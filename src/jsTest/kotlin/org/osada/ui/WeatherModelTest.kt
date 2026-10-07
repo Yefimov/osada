@@ -16,8 +16,7 @@ import kotlin.test.assertTrue
 import org.osada.weatherZones as ogDefaultWeatherZones
 
 /**
- * Open General's weather as its author specifies it (`ui/WeatherModel`,
- * `docs/design/combat-movement-heroes-weather-audit.md` §7.1): alternating clear/overcast periods of
+ * Open General's weather as its author specifies it (`ui/WeatherModel`): alternating clear/overcast periods of
  * `((r1+r2+r3+r4)+2)/2` turns, one precipitation type per overcast period, precipitation rolled every
  * turn, the efile's own climate table, `force_weather`, and no reroll on load.
  */

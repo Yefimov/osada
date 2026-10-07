@@ -1,8 +1,8 @@
 package org.osada.ui.music
 
 import kotlinx.browser.document
-import kotlinx.browser.localStorage
 import kotlinx.browser.window
+import org.osada.storage.localStorage
 
 /** Ownership is local to this origin, never a multiplayer command. Hidden timers cannot steal it. */
 internal object MusicTabCoordinator {

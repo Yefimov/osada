@@ -16,11 +16,11 @@ import org.osada.rules.ruleset.RuleKey
  * airfields"*.
  *
  * **It is a DEPLOYMENT permission, not a hangar**, and that is why it took so long to place.
- * `docs/og-fidelity-plan.md` §Y filed this ability as blocked on *"aircraft stored INSIDE the ship
+ * It was once filed as blocked on *"aircraft stored INSIDE the ship
  * ... a hangar list, a launch order, spotting suppressed while contained"* — a containment model
  * OSADA does not have. The author's specials page says something much narrower: the aircraft may be
  * **placed on a carrier during deployment**, which it otherwise may not be, because a ship at sea
- * is never in a deploy zone. Read at its word, per `docs/og-sources.md`'s standing rule that a
+ * is never in a deploy zone. Read at its word, per `docs/og/og-sources.md`'s standing rule that a
  * stated condition is not refused for reading oddly.
  *
  * The hangar is a real and separate mechanic and is still unbuilt (§AA.5). This ability does not

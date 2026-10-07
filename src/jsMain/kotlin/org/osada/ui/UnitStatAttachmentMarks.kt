@@ -8,7 +8,7 @@ import org.osada.rules.movementPenalty
 import org.w3c.dom.HTMLElement
 
 /**
- * Marks the unit-info stat chips an attachment is currently changing (DEFERRED.md §1.4).
+ * Marks the unit-info stat chips an attachment is currently changing (`docs/design/attachments.md`).
  *
  * Without this the panel showed the unit's **base** equipment stats while the rules layer quietly
  * used the modified ones, so a player could not tell a kitted-out unit from a bare one anywhere

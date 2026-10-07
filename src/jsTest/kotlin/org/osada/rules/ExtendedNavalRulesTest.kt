@@ -18,8 +18,8 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Open General's **Extended Naval Rules** (manual §9.6), built 2026-08-27 as schema 9
- * (`docs/og-fidelity-plan.md` §U). By shipped content this was the largest gap the project had:
+ * Open General's **Extended Naval Rules** (manual §9.6), built 2026-08-27 as schema 9.
+ * By shipped content this was the largest gap the project had:
  * 238 of the 457 scenarios whose source is readable author the switch.
  *
  * **Every bullet is tested OFF as well as ON**, which is the promise the key was admitted on: none

@@ -134,7 +134,7 @@ internal object CombatLogGroups {
      *
      * Its own group, and shown to the OWNER rather than to an opponent: nobody took these units, and
      * a formation that vanishes with no line here is exactly the "loss with no visible cause"
-     * `tools/og-import/DEFERRED.md` §1.1 forbids. Empty, and therefore invisible, for every player
+     * `docs/design/action-affordances-and-objectives.md` §1.1 forbids. Empty, and therefore invisible, for every player
      * who has not switched the rule on.
      */
     fun buildAttritionGroup(): CombatLogFeed.FeedGroup {

@@ -70,6 +70,10 @@ object UnitActionAvailability {
             engineering(context, UnitActionId.REPAIR),
             engineering(context, UnitActionId.DEMOLISH),
             engineering(context, UnitActionId.BLOW_RAIL),
+            HangarActions.land(context),
+            HangarActions.hangar(context),
+            HangarActions.enterCover(context),
+            HangarActions.cover(context),
             sleep(context),
         )
 
@@ -269,6 +273,10 @@ object UnitActionAvailability {
             UnitActionId.GREEN_REINFORCE -> greenReinforce(context)
             UnitActionId.DISMISS_LEADER -> dismissLeader(context)
             UnitActionId.WITHDRAW -> withdraw(context)
+            UnitActionId.LAND_IN_HANGAR -> HangarActions.land(context)
+            UnitActionId.HANGAR -> HangarActions.hangar(context)
+            UnitActionId.ENTER_COVER -> HangarActions.enterCover(context)
+            UnitActionId.COVER -> HangarActions.cover(context)
             else -> ActionAvailability.notApplicable(action)
         }
 
@@ -552,7 +560,7 @@ object UnitActionAvailability {
      * on (`rules/RailTransport`). The train itself moves through the ordinary move range.
      *
      * **NOT APPLICABLE unless the scenario grants this player a rail pool** -- 120 of the 502
-     * deployed scenarios do (`docs/og-fidelity-plan.md` §AE.3) -- so the chip is absent in the rest
+     * deployed scenarios do -- so the chip is absent in the rest
      * rather than present and permanently disabled, the rule the engineering chips follow. A pool
      * that is merely used up right now shows the chip disabled, with the reason.
      *
@@ -666,6 +674,12 @@ object UnitActionAvailability {
      * The one condition that is a REASON rather than an absence is prestige. A player who cannot
      * afford a bridge today can afford it next turn, so the chip stays visible with
      * [ActionBlockReason.NEEDS_PRESTIGE] and the exact shortfall, the same way Reinforce does.
+     *
+     * **The five BUILD chips are the exception (owner's request 2026-10-07):** a sapper is always
+     * shown them, greyed with the reason where this hex will not take the work
+     * ([unsuitableConstruction]), so the player learns where an airfield or a port CAN go instead
+     * of finding the button missing. Demolition, repair and cutting rail still appear only where
+     * there is something to blow or repair.
      */
     private fun engineering(
         context: UnitActionContext,
@@ -674,7 +688,7 @@ object UnitActionAvailability {
         val unit = context.unit
         val work =
             engineeringWorkFor(action, Engineering.availableWork(unit, ignoreScenarioBan = true))
-                ?: return ActionAvailability.notApplicable(action)
+                ?: return unsuitableConstruction(context, action) ?: ActionAvailability.notApplicable(action)
         val reasons = mutableListOf<ActionBlock>()
         addTurnBlock(context, reasons)
         // Shown greyed rather than hidden, so the player learns the scenario forbids it.
@@ -696,24 +710,17 @@ object UnitActionAvailability {
         }
         val missingPrestige = work.costFor() - (unit.player?.prestige ?: 0)
         if (missingPrestige > 0) reasons += ActionBlock(ActionBlockReason.NEEDS_PRESTIGE, missingPrestige)
-        val effects = mutableListOf<ActionEffect>()
-        if (work.costFor() > 0) effects += ActionEffect(ActionEffectKind.PRESTIGE_COST_ONCE, work.costFor())
-        effects +=
-            if (work.turnsFor(unit.getHex()) == 0) {
-                ActionEffect(ActionEffectKind.DEMOLISH_NOW)
-            } else {
-                ActionEffect(ActionEffectKind.BUILD_TURNS, work.turnsFor(unit.getHex()))
-            }
-        effects +=
-            ActionEffect(
-                if (afterMove) {
-                    ActionEffectKind.ENGINEERING_START_AFTER_MOVE
-                } else {
-                    ActionEffectKind.ENGINEERING_START_UNSPENT
-                },
-            )
-        effects += ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION)
+        val effects = ConstructionChips.effects(unit, work, afterMove)
         return ActionAvailability(action, true, reasons.isEmpty(), reasons, effects)
+    }
+
+    /** A greyed BUILD chip where the sapper's hex will not take the job ([ConstructionChips.unsuitable]). */
+    private fun unsuitableConstruction(
+        context: UnitActionContext,
+        action: UnitActionId,
+    ): ActionAvailability? {
+        val reasons = mutableListOf<ActionBlock>().also { addTurnBlock(context, it) }
+        return ConstructionChips.unsuitable(action, ENGINEERING_ACTIONS[action], context.unit, reasons)
     }
 
     // ---- Sleep / wake ------------------------------------------------------------------------
@@ -736,7 +743,7 @@ object UnitActionAvailability {
 
     // ---- Shared reason builders ---------------------------------------------------------------
 
-    private fun addTurnBlock(
+    internal fun addTurnBlock(
         context: UnitActionContext,
         reasons: MutableList<ActionBlock>,
     ) {

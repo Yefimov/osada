@@ -3,6 +3,7 @@ package org.osada.model
 import org.osada.rules.Engineering
 import org.osada.rules.EngineeringWork
 import org.osada.rules.FacilityOwner
+import org.osada.rules.turnsForBuilder
 
 /*
  * The Build and Repair commands, as [GameMap] extensions beside [MinefieldOperations]
@@ -37,13 +38,14 @@ internal fun GameMap.beginEngineering(
     if (side < 0 || !mayBegin(unit, work)) return EngineeringActionResult.NOT_ALLOWED
     undoState.invalidate(unit, UndoInvalidation.IRREVERSIBLE_ACTION)
     if (work.costFor() > 0) player.prestige -= work.costFor()
-    Engineering.begin(hex, side, work, FacilityOwner(player.id, player.country))
+    val turns = work.turnsForBuilder(unit)
+    Engineering.begin(hex, side, work, FacilityOwner(player.id, player.country), turns)
     endUnitTurnForEngineering(unit)
     // A demolition changes terrain THIS INSTANT, and `extended_los` blocks line of sight on terrain,
     // so the spotting reference counts have to be re-derived before anyone reads them again. A
     // multi-turn job changes nothing yet and is rebuilt when it completes (`GameMap.endTurn`).
-    if (work.turnsFor(unit.getHex()) == 0) recomputeSpotting()
-    return if (work.turnsFor(unit.getHex()) == 0) {
+    if (turns == 0) recomputeSpotting()
+    return if (turns == 0) {
         EngineeringActionResult.DEMOLISHED
     } else {
         EngineeringActionResult.STARTED

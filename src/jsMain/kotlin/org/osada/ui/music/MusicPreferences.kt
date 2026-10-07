@@ -1,7 +1,7 @@
 package org.osada.ui.music
 
-import kotlinx.browser.localStorage
 import org.osada.VERSION
+import org.osada.storage.localStorage
 
 /** Stable JSON fields; deliberately separate from game saves and room snapshots. */
 internal object MusicPreferences {

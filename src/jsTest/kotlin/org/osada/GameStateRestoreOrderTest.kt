@@ -6,6 +6,7 @@ import org.osada.model.resetEquipment
 import org.osada.save.CampaignRunBundle
 import org.osada.save.CampaignRunMetadata
 import org.osada.save.ProfileBundle
+import org.osada.save.ResumeTarget
 import org.osada.save.SaveResult
 import org.osada.save.SaveSnapshot
 import org.osada.save.SaveSnapshotStore
@@ -47,11 +48,13 @@ class GameStateRestoreOrderTest {
         """,
         )
         localStorage.removeItem(standaloneKey)
+        ResumeTarget.clear()
     }
 
     @AfterTest
     fun tearDown() {
         localStorage.removeItem(standaloneKey)
+        ResumeTarget.clear()
     }
 
     /** The shipped fixture, re-stamped to the current save format and renamed so the test can tell
@@ -267,6 +270,82 @@ class GameStateRestoreOrderTest {
         val store = FakeStore(metadata = null, current = null)
         return restoreWith(store).then {
             assertTrue(it.succeeded.not(), "with no source at all restore must report failure")
+        }
+    }
+
+    @Test
+    fun anImportedStandaloneBattleOpensDespiteANewerCampaignRun(): Promise<Unit> {
+        // A raw battle file has no trustworthy timestamp; recency alone would pick the campaign.
+        writeStandalone("from-standalone", savedAt = 0.0)
+        localStorage.setItem(ResumeTarget.key, ResumeTarget.encode(ResumeTarget.Standalone))
+        val store =
+            FakeStore(
+                metadata = runMetadata(lastPlayedAt = 9000.0),
+                current = snapshotFor("camp.json", payloadNamed("from-campaign")),
+            )
+        return restoreWith(store).then {
+            assertTrue(it.succeeded)
+            assertEquals("from-standalone", it.scenarioName, "the file just imported must open")
+            // The restore's own save stamps the imported game as the newest, so the pointer has
+            // done its job and ordinary recency now reopens the same battle after a refresh.
+            assertEquals(null, ResumeTarget.read())
+            val savedAt = JSON.parse<dynamic>(localStorage.getItem(standaloneKey)!!).savedAt as Double
+            assertTrue(savedAt > 9000.0, "the imported battle must now win plain recency")
+        }
+    }
+
+    @Test
+    fun anImportedCampaignTargetOutranksANewerStandaloneSession(): Promise<Unit> {
+        writeStandalone("from-standalone", savedAt = 9000.0)
+        localStorage.setItem(ResumeTarget.key, ResumeTarget.encode(ResumeTarget.Campaign("camp.json")))
+        val store =
+            FakeStore(
+                metadata = runMetadata(lastPlayedAt = 0.0),
+                current = snapshotFor("camp.json", payloadNamed("from-campaign")),
+            )
+        return restoreWith(store).then {
+            assertTrue(it.succeeded)
+            assertEquals("from-campaign", it.scenarioName)
+        }
+    }
+
+    @Test
+    fun aStaleTargetFallsBackToOrdinaryRecency(): Promise<Unit> {
+        writeStandalone("from-standalone", savedAt = 1000.0)
+        localStorage.setItem(ResumeTarget.key, ResumeTarget.encode(ResumeTarget.Campaign("deleted.json")))
+        val store =
+            FakeStore(
+                metadata = runMetadata(lastPlayedAt = 2000.0),
+                current = snapshotFor("camp.json", payloadNamed("from-campaign")),
+            )
+        return restoreWith(store).then {
+            assertTrue(it.succeeded)
+            assertEquals("from-campaign", it.scenarioName, "a missing target must not block the normal choice")
+        }
+    }
+
+    @Test
+    fun aTargetSurvivesUntilASaveSucceeds() {
+        localStorage.setItem(ResumeTarget.key, ResumeTarget.encode(ResumeTarget.Standalone))
+        val game = Game()
+        game.state = GameState(game)
+        // No scenario: save() writes nothing, so the pointer must still be there for the next boot.
+        GameStatePersistence(game, GameStateRestore(game), FakeStore(metadata = null, current = null)).save()
+        assertEquals(ResumeTarget.Standalone, ResumeTarget.read())
+    }
+
+    @Test
+    fun theFirstSuccessfulSaveClearsTheTarget(): Promise<Unit> {
+        writeStandalone("from-standalone", savedAt = 0.0)
+        localStorage.setItem(ResumeTarget.key, ResumeTarget.encode(ResumeTarget.Standalone))
+        val game = Game()
+        game.state = GameState(game)
+        val persistence =
+            GameStatePersistence(game, GameStateRestore(game), FakeStore(metadata = null, current = null))
+        return Promise<Unit> { resolve, _ -> persistence.restore({ resolve(Unit) }, { resolve(Unit) }) }.then {
+            assertEquals("from-standalone", game.scenario?.name)
+            persistence.save()
+            assertEquals(null, ResumeTarget.read(), "after the imported game saved, ordinary recency applies")
         }
     }
 }

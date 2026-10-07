@@ -1,8 +1,9 @@
 package org.osada.multiplayer.persistence
 
-import kotlinx.browser.window
 import org.osada.multiplayer.coop.CoopCheckpoint
 import org.osada.multiplayer.sync.MultiplayerSnapshot
+import org.osada.storage.BrowserStorage
+import org.osada.storage.localStorage
 
 /** Bounded to one latest acknowledged checkpoint per browser; never touches single-player saves. */
 internal object CoopCheckpointStore {
@@ -16,12 +17,14 @@ internal object CoopCheckpointStore {
     fun save(snapshot: MultiplayerSnapshot) {
         val checkpoint = CoopCheckpoint.fromSnapshot(snapshot)
         memory = checkpoint
-        durable = runCatching { window.localStorage.setItem(KEY, checkpoint.encode()) }.isSuccess
+        // A write into the session-memory fallback (site storage denied) succeeds but survives
+        // nothing: only a reachable store counts as durable.
+        durable = runCatching { localStorage.setItem(KEY, checkpoint.encode()) }.isSuccess && BrowserStorage.persistent
     }
 
     fun latest(): CoopCheckpoint? =
         memory ?: runCatching {
-            window.localStorage.getItem(KEY)?.let(CoopCheckpoint::decode)
+            localStorage.getItem(KEY)?.let(CoopCheckpoint::decode)
         }.getOrNull()?.also { memory = it }
 
     fun stage(snapshot: MultiplayerSnapshot) {

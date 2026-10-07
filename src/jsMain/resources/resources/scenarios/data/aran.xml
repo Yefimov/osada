@@ -4,39 +4,39 @@
   <player id="1" country="234" side="0" airtrans="0" navaltrans="0" support="235,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="3">
     <at row="7" col="25">
-      <unit id="41236" owner="0" flag="92" face="0" exp="80" str="4"/>
+      <unit id="41236" owner="0" flag="92" face="0" exp="80" str="4" bstr="1"/>
     </at>
     <at row="9" col="26">
-      <unit id="41236" owner="0" flag="92" face="0" exp="101" str="7"/>
+      <unit id="41236" owner="0" flag="92" face="0" exp="101" str="7" bstr="1"/>
     </at>
     <at row="10" col="27">
-      <unit id="41236" owner="0" flag="92" face="0" exp="77" str="6"/>
+      <unit id="41236" owner="0" flag="92" face="0" exp="77" str="6" bstr="1"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="1" col="14">
-      <unit id="41236" owner="0" flag="92" face="0" exp="98" str="7"/>
+      <unit id="41236" owner="0" flag="92" face="0" exp="98" str="7" bstr="1"/>
     </at>
     <at row="1" col="13">
-      <unit id="41236" owner="0" flag="92" face="0" exp="59" str="7"/>
+      <unit id="41236" owner="0" flag="92" face="0" exp="59" str="7" bstr="1"/>
     </at>
     <at row="0" col="15">
-      <unit id="41450" owner="0" flag="92" face="0" str="6"/>
+      <unit id="41450" owner="0" flag="92" face="0" str="6" bstr="1"/>
     </at>
     <at row="0" col="13">
-      <unit id="41259" owner="0" flag="92" face="0" exp="42" str="3" ldr="1"/>
+      <unit id="41259" owner="0" flag="92" face="0" exp="42" str="3" ldr="1" bstr="1"/>
     </at>
   </reinforce>
   <reinforce turn="6">
     <at row="25" col="15">
-      <unit id="1056" owner="1" flag="235" face="0" exp="200" str="4" ldr="1"/>
+      <unit id="1056" owner="1" flag="235" face="0" exp="200" str="4" ldr="1" bstr="4" fuel="0"/>
     </at>
     <at row="24" col="15">
-      <unit id="1056" owner="1" flag="235" face="0" exp="200" str="4" ldr="1"/>
+      <unit id="1056" owner="1" flag="235" face="0" exp="200" str="4" ldr="1" bstr="4" fuel="0"/>
     </at>
   </reinforce>
   <hex row="0" col="1">
-    <unit id="6547" owner="0" flag="7" face="0" str="5"/>
+    <unit id="6547" owner="0" flag="7" face="0" str="5" bstr="5"/>
   </hex>
   <hex row="0" col="6" terrain="6"/>
   <hex row="0" col="7" terrain="6"/>
@@ -76,7 +76,7 @@
   <hex row="1" col="23" terrain="6"/>
   <hex row="1" col="24" terrain="6"/>
   <hex row="1" col="25" terrain="1" name="Ustou (FRANCE)" owner="0" flag="91">
-    <unit id="6547" owner="0" flag="7" face="0" str="5"/>
+    <unit id="6547" owner="0" flag="7" face="0" str="5" bstr="5"/>
   </hex>
   <hex row="1" col="26" terrain="1" name="Ustou (FRANCE)"/>
   <hex row="1" col="27" terrain="6"/>
@@ -90,7 +90,7 @@
   <hex row="2" col="10" terrain="6"/>
   <hex row="2" col="12" terrain="1" name="Bossost"/>
   <hex row="2" col="13" owner="1" flag="234" victory="1">
-    <unit id="672" owner="1" flag="235" face="0" str="3"/>
+    <unit id="672" owner="1" flag="235" face="0" str="3" bstr="3"/>
   </hex>
   <hex row="2" col="14" terrain="3"/>
   <hex row="2" col="17" terrain="6"/>
@@ -114,13 +114,13 @@
   <hex row="3" col="8" terrain="6"/>
   <hex row="3" col="9" terrain="6"/>
   <hex row="3" col="10" terrain="1" name="Saint-Mamet (FRANCE)" owner="0" flag="91">
-    <unit id="6547" owner="0" flag="7" face="0" str="5"/>
+    <unit id="6547" owner="0" flag="7" face="0" str="5" bstr="5"/>
   </hex>
   <hex row="3" col="15" terrain="10"/>
   <hex row="3" col="16" terrain="6"/>
   <hex row="3" col="17" terrain="6"/>
   <hex row="3" col="18" terrain="6">
-    <unit id="41236" owner="0" flag="92" face="0" exp="79" str="6"/>
+    <unit id="41236" owner="0" flag="92" face="0" exp="79" str="6" bstr="1"/>
   </hex>
   <hex row="3" col="19" terrain="6"/>
   <hex row="3" col="20" terrain="6"/>
@@ -148,12 +148,12 @@
   <hex row="4" col="18" terrain="6"/>
   <hex row="4" col="19" terrain="6"/>
   <hex row="4" col="20" terrain="6">
-    <unit id="41236" owner="0" flag="92" face="0" exp="98" str="3"/>
+    <unit id="41236" owner="0" flag="92" face="0" exp="98" str="3" bstr="1"/>
   </hex>
   <hex row="4" col="21" terrain="6"/>
   <hex row="4" col="22" terrain="6"/>
   <hex row="4" col="23" terrain="6">
-    <unit id="41236" owner="0" flag="92" face="0" exp="74" str="5"/>
+    <unit id="41236" owner="0" flag="92" face="0" exp="74" str="5" bstr="1"/>
   </hex>
   <hex row="4" col="24" terrain="6"/>
   <hex row="4" col="25" terrain="6"/>
@@ -172,10 +172,10 @@
   <hex row="5" col="11" terrain="6"/>
   <hex row="5" col="12" terrain="6"/>
   <hex row="5" col="13" terrain="1" name="Viella">
-    <unit id="48102" owner="1" flag="235" face="0" str="3"/>
+    <unit id="48102" owner="1" flag="235" face="0" str="3" bstr="3"/>
   </hex>
   <hex row="5" col="14" terrain="1" name="Viella">
-    <unit id="48101" owner="1" flag="235" face="0" str="3"/>
+    <unit id="48101" owner="1" flag="235" face="0" str="3" bstr="3"/>
   </hex>
   <hex row="5" col="15" terrain="10"/>
   <hex row="5" col="16" terrain="6"/>
@@ -203,7 +203,7 @@
   <hex row="6" col="11" terrain="6"/>
   <hex row="6" col="12" terrain="6"/>
   <hex row="6" col="14" terrain="1" name="Viella" owner="1" flag="234" victory="1">
-    <unit id="48095" owner="1" flag="235" face="0" exp="100" str="4"/>
+    <unit id="48095" owner="1" flag="235" face="0" exp="100" str="4" bstr="4"/>
   </hex>
   <hex row="6" col="15" terrain="10"/>
   <hex row="6" col="16" terrain="6"/>
@@ -226,7 +226,7 @@
   <hex row="7" col="6" terrain="6"/>
   <hex row="7" col="7" terrain="6"/>
   <hex row="7" col="8" terrain="6">
-    <unit id="41236" owner="0" flag="92" face="0" exp="54" str="5"/>
+    <unit id="41236" owner="0" flag="92" face="0" exp="54" str="5" bstr="1"/>
   </hex>
   <hex row="7" col="9" terrain="6"/>
   <hex row="7" col="10" terrain="6"/>
@@ -247,12 +247,12 @@
   <hex row="8" col="1" terrain="3"/>
   <hex row="8" col="2" terrain="6"/>
   <hex row="8" col="3" terrain="6">
-    <unit id="41236" owner="0" flag="92" face="0" exp="105" str="5"/>
+    <unit id="41236" owner="0" flag="92" face="0" exp="105" str="5" bstr="1"/>
   </hex>
   <hex row="8" col="4" terrain="6"/>
   <hex row="8" col="5" terrain="6"/>
   <hex row="8" col="6" terrain="6">
-    <unit id="41236" owner="0" flag="92" face="0" exp="77" str="8" ldr="1"/>
+    <unit id="41236" owner="0" flag="92" face="0" exp="77" str="8" ldr="1" bstr="1"/>
   </hex>
   <hex row="8" col="7" terrain="6"/>
   <hex row="8" col="8" terrain="6"/>
@@ -304,7 +304,7 @@
   <hex row="10" col="20" terrain="6"/>
   <hex row="10" col="21" terrain="6"/>
   <hex row="10" col="22" terrain="1" name="Esterri de Aneu" owner="1" flag="234">
-    <unit id="48101" owner="1" flag="235" face="0" str="4"/>
+    <unit id="48101" owner="1" flag="235" face="0" str="4" bstr="4"/>
   </hex>
   <hex row="10" col="26" terrain="6"/>
   <hex row="10" col="27" terrain="6"/>
@@ -327,7 +327,7 @@
   <hex row="12" col="10" terrain="3"/>
   <hex row="12" col="14" rail="17" name="Ferrocarril"/>
   <hex row="12" col="15" terrain="1" name="Boi" owner="1" flag="234">
-    <unit id="48101" owner="1" flag="235" face="0" str="4"/>
+    <unit id="48101" owner="1" flag="235" face="0" str="4" bstr="4"/>
   </hex>
   <hex row="12" col="16" terrain="6"/>
   <hex row="12" col="17" terrain="6"/>
@@ -341,7 +341,7 @@
   <hex row="13" col="7" terrain="3"/>
   <hex row="13" col="10" terrain="1" name="Laspaules" owner="1" flag="234"/>
   <hex row="13" col="12" terrain="1" name="Montanuy" owner="1" flag="234">
-    <unit id="48102" owner="1" flag="235" face="0" str="3"/>
+    <unit id="48102" owner="1" flag="235" face="0" str="3" bstr="3"/>
   </hex>
   <hex row="13" col="14" rail="17" name="Ferrocarril"/>
   <hex row="13" col="16" terrain="6"/>
@@ -365,11 +365,11 @@
   <hex row="14" col="26" terrain="6"/>
   <hex row="14" col="27" terrain="6"/>
   <hex row="15" col="5" terrain="1" name="Campo" owner="1" flag="234" victory="1">
-    <unit id="48102" owner="1" flag="235" face="0" str="3"/>
+    <unit id="48102" owner="1" flag="235" face="0" str="3" bstr="3"/>
   </hex>
   <hex row="15" col="8" terrain="3"/>
   <hex row="15" col="13" terrain="1" name="El Pont de Suert" owner="1" flag="234" victory="1">
-    <unit id="48102" owner="1" flag="235" face="0" str="3"/>
+    <unit id="48102" owner="1" flag="235" face="0" str="3" bstr="3"/>
   </hex>
   <hex row="15" col="14" rail="17" name="Ferrocarril"/>
   <hex row="15" col="17" terrain="3"/>
@@ -389,7 +389,7 @@
   <hex row="16" col="20" terrain="6"/>
   <hex row="16" col="21" terrain="6"/>
   <hex row="16" col="23" terrain="1" name="Sort" owner="1" flag="234" victory="1">
-    <unit id="48101" owner="1" flag="235" face="0" str="4"/>
+    <unit id="48101" owner="1" flag="235" face="0" str="4" bstr="4"/>
   </hex>
   <hex row="17" col="5" terrain="3"/>
   <hex row="17" col="6" terrain="3"/>
@@ -460,7 +460,7 @@
   <hex row="21" col="15" rail="17" name="Ferrocarril"/>
   <hex row="21" col="18" terrain="3"/>
   <hex row="21" col="20">
-    <unit id="48104" owner="1" flag="235" face="0" exp="90" str="4"/>
+    <unit id="48104" owner="1" flag="235" face="0" exp="90" str="4" bstr="4" ammo="5"/>
   </hex>
   <hex row="21" col="21" terrain="6"/>
   <hex row="21" col="22" terrain="6"/>
@@ -482,7 +482,7 @@
   <hex row="22" col="16" terrain="3"/>
   <hex row="22" col="17" terrain="1" name="La Pobla de Segur" owner="1" flag="234"/>
   <hex row="22" col="19">
-    <unit id="48104" owner="1" flag="235" face="0" exp="90" str="5"/>
+    <unit id="48104" owner="1" flag="235" face="0" exp="90" str="5" bstr="5" ammo="5"/>
   </hex>
   <hex row="22" col="23" terrain="6"/>
   <hex row="22" col="24" terrain="6"/>
@@ -507,7 +507,7 @@
   <hex row="24" col="15" rail="17" name="Ferrocarril"/>
   <hex row="24" col="16" terrain="3"/>
   <hex row="24" col="17" terrain="1" name="Tremp" owner="1" flag="234" victory="1">
-    <unit id="48101" owner="1" flag="235" face="0" str="4"/>
+    <unit id="48101" owner="1" flag="235" face="0" str="4" bstr="4"/>
   </hex>
   <hex row="24" col="19" terrain="3"/>
   <hex row="24" col="20" terrain="3"/>

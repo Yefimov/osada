@@ -4,45 +4,45 @@
   <player id="1" country="82" side="0" airtrans="0" navaltrans="4" railtrans="4" defaultxp="200" defaultstr="10" support="83,0,0,0" turnprestige="0, 400, 400, 400, 400, 400, 400, 400, 400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="83:1:262144"/>
   <reinforce turn="2">
     <at row="5" col="1">
-      <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" fearless="1" bstr="5"/>
+      <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" fearless="1" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="3">
     <at row="5" col="1">
-      <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" fearless="1" bstr="5"/>
+      <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" fearless="1" bstr="5"/>
     </at>
     <at row="9" col="2">
-      <unit id="2370" owner="0" flag="3" face="0" exp="44" bstr="5"/>
+      <unit id="2370" owner="0" flag="3" face="0" exp="300" bstr="5"/>
     </at>
     <at row="10" col="2">
-      <unit id="2370" owner="0" flag="3" face="0" exp="44" bstr="5"/>
+      <unit id="2370" owner="0" flag="3" face="0" exp="300" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="5" col="1">
-      <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" fearless="1" bstr="5"/>
+      <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" fearless="1" bstr="5"/>
     </at>
     <at row="10" col="2">
-      <unit id="25071" owner="0" flag="23" face="0" exp="44" bstr="5"/>
+      <unit id="25071" owner="0" flag="23" face="0" exp="300" bstr="5"/>
     </at>
     <at row="9" col="2">
-      <unit id="2370" owner="0" flag="3" face="0" exp="44" bstr="5"/>
+      <unit id="2370" owner="0" flag="3" face="0" exp="300" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="5">
     <at row="10" col="2">
-      <unit id="2370" owner="0" flag="3" face="0" exp="44" bstr="5"/>
+      <unit id="2370" owner="0" flag="3" face="0" exp="300" bstr="5"/>
     </at>
     <at row="9" col="2">
-      <unit id="2370" owner="0" flag="3" face="0" exp="44" bstr="5"/>
+      <unit id="2370" owner="0" flag="3" face="0" exp="300" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="6">
     <at row="9" col="2">
-      <unit id="25071" owner="0" flag="23" face="0" exp="44" bstr="5"/>
+      <unit id="25071" owner="0" flag="23" face="0" exp="300" bstr="5"/>
     </at>
     <at row="10" col="2">
-      <unit id="2370" owner="0" flag="3" face="0" exp="44" bstr="5"/>
+      <unit id="2370" owner="0" flag="3" face="0" exp="300" bstr="5"/>
     </at>
   </reinforce>
   <hex row="0" col="1" terrain="16"/>
@@ -95,7 +95,7 @@
   <hex row="1" col="7" terrain="3" road="17"/>
   <hex row="1" col="8" terrain="3"/>
   <hex row="1" col="9" terrain="2">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="1" col="10" terrain="3"/>
   <hex row="1" col="11" terrain="3"/>
@@ -135,7 +135,7 @@
   <hex row="2" col="6" terrain="6"/>
   <hex row="2" col="7" terrain="16" road="19"/>
   <hex row="2" col="8" terrain="2" owner="1" flag="82" victory="1">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="2" col="9" terrain="3"/>
   <hex row="2" col="10" terrain="3"/>
@@ -280,7 +280,7 @@
   <hex row="5" col="29" terrain="16"/>
   <hex row="5" col="30" terrain="16"/>
   <hex row="5" col="31" terrain="2">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="5" col="32" terrain="1" name="Varnavas" owner="1" flag="82"/>
   <hex row="5" col="33" terrain="9"/>
@@ -322,7 +322,7 @@
   <hex row="6" col="27" terrain="16"/>
   <hex row="6" col="28" terrain="16"/>
   <hex row="6" col="30" terrain="2" owner="1" flag="82" victory="1">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" ldr="1" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" ldr="1" bstr="5" fearless="1"/>
   </hex>
   <hex row="6" col="33" terrain="16"/>
   <hex row="6" col="34" terrain="9"/>
@@ -620,7 +620,7 @@
   <hex row="14" col="1" terrain="9"/>
   <hex row="14" col="2" terrain="1" road="152"/>
   <hex row="14" col="3" terrain="1" road="186" name="Megara" owner="1" flag="82">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="14" col="4" terrain="1" road="50"/>
   <hex row="14" col="5" terrain="16"/>
@@ -678,28 +678,28 @@
   <hex row="15" col="16" terrain="16"/>
   <hex row="15" col="17" terrain="16"/>
   <hex row="15" col="18" rail="136" deploy="0">
-    <unit id="30287" owner="0" flag="40" face="0" transport="30572" exp="44" str="5" bstr="5"/>
+    <unit id="30287" owner="0" flag="40" face="0" transport="30572" exp="300" str="5" bstr="5"/>
   </hex>
   <hex row="15" col="19" rail="136" deploy="0">
-    <unit id="30712" owner="0" flag="40" face="0" transport="30618" exp="44" bstr="5"/>
+    <unit id="30712" owner="0" flag="40" face="0" transport="30618" exp="300" bstr="5"/>
   </hex>
   <hex row="15" col="20" terrain="3" deploy="0">
-    <unit id="30712" owner="0" flag="40" face="0" transport="30618" exp="44" bstr="5"/>
+    <unit id="30712" owner="0" flag="40" face="0" transport="30618" exp="300" bstr="5"/>
   </hex>
   <hex row="15" col="21" terrain="1" road="58" deploy="0">
-    <unit id="30712" owner="0" flag="40" face="0" transport="30618" exp="44" bstr="5"/>
+    <unit id="30712" owner="0" flag="40" face="0" transport="30618" exp="300" bstr="5"/>
   </hex>
   <hex row="15" col="22" terrain="1" road="56"/>
   <hex row="15" col="23" terrain="1" road="170"/>
   <hex row="15" col="24" terrain="1" road="40"/>
   <hex row="15" col="25" terrain="1" road="146">
-    <unit id="23352" owner="0" flag="23" face="0" exp="144" bstr="5"/>
+    <unit id="23352" owner="0" flag="23" face="0" exp="400" bstr="5"/>
   </hex>
   <hex row="15" col="26" road="34">
-    <unit id="24375" owner="0" flag="23" face="0" transport="24156" exp="144" str="5" bstr="5"/>
+    <unit id="24375" owner="0" flag="23" face="0" transport="24156" exp="400" str="5" bstr="5"/>
   </hex>
   <hex row="15" col="27" terrain="1" road="3">
-    <unit id="24875" owner="0" flag="23" face="0" exp="44" str="2" bstr="2" attach="1"/>
+    <unit id="24875" owner="0" flag="23" face="0" exp="300" str="2" bstr="2" attach="1"/>
   </hex>
   <hex row="15" col="28" terrain="1" road="176"/>
   <hex row="15" col="30" terrain="5"/>
@@ -717,7 +717,7 @@
   <hex row="16" col="0" terrain="9"/>
   <hex row="16" col="1" terrain="9"/>
   <hex row="16" col="2" terrain="12" road="11" owner="1" flag="82" victory="1">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="16" col="3" terrain="1" road="131"/>
   <hex row="16" col="4" terrain="1" road="161"/>
@@ -736,27 +736,27 @@
   <hex row="16" col="17" terrain="9"/>
   <hex row="16" col="18" terrain="9"/>
   <hex row="16" col="19" deploy="0">
-    <unit id="30289" owner="0" flag="40" face="0" transport="30572" exp="44" bstr="5"/>
+    <unit id="30289" owner="0" flag="40" face="0" transport="30572" exp="300" bstr="5"/>
   </hex>
   <hex row="16" col="20" terrain="1" road="26" rail="144" deploy="0">
-    <unit id="30283" owner="0" flag="40" face="0" transport="30602" exp="44" str="5" bstr="5"/>
+    <unit id="30283" owner="0" flag="40" face="0" transport="30602" exp="300" str="5" bstr="5"/>
   </hex>
   <hex row="16" col="21" terrain="1" road="187" deploy="0">
-    <unit id="30289" owner="0" flag="40" face="0" transport="30572" exp="44" ldr="1" bstr="5"/>
+    <unit id="30289" owner="0" flag="40" face="0" transport="30572" exp="300" ldr="1" bstr="5"/>
   </hex>
   <hex row="16" col="22" terrain="1" road="179"/>
   <hex row="16" col="23">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="16" col="24" terrain="1" road="152"/>
   <hex row="16" col="25" terrain="2" road="185">
-    <unit id="23352" owner="0" flag="23" face="0" exp="144" bstr="5"/>
+    <unit id="23352" owner="0" flag="23" face="0" exp="400" bstr="5"/>
   </hex>
   <hex row="16" col="26" terrain="2" owner="0" flag="39" victory="0">
-    <unit id="23056" owner="0" flag="23" face="0" exp="144" str="5" bstr="5"/>
+    <unit id="23056" owner="0" flag="23" face="0" exp="400" str="5" bstr="5"/>
   </hex>
   <hex row="16" col="27">
-    <unit id="23985" owner="0" flag="23" face="0" transport="24156" exp="144" str="5" bstr="5"/>
+    <unit id="23985" owner="0" flag="23" face="0" transport="24156" exp="400" str="5" bstr="5"/>
   </hex>
   <hex row="16" col="28" road="17"/>
   <hex row="16" col="29" terrain="14" name="Acropolis"/>
@@ -791,29 +791,29 @@
   <hex row="17" col="15" terrain="9"/>
   <hex row="17" col="16" terrain="9"/>
   <hex row="17" col="19" terrain="1" road="58">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="17" col="20" terrain="1" road="59" rail="17" name="Koridhallos" owner="0" flag="39" victory="0" deploy="0" station="1">
-    <unit id="30289" owner="0" flag="40" face="0" transport="30572" exp="44" bstr="5"/>
+    <unit id="30289" owner="0" flag="40" face="0" transport="30572" exp="300" bstr="5"/>
   </hex>
   <hex row="17" col="21" terrain="1" road="131"/>
   <hex row="17" col="22" terrain="1" road="169">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="17" col="23" terrain="11" road="154" name="Peristeri" owner="1" flag="82" victory="1">
-    <unit id="682" owner="1" flag="83" face="0" exp="44" str="15" bstr="1"/>
+    <unit id="682" owner="1" flag="83" face="0" exp="300" str="15" bstr="1"/>
   </hex>
   <hex row="17" col="24" terrain="1" road="59">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="17" col="25" terrain="1" road="187">
-    <unit id="38958" owner="1" flag="83" face="0" exp="144" ldr="1" bstr="5"/>
+    <unit id="38958" owner="1" flag="83" face="0" exp="400" ldr="1" bstr="5"/>
   </hex>
   <hex row="17" col="26" terrain="1" road="184">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="17" col="27" terrain="1" road="184">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" ldr="1" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" ldr="1" bstr="5" fearless="1"/>
   </hex>
   <hex row="17" col="28" road="17"/>
   <hex row="17" col="29" terrain="14" name="Acropolis"/>
@@ -846,28 +846,28 @@
   <hex row="18" col="15" terrain="9"/>
   <hex row="18" col="16" terrain="14"/>
   <hex row="18" col="18" terrain="1" road="26">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="18" col="19" terrain="11" road="187" name="Piraeus" owner="1" flag="82" victory="1">
-    <unit id="890" owner="1" flag="83" face="0" exp="44" bstr="1"/>
+    <unit id="890" owner="1" flag="83" face="0" exp="300" bstr="1"/>
   </hex>
   <hex row="18" col="20" terrain="1" road="177">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="18" col="22">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="18" col="23" terrain="1" road="43">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="18" col="24" terrain="1" road="187">
-    <unit id="38960" owner="1" flag="83" face="0" transport="38976" exp="144" str="5" ldr="1" bstr="5"/>
+    <unit id="38960" owner="1" flag="83" face="0" transport="38976" exp="400" str="5" ldr="1" bstr="5"/>
   </hex>
   <hex row="18" col="25" terrain="1" road="187">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" ldr="1" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" ldr="1" bstr="5" fearless="1"/>
   </hex>
   <hex row="18" col="26" terrain="11" road="187" name="Athens" owner="1" flag="82" victory="1">
-    <unit id="890" owner="1" flag="83" face="0" exp="44" bstr="1"/>
+    <unit id="890" owner="1" flag="83" face="0" exp="300" bstr="1"/>
   </hex>
   <hex row="18" col="27" terrain="1" road="163"/>
   <hex row="18" col="28" terrain="1" road="161"/>
@@ -895,7 +895,7 @@
   <hex row="19" col="8" terrain="9"/>
   <hex row="19" col="9" terrain="9"/>
   <hex row="19" col="12" terrain="12" road="136" name="Salamis" owner="1" flag="82" victory="1">
-    <unit id="890" owner="1" flag="83" face="0" exp="44" str="5" bstr="1"/>
+    <unit id="890" owner="1" flag="83" face="0" exp="300" str="5" bstr="1"/>
   </hex>
   <hex row="19" col="13" terrain="16" road="136"/>
   <hex row="19" col="14" terrain="9"/>
@@ -904,14 +904,14 @@
   <hex row="19" col="18" terrain="1" road="11"/>
   <hex row="19" col="19" terrain="1" road="131"/>
   <hex row="19" col="20" terrain="1" road="169">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="19" col="21" terrain="1" road="138"/>
   <hex row="19" col="22" road="50"/>
   <hex row="19" col="24" terrain="1" road="155"/>
   <hex row="19" col="25" terrain="1" road="131"/>
   <hex row="19" col="26" terrain="1" road="163">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="19" col="27" terrain="1"/>
   <hex row="19" col="28" terrain="1"/>
@@ -953,7 +953,7 @@
   <hex row="20" col="23" terrain="1" road="186"/>
   <hex row="20" col="24" terrain="1" road="57"/>
   <hex row="20" col="25" terrain="1" road="176">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="20" col="26" terrain="5"/>
   <hex row="20" col="27" terrain="5"/>
@@ -990,13 +990,13 @@
   <hex row="21" col="21" terrain="9"/>
   <hex row="21" col="22" terrain="1" road="11"/>
   <hex row="21" col="23" terrain="1" road="155">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="21" col="24" terrain="11" road="187" name="Kallithea" owner="1" flag="82" victory="1">
-    <unit id="890" owner="1" flag="83" face="0" exp="44" bstr="1"/>
+    <unit id="890" owner="1" flag="83" face="0" exp="300" bstr="1"/>
   </hex>
   <hex row="21" col="25" terrain="1" road="169">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="21" col="26" terrain="5"/>
   <hex row="21" col="27" terrain="5"/>
@@ -1036,7 +1036,7 @@
   <hex row="22" col="22" terrain="7"/>
   <hex row="22" col="23" terrain="1" road="19"/>
   <hex row="22" col="24" terrain="1" road="163">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="22" col="26" terrain="1" road="136"/>
   <hex row="22" col="27" terrain="5" road="144"/>
@@ -1078,12 +1078,12 @@
   <hex row="23" col="21" terrain="9"/>
   <hex row="23" col="22" terrain="7"/>
   <hex row="23" col="23" terrain="1" road="25" deploy="0">
-    <unit id="30339" owner="0" flag="40" face="0" transport="30602" exp="44" str="5" ldr="1" bstr="5"/>
+    <unit id="30339" owner="0" flag="40" face="0" transport="30602" exp="300" str="5" ldr="1" bstr="5"/>
   </hex>
   <hex row="23" col="25" terrain="1" road="58"/>
   <hex row="23" col="26" terrain="1" road="56"/>
   <hex row="23" col="27" terrain="1" road="185">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="23" col="28" terrain="5"/>
   <hex row="23" col="29" terrain="5"/>
@@ -1122,21 +1122,21 @@
   <hex row="24" col="19" terrain="9"/>
   <hex row="24" col="20" terrain="9"/>
   <hex row="24" col="21" terrain="9">
-    <unit id="25203" owner="0" flag="23" face="0" exp="44"/>
+    <unit id="25203" owner="0" flag="23" face="0" exp="300"/>
   </hex>
   <hex row="24" col="22" terrain="7" deploy="0">
-    <unit id="23835" owner="0" flag="23" face="0" exp="44" str="5" bstr="5"/>
+    <unit id="23835" owner="0" flag="23" face="0" exp="300" str="5" bstr="5"/>
   </hex>
   <hex row="24" col="23" terrain="1" road="27" deploy="0">
-    <unit id="23674" owner="0" flag="23" face="0" exp="44" ldr="1" bstr="5"/>
+    <unit id="23674" owner="0" flag="23" face="0" exp="300" ldr="1" bstr="5"/>
   </hex>
   <hex row="24" col="24" terrain="1" road="186"/>
   <hex row="24" col="25" terrain="1" road="187"/>
   <hex row="24" col="26" terrain="1" road="187">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" bstr="5" fearless="1"/>
   </hex>
   <hex row="24" col="27" terrain="11" road="187" name="Koropion" owner="1" flag="82" victory="1">
-    <unit id="890" owner="1" flag="83" face="0" exp="44" bstr="1"/>
+    <unit id="890" owner="1" flag="83" face="0" exp="300" bstr="1"/>
   </hex>
   <hex row="24" col="28" terrain="1" road="176"/>
   <hex row="24" col="29" terrain="16"/>
@@ -1175,23 +1175,23 @@
   <hex row="25" col="19" terrain="9"/>
   <hex row="25" col="20" terrain="9"/>
   <hex row="25" col="21" terrain="9">
-    <unit id="25203" owner="0" flag="23" face="0" exp="44"/>
+    <unit id="25203" owner="0" flag="23" face="0" exp="300"/>
   </hex>
   <hex row="25" col="22" terrain="7" deploy="0">
-    <unit id="24404" owner="0" flag="23" face="0" transport="24186" exp="44" str="5" bstr="5"/>
+    <unit id="24404" owner="0" flag="23" face="0" transport="24186" exp="300" str="5" bstr="5"/>
   </hex>
   <hex row="25" col="23" terrain="12" road="11" name="Glifadha" owner="0" flag="39" victory="0" deploy="0">
-    <unit id="22981" owner="0" flag="23" face="0" transport="24180" exp="44" str="5" bstr="5"/>
+    <unit id="22981" owner="0" flag="23" face="0" transport="24180" exp="300" str="5" bstr="5"/>
   </hex>
   <hex row="25" col="24" terrain="1" road="187" deploy="0">
-    <unit id="23674" owner="0" flag="23" face="0" exp="44" bstr="5"/>
+    <unit id="23674" owner="0" flag="23" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="25" col="25" terrain="1" road="171"/>
   <hex row="25" col="26" terrain="1" road="187">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" ldr="1" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" ldr="1" bstr="5" fearless="1"/>
   </hex>
   <hex row="25" col="27" terrain="1" road="163">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" ldr="1" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" ldr="1" bstr="5" fearless="1"/>
   </hex>
   <hex row="25" col="28" terrain="1" road="177"/>
   <hex row="25" col="30" terrain="16"/>
@@ -1230,11 +1230,11 @@
   <hex row="26" col="20" terrain="9"/>
   <hex row="26" col="21" terrain="9"/>
   <hex row="26" col="22" terrain="9">
-    <unit id="25371" owner="0" flag="23" face="0" exp="44"/>
+    <unit id="25371" owner="0" flag="23" face="0" exp="300"/>
   </hex>
   <hex row="26" col="23" terrain="9"/>
   <hex row="26" col="24" terrain="12" road="139" name="Voula" owner="0" flag="39" victory="0" deploy="0">
-    <unit id="22992" owner="0" flag="23" face="0" transport="24223" exp="44" bstr="5"/>
+    <unit id="22992" owner="0" flag="23" face="0" transport="24223" exp="300" bstr="5"/>
   </hex>
   <hex row="26" col="25" terrain="1" road="130"/>
   <hex row="26" col="26" road="171"/>
@@ -1440,7 +1440,7 @@
   <hex row="31" col="12" terrain="16" road="33"/>
   <hex row="31" col="13" terrain="7"/>
   <hex row="31" col="14" terrain="12" road="128" owner="1" flag="82" victory="1">
-    <unit id="38964" owner="1" flag="83" face="0" exp="44" str="12" ldr="1" bstr="5" fearless="1"/>
+    <unit id="38964" owner="1" flag="83" face="0" exp="300" str="12" ldr="1" bstr="5" fearless="1"/>
   </hex>
   <hex row="31" col="15" terrain="9"/>
   <hex row="31" col="16" terrain="9"/>
@@ -1535,7 +1535,7 @@
   <hex row="33" col="19" terrain="9"/>
   <hex row="33" col="20" terrain="9"/>
   <hex row="33" col="21" terrain="9" deploy="0">
-    <unit id="24864" owner="0" flag="23" face="0" exp="44" ldr="1" bstr="5"/>
+    <unit id="24864" owner="0" flag="23" face="0" exp="300" ldr="1" bstr="5"/>
   </hex>
   <hex row="33" col="22" terrain="9"/>
   <hex row="33" col="23" terrain="9"/>
@@ -1581,7 +1581,7 @@
   <hex row="34" col="20" terrain="9"/>
   <hex row="34" col="21" terrain="9" owner="0" flag="39"/>
   <hex row="34" col="22" terrain="9" deploy="0">
-    <unit id="24648" owner="0" flag="23" face="0" exp="44" bstr="5"/>
+    <unit id="24648" owner="0" flag="23" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="34" col="23" terrain="9"/>
   <hex row="34" col="24" terrain="9"/>

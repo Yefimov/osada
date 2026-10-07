@@ -6,7 +6,7 @@ import org.osada.save.CampaignRunMetadata
 
 /**
  * Assembles the Hero Desk's read model from the two sources §2 of
- * `docs/design/hero-desk-and-profile-archive.md` names: every campaign run's own current snapshot,
+ * `docs/heroes/hero-desk-and-archive.md` names: every campaign run's own current snapshot,
  * and the profile archive. Split from [HeroArchiveService] so the archive's LIFETIME (minting,
  * upserting, deleting) and its READ side stay separately testable and separately small.
  *

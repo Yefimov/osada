@@ -39,9 +39,10 @@ internal class UnitRenderer(
         // rather than over painted terrain.
         private const val RECESSED_ALPHA = 0.65
         private const val RECESSED_FILTER = "saturate(45%)"
+        private const val SEAT_GLYPH_FILL = 1.5
+        private const val SEAT_GLYPH_BOX = 24.0
         private const val SEAT_BADGE_PAD = 1.0
         private const val SEAT_BADGE_LINE = 1.5
-        private const val SEAT_DIGIT_DIVISOR = 3.0
         private const val FULL_TURN = 2.0 * kotlin.math.PI
     }
 
@@ -83,7 +84,7 @@ internal class UnitRenderer(
         val textOff = if (unit.strength < 10) 2.0 else 1.0
 
         drawStrengthBox(ctx, unit, side, isCore, boxX, boxY, boxW, boxH, textOff)
-        drawAmmoIndicator(ctx, x, y, unit, side)
+        drawAmmoIndicator(ctx, x, y, unit, side, boxX + boxW + 1.0)
         drawLeaderBadge(ctx, y, unit, side, boxX, boxW)
         drawSeatBadge(ctx, unit, boxX, boxY, boxH)
     }
@@ -116,7 +117,18 @@ internal class UnitRenderer(
         ctx.strokeStyle = "#e0b857"
         ctx.stroke()
         ctx.fillStyle = "#f6e9c3"
-        ctx.fillText("${owner.seat + 1}", cx - radius / SEAT_DIGIT_DIVISOR, boxY + STRENGTH_TEXT_Y_OFFSET)
+        val glyph = CoopSeatGlyphs.path2d(owner.symbol)
+        if (glyph != null) {
+            // The symbol's 24-unit box fills most of the disc: drawn, not typed, so it is the same
+            // shape on every device instead of whatever emoji font the browser happens to have.
+            val size = radius * SEAT_GLYPH_FILL
+            ctx.translate(cx - size / 2.0, cy - size / 2.0)
+            ctx.scale(size / SEAT_GLYPH_BOX, size / SEAT_GLYPH_BOX)
+            ctx.fill(glyph, "evenodd")
+        } else {
+            ctx.textAlign = "center"
+            ctx.fillText(owner.mark, cx, boxY + STRENGTH_TEXT_Y_OFFSET)
+        }
         ctx.restore()
     }
 
@@ -180,10 +192,14 @@ internal class UnitRenderer(
         y: Double,
         unit: GameUnit,
         side: Int,
+        rightOfStrengthX: Double,
     ) {
         if (unit.hasFired || !GameRules.unitUsesAmmo(unit) || side != rc.map?.currentPlayer?.side) return
         val img = if (unit.getAmmo() > 0) rc.fireImage else rc.noAmmoImage
-        ctx.drawImage(img, x - AMMO_ICON_X_OFFSET, y + 2.0 * rc.v - AMMO_ICON_Y_OFFSET)
+        // A cooperative seat badge sits left of the strength box, where this mark normally goes, so
+        // a commanded unit shows it to the right of the strength figure instead.
+        val iconX = if (CoopRuntime.governs(unit)) rightOfStrengthX else x - AMMO_ICON_X_OFFSET
+        ctx.drawImage(img, iconX, y + 2.0 * rc.v - AMMO_ICON_Y_OFFSET)
     }
 
     private fun drawLeaderBadge(

@@ -1,0 +1,438 @@
+/* Campaign operations map (ui/campaignmap) and the campaign screen's folded "Campaign path" block.
+ * A staff map: dark ruled table, paper operation cards, brass main line, grade-coloured branches. */
+
+.osada-cmap-backdrop {
+    --cmap-main: var(--osada-brass, #b48a3c);
+    --cmap-brilliant: #f0c94a;
+    --cmap-victory: #74b36d;
+    --cmap-tactical: #93a8bf;
+    --cmap-lose: #d0463f;
+    --cmap-choice: #e0bd6e;
+    --cmap-ink: var(--osada-paper-ink, #2b2317);
+    --cmap-line: #77705f;
+    position: fixed;
+    z-index: calc(var(--z-msg, 1000) - 2);
+    background: rgba(0, 0, 0, .74);
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+    overscroll-behavior: contain;
+    font-family: var(--osada-font-ui, sans-serif);
+    color: var(--osada-text, #e7e2d4);
+}
+
+.osada-cmap {
+    /* A flex item defaults to min-width: auto, which let the nowrap header widen the dialog past a phone. */
+    min-width: 0;
+    width: 1760px;
+    max-width: 100%;
+    height: 1080px;
+    max-height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    background: var(--osada-metal-900, #14161a);
+    border: 1px solid var(--cmap-main);
+    border-radius: 6px;
+    box-shadow: 0 10px 40px #000;
+    overflow: hidden;
+}
+
+/* ---- header ---- */
+.osada-cmap-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px 8px 16px;
+    border-bottom: 1px solid var(--cmap-line);
+    background: linear-gradient(var(--osada-metal-800, #1d2127), var(--osada-metal-900, #14161a));
+}
+.osada-cmap-heading { flex: 1; min-width: 0; }
+.osada-cmap-heading h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.osada-cmap-stats { color: var(--osada-text-dim, #a9a494); font-size: 13px; margin-top: 2px; }
+.osada-cmap-tools { display: flex; gap: 6px; flex: 0 0 auto; }
+.osada-cmap-tool {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    font: 18px/1 var(--osada-font-ui, sans-serif);
+    color: var(--osada-text, #e7e2d4);
+    background: var(--osada-metal-700, #2a2f38);
+    border: 1px solid var(--cmap-line);
+    border-radius: 3px;
+    cursor: pointer;
+}
+.osada-cmap-tool:hover { border-color: var(--cmap-main); background: #34302a; }
+.osada-cmap-tool--close { margin-left: 6px; }
+.osada-cmap-tool--legend { display: none; }
+.osada-cmap :focus-visible { outline: 2px solid #f7d889; outline-offset: 2px; }
+
+/* ---- body: map | panel ---- */
+.osada-cmap-body {
+    position: relative;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+}
+.osada-cmap-scroller {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    display: flex;
+    touch-action: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    background-color: #181b20;
+    background-image:
+        linear-gradient(rgba(180, 138, 60, .07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(180, 138, 60, .07) 1px, transparent 1px);
+    background-size: 44px 44px;
+}
+.osada-cmap-scroller:active { cursor: grabbing; }
+/* margin:auto centres a small route and collapses to 0 once it overflows, so nothing is clipped. */
+.osada-cmap-sizer { position: relative; flex: none; margin: auto; }
+.osada-cmap-surface { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.osada-cmap-loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 340px;
+    bottom: 0;
+    display: none;
+    padding-top: 30vh;
+    text-align: center;
+    color: var(--osada-text-dim, #a9a494);
+    pointer-events: none;
+}
+
+/* ---- edges ---- */
+.osada-cmap-edges { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.osada-cmap-edge { fill: none; stroke-width: 2.6; stroke-linecap: round; transition: opacity .2s; }
+.osada-cmap-edge--main { stroke: var(--cmap-main); }
+.osada-cmap-edge--brilliant { stroke: var(--cmap-brilliant); }
+.osada-cmap-edge--victory { stroke: var(--cmap-victory); }
+.osada-cmap-edge--tactical { stroke: var(--cmap-tactical); }
+.osada-cmap-edge--lose { stroke: var(--cmap-lose); stroke-dasharray: 7 5; }
+.osada-cmap-edge--choice { stroke: var(--cmap-choice); stroke-dasharray: 12 4 2 4; }
+.osada-cmap-arrow--main { fill: var(--cmap-main); }
+.osada-cmap-arrow--brilliant { fill: var(--cmap-brilliant); }
+.osada-cmap-arrow--victory { fill: var(--cmap-victory); }
+.osada-cmap-arrow--tactical { fill: var(--cmap-tactical); }
+.osada-cmap-arrow--lose { fill: var(--cmap-lose); }
+.osada-cmap-arrow--choice { fill: var(--cmap-choice); }
+.osada-cmap-surface--traced .osada-cmap-edge { opacity: .42; }
+.osada-cmap-surface--traced .osada-cmap-edge--travelled {
+    opacity: 1;
+    stroke-width: 5;
+    filter: drop-shadow(0 0 4px rgba(247, 216, 137, .55));
+}
+
+/* ---- edge labels ---- */
+.osada-cmap-label {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    max-width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 1px 8px;
+    font-size: 11px;
+    line-height: 16px;
+    border-radius: 9px;
+    border: 1px solid currentColor;
+    background: var(--osada-metal-800, #1d2127);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .6);
+    z-index: 1;
+}
+.osada-cmap-label--brilliant { color: var(--cmap-brilliant); }
+.osada-cmap-label--victory { color: var(--cmap-victory); }
+.osada-cmap-label--tactical { color: var(--cmap-tactical); }
+.osada-cmap-label--lose { color: #ef7a73; }
+.osada-cmap-label--choice { color: var(--cmap-choice); font-weight: 600; }
+/* A choice chip is a tag hung on its destination card, not a mark on a line. */
+.osada-cmap-label--tag { transform: none; max-width: 176px; border-radius: 2px; z-index: 3; }
+.osada-cmap-surface--traced .osada-cmap-label { opacity: .6; }
+.osada-cmap-surface--traced .osada-cmap-label--travelled { opacity: 1; }
+
+/* ---- operation cards ---- */
+.osada-cmap-node {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    padding: 5px 10px 6px;
+    text-align: left;
+    font: 13px/1.2 var(--osada-font-ui, sans-serif);
+    color: var(--cmap-ink);
+    background: linear-gradient(#e4d8b8, #d2c29b);
+    border: 1px solid #8a7550;
+    border-left: 4px solid #8a7550;
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .55);
+    cursor: pointer;
+    z-index: 2;
+    transition: transform .12s, box-shadow .12s, opacity .2s;
+}
+.osada-cmap-node:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0, 0, 0, .7); }
+.osada-cmap-node-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 11px;
+    color: #6b5b3e;
+    font-variant-numeric: tabular-nums;
+}
+.osada-cmap-node-marks { color: var(--osada-red-dark, #7d1418); font-weight: 700; letter-spacing: .1em; }
+.osada-cmap-node-title {
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.osada-cmap-surface--traced .osada-cmap-node:not(.osada-cmap-node--played):not(.osada-cmap-node--current) { opacity: .78; }
+.osada-cmap-node--brilliant { border-left-color: #b58a12; }
+.osada-cmap-node--victory { border-left-color: #3f7a3a; }
+.osada-cmap-node--tactical { border-left-color: #4d6680; }
+.osada-cmap-node--lose { border-left-color: var(--osada-red, #a51e22); }
+.osada-cmap-node--defeated { background: linear-gradient(#e6c9bd, #d4ad9f); }
+.osada-cmap-stamp {
+    position: absolute;
+    top: -9px;
+    right: -6px;
+    padding: 0 5px;
+    font-size: 10px;
+    line-height: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    background: #efe5cb;
+    border: 1.5px solid currentColor;
+    border-radius: 2px;
+    transform: rotate(-5deg);
+}
+.osada-cmap-stamp--brilliant { color: #8f6a00; }
+.osada-cmap-stamp--victory { color: #2f6a2b; }
+.osada-cmap-stamp--tactical { color: #3c5672; }
+.osada-cmap-stamp--lose { color: var(--osada-red, #a51e22); }
+.osada-cmap-node--current { animation: osada-cmap-pulse 1.8s ease-out infinite; }
+.osada-cmap-here {
+    position: absolute;
+    top: -19px;
+    left: 6px;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #fff;
+    background: var(--osada-red, #a51e22);
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .6);
+}
+@keyframes osada-cmap-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(208, 52, 44, .75), 0 2px 6px rgba(0, 0, 0, .55); }
+    70% { box-shadow: 0 0 0 12px rgba(208, 52, 44, 0), 0 2px 6px rgba(0, 0, 0, .55); }
+    100% { box-shadow: 0 0 0 0 rgba(208, 52, 44, 0), 0 2px 6px rgba(0, 0, 0, .55); }
+}
+.osada-cmap-node.osada-cmap-selected { box-shadow: 0 0 0 3px #f7d889, 0 4px 12px rgba(0, 0, 0, .75); z-index: 3; }
+
+/* ---- campaign endings ---- */
+.osada-cmap-finale {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--cmap-brilliant);
+    font: 11px/1.1 var(--osada-font-ui, sans-serif);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    cursor: pointer;
+    z-index: 2;
+}
+.osada-cmap-medal {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #3a2a05;
+    background: radial-gradient(circle at 35% 30%, #fff1b0, #e8bd3c 55%, #a37a14);
+    border: 2px solid #7a5a10;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .6);
+}
+.osada-cmap-surface--traced .osada-cmap-finale:not(.osada-cmap-finale--reached) { opacity: .6; }
+.osada-cmap-finale--reached .osada-cmap-medal { box-shadow: 0 0 0 4px rgba(247, 216, 137, .35), 0 0 16px rgba(247, 216, 137, .8); }
+.osada-cmap-finale.osada-cmap-selected .osada-cmap-medal { box-shadow: 0 0 0 3px #f7d889; }
+
+/* ---- side panel ---- */
+.osada-cmap-panel {
+    min-height: 0;
+    overflow-y: auto;
+    padding: 12px 16px 16px;
+    border-left: 1px solid var(--cmap-line);
+    background: var(--osada-metal-800, #1d2127);
+    font-size: 13px;
+    line-height: 1.45;
+}
+.osada-cmap-panel-back {
+    display: none;
+    margin-bottom: 6px;
+    padding: 2px 0;
+    font: inherit;
+    color: var(--osada-text-dim, #a9a494);
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+.osada-cmap-panel-back:hover { color: var(--cmap-main); }
+.osada-cmap--selected .osada-cmap-panel-back { display: inline-block; }
+.osada-cmap-panel-title { margin: 0; font-size: 17px; font-weight: 600; }
+.osada-cmap-panel-sub { margin: 2px 0 0; color: var(--osada-text-dim, #a9a494); }
+.osada-cmap-panel-section {
+    margin: 14px 0 6px;
+    padding-bottom: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--cmap-main);
+    border-bottom: 1px solid var(--osada-metal-600, #3a414c);
+}
+.osada-cmap-status { margin: 8px 0 0; color: #f7d889; font-weight: 600; }
+.osada-cmap-summary { margin: 8px 0 0; color: #cfc8b6; white-space: pre-line; }
+.osada-cmap-note { margin: 6px 0; font-size: 12px; color: var(--osada-text-dim, #a9a494); }
+.osada-cmap-results, .osada-cmap-choices, .osada-cmap-legend { list-style: none; margin: 0; padding: 0; }
+.osada-cmap-result {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 8px;
+    padding: 5px 0 5px 10px;
+    border-left: 3px solid var(--cmap-main);
+    margin-bottom: 4px;
+}
+.osada-cmap-result--brilliant { border-left-color: var(--cmap-brilliant); }
+.osada-cmap-result--victory { border-left-color: var(--cmap-victory); }
+.osada-cmap-result--tactical { border-left-color: var(--cmap-tactical); }
+.osada-cmap-result--lose { border-left-color: var(--cmap-lose); }
+.osada-cmap-result-grade { font-weight: 600; }
+.osada-cmap-result-prestige { color: var(--osada-text-dim, #a9a494); font-size: 12px; font-variant-numeric: tabular-nums; }
+.osada-cmap-result-target { grid-column: 1 / -1; color: #cfc8b6; }
+.osada-cmap-choice { padding: 6px 0 6px 10px; border-left: 3px dashed var(--cmap-choice); margin-bottom: 6px; }
+.osada-cmap-choice-label { display: block; font-weight: 600; color: var(--cmap-choice); }
+.osada-cmap-choice-hint { margin: 3px 0 0; font-size: 12px; color: #cfc8b6; }
+.osada-cmap-link {
+    padding: 0;
+    font: inherit;
+    text-align: left;
+    color: #ecc874;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    text-decoration: underline dotted rgba(236, 200, 116, .6);
+    text-underline-offset: 3px;
+}
+.osada-cmap-link:hover { color: #fff0bf; }
+.osada-cmap-legend li { display: flex; align-items: center; gap: 10px; padding: 3px 0; }
+.osada-cmap-swatch { flex: 0 0 30px; height: 0; border-top: 3px solid var(--cmap-main); }
+.osada-cmap-swatch--brilliant { border-top-color: var(--cmap-brilliant); }
+.osada-cmap-swatch--victory { border-top-color: var(--cmap-victory); }
+.osada-cmap-swatch--tactical { border-top-color: var(--cmap-tactical); }
+.osada-cmap-swatch--lose { border-top: 3px dashed var(--cmap-lose); }
+.osada-cmap-swatch--choice { border-top: 3px dashed var(--cmap-choice); }
+.osada-cmap-legend-mark { flex: 0 0 30px; text-align: center; font-weight: 700; }
+.osada-cmap-legend-mark--defeat { color: var(--cmap-lose); }
+.osada-cmap-legend-mark--finale { color: var(--cmap-brilliant); }
+.osada-cmap-legend-mark--played { color: var(--cmap-victory); }
+.osada-cmap-legend-mark--current { color: var(--osada-red-bright, #d0342c); }
+
+/* ---- small screens (osada-cmap--compact, set from the measured viewport): the panel becomes a
+ * sheet -- from the right on a phone held sideways, from the bottom when upright. ---- */
+.osada-cmap--compact { width: 100%; height: 100%; border-radius: 0; border-width: 0; }
+.osada-cmap-backdrop--compact { padding: 0; }
+.osada-cmap--compact .osada-cmap-header { padding: 4px 6px 4px 12px; gap: 8px; }
+.osada-cmap--compact .osada-cmap-heading h2 { font-size: 15px; }
+.osada-cmap--compact .osada-cmap-stats { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.osada-cmap--compact .osada-cmap-tool { min-width: 40px; height: 40px; }
+.osada-cmap--compact .osada-cmap-tool--zoom_in, .osada-cmap--compact .osada-cmap-tool--zoom_out { display: none; }
+.osada-cmap--compact .osada-cmap-tool--legend { display: inline-block; }
+.osada-cmap--compact .osada-cmap-body { grid-template-columns: minmax(0, 1fr); }
+.osada-cmap--compact .osada-cmap-loading { right: 0; }
+.osada-cmap--compact .osada-cmap-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(340px, 86%);
+    border-left: 1px solid var(--cmap-main);
+    box-shadow: -6px 0 24px rgba(0, 0, 0, .7);
+    padding-right: calc(16px + env(safe-area-inset-right, 0px));
+    transform: translateX(105%);
+    /* Hidden sheets also leave the Tab order; visibility flips after the slide-out ends. */
+    visibility: hidden;
+    transition: transform .2s ease-out, visibility 0s linear .2s;
+    z-index: 5;
+}
+.osada-cmap--compact.osada-cmap--upright .osada-cmap-panel {
+    top: auto;
+    left: 0;
+    width: auto;
+    max-height: 55%;
+    border-left: 0;
+    border-top: 1px solid var(--cmap-main);
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 -6px 24px rgba(0, 0, 0, .7);
+    padding-right: 16px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    transform: translateY(105%);
+}
+.osada-cmap--compact.osada-cmap--selected .osada-cmap-panel,
+.osada-cmap--compact.osada-cmap--sheet .osada-cmap-panel { transform: none; visibility: visible; transition: transform .2s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+    .osada-cmap-node--current { animation: none; box-shadow: 0 0 0 3px var(--osada-red-bright, #d0342c); }
+    .osada-cmap-node, .osada-cmap-panel { transition: none; }
+}
+
+/* ---- campaign screen: the folded "Campaign path" block ---- */
+#smCampPath .osadaCollapseSummary { display: flex; align-items: center; gap: 8px; }
+#smCampPath .osadaCollapseLabel { flex: 1; }
+.osadaCollapseExpand {
+    flex: 0 0 auto;
+    min-width: 28px;
+    height: 24px;
+    padding: 0 6px;
+    font: 15px/1 var(--osada-font-ui, sans-serif);
+    color: var(--osada-brass, #b48a3c);
+    background: var(--osada-metal-700, #2a2f38);
+    border: 1px solid var(--osada-metal-600, #3a414c);
+    border-radius: 3px;
+    cursor: pointer;
+}
+.osadaCollapseExpand:hover { color: #f7d889; border-color: var(--osada-brass, #b48a3c); }
+#smCampPathBody .osada-cpath-stats { margin: 0 0 4px; color: var(--osada-text-dim, #a9a494); }
+#smCampPathBody .osada-cmap-panel-section { margin: 8px 0 3px; }
+#smCampPathBody .osada-cpath-list { margin: 0 0 4px; padding-left: 16px; }
+#smCampPathBody .osada-cpath-list li { margin: 2px 0; }
+#smCampPathBody > .osada-cmap-link { margin-top: 6px; }

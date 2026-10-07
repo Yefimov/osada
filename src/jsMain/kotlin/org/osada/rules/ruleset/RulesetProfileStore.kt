@@ -1,6 +1,6 @@
 package org.osada.rules.ruleset
 
-import kotlinx.browser.localStorage
+import org.osada.storage.localStorage
 
 /**
  * The one versioned browser-local profile library
@@ -20,7 +20,7 @@ object RulesetProfileStore {
     /**
      * The three entries that always exist, in the picker's documented order (§1).
      *
-     * Open General Fidelity joined them on 2026-08-19 (`docs/og-fidelity-plan.md` D.1/D.3). It sits
+     * Open General Fidelity joined them on 2026-08-19. It sits
      * last of the three because it is the most opinionated: the first entry follows the content,
      * the second is OSADA's baseline, and only the third asserts a whole foreign ruleset.
      */

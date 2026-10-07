@@ -2,6 +2,7 @@ package org.osada.model
 
 import org.osada.GameHolder
 import org.osada.TerrainType
+import org.osada.rules.AirfieldOwnership
 import org.osada.rules.CarrierDeploy
 import org.osada.rules.GameRules
 import org.osada.rules.HexGeometry
@@ -63,7 +64,7 @@ private fun GameMap.isOwnedSupplyHex(
     side: Int,
 ): Boolean {
     // OG's "ports do not deploy naval units", authored by 48 scenarios and read by nothing until
-    // 2026-08-28 (`docs/og-fidelity-plan.md` §AD). A port that does not deploy also opens no ring,
+    // 2026-08-28. A port that does not deploy also opens no ring,
     // which is the whole of what this function decides. Null (unreadable source) stays permitted.
     if (GameHolder.instance?.scenario?.portsNoNavalDeploy == true) return false
     return hex.isWorking(TerrainType.PORT.value) && hex.owner != -1 && getPlayer(hex.owner).side == side
@@ -78,9 +79,8 @@ fun GameMap.getDeployHexes(side: Int): Array<Cell> = deployZone(side).map { Cell
  * rule the overlay lit hexes that then silently refused the unit — the defect [deployZone]'s own
  * header records, reported on `Falciu 1`.
  *
- *  - a FRIENDLY airfield, for an aircraft. `hex.owner` is a player id and -1 means unowned, and
- *    `getPlayer(-1)` falls back to player 0, so -1 must be excluded explicitly or an unowned
- *    airfield silently reads as player 0's.
+ *  - a FRIENDLY airfield, for an aircraft: any hex of a field whose flag is ours, not only the
+ *    flagged hex ([friendlyAirfields], [AirfieldOwnership.servesSide]).
  *  - a friendly CARRIER, for an aircraft carrying OG's `Carrier Deploy` (`rules/CarrierDeploy`).
  */
 fun GameMap.isOutOfZoneDeployTarget(
@@ -88,13 +88,14 @@ fun GameMap.isOutOfZoneDeployTarget(
     row: Int,
     col: Int,
 ): Boolean {
-    val hex = map?.getOrNull(row)?.getOrNull(col) ?: return false
+    if (map?.getOrNull(row)?.getOrNull(col) == null) return false
     val side = currentPlayer?.side
+    // Read through the cached list: the renderer asks this per hex per frame, and the field's
+    // ownership is a flood fill.
     val friendlyAirfield =
         GameRules.isAir(unit) &&
-            hex.terrain == TerrainType.AIRFIELD.value &&
-            hex.owner != -1 &&
-            getPlayer(hex.owner).side == side
+            side != null &&
+            friendlyAirfields(side).any { it.row == row && it.col == col }
     return friendlyAirfield || CarrierDeploy.permits(this, unit, row, col)
 }
 
@@ -108,8 +109,9 @@ fun GameMap.isInDeployZone(
 ): Boolean = (row * cols + col) in deployZone(side)
 
 /**
- * Every airfield [side] holds, as deploy cells. An airfield is friendly by its owner's side, with
- * -1 (unowned) excluded explicitly for the reason [isOutOfZoneDeployTarget] gives.
+ * Every airfield hex [side] holds, as deploy cells. A hex is friendly by its owner's side, and an
+ * unowned hex of a multi-hex field by the owner of the field's flagged hex
+ * ([AirfieldOwnership.servesSide]) -- one flag speaks for the whole runway.
  */
 internal fun GameMap.friendlyAirfields(side: Int): List<Cell> =
     friendlyAirfieldCache.getOrPut(side) {
@@ -117,7 +119,7 @@ internal fun GameMap.friendlyAirfields(side: Int): List<Cell> =
         val cells = mutableListOf<Cell>()
         grid.forEachIndexed { r, row ->
             row.forEachIndexed { c, hex ->
-                if (hex.terrain == TerrainType.AIRFIELD.value && hex.owner != -1 && getPlayer(hex.owner).side == side) {
+                if (hex.terrain == TerrainType.AIRFIELD.value && AirfieldOwnership.servesSide(this, r, c, side)) {
                     cells += Cell(r, c)
                 }
             }

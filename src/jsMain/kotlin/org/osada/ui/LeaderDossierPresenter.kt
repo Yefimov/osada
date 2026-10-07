@@ -29,7 +29,7 @@ internal object LeaderDossierPresenter {
     fun openForHero(heroId: HeroId) = HeroCampaign.dossier(heroId)?.let { show(it) }
 
     /**
-     * Source-neutral entry point (`docs/design/hero-desk-and-profile-archive.md` §6): opens the
+     * Source-neutral entry point (`docs/heroes/hero-desk-and-archive.md` §6): opens the
      * SAME presentation for a view assembled from an archived roster as for a live one. Live and
      * archived records reach this through one assembler, so parity is structural rather than
      * maintained by hand.

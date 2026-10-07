@@ -18,8 +18,8 @@ import org.osada.rules.ruleset.RuleKey
  * Counterbattery ability, so they will fire to enemy artillery units in range attacking friendly
  * units, once per turn."*
  *
- * **This is an optional rule in its own right, and `docs/og-fidelity-plan.md` §C had it filed in
- * the wrong place.** That table listed "counterbattery" as one item inside `extended_naval_rules`,
+ * **This is an optional rule in its own right, once filed in the wrong place.** An early table
+ * listed "counterbattery" as one item inside `extended_naval_rules`,
  * quoting OG's §9.6. §9.6 is four bullets — ships return fire to artillery and forts, ships attack
  * submarines only at range 1, destroyers escort naval transports, submarines need line of fire —
  * and counterbattery is not among them. It is §9.4, it is about land artillery, and it needs its own
@@ -29,8 +29,8 @@ import org.osada.rules.ruleset.RuleKey
  * ### Shape: a reaction, modelled on [AAInterception], not on support fire
  *
  * The two mechanics have the same player-facing problem — a formation loses strength in a combat
- * its owner did not order — so this follows every constraint `DEFERRED.md` §1.1 already imposed on
- * that one:
+ * its owner did not order — so this follows every constraint
+ * `docs/design/action-affordances-and-objectives.md` §1.1 already imposed on that one:
  *
  *  - **one-sided**: the artillery being counter-batteried does not shoot back, exactly as an
  *    intercepted aircraft cannot shoot at the gun;

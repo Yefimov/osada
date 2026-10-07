@@ -11,7 +11,7 @@ import org.osada.rules.Attachments
 import org.w3c.dom.HTMLElement
 
 /**
- * The attachment picker (DEFERRED.md §1.4, `docs/design/attachments.md` §5).
+ * The attachment picker (`docs/design/attachments.md` §5).
  *
  * **Two slot cards over a grid of choices.** The `MAX_PER_UNIT` cap is the structure of the dialog,
  * not a rule stated in prose: the player sees two slots, filled or empty, before seeing anything
@@ -20,7 +20,7 @@ import org.w3c.dom.HTMLElement
  *
  * **Opened from the equipment window only** ([EquipmentUnitStrip]), never from the in-battle unit
  * action strip. OG allows attachment changes at initial HQ only, never during an ordinary scenario
- * turn (DEFERRED.md §1.18); the equipment window is where buying and upgrading already happen, and
+ * turn (`docs/design/attachments.md`); the equipment window is where buying and upgrading already happen, and
  * its unit strip is the one surface that carries a real owned [GameUnit] rather than an equipment
  * TYPE — which is what §7.22 believed the window lacked.
  *
@@ -38,7 +38,7 @@ import org.w3c.dom.HTMLElement
  *
  * **Attachments bought on an earlier visit are informational.** Removing one is a real OG
  * operation, but the refund rate is not documented anywhere located so far, and inventing an
- * economic rule is worse than offering no button (DEFERRED.md §1.18).
+ * economic rule is worse than offering no button (`docs/design/attachments.md`).
  */
 internal object AttachmentPickerPresenter {
     private const val BOX_ID = "uiAttachmentBox"
@@ -108,7 +108,7 @@ internal object AttachmentPickerPresenter {
     }
 
     /** Whether the picker is currently on screen. Read by [MainMenuButtonHandler.handleGlobalEscape],
-     *  which has to close THIS before `#equipment` underneath it -- see DEFERRED.md §4.13. Presence
+     *  which has to close THIS before `#equipment` underneath it (the ordered modal stack). Presence
      *  in the DOM is the whole state: this dialog is created on open and removed on close, never
      *  hidden. */
     fun isOpen(): Boolean = byId(BOX_ID) != null
@@ -217,6 +217,12 @@ internal object AttachmentPickerPresenter {
             when (slotNumber) {
                 Attachments.SLOT_BRIDGING -> I18n.t("attachments.grant.bridging")
                 Attachments.SLOT_BUNKER_BUSTER -> I18n.t("attachments.grant.bunker_buster")
+                // A count of turns taken off, floored at one (`rules/FastBuilder`) -- not a stat.
+                Attachments.SLOT_FAST_BUILDER ->
+                    I18n.t(
+                        "attachments.grant.fast_builder",
+                        mapOf("turns" to Attachments.previewBonus(unit, slotNumber)),
+                    )
                 else -> "+${Attachments.previewBonus(unit, slotNumber)} ${attachmentBonusStatName(slotNumber)}"
             }
         val penalty = addTag(parent, "div")
@@ -265,7 +271,7 @@ internal object AttachmentPickerPresenter {
         val price = addTag(tile, "div")
         price.className = "osada-atp__cost"
         // A null cost means the slot could not be priced at all -- never render that as "0",
-        // which reads as "free" rather than as "unavailable" (DEFERRED.md §4.10).
+        // which reads as "free" rather than as "unavailable".
         price.textContent =
             if (cost == null) {
                 I18n.t("attachments.cost.unavailable")

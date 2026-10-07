@@ -20,7 +20,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Shell craters — **OSADA's own rule** (`rules/Craters`, `docs/og-fidelity-plan.md` §S), behind
+ * Shell craters — **OSADA's own rule** (`rules/Craters`), behind
  * `RuleKey.CRATERS` and deliberately off in Open General Fidelity.
  *
  * The two claims worth defending are the two that make it safe: a crater is a FLOOR under the

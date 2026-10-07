@@ -23,6 +23,8 @@ fun GameMap.delCurrentUnit() {
     // formation that is no longer selected (OG 9.2, `model/BarrageOperations`).
     uiSettings.barrageMode = false
     clearBarrageTargeting()
+    // The same for a hangar take-off being chosen: its offered hexes were just cleared above.
+    hangarLaunch = null
 }
 
 /**
@@ -65,9 +67,9 @@ fun GameMap.delAttackSel() {
 fun GameMap.setMoveRange(unit: GameUnit) {
     delMoveSel()
     val range = GameRules.getMoveRange(this, unit)
-    // AA threat overlay (DEFERRED.md §1.1): only meaningful for the aircraft that would actually
-    // be intercepted, and only ever built from SPOTTED AA -- hidden AA must never be drawn, or the
-    // ambush the mechanic depends on is gone.
+    // AA threat overlay (`docs/design/action-affordances-and-objectives.md` §1.1): only meaningful
+    // for the aircraft that would actually be intercepted, and only ever built from SPOTTED AA -- hidden AA must never
+    // be drawn, or the ambush the mechanic depends on is gone.
     val threatSide = currentPlayer?.side
     val threatened =
         if (UnitPredicates.isAir(unit) && threatSide != null) {

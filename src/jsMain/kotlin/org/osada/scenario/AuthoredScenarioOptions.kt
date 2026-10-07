@@ -10,7 +10,7 @@ import kotlin.js.json
  *
  * [read] and [write] are a pair on purpose — the table below is the ONLY place an attribute name
  * and its field are associated, so the XML parser, the save writer and the save reader cannot
- * drift apart. That drift is exactly what `docs/og-import-rules-backlog.md` recorded: the loader
+ * drift apart. That drift is exactly what `docs/og/import-rules-backlog.md` recorded: the loader
  * knew 24 switches and the save file knew one of them.
  */
 internal class AuthoredSwitch(
@@ -68,7 +68,7 @@ internal object AuthoredScenarioOptions {
             AuthoredSwitch("airzoc", { it.airZoc }, { s, v -> s.airZoc = v }),
             AuthoredSwitch("airmissions", { it.airMissions }, { s, v -> s.airMissions = v }),
             AuthoredSwitch("extnaval", { it.extendedNaval }, { s, v -> s.extendedNaval = v }),
-            // Deployed 2026-08-28, each WITH its reader (`docs/og-fidelity-plan.md` §AD).
+            // Deployed 2026-08-28, each WITH its reader.
             // `add_scenario_options.py`'s standing policy is that an attribute nothing reads is a
             // promise nothing keeps, so these arrived with the rules that consult them.
             AuthoredSwitch("airintercept", { it.airIntercept }, { s, v -> s.airIntercept = v }),

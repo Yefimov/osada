@@ -8,7 +8,7 @@ import org.osada.i18n.I18n
 
 /**
  * Composes [HeroBiographyFacts] into the dossier's `Personal record` block — the biography design's
- * §13.1, built on `docs/design/hero-presentation.md` §2.3b's original two-sentence renderer.
+ * §13.1, built on `docs/heroes/README.md` §3.2's original two-sentence renderer.
  *
  * ## Two paths, and why the old one survives
  *

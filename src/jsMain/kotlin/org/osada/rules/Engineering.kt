@@ -8,6 +8,7 @@ import org.osada.model.ATTR_MASK_CAN_BLOW
 import org.osada.model.EfileConfig
 import org.osada.model.GameUnit
 import org.osada.model.Hex
+import org.osada.model.SapperWorks
 import org.osada.model.getPlayers
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
@@ -18,8 +19,8 @@ import org.osada.rules.ruleset.RuleKey
  *
  * ### Why this exists at all, given it was on nobody's list
  *
- * `docs/og-fidelity-plan.md` §C lists the Open General systems OSADA lacks. It names rail, air
- * missions, carrier hangars, minefields and extended naval rules. **It does not name this one**, and
+ * The early list of Open General systems OSADA lacked named rail, air missions, carrier hangars,
+ * minefields and extended naval rules. **It did not name this one**, and
  * neither does the profile's own player-facing gap list, so a whole optional rule with eight
  * sub-sections was invisible to both. Its two abilities appeared in the equipment card as muted
  * "decoded, not executed" badges — `Build/Repair` on 1,298 shipped records and `Can Blow` on 5,047 —
@@ -93,7 +94,7 @@ internal object Engineering {
      * So with the key on, a sapper that has MOVED may still begin: what it must still have is its
      * SHOT. `eqp-atomic` and `eqp-basekorp` set it, `eqp-lxf` does not, and an efile with no
      * `equip.cfg` at all is silent — which reads as the strict rule, per
-     * `docs/design/efile-config.md` §2 trap 4 and for the same reason `build_terr_ex` does.
+     * `docs/design/efile-driven-rules.md` §1.2 item 4 and for the same reason `build_terr_ex` does.
      *
      * The resupply flag stays disqualifying under both readings: OG's relaxation names movement,
      * and a formation that has taken on ammunition this turn has plainly done an action.
@@ -147,9 +148,9 @@ internal object Engineering {
      * Whether [side] should see a construction mark on [hex] — its own unfinished job.
      *
      * **Only the paying side's own work is drawn.** An enemy site is not shown, for the reason
-     * `DEFERRED.md` §1.1 gives about hidden AA and undetected minefields: the map must not reveal
-     * something the fog has not. A job on a hex whose builder is unrecorded (a save older than the
-     * builder field) falls back to the side that was paying, which is all such a save knows.
+     * `docs/design/action-affordances-and-objectives.md` §1.1 gives about hidden AA and undetected
+     * minefields: the map must not reveal something the fog has not. A job on a hex whose builder is unrecorded (a save
+     * older than the builder field) falls back to the side that was paying, which is all such a save knows.
      */
     fun visibleSiteFor(
         hex: Hex,
@@ -223,13 +224,16 @@ internal object Engineering {
         side: Int,
         work: EngineeringWork,
         owner: FacilityOwner,
+        turns: Int = work.turnsFor(hex),
     ) {
-        if (work.turnsFor(hex) == 0) {
+        if (turns == 0) {
             complete(hex, work, owner)
             return
         }
         hex.construction = work.ordinal
-        hex.constructionTurns = work.turnsFor(hex)
+        // [turns] is the builder's duration (`turnsForBuilder`, Fast Builder), fixed when the job
+        // starts; a second sapper taking over a paused site inherits the countdown as it stands.
+        hex.constructionTurns = turns
         hex.constructionSide = side
         // The BUILDER, not just their side: it decides whose turn end advances this job and whose
         // flag the finished facility flies. `Hex.constructionPlayer` records what storing only the
@@ -353,19 +357,29 @@ internal object Engineering {
         when (work) {
             EngineeringWork.BRIDGE -> {
                 hex.road = ALL_DIRECTIONS_ROAD
+                hex.sapperWorks = hex.sapperWorks or SapperWorks.BRIDGE
                 // A crossing built where one was blown SPENDS that record: the gap is closed, so
                 // there is nothing destroyed left for Repair to put back. Leaving it set offered
                 // Repair on the new bridge and would have replaced its full mask with the old
                 // partial one.
                 hex.blownRoad = 0
             }
-            EngineeringWork.FORTIFICATION -> raiseTerrain(hex, TerrainType.FORTIFICATION.value, owner)
+            EngineeringWork.FORTIFICATION -> {
+                raiseTerrain(hex, TerrainType.FORTIFICATION.value, owner)
+                hex.sapperWorks = hex.sapperWorks or SapperWorks.FORTIFICATION
+            }
             EngineeringWork.AIRFIELD -> raiseTerrain(hex, TerrainType.AIRFIELD.value, owner)
-            EngineeringWork.PORT -> raiseTerrain(hex, TerrainType.PORT.value, owner)
+            EngineeringWork.PORT -> {
+                raiseTerrain(hex, TerrainType.PORT.value, owner)
+                hex.sapperWorks = hex.sapperWorks or SapperWorks.PORT
+            }
             // §9.3.6. A station is a FEATURE of a rail hex, not a terrain that replaces it: the
             // track has to still be there afterwards, so this sets the flag and leaves the terrain
             // alone -- unlike the three facilities above, which raise a new terrain type.
-            EngineeringWork.STATION -> hex.station = true
+            EngineeringWork.STATION -> {
+                hex.station = true
+                hex.sapperWorks = hex.sapperWorks or SapperWorks.STATION
+            }
             EngineeringWork.BLOW_BRIDGE -> {
                 // Recorded BEFORE it is cleared, so Repair restores the mask this crossing
                 // actually had rather than inventing a full one.

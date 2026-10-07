@@ -21,7 +21,7 @@ import org.w3c.dom.HTMLElement
  * This is the Phase 3 presentation — a functional two-choice box, not yet the styled promotion
  * card a later UI pass may give it.
  *
- * **Styling is `.osada-hpp-*`, not `.smallButton` (DEFERRED.md §4.12).** `.smallButton` sets
+ * **Styling is `.osada-hpp-*`, not `.smallButton`.** `.smallButton` sets
  * `font-family: osada-menu`, an ICON font, so every choice's real words drew as unrelated glyphs —
  * exactly the trap `AttachmentPickerPresenter`'s own doc comment warns about, because that picker's
  * DOM shape was originally copied from this file. Also dropped for the same reason: the hardcoded
@@ -29,7 +29,7 @@ import org.w3c.dom.HTMLElement
  * `makeVisible()` (sets `display: inline`, discarding this dialog's centring transform — a freshly
  * created `div` is already visible and needs no help).
  *
- * **One at a time (DEFERRED.md §4.17).** Two promotions can resolve from a single combat.
+ * **One at a time.** Two promotions can resolve from a single combat.
  * [present] used to build one `div` per announcement, all carrying the same element id and all
  * stacked at the same centring transform; [queue] now holds the rest and [show] is re-entered when
  * a choice is taken, so exactly one dialog owns [BOX_ID] at any moment. That also makes

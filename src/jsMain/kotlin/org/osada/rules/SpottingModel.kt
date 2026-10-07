@@ -7,8 +7,8 @@ import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 
 /**
- * The two Open General spotting rules OSADA's fog does not execute
- * (`docs/og-fidelity-plan.md` B.4 and B.5), behind `spotting_memory` and `installation_spotting`.
+ * The two Open General spotting rules OSADA's fog does not execute,
+ * behind `spotting_memory` and `installation_spotting`.
  *
  * ### Why these are two keys and two layers, not one
  *

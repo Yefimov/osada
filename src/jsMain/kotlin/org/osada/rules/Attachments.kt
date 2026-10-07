@@ -12,7 +12,7 @@ import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 
 /**
- * Attachments (DEFERRED.md §1.4, `docs/design/attachments.md`): per-efile purchasable per-unit
+ * Attachments (`docs/design/attachments.md`): per-efile purchasable per-unit
  * upgrades, gated by `attach_on` (default off — 14 of 22 campaigns never see this at all).
  *
  * A **pure query layer over `CoreFormation.attachmentIds`**, never a stat-mutation one:
@@ -28,7 +28,10 @@ import org.osada.rules.ruleset.RuleKey
  *
  * Attachments arrive from two places, and [fittedSlots] is the union every read site asks:
  *
- * * **PURCHASED**, in `CoreFormation.attachmentIds`. Only a core formation can buy one (§3.2).
+ * * **PURCHASED**, in `CoreFormation.attachmentIds` in a campaign (only a core formation can buy
+ *   one, §3.2), or in [GameUnit.purchasedAttachmentIds] for any other unit -- every unit of a
+ *   standalone scenario, and a borrowed or non-roster unit in a campaign -- which has no roster
+ *   record to carry a purchase between battles.
  * * **AUTHORED**, in [GameUnit.authoredAttachmentIds] — `.xscn` unit `@40`/`@41`, on **12,555
  *   corpus records**. These are stored on the UNIT and not on the formation, because most of the
  *   formations that carry one have no `CoreFormation`: an auxiliary or scenario-only unit never
@@ -50,7 +53,7 @@ import org.osada.rules.ruleset.RuleKey
  *
  * ### The lifetime question, and what shipping this decides
  *
- * `docs/og-import-rules-backlog.md` §7 names it: does an authored attachment on a CORE formation
+ * `docs/og/import-rules-backlog.md` §7 names it: does an authored attachment on a CORE formation
  * survive the scenario it was authored in? Nothing published says. The instruction it gives is what
  * is built — store the slots on the unit and serialize them — and the consequence follows from
  * that: a core formation carries its authored slots into the next battle exactly as it carries its
@@ -65,19 +68,24 @@ internal object Attachments {
     // bonus applies to; only the magnitude, name, cost and penalty are per-efile data. Tier 1
     // (`docs/design/attachments.md` §4) is Recon/Air Defense/AntiTank/Support/Fuel Pods/Fast Speed;
     // Tier 2 is Bridging/Fast Entrench/Bunker Buster, each modelled on an existing rule rather than
-    // a new one (§6.6 item 7, DEFERRED.md §1.4).
+    // a new one (§6.6 item 7, `docs/design/attachments.md`).
     const val SLOT_RECON = 1
     const val SLOT_AIR_DEFENSE = 2
     const val SLOT_BRIDGING = 3
     const val SLOT_ANTI_TANK = 4
     const val SLOT_SUPPORT_AMMO = 5
+    const val SLOT_FORWARD_OBSERVER = 6
+    const val SLOT_SPECIAL_MUNITION = 7
     const val SLOT_FAST_ENTRENCH = 8
     const val SLOT_BUNKER_BUSTER = 9
+    const val SLOT_FAST_BUILDER = 10
     const val SLOT_FUEL_PODS = 11
     const val SLOT_FAST_SPEED = 12
 
-    /** The slots this engine actually applies -- the six Tier 1 pure stat deltas plus the three
-     *  Tier 2 slots. Nothing else may be sold; see [availableSlots]. */
+    /** The slots this engine actually applies -- all twelve since 2026-10-06: the six Tier 1 stat
+     *  deltas, the three Tier 2 slots and Tier 3's Forward Observer ([forwardObserverBonus]),
+     *  Special Munition (`CombatResolver.attackValue`) and Fast Builder (`turnsForBuilder`). The set
+     *  stays because an efile could define a slot number above 12; see [availableSlots]. */
     val IMPLEMENTED_SLOTS =
         setOf(
             SLOT_RECON,
@@ -85,8 +93,11 @@ internal object Attachments {
             SLOT_BRIDGING,
             SLOT_ANTI_TANK,
             SLOT_SUPPORT_AMMO,
+            SLOT_FORWARD_OBSERVER,
+            SLOT_SPECIAL_MUNITION,
             SLOT_FAST_ENTRENCH,
             SLOT_BUNKER_BUSTER,
+            SLOT_FAST_BUILDER,
             SLOT_FUEL_PODS,
             SLOT_FAST_SPEED,
         )
@@ -158,8 +169,8 @@ internal object Attachments {
      * | BASEKORP | 2 | 20 | 30 | 50 |
      *
      * So LXF Fast Speed on a 6-MP unit is `max(1, 6*20/100)` = **+1**, not the +20 the flat reading
-     * gave it (DEFERRED.md §1.17). The key floors THE BONUS; it is NOT a floor on the unit's
-     * resulting stat, which is what DEFERRED.md §1.14/§1.16 were both about.
+     * gave it (`docs/design/attachments.md`). The key floors THE BONUS; it is NOT a floor on the unit's
+     * resulting stat, which is what two earlier attachment defects were both about.
      */
     fun bonus(
         unit: GameUnit,
@@ -204,15 +215,15 @@ internal object Attachments {
     }
 
     /**
-     * Slots [unit]'s formation could still purchase: implemented by this engine, enabled for the
-     * active efile, not disabled by it (LXF disables Bridging), legal for this unit's class, and
-     * not already bought. Empty when attachments are off, the unit has no formation, or it is
-     * already at [MAX_PER_UNIT].
+     * Slots [unit] could still purchase: implemented by this engine, enabled for the active efile,
+     * not disabled by it (LXF disables Bridging), legal for this unit's class, and not already
+     * bought. Empty when attachments are off, the author forbade them, or the unit is already at
+     * [MAX_PER_UNIT].
      *
      * **Only [IMPLEMENTED_SLOTS] are offered.** Every other slot is a Tier 2/3 mechanic this engine
      * does not have yet (`docs/design/attachments.md` §4), and offering one would sell the player a
      * no-op for real prestige -- strictly worse than not offering it. Deliberately silent about
-     * why: the port's own build status is not game content (the rule DEFERRED.md §2.10 established).
+     * why: the port's own build status is not game content.
      * Widen this set as each mechanic lands, and the slot appears on its own.
      *
      * **Class eligibility is one table for all content** ([AttachmentClassRules], 2026-09-26): the
@@ -224,7 +235,9 @@ internal object Attachments {
         // The formation's IDENTITY, not its roster record: a record is written lazily (on purchase,
         // carry-over, the first notable combat), and one bought before 2026-09-30's Terser fix may
         // still have none. [HeroCampaign.purchaseAttachment] creates it when it is first needed.
-        val inScope = HeroCampaign.activeFormationId(unit) != null
+        // A unit outside the hero roster -- every unit of a standalone scenario, and a borrowed or
+        // non-roster unit in a campaign -- buys onto itself ([UnitAttachments]).
+        val inScope = HeroCampaign.activeFormationId(unit) != null || UnitAttachments.buyer(unit)
         // The cap and the "already owned" test both measure against the UNION, so a formation the
         // author already filled cannot have a third slot bought onto it and an authored slot is
         // never offered for sale a second time.
@@ -254,11 +267,11 @@ internal object Attachments {
     /**
      * `cost = minCost + (unitCostPerStrengthPoint x unitBaseStrength x factorPct) / 100`
      * (`EFILE_GCE/equip.cfg`'s own comment, `DOC-ONLY`). `minCost`/`factorPct` come from the
-     * slot's own columns when set (nonzero), else the efile's global `attach_mincost`/
-     * `attach_factor`, else the documented defaults 30/25 -- `INFERENCE`: the importer cannot
-     * distinguish an explicit 0 from an omitted column, so a genuinely free slot (the doc allows
-     * one) would incorrectly fall through to a default; no shipped efile has been seen to rely on
-     * that distinction.
+     * slot's own columns when the efile WROTE them, else the efile's global `attach_mincost`/
+     * `attach_factor` when set, else the documented defaults 30/25. An explicit 0 at either level
+     * is a price, not a request for the default -- *"any can be set to zero"* (both commented
+     * configs). Presence is carried from the importer through [EfileConfig.AttachmentSlot]; a
+     * resource generated before that keeps its zeros meaning "inherit" (`EfileConfig.parseAttachments`).
      */
     fun cost(
         unit: GameUnit,
@@ -269,14 +282,12 @@ internal object Attachments {
         return if (config == null || slot == null) {
             null
         } else {
-            val minCost = firstNonZero(slot.minCost, config.minCostDefault, DEFAULT_MIN_COST)
-            val factorPct = firstNonZero(slot.factCost, config.factorDefaultPct, DEFAULT_FACTOR_PCT)
+            val minCost = slot.minCost ?: config.minCostDefault ?: DEFAULT_MIN_COST
+            val factorPct = slot.factCost ?: config.factorDefaultPct ?: DEFAULT_FACTOR_PCT
             val perStrength = CostCalculator.calculateUnitCostPerStrength(unit)
             minCost + (perStrength * CombatResolver.FULL_STRENGTH.toInt() * factorPct) / PERCENT
         }
     }
-
-    private fun firstNonZero(vararg values: Int): Int = values.firstOrNull { it != 0 } ?: values.last()
 }
 
 /** The slots [unit]'s formation has BOUGHT, as `slotNumber to slot`; empty for a unit with no
@@ -286,13 +297,18 @@ internal object Attachments {
 private fun purchasedSlots(
     unit: GameUnit,
     config: EfileConfig.AttachmentConfig,
-): List<Pair<Int, EfileConfig.AttachmentSlot>> =
-    HeroCampaign
-        .formationFor(unit)
-        ?.attachmentIds
-        ?.mapNotNull { id ->
-            id.toIntOrNull()?.let { number -> config.slots[number]?.let { number to it } }
-        }.orEmpty()
+): List<Pair<Int, EfileConfig.AttachmentSlot>> {
+    val formationBought =
+        HeroCampaign
+            .formationFor(unit)
+            ?.attachmentIds
+            ?.mapNotNull { it.toIntOrNull() }
+            .orEmpty()
+    // Purchases by a unit outside the roster ([UnitAttachments.purchase]); only written when the
+    // unit has no active formation, so the two lists never both hold a real entry.
+    return (formationBought + unit.purchasedAttachmentIds)
+        .mapNotNull { number -> config.slots[number]?.let { number to it } }
+}
 
 /**
  * The slots the SCENARIO AUTHOR fitted ([GameUnit.authoredAttachmentIds]), resolved against the

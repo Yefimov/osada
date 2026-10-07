@@ -16,10 +16,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
- * The two behavioural divergences `DEFERRED.md` §4.6 left open after §7.32 fixed the *sourcing* of
- * Combat Support. Both are about the interaction between Combat Support (an adjacent HQ lending
- * experience bars) and Fire Support (an adjacent unit shooting on someone else's behalf), which the
- * entry could only describe as "verify against `calculateAttackResults` before claiming either way".
+ * The two behavioural divergences left open after Combat Support's *sourcing* was fixed. Both are about the interaction
+ * between Combat Support (an adjacent HQ lending experience bars) and Fire Support (an adjacent unit shooting on
+ * someone else's behalf), which the entry could only describe as "verify against `calculateAttackResults` before
+ * claiming either way".
  *
  * Verified here, and they turned out to be one real defect and one non-issue:
  *

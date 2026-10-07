@@ -40,6 +40,9 @@ class ContainerSupportFireTest : OgRulesTestHarness() {
     private val bomberEqid = 967
     private val marinesEqid = 968
 
+    /** Aircraft go only into a carrier or an airbase (2026-10-07), so the aircraft cases use one. */
+    private val carrierEqid = 969
+
     @BeforeTest
     fun setup() {
         installTestWorld()
@@ -57,6 +60,17 @@ class ContainerSupportFireTest : OgRulesTestHarness() {
                 movmethod = MovMethod.LEG.value
                 target = UnitType.SOFT.value
                 grounddef = 12
+                hangarCap = 2
+            },
+        )
+        Equipment.putEquipment(
+            carrierEqid,
+            EquipmentData().apply {
+                name = "Escort Carrier"
+                uclass = UnitClass.CARRIER.value
+                movmethod = MovMethod.NAVAL.value
+                target = UnitType.HARD.value
+                grounddef = 6
                 hangarCap = 2
             },
         )
@@ -270,7 +284,7 @@ class ContainerSupportFireTest : OgRulesTestHarness() {
     fun aContainedFighterNeverAnswersAnAirAttack() {
         containersOn(flakRange = 2)
         val map = world()
-        val ship = place(map, shipEqid, 3, 3, 0)
+        val ship = place(map, carrierEqid, 3, 3, 0)
         // Beside the neighbour: a fighter covers the unit it stands next to (OG's Air-Interception
         // procedure), so this is where it must be to prove anything on the map.
         val fighter = place(map, fighterEqid, 4, 4, 0)
@@ -295,7 +309,7 @@ class ContainerSupportFireTest : OgRulesTestHarness() {
     fun aContainedAircraftIsNotACombatSupporterEither() {
         containersOn()
         val map = world()
-        val ship = place(map, shipEqid, 3, 3, 0)
+        val ship = place(map, carrierEqid, 3, 3, 0)
         val fighter = place(map, fighterEqid, 5, 5, 0).apply { experience = 300 }
         val neighbour = place(map, marinesEqid, 3, 4, 0)
 
@@ -343,9 +357,11 @@ class ContainerSupportFireTest : OgRulesTestHarness() {
     fun bitEightSaysNothingAboutAircraft() {
         containersOn(mode = 1 or 2)
         val map = world()
-        val ship = place(map, shipEqid, 3, 3, 0)
+        val carrier = place(map, carrierEqid, 3, 3, 0)
         val fighter = place(map, fighterEqid, 3, 4, 0)
-        assertTrue(CarrierHangars.canBoard(fighter, ship))
+        assertTrue(CarrierHangars.canBoard(fighter, carrier))
+        val ship = place(map, shipEqid, 5, 5, 0)
+        assertFalse(CarrierHangars.canBoard(fighter, ship), "a landing ship is not a carrier")
     }
 
     // ---- Lifecycle -----------------------------------------------------------------------------

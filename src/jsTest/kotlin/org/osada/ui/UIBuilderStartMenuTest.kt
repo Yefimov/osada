@@ -407,8 +407,12 @@ class UIBuilderStartMenuTest {
                         (children.asDynamic()[j] as? HTMLElement)?.id
                     }
                 }.flatten()
-        assertTrue(ids.contains("disksave"))
-        assertTrue(ids.contains("diskload"))
+        assertTrue(ids.contains("profileBackupExport"))
+        assertTrue(ids.contains("profileBackupImport"))
+        assertTrue(!ids.contains("disksave"))
+        assertTrue(!ids.contains("diskload"))
+        assertTrue(byId("campaignRunExport") == null)
+        assertTrue(byId("campaignRunImport") == null)
         assertTrue(!ids.contains("cloudsave"))
         assertTrue(!ids.contains("cloudload"))
     }

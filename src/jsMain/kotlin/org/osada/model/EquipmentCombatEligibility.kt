@@ -46,13 +46,13 @@ package org.osada.model
  *
  * **Two masks this file previously guessed were WRONG, and are corrected here:**
  *  - `262144` was `ATTR_MASK_PURCHASABLE`. It is **`Can't Naval Atk`**. That settles the doubt
- *    recorded in `DEFERRED.md` §1.5/§7.25 about the old ground-transport gate: it was testing naval
+ *    recorded in `tools/og-import/OG_ABILITY_AUDIT.md` §2 about the old ground-transport gate: it was testing naval
  *    attack capability. Purchasability is bit 7 (`Can't Buy`), INVERTED.
  *  - `32768` was `ATTR_MASK_SPECIAL_ANTI_AIR`. It is **`CAN Air Atk`** -- the same idea (a unit that
  *    may attack aircraft although its class would not), so the one use of it is unaffected; only the
  *    name was wrong.
  *
- * WIDENED 2026-08-19 (`docs/og-fidelity-plan.md` §C). `attr` itself still stops at bit 23 -- it is
+ * WIDENED 2026-08-19. `attr` itself still stops at bit 23 -- it is
  * three OG special bytes packed by the importer, unchanged -- but two more fields now carry the
  * other two: `EquipmentData.attr2` is `Special4` (8 bits) and `EquipmentData.attrEx` is
  * `SpecialEx` bytes 0..2 (24 bits, packed the identical way `attr` packs Special1..3). Together the
@@ -63,7 +63,7 @@ package org.osada.model
  * pzliga, kaiser, atomic, basekorp, lxf, gce, ag). `csv_to_eqp.py` now packs both fields going
  * forward for any efile it can read.
  *
- * COMPLETED 2026-08-23 (`docs/og-fidelity-plan.md` §J). The other three efiles are readable through
+ * COMPLETED 2026-08-23. The other three efiles are readable through
  * OpenSuite's `*_sel.xeqp` exports, which use the same 4 + N*122 layout; `tools/eqp-merge/
  * verify_specials.py` audits EVERY shipped record's `attr`/`attr2`/`attrEx` against OG's own binary
  * and back-filled 440 `attr2` and 1,996 `attrEx` values that had been 0 for want of a readable
@@ -338,7 +338,7 @@ internal const val ATTR_MASK_DROP_MINES = 1
  *
  * **Acceptance-test it on `eqp-basekorp` or `eqp-comww2`, never on an LXF campaign**: `Mechanized`
  * is set on ZERO LXF records, so the four deployed LXF campaigns would show no change and read as a
- * failure (`docs/og-fidelity-plan.md` B.1).
+ * failure.
  */
 internal const val ATTR_MASK_MECHANIZED = 2097152
 
@@ -450,8 +450,7 @@ internal const val ATTR2_MASK_NO_ZOC = 64
 /**
  * OG's `Counter Battery` (`SpecialEx` 61.1, `attrEx` bit 9) — artillery that answers enemy
  * artillery firing on a friendly unit, once per turn. OG manual §9.4, an optional rule in its own
- * right (it is NOT part of §9.6's extended naval set, where an earlier draft of
- * `docs/og-fidelity-plan.md` §C filed it).
+ * right (it is NOT part of §9.6's extended naval set, where an earlier plan once filed it).
  *
  * WIRED 2026-08-25 behind `RuleKey.COUNTERBATTERY`; 818 shipped records carry it. See
  * [org.osada.rules.CounterBatteryFire].
@@ -560,7 +559,7 @@ internal const val ATTR_EX_MASK_ALL_WEATHER = 4
  * class default**, exactly the shape `Support Fire` and `Recon Skill` already have (see
  * `UnitCapabilities.hasSupportFire`'s header for why toggles must be read as `classDefault xor
  * bit`, never as a plain grant). `UnitCapabilities.canOverrun` previously read the Tank class alone
- * — `docs/og-fidelity-plan.md`'s own approximations list named this the OVR badge's stand-in.
+ * — the OVR badge's class-only stand-in.
  */
 internal const val ATTR_EX_MASK_OVERRUN_TOGGLE = 8
 
@@ -606,7 +605,7 @@ internal const val ATTR_EX_MASK_NO_INTERCEPT_AIR = 32
  * *"suppression inflicted by the unit lasts until end of turn."* The second, equipment-level
  * source of the same effect the `SHOCK_TACTICS` leader trait already grants
  * (`GameUnit.lastingHits`) — see [org.osada.rules.UnitCapabilities.hasLastingSuppression], which
- * ORs the two exactly as `docs/og-fidelity-plan.md` §0.1 anticipated this bit being wired: *"this
+ * ORs the two exactly as `tools/og-import/OG_REGISTER.md` F§0.1 anticipated this bit being wired: *"this
  * unit's `hits` survive the victim's `unitEndTurn`"*, not a second suppression statistic.
  */
 internal const val ATTR_EX_MASK_LASTING_SUPPRESSION = 2
@@ -683,7 +682,7 @@ private fun isDedicatedAntiAir(attacker: EquipmentData): Boolean {
  *
  * OG states the ability as *"can attack air units, if it hasn't moved"* — one sentence with two
  * halves, of which OSADA read only the first until 2026-08-27
- * (`docs/og-fidelity-plan.md` §M.1's approximations table). The condition is attached to the GRANT,
+ * (it was once listed among the abilities wired narrower than OG). The condition is attached to the GRANT,
  * not to the target: a Fighter or an Air Defence gun engages aircraft because of what it is, moves
  * and fires like any other unit, and is untouched here. Only a record that would be refused the
  * shot but for this bit has to stand still to take it, which is the reading that cannot overstate

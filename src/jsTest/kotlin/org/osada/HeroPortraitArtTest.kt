@@ -24,8 +24,8 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
- * Guards the painted (authored) portrait path added for `DEFERRED.md` §6.6 item 6a — the half of
- * `docs/design/hero-presentation.md` §3 that was blocked on art.
+ * Guards the painted (authored) portrait path — the half of `docs/heroes/README.md` §3.3 that was
+ * blocked on art.
  *
  * The invariants that matter are not "the picture is pretty" but: every authored hero that requests
  * painted art names an existing, correctly dated asset; every shipped authored hero has one; an

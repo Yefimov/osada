@@ -24,6 +24,7 @@ object CoopStateJson {
             "name" to commander.name,
             "portrait" to encodePortrait(commander.portrait),
             "abilityIds" to commander.abilityIds.toTypedArray(),
+            "symbol" to commander.symbol,
             "catalogueVersion" to CoopAbilityCatalogue.VERSION,
         )
 
@@ -35,7 +36,12 @@ object CoopStateJson {
             if (intOf(value.catalogueVersion, -1) != CoopAbilityCatalogue.VERSION) return null
             val portrait = decodePortrait(value.portrait) ?: return null
             val abilities = stringList(value.abilityIds)
-            CoopCommanderProfile(CoopCommander.cleanName(value.name as? String), portrait, abilities)
+            CoopCommanderProfile(
+                CoopCommander.cleanName(value.name as? String),
+                portrait,
+                abilities,
+                (value.symbol as? String).orEmpty().takeIf(CoopSeatSymbols::isValid).orEmpty(),
+            )
         } catch (e: Throwable) {
             console.warn("[coop] unreadable commander profile", e)
             null
@@ -145,6 +151,7 @@ object CoopStateJson {
             "name" to commander.name,
             "portrait" to encodePortrait(commander.portrait),
             "abilityIds" to commander.abilityIds.toTypedArray(),
+            "symbol" to commander.symbol,
         )
 
     private fun decodeCommander(value: dynamic): CoopCommander {
@@ -158,6 +165,7 @@ object CoopStateJson {
             name = CoopCommander.cleanName(value.name as? String),
             portrait = portrait,
             abilityIds = abilities,
+            symbol = (value.symbol as? String).orEmpty().takeIf(CoopSeatSymbols::isValid).orEmpty(),
         )
     }
 
@@ -364,4 +372,6 @@ data class CoopCommanderProfile(
     val name: String,
     val portrait: CoopPortrait,
     val abilityIds: List<String>,
+    /** The map mark chosen on the lobby card; empty means the seat number. */
+    val symbol: String = "",
 )

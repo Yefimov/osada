@@ -24,7 +24,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Build and Repair's four loose ends, closed 2026-08-27 (`docs/og-fidelity-plan.md` §V):
+ * Build and Repair's four loose ends, closed 2026-08-27:
  * the efile's own `build_cost` / `build_turn` / `repair_turn`, work that advanced with nobody
  * doing it, `blow_any_terrain`'s real reach, and a wrecked facility that went on working.
  *
@@ -517,6 +517,72 @@ class EngineeringConfigTest : OgRulesTestHarness() {
         sapper.hasFired = true
         val fired = UnitActionAvailability.forAction(UnitActionId.BUILD_FORTIFICATION, context)
         assertTrue(fired.reasons.any { it.reason == ActionBlockReason.ENGINEERING_NEEDS_UNFIRED })
+    }
+
+    /** Owner's request 2026-10-07: a sapper in a forest still SEES Build airfield, greyed, with the
+     *  reason -- the button no longer vanishes on terrain that will not take it. */
+    @Test
+    fun aBuildChipOnUnsuitableTerrainIsGreyedWithTheReason() {
+        val map = engineeringWorld()
+        map.map!![2][2].terrain = TerrainType.FOREST.value
+        val sapper = place(map, sapperEqid, 2, 2, side = 0)
+
+        val chip =
+            UnitActionAvailability.forAction(UnitActionId.BUILD_AIRFIELD, UnitActionContext(map, sapper, friendly))
+
+        assertTrue(chip.applicable)
+        assertFalse(chip.enabled)
+        assertTrue(chip.reasons.any { it.reason == ActionBlockReason.AIRFIELD_NEEDS_CLEAR })
+    }
+
+    @Test
+    fun aBuildChipOnABusySiteSaysWorkIsUnderWay() {
+        val map = engineeringWorld()
+        val hex = map.map!![2][2]
+        hex.construction = EngineeringWork.FORTIFICATION.ordinal
+        hex.constructionTurns = 2
+        val sapper = place(map, sapperEqid, 2, 2, side = 0)
+
+        val chip =
+            UnitActionAvailability.forAction(UnitActionId.BUILD_AIRFIELD, UnitActionContext(map, sapper, friendly))
+
+        assertFalse(chip.enabled)
+        assertTrue(chip.reasons.any { it.reason == ActionBlockReason.ENGINEERING_IN_PROGRESS && it.amount == 2 })
+    }
+
+    @Test
+    fun aUnitThatCannotBuildStillGetsNoBuildChip() {
+        val map = engineeringWorld()
+        val gun = place(map, gunEqid, 2, 2, side = 0)
+
+        val chip =
+            UnitActionAvailability.forAction(UnitActionId.BUILD_AIRFIELD, UnitActionContext(map, gun, friendly))
+
+        assertFalse(chip.applicable)
+    }
+
+    @Test
+    fun withBuildAndRepairOffNoBuildChipIsShown() {
+        ruleset(RuleKey.BUILD_AND_REPAIR to 0)
+        val map = world(prestige = 200)
+        GameHolder.instance = holderFor(map)
+        val sapper = place(map, sapperEqid, 2, 2, side = 0)
+
+        val chip =
+            UnitActionAvailability.forAction(UnitActionId.BUILD_AIRFIELD, UnitActionContext(map, sapper, friendly))
+
+        assertFalse(chip.applicable)
+    }
+
+    /** Demolition is not a build job: with nothing to blow it stays out of the strip. */
+    @Test
+    fun demolishStillAppearsOnlyWhereThereIsSomethingToBlow() {
+        val map = engineeringWorld()
+        val sapper = place(map, sapperEqid, 2, 2, side = 0)
+
+        val chip = UnitActionAvailability.forAction(UnitActionId.DEMOLISH, UnitActionContext(map, sapper, friendly))
+
+        assertFalse(chip.applicable)
     }
 
     @Test

@@ -330,7 +330,7 @@ internal object AttackCalculation {
         // those classes do not EXPLOIT a suppressed defender, they are not immune to being
         // suppressed themselves. Verified 2026-08-18 against `openpanzer.js:2424`, where the same
         // test reads `s.uclass` (the attacker's equipment) while the penalty reads `k.hits` (the
-        // defender's counter): `docs/og-fidelity-plan.md` A.7. The player-facing string said the
+        // defender's counter). The player-facing string said the
         // opposite and was corrected, not the code.
         val attackerData = context.attackerData
         val hitsPenaltyApplies =
@@ -378,7 +378,7 @@ internal object AttackCalculation {
      *  [org.osada.terrainInitiative] table (`AIPositionEvaluation`) without the combat resolver
      *  ever having applied it. Capping by the DEFENDER's hex, not each side's own, is deliberate:
      *  the alternative would make assaulting a city better for a fast attacker, which inverts the
-     *  point of the cap (see `docs/design/terrain-supply-and-initiative.md` §4.2). Applied before
+     *  point of the cap (see `docs/design/efile-driven-rules.md` §2.1). Applied before
      *  the First Strike reversal below, which takes `abs()` of the difference. */
     fun applyInitiativeBonus(
         stats: CombatStats,

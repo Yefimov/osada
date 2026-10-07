@@ -7,6 +7,7 @@ import org.osada.hero.HeroCampaign
 import org.osada.prestigeGains
 import org.osada.rules.CombatPositioning
 import org.osada.rules.CombatResolver
+import org.osada.rules.CombatSupportExperience
 import org.osada.rules.CounterBatteryFire
 import org.osada.rules.CriticalHit
 import org.osada.rules.Evade
@@ -304,6 +305,10 @@ internal class CombatApplication(
     ) {
         attacker.experience = kotlin.math.round(attacker.experience + combatResult.atkExpGained.toDouble()).toInt()
         defender.experience = kotlin.math.round(defender.experience + combatResult.defExpGained.toDouble()).toInt()
+        // The staff that lent its bars learns from the fight it supported (`rules/CombatSupportExperience`).
+        val units = gameMap.units.toList()
+        CombatSupportExperience.award(units, attacker, combatResult.atkExpGained)
+        CombatSupportExperience.award(units, defender, combatResult.defExpGained)
         when {
             // Nothing was fired, so no ammunition is spent -- only the turn's attack.
             !combatResult.attackerFired -> if (supportFire) attacker.hasFired = true else attacker.spendAttack()
@@ -318,7 +323,7 @@ internal class CombatApplication(
         // OG's `Shock Tactics` leader trait / `Lasting Suppression` equipment special: suppression
         // this side inflicts outlives the round wrap that clears everybody else's. Resolved here,
         // on the side that DEALT the damage -- `hit` runs on the victim and cannot see who hit it
-        // (`docs/og-fidelity-plan.md` A.4, and the equipment half added 2026-08-19 per §0.1).
+        // (The equipment half was added 2026-08-19, as `tools/og-import/OG_REGISTER.md` F§0.1 required.)
         // OG's `critical_hit`: a naval shot that sinks its target outright, on a die roll. Applied
         // on the COMMITTED shot only -- like `SingleFireSup.` above -- so it never reaches the
         // attack forecast, which promises the player what will actually happen (`rules/CriticalHit`).
@@ -412,7 +417,7 @@ internal class CombatApplication(
         result: dynamic,
     ) {
         // OG restricts hex capture to ground combat units; PM has no class check at all. Reversed
-        // in OG's favour 2026-07-26 (DEFERRED.md §5.4). `unitData(true)` reads the REAL unit, not
+        // in OG's favour 2026-07-26 (`tools/og-import/OG_REGISTER.md` D§5.4). `unitData(true)` reads the REAL unit, not
         // its transport, so infantry riding a truck still takes the hex it drives into.
         // OG's Liberator: *"Can capture flags and gets double prestige for capturing"* -- the first
         // half lets a land formation outside the capturing classes (a gun, a FlaK) take the hex.

@@ -15,8 +15,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * The four mechanics `docs/og-fidelity-plan.md` §Y.3 listed as unbuilt, and the transport-weight
- * question §Y.5 carried — all closed 2026-08-30.
+ * Four once-unbuilt mechanics and the transport-weight question — all closed 2026-08-30.
  *
  * None of them was ever blocked on evidence: every key is documented in `OPENTXT_SAMPLE/equip.cfg`
  * or `EFILE_NOKORP/equip.cfg`, and the register said so. What they were blocked on was effort.

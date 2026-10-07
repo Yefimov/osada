@@ -24,21 +24,19 @@ package org.osada.rules.ruleset
  * it explicitly.
  *
  * 4 (2026-08-18) added [RuleKey.HEAVY_MOVE_FIRE], [RuleKey.SNOW_FUEL], [RuleKey.SUPPORT_FIRE_FALLOFF],
- * [RuleKey.DRY_UNIT_PENALTIES] and [RuleKey.MINEFIELDS] (`docs/og-fidelity-plan.md` B.1, B.2, B.7,
- * B.8 and C.1). Additive, and every one of the five defaults to the behaviour OSADA already ran, so
- * a schema-1..3 profile that names none of them is byte-identical in play to what it was.
+ * [RuleKey.DRY_UNIT_PENALTIES] and [RuleKey.MINEFIELDS]. Additive, and every one of the five defaults to the behaviour
+ * OSADA already ran, so a schema-1..3 profile that names none of them is byte-identical in play to what it was.
  *
  * 5 (2026-08-19) added [RuleKey.AIR_FUEL], [RuleKey.INITIATIVE_MODEL], [RuleKey.SPOTTING_MEMORY],
- * [RuleKey.INSTALLATION_SPOTTING] and [RuleKey.GROUND_AUTO_SUPPLY] (`docs/og-fidelity-plan.md` B.3,
- * B.6, B.4, B.5 and A.3 item 2) -- the last five rules that document names. Additive on the same
- * terms as schema 4, and every one of the five again defaults to what OSADA already ran. This is
+ * [RuleKey.INSTALLATION_SPOTTING] and [RuleKey.GROUND_AUTO_SUPPLY] -- the last five rules the fidelity plan named.
+ * Additive on the same terms as schema 4, and every one of the five again defaults to what OSADA already ran. This is
  * The built-in profiles are Author's Vision and OSADA Default; the third, Open General Fidelity,
- * was retired 2026-08-28 (`docs/og-fidelity-plan.md` §AC).
+ * was retired 2026-08-28.
  *
  * 6 (2026-08-25) added [RuleKey.COUNTERBATTERY], [RuleKey.EXTENDED_LOS],
  * [RuleKey.BUILD_AND_REPAIR] and [RuleKey.EQUIPMENT_TOGGLES] -- three of the five Open General
  * OPTIONAL RULES (manual section 9)
- * that `docs/og-fidelity-plan.md` section C never listed at all. Additive on the same terms as
+ * that the original fidelity plan never listed at all. Additive on the same terms as
  * schemas 4 and 5, and all three again default to what OSADA already ran, so the 502 shipped
  * scenarios stay arithmetically unchanged until a profile asks otherwise.
  *
@@ -63,8 +61,8 @@ package org.osada.rules.ruleset
  * readable scenarios author it. Additive and defaulted off, on the same terms.
  *
  * 11 (2026-08-28) added [RuleKey.NAVAL_CRITICAL_HITS] -- `critical_hit`, a complete OG combat
- * formula that **`eqp-lxf` has been setting to 2 all along** and nothing read
- * (`docs/og-fidelity-plan.md` §AA.6). It is the first key in this enum found by reading an efile
+ * formula that **`eqp-lxf` has been setting to 2 all along** and nothing read.
+ * It is the first key in this enum found by reading an efile
  * key nobody had looked up rather than by working through the manual, and it is behind a key rather
  * than universal for one reason: it SINKS ships outright, so honouring LXF's own value silently
  * would rewrite every naval battle in the campaigns built on it. Additive and defaulted off.
@@ -250,12 +248,12 @@ enum class RuleKey(
 
     /**
      * Whether land minefields exist at all — pre-placed by the scenario author, laid by units with
-     * OG's `Drop mines` attribute and cleared by engineers (OG 9.9, `docs/og-fidelity-plan.md`
-     * C.1). 0 = `off`, 1 = `og`.
+     * OG's `Drop mines` attribute and cleared by engineers (OG 9.9).
+     * 0 = `off`, 1 = `og`.
      *
      * **Default off, and deliberately so.** Undetected mines damage a unit mid-move with no visible
-     * cause, which is precisely the failure `DEFERRED.md` §1.1 forbids for AA interception
-     * (*"Movement damage with no visible cause reads as a bug"*). Detected fields are drawn and warn
+     * cause, which is precisely the failure `docs/design/action-affordances-and-objectives.md` §1.1
+     * forbids (*"Movement damage with no visible cause reads as a bug"*). Detected fields are drawn and warn
      * before a route commits; only undetected ones ambush. A player who has not asked for the
      * mechanic never meets either.
      */
@@ -278,7 +276,7 @@ enum class RuleKey(
      *    reach *"crashes and it is destroyed"* ([org.osada.rules.AirOperations.strandedAircraft],
      *    swept in `model/GameMap.endTurn`). OSADA alone merely stops it moving.
      *
-     * Default `forgiving` by an owner decision recorded in `docs/og-fidelity-plan.md` B.3: the
+     * Default `forgiving` by an owner decision: the
      * crash rule is genuinely punitive and OSADA Default is deliberately the gentler game. That is
      * why this is a key and not a section-A correction.
      */
@@ -302,7 +300,7 @@ enum class RuleKey(
      * an exact figure; with it off nothing draws and the forecast is exact, as it always was.
      *
      * **Default `og_full` since 2026-09-02, by owner decision.** It was `equipment_terrain` on the
-     * `DEFERRED.md` §5.10 grounds -- experience re-tunes every imported campaign in the veteran's
+     * `tools/og-import/OG_REGISTER.md` D§5.10 grounds -- experience re-tunes every imported campaign in the veteran's
      * favour, and both halves change what `First Strike` is worth, since that trait re-signs the
      * initiative difference rather than adding to it. Those consequences are real and unchanged;
      * what changed is which of them is preferred. The owner wants combat to carry OG's uncertainty,
@@ -350,8 +348,8 @@ enum class RuleKey(
      * OG 6.23 resupplies *"ground units that do nothing in the turn"* and states no terrain
      * condition; OSADA additionally requires a `CITY` hex with no adjacent enemies. That extra
      * condition is a BALANCE decision rather than a defect -- relaxing it hands every idle
-     * formation in the field a free full refit -- so `docs/og-fidelity-plan.md` A.3 item 2 required
-     * that it be relaxed behind a key if at all, never universally. This is that key; the adjacent-
+     * formation in the field a free full refit -- so it may be relaxed behind a key if at all, never
+     * universally. This is that key; the adjacent-
      * enemy condition is untouched by it, because a unit being shot at is idle in neither game.
      * Call site: `rules/SupplyRules.computeResupplyValue`.
      */
@@ -367,8 +365,8 @@ enum class RuleKey(
      * friendly unit, once per turn. 0 = off (OSADA today), 1 = `og`.
      *
      * 818 shipped records carry the ability, and it had no call site at all before schema 6 --
-     * `docs/og-fidelity-plan.md` section C mis-filed it inside the extended NAVAL set, which is a
-     * different optional rule (9.6) and does not contain it. Call site:
+     * An early plan mis-filed it inside the extended NAVAL set, which is a different optional rule
+     * (9.6) and does not contain it. Call site:
      * `rules/CounterBatteryFire`, reached from `CombatApplication.resolveCombat`.
      */
     COUNTERBATTERY("counterbattery", null, 0, 1),
@@ -493,7 +491,7 @@ enum class RuleKey(
      * OG's **green replacements** — a second, cheap replacement action that costs veterancy.
      * **Schema 14.**
      *
-     * `og-fidelity-plan.md` §Y.3 called this the largest unbuilt OG mechanic left. It adds an
+     * Once the largest unbuilt OG mechanic. It adds an
      * action rather than changing one: the existing Reinforce is untouched, and
      * `rules/GreenReplacements` prices and dilutes the new one from the efile's own
      * `green_cost` / `green_exp` / `green_defexp` / `remove_leader`.
@@ -514,8 +512,9 @@ enum class RuleKey(
      * one) and its permissions from the efile's `ground_carrier` bits.
      *
      * **The content gate survives this key**: a ship whose record gives it no hangar cannot hold
-     * anything, and an efile that leaves `ground_carrier` at 0 has no hangars at all. Additive and
-     * defaulted off — containment changes how a carrier fights, and the player should choose it.
+     * anything. Aircraft go into carriers and airbases under this key alone; LAND formations also
+     * need the efile's `ground_carrier`. **On by default since 2026-10-07** (owner's decision:
+     * carriers and airbases must hold their aircraft), not as a new schema -- see `RulesetDefaults`.
      */
     CARRIER_HANGARS("carrier_hangars", null, 0, 1),
 
@@ -527,8 +526,7 @@ enum class RuleKey(
      * > Destroyers can escort naval transports against submarine attacks, just like fighters escort
      * > bombers. Submarines need direct LOF to attack."*
      *
-     * **One key rather than four**, which `docs/og-fidelity-plan.md` section C called correctly
-     * from the start: OG treats them as one coherent optional set and the scenario bitfield carries
+     * **One key rather than four**: OG treats them as one coherent optional set and the scenario bitfield carries
      * a single `extnaval` bit, so four keys would invent a granularity no author can express.
      *
      * **The largest single gap by content this project had.** 238 of the 457 scenarios whose source
@@ -794,7 +792,7 @@ enum class RulesetSource {
     /**
      * A built-in, EXPERIMENTAL overlay on the selected content: aircraft may start attacks in
      * overcast, rain and snow, under the weather penalties that already exist (2026-09-27,
-     * `docs/design/combat-movement-heroes-weather-audit.md` §7.3). A balance trial, not a claim about
+     * `tools/og-import/OG_REGISTER.md` §2.3). A balance trial, not a claim about
      * Open General -- whose manual forbids bad-weather air attacks -- and never the default.
      */
     AVIATION_TRIAL,
@@ -845,8 +843,8 @@ object RulesetDefaults {
             // TerrainEx already prefers the efile's own factors and falls back per terrain id to
             // PM's flat formula, so "efile factors" is what OSADA runs today.
             RuleKey.SUPPLY_MODEL to 1,
-            // Every weather rule ships on: these are Open General's own rules
-            // (`tools/og-import/DEFERRED.md` §7.45), and each is already a no-op in Fair weather.
+            // Every weather rule ships on: these are Open General's own rules,
+            // and each is already a no-op in Fair weather.
             RuleKey.WEATHER_GROUNDS_AIRCRAFT to 1,
             RuleKey.WEATHER_HALVES_AIR_GROUND to 1,
             RuleKey.WEATHER_DEFENSE_BONUS to 1,
@@ -891,7 +889,7 @@ object RulesetDefaults {
             RuleKey.DEPOT_SUPPLY to 0,
             RuleKey.CARRIER_DEPLOY to 0,
             RuleKey.GREEN_REPLACEMENTS to 0,
-            RuleKey.CARRIER_HANGARS to 0,
+            RuleKey.CARRIER_HANGARS to 1,
             // Schema 11. `eqp-lxf` sets `critical_hit = 2`, so this is the one key whose OFF is a
             // divergence from a shipped efile's own instruction -- taken deliberately, because the
             // rule sinks ships outright and no existing campaign was balanced with it running.

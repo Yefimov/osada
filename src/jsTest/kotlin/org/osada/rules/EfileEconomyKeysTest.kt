@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 /**
- * `upgrade_ldr`, read 2026-08-28 (`docs/og-fidelity-plan.md` §AA.7).
+ * `upgrade_ldr`, read 2026-08-28.
  *
  * Inert on every shipped efile — `eqp-lxf` writes the documented default — so this is the only
  * place its two non-default modes run at all.

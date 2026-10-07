@@ -22,8 +22,7 @@ import org.osada.uiSettings
  * correct — a range that changes out from under them leaves fog permanently lifted (that failure is
  * recorded on `Hex.clearSpotted`). Nothing here writes anything.
  *
- * The trait was advertised to the player and read by nothing until 2026-08-18
- * (`docs/og-fidelity-plan.md` A.4).
+ * The trait was advertised to the player and read by nothing until 2026-08-18.
  */
 internal object UnitConcealment {
     /**

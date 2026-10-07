@@ -147,10 +147,10 @@ private fun MoveExecutor.ambushedAt(
     return true
 }
 
-/** AA interception of a moving aircraft (DEFERRED.md §1.1). Checks the cell [unit] just entered; if
- *  any enemy AA fires, relocates [unit] there and applies one-sided damage. Returns true when
+/** AA interception of a moving aircraft (`docs/design/efile-driven-rules.md` §3). Checks the cell
+ *  [unit] just entered; if any enemy AA fires, relocates [unit] there and applies one-sided damage. Returns true when
  *  interception fired -- the walk must stop at this cell regardless of whether the plane survived
- *  (docs/design/aa-interception.md §3.4). */
+ *  (`docs/design/efile-driven-rules.md` §3.4). */
 internal fun MoveExecutor.applyAAInterception(
     unit: GameUnit,
     setup: MoveExecutor.MoveSetup,

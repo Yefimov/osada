@@ -141,14 +141,16 @@ class CoopPipelineTest : OgRulesTestHarness() {
     }
 
     @Test
-    fun anotherCommanderCannotOrderAClaimedUnitAndIsToldWho() {
+    fun anotherCommanderIsNotRefusedForTouchingAClaimedUnitAndTakesItWhenItChanges() {
         val unit = mine(3, 3)
         run("guest", move(unit, 3, 4))
         val verdict =
-            run("third", MoveUnit(unit.id, HexCoordinate(4, 3), HexCoordinate(5, 3), emptyList(), friendly.id))
-        assertTrue(verdict is CommandValidation.Rejected)
-        assertEquals("coop.unit_commanded_by:Bo", reason(verdict))
-        assertEquals("c2", coop.ownerOf(unit.id), "the refused order took nothing")
+            run("third", MoveUnit(unit.id, HexCoordinate(3, 4), HexCoordinate(3, 5), emptyList(), friendly.id))
+        // The unit has already moved this turn, so the game refuses it -- but not as "another's unit".
+        assertTrue(reason(verdict) != "coop.unit_commanded_by:Bo")
+        assertEquals("c2", coop.ownerOf(unit.id), "a refused order takes nothing")
+        coop.takeCommand(unit.id, "c3")
+        assertEquals("c3", coop.ownerOf(unit.id), "an accepted order by a teammate hands the unit over")
     }
 
     @Test
@@ -301,12 +303,13 @@ class CoopPipelineTest : OgRulesTestHarness() {
     }
 
     @Test
-    fun theClaimBoardOnlyReservesAnUnclaimedUnitForTheSender() {
+    fun aCommanderTakesAUnitOnlyForThemselvesButFromAnyone() {
         val unit = mine(3, 3)
         assertTrue(run("guest", SetUnitAssignment(unit.id, "host", friendly.id)) is CommandValidation.Rejected)
         assertEquals(CommandValidation.Accepted, run("guest", SetUnitAssignment(unit.id, "guest", friendly.id)))
         assertEquals("c2", coop.ownerOf(unit.id))
-        assertTrue(run("third", SetUnitAssignment(unit.id, "third", friendly.id)) is CommandValidation.Rejected)
+        assertEquals(CommandValidation.Accepted, run("third", SetUnitAssignment(unit.id, "third", friendly.id)))
+        assertEquals("c3", coop.ownerOf(unit.id), "Wait hands the unit to whoever pressed it")
     }
 
     @Test
@@ -451,7 +454,7 @@ class CoopPipelineTest : OgRulesTestHarness() {
     }
 
     @Test
-    fun theBoardReservesAndReleasesBeforeTheBattleAndClosesWithIt() {
+    fun releasingIsPreBattleButTakingStaysOpen() {
         val unit = mine(3, 3)
         assertEquals(CommandValidation.Accepted, run("guest", SetUnitAssignment(unit.id, "guest", friendly.id)))
         assertEquals("c2", coop.ownerOf(unit.id))
@@ -462,7 +465,8 @@ class CoopPipelineTest : OgRulesTestHarness() {
         assertEquals(CommandValidation.Accepted, run("guest", SetUnitAssignment(unit.id, null, friendly.id)))
         assertNull(coop.ownerOf(unit.id))
         run("host", EndTurnReady(true, friendly.id))
-        val closed = run("guest", SetUnitAssignment(unit.id, "guest", friendly.id))
+        assertEquals(CommandValidation.Accepted, run("guest", SetUnitAssignment(unit.id, "guest", friendly.id)))
+        val closed = run("guest", SetUnitAssignment(unit.id, null, friendly.id))
         assertEquals("coop.board_closed", reason(closed))
     }
 

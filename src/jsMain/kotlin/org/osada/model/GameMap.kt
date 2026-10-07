@@ -74,6 +74,9 @@ class GameMap {
      * which is keyed by unit id) named a different unit on the host.
      */
     internal var preserveUnitIds: Boolean = false
+
+    /** The hangar passenger whose take-off hex is being chosen, or null (`model/HangarOperations`). */
+    internal var hangarLaunch: HangarLaunch? = null
     internal val unitImages: MutableSet<Int> = mutableSetOf()
     internal val currentMoveRange: MutableList<Cell> = mutableListOf()
     internal val currentAttackRange: MutableList<Cell> = mutableListOf()
@@ -214,7 +217,7 @@ class GameMap {
      * [endTurn] happens on every hand-over, while everything here happens only when the turn wraps
      * back to player 0. That distinction is a byte-faithful port of `openpanzer.js:3565-3587` and is
      * the reason suppression and resupply are round-scoped rather than turn-scoped
-     * (`docs/og-fidelity-plan.md` §0.1.1).
+     * (`tools/og-import/OG_REGISTER.md` F§0.1.1).
      */
     private fun beginNewRound() {
         turn++
@@ -238,13 +241,14 @@ class GameMap {
     }
 
     /**
-     * OG 6.23's crash rule (`docs/og-fidelity-plan.md` B.3), behind `air_fuel`: an aircraft that
+     * OG 6.23's crash rule, behind `air_fuel`: an aircraft that
      * ends its owner's turn out of fuel and with no airfield or friendly carrier within reach is
      * destroyed rather than merely immobilised.
      *
      * Every loss gets its own Turn Report row before the sweep removes it. A formation that
-     * disappears between turns with no explanation is the failure `DEFERRED.md` 1.1 forbids, and it
-     * is less visible here than anywhere else in the engine, so the reporting is not optional.
+     * disappears between turns with no explanation is the failure
+     * `docs/design/action-affordances-and-objectives.md` §1.1 forbids, and it is less visible here
+     * than anywhere else in the engine, so the reporting is not optional.
      */
     private fun crashStrandedAircraft(side: Int) {
         val lost = AirOperations.strandedAircraft(this, side)

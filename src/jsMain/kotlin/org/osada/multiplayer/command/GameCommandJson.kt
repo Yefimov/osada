@@ -117,6 +117,7 @@ object GameCommandJson {
                 RespondTransfer(requiredInt(value.unitId, "unitId"), value.accept as? Boolean ?: false, actor)
 
             SetLoadout::class.simpleName -> SetLoadout(stringList(value.abilityIds), actor)
+            SetSeatSymbol::class.simpleName -> SetSeatSymbol(value.symbol as? String ?: "", actor)
             ResolveCampaignVote::class.simpleName ->
                 ResolveCampaignVote(
                     requiredString(value.optionId, "optionId"),

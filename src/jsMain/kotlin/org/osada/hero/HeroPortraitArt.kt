@@ -15,7 +15,7 @@ import org.osada.hero.HeroPortraitArt.pathFor
  * keeps the directory layout a rendering detail — assets can move without a migration — and lets an
  * unknown id fail *soft*: [pathFor] returns null, the renderer falls through to the layer stack the
  * composer stored alongside it, and the hero keeps a face. That is the §3.4 compatibility rule of
- * `docs/design/hero-presentation.md` applied to painted art: never a half-rendered portrait.
+ * `docs/heroes/README.md` §3 applied to painted art: never a half-rendered portrait.
  *
  * **Era, not nation, is what the art actually encodes.** A budenovka and a shoulder-boardless
  * gymnastyorka read as 1919 whatever the campaign calls its side; pogony and a peaked cap read as

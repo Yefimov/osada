@@ -15,7 +15,7 @@ import org.osada.model.Player
  *
  * ## What the reconstruction preserves
  *
- * The old integer granted two effective traits (`docs/leaders.md` §1). Both survive, by different
+ * The old integer granted two effective traits (`docs/heroes/legacy-leaders.md` §1). Both survive, by different
  * routes:
  *
  * - the **rolled trait** becomes a learned trait, carried verbatim as a [LegacyTraitMapping] id;

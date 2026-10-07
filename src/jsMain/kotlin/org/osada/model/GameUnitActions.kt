@@ -44,7 +44,7 @@ fun GameUnit.hit(
  *    "may fire twice in a turn" means to every gate that reads it ([AttackEligibility.canFire],
  *    the attack-cell overlay, the ready-unit navigator). The second attack spends it normally.
  *
- * Both were advertised to the player and inert until 2026-08-18 (`docs/og-fidelity-plan.md` A.4).
+ * Both were advertised to the player and inert until 2026-08-18.
  */
 fun GameUnit.fire(usedOverstrength: Boolean) {
     tempSpotted = true
@@ -54,7 +54,7 @@ fun GameUnit.fire(usedOverstrength: Boolean) {
         // an interception and an overrun (which OG excludes by name) spend ammunition but not an
         // attack: counted, they let a unit of the SECOND player spend `Devastating Fire` while
         // defending in the first player's turn, because the counter only resets once a round
-        // (2026-09-27, `docs/design/combat-movement-heroes-weather-audit.md` §4.4).
+        // (2026-09-27).
         shotsThisTurn++
         hasOverstrength = true
         if (!owesAnotherShot()) hasFired = true

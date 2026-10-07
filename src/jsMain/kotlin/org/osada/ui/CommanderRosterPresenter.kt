@@ -6,6 +6,8 @@ import org.osada.hero.HeroDisplay
 import org.osada.hero.HeroId
 import org.osada.hero.HeroTransferService
 import org.osada.i18n.I18n
+import org.osada.multiplayer.coop.CoopRuntime
+import org.osada.multiplayer.ui.CoopHud
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
@@ -14,10 +16,10 @@ import org.w3c.dom.events.MouseEvent
  * Active / Reserve / Wounded / Missing / Fallen tabs. A row opens the leader dossier; during the
  * initial deployment window it also gets a Transfer action, which is both the "way back" a wounded
  * or evacuated commander previously had no route to and the exchange of two serving officers
- * (DEFERRED.md §1.10). The dialog itself lives in [CommanderTransferPicker]. Built from the pure
+ * (`docs/heroes/README.md` §2). The dialog itself lives in [CommanderTransferPicker]. Built from the pure
  * [CommanderRow] list, dynamic values via `textContent`.
  *
- * **Localized in full (DEFERRED.md §4.15).** §7.37 localized only the transfer picker inside this
+ * **Localized in full.** §7.37 localized only the transfer picker inside this
  * file and left the roster around it in English, which was the worst of both. Note what the tab
  * labels do now: [HeroDisplay.ROSTER_TABS]' strings are treated as **ids** for grouping and looked
  * up as `hero.roster.tab.<id>` for display. The previous tooltip interpolated the visible label
@@ -27,10 +29,15 @@ import org.w3c.dom.events.MouseEvent
 internal object CommanderRosterPresenter {
     private const val BOX_ID = "uiCommanderRoster"
 
-    fun close() = delTag(byId(BOX_ID))
+    /** Also closes a cooperative room's players roster, which the same Headquarters button opens. */
+    fun close() {
+        delTag(byId(BOX_ID))
+        CoopHud.closeRoster()
+    }
 
-    /** Whether the roster is on screen — see [MainMenuButtonHandler.handleGlobalEscape] (§4.13). */
-    fun isOpen(): Boolean = byId(BOX_ID) != null
+    /** Whether the roster is on screen — see [MainMenuButtonHandler.handleGlobalEscape] (§4.13). A
+     *  cooperative room's players roster counts: it is what Headquarters opens there. */
+    fun isOpen(): Boolean = byId(BOX_ID) != null || CoopHud.isRosterOpen()
 
     /** Whether the transfer picker is on screen. It layers ABOVE the roster, so Escape has to
      *  offer it first — see [MainMenuButtonHandler.handleGlobalEscape] (§4.13). */
@@ -40,6 +47,12 @@ internal object CommanderRosterPresenter {
 
     fun open() {
         close()
+        // A cooperative room has no legendary heroes beyond its players, so Headquarters -- the
+        // top-bar star and the phone dock's star alike -- shows the players there.
+        if (CoopRuntime.active) {
+            CoopHud.open()
+            return
+        }
         val mainBody = byId("mainbody") ?: return
         val byTab = HeroCampaign.commanders().groupBy { HeroDisplay.rosterTab(it.status) }
 

@@ -8,7 +8,7 @@ import kotlin.test.assertTrue
 /**
  * The class-tab row's coverage contract. PM shipped 8 tabs for 21 classes and no mapping, so 13
  * classes had no tab at all; "All", Naval and Fortification became real tabs on 2026-07-26 once
- * `#eqSelClass` scrolled and row width stopped being the constraint (`DEFERRED.md` §5.7).
+ * `#eqSelClass` scrolled and row width stopped being the constraint (`tools/og-import/OG_REGISTER.md` D§5.7).
  */
 class EquipmentClassTabsTest {
     @Test

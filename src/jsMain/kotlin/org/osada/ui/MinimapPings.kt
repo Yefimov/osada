@@ -13,6 +13,7 @@ internal object MinimapPings {
     private const val LIFETIME_MILLIS = 8000
     private const val COOLDOWN_MILLIS = 1000
     private const val SCALE = 10_000.0
+    private const val HIGHLIGHT_REFRESH_MILLIS = 250
     private var missionKey: String? = null
     private var send: ((Int, Int, String) -> Unit)? = null
     private var button: HTMLButtonElement? = null
@@ -29,6 +30,8 @@ internal object MinimapPings {
         val y: Int,
         val label: String,
         val expiresAt: Double,
+        val row: Int?,
+        val col: Int?,
     )
 
     fun build() {
@@ -95,6 +98,29 @@ internal object MinimapPings {
         callback((x * SCALE).roundToInt(), (y * SCALE).roundToInt(), mission)
     }
 
+    /**
+     * A tap on the battle map while the ping is armed. The hex travels as the same normalized
+     * minimap coordinate a minimap tap sends, so the room server and every client treat both alike.
+     * Returns true when the tap was a ping and must not also act on the map.
+     */
+    @Suppress("ReturnCount")
+    fun placeCell(
+        row: Int,
+        col: Int,
+    ): Boolean {
+        if (!armed) return false
+        cancel()
+        val mission = missionKey ?: return true
+        val callback = send ?: return true
+        val (fx, fy) = MapPingHighlights.normalizedCentre(row, col) ?: return true
+        if (Date.now() < nextSendAt) return true
+        val x = (fx * SCALE).roundToInt().coerceIn(0, SCALE.toInt())
+        val y = (fy * SCALE).roundToInt().coerceIn(0, SCALE.toInt())
+        nextSendAt = Date.now() + COOLDOWN_MILLIS
+        callback(x, y, mission)
+        return true
+    }
+
     @Suppress("ReturnCount")
     fun receive(
         senderId: String,
@@ -104,16 +130,28 @@ internal object MinimapPings {
         if (missionKey == null || payload.mission as? String != missionKey) return
         val x = coordinate(payload.x) ?: return
         val y = coordinate(payload.y) ?: return
-        markers[senderId] = Marker(x, y, name, Date.now() + LIFETIME_MILLIS)
+        val cell = MapPingHighlights.nearestCell(x / SCALE, y / SCALE)
+        markers[senderId] = Marker(x, y, name, Date.now() + LIFETIME_MILLIS, cell?.first, cell?.second)
         announcement?.textContent = I18n.t("multiplayer.ping.received", mapOf("name" to name))
         MinimapBuilder.refresh()
+        MapPingHighlights.draw(
+            markers.values
+                .filter { it.expiresAt > Date.now() && it.row != null && it.col != null }
+                .map { MapPingHighlights.Spot(it.row!!, it.col!!, it.label) },
+        )
         if (timer == null) {
             timer =
                 window.setInterval({
+                    val before = markers.size
                     markers.entries.removeAll { it.value.expiresAt <= Date.now() }
-                    MinimapBuilder.refresh()
+                    if (markers.size != before) MinimapBuilder.refresh()
+                    MapPingHighlights.draw(
+                        markers.values
+                            .filter { it.expiresAt > Date.now() && it.row != null && it.col != null }
+                            .map { MapPingHighlights.Spot(it.row!!, it.col!!, it.label) },
+                    )
                     if (markers.isEmpty()) stopTimer()
-                }, COOLDOWN_MILLIS)
+                }, HIGHLIGHT_REFRESH_MILLIS)
         }
     }
 
@@ -171,6 +209,7 @@ internal object MinimapPings {
 
     private fun clearMarkers() {
         markers.clear()
+        MapPingHighlights.clear()
         nextSendAt = 0.0
         armed = false
         announcement?.textContent = ""
@@ -181,5 +220,6 @@ internal object MinimapPings {
     private fun stopTimer() {
         timer?.let(window::clearInterval)
         timer = null
+        MapPingHighlights.clear()
     }
 }

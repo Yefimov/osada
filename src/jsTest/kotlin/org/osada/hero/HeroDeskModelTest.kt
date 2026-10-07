@@ -9,7 +9,7 @@ import kotlin.test.assertTrue
 
 /**
  * Every Hero Desk filter predicate and the stable sort, which §9 of
- * `docs/design/hero-desk-and-profile-archive.md` requires to be pure and unit-tested.
+ * `docs/heroes/hero-desk-and-archive.md` requires to be pure and unit-tested.
  */
 class HeroDeskModelTest {
     @BeforeTest

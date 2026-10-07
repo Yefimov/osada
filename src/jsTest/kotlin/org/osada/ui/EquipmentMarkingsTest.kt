@@ -43,6 +43,34 @@ class EquipmentMarkingsTest {
         )
     }
 
+    /** SAP is a primary (brass) badge since 2026-10-07: shown without the extended row, with the
+     *  primary styling rather than the muted `--ability` one, and never twice. */
+    @Test
+    fun theSapperBadgeIsAPrimaryBrassBadge() {
+        ActiveRuleset.set(
+            RulesetResolver.fromEffective(
+                id = "badge-test",
+                name = "Test",
+                source = RulesetSource.CUSTOM,
+                schemaVersion = RULESET_SCHEMA_VERSION,
+                effective = RulesetDefaults.OSADA + mapOf(RuleKey.BUILD_AND_REPAIR to 1),
+            ),
+        )
+        val parent = document.createElement("div") as HTMLElement
+        val sapper =
+            EquipmentData().apply {
+                uclass = UnitClass.INFANTRY.value
+                attr2 = 1
+            }
+
+        EquipmentMarkings.render(parent, sapper, extended = true)
+
+        val marks = (0 until parent.children.length).mapNotNull { parent.children.item(it) }
+        val sap = marks.filter { it.textContent == "SAP" }
+        assertEquals(1, sap.size)
+        assertEquals("osada-capability-mark osada-capability-mark--sap", sap.single().className)
+    }
+
     @Test
     fun reconAndTankMarksExplainTheirRealRules() {
         val parent = document.createElement("div") as HTMLElement
@@ -210,7 +238,7 @@ class EquipmentMarkingsTest {
      * `airatk = 0` — all of them radar sets (`Mobile Radar`, `SCR-584`, `SCR-268`) — and the real
      * rule rejects them, because `CombatResolver.isSupportFireEligible` also runs
      * `AttackEligibility.canInitiateAttack`. A badge on those claimed a role combat would never
-     * grant: DEFERRED.md §4.6's failure mode, inside the predicate §7.14 shared to prevent it.
+     * grant — the failure mode the shared predicate exists to prevent.
      */
     @Test
     fun anAirDefenceUnitThatCannotAttackAircraftGetsNoAntiAirMark() {
@@ -227,8 +255,8 @@ class EquipmentMarkingsTest {
         assertEquals(null, parent.firstElementChild, "a radar set advertises no defensive fire")
     }
 
-    /** DEFERRED.md §1.1/§7.19: the engine now intercepts moving aircraft, so the badge must state
-     *  the rule it actually runs rather than the old disclaimer that it never would. */
+    /** The engine intercepts moving aircraft (`docs/design/efile-driven-rules.md` §3), so the badge
+     *  must state the rule it actually runs rather than the old disclaimer that it never would. */
     @Test
     fun theAntiAirMarkNowPromisesInterception() {
         val parent = document.createElement("div") as HTMLElement
@@ -258,7 +286,7 @@ class EquipmentMarkingsTest {
      * A logistics-sounding name is not a capability. The old LOG mark inferred one from the name
      * and then spent its tooltip explaining the port's own import status to the player; both the
      * inference and the explanation are gone. What is actually known about OG Depots lives in
-     * DEFERRED.md §2.10, not in the UI.
+     * `tools/og-import/OG_ABILITY_AUDIT.md` §7.5, not in the UI.
      */
     @Test
     fun aLogisticsSoundingNameEarnsNoMark() {

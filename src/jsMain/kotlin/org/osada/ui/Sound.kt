@@ -266,8 +266,11 @@ object Sound {
         }
         ambient = null
         try {
-            if (kotlinx.browser.localStorage.getItem(AMBIENT_OWNER_KEY) == ambientToken) {
-                kotlinx.browser.localStorage.removeItem(AMBIENT_OWNER_KEY)
+            if (org.osada.storage.localStorage
+                    .getItem(AMBIENT_OWNER_KEY) == ambientToken
+            ) {
+                org.osada.storage.localStorage
+                    .removeItem(AMBIENT_OWNER_KEY)
             }
         } catch (_: Throwable) {
         }
@@ -289,7 +292,9 @@ object Sound {
         kotlinx.browser.window.addEventListener("storage", { event ->
             val raw = event.asDynamic()
             val otherOwner = raw.newValue != ambientToken && raw.newValue != null
-            val lostOwnership = kotlinx.browser.localStorage.getItem(AMBIENT_OWNER_KEY) != ambientToken
+            val lostOwnership =
+                org.osada.storage.localStorage
+                    .getItem(AMBIENT_OWNER_KEY) != ambientToken
             if (raw.key == AMBIENT_OWNER_KEY && otherOwner && lostOwnership) {
                 suspendAmbient()
             }
@@ -330,7 +335,8 @@ object Sound {
         val url = ambientUrl ?: return
         if (ambient == null) {
             try {
-                kotlinx.browser.localStorage.setItem(AMBIENT_OWNER_KEY, ambientToken)
+                org.osada.storage.localStorage
+                    .setItem(AMBIENT_OWNER_KEY, ambientToken)
                 ambientOwner = true
                 val audio = js("new Audio()")
                 audio.src = url

@@ -10,6 +10,7 @@ import org.osada.rules.FrontsAndFactions
 import org.osada.rules.GameRules
 import org.osada.rules.PurchaseCap
 import org.osada.rules.ScenarioPurchaseList
+import org.osada.rules.UnitAttachments
 import org.osada.rules.calculateUnitCosts
 import org.osada.rules.calculateUnitSellCost
 import org.osada.rules.calculateUpgradeCosts
@@ -124,7 +125,7 @@ fun Player.acquireUnit(
 }
 
 /**
- * OG's two per-player purchase defaults, wired 2026-08-29 (`docs/og-fidelity-plan.md` §AF).
+ * OG's two per-player purchase defaults, wired 2026-08-29.
  *
  * The scenario may state what a newly acquired formation arrives with — [Player.defaultExperience]
  * (`opt_default_xp`, 224 scenarios) and [Player.defaultStrength] (`opt_allow_default_str`, 149).
@@ -158,7 +159,7 @@ private fun Player.applyPurchaseDefaults(unit: GameUnit) {
  * **The scenario's purchase whitelist gates upgrades as well as purchases**, unlike `Can't Buy`:
  * OpenSuite's own sentence for Fronts/Factions is *"available to the player to buy new units **or
  * upgrade existing ones**"*, so both go through `rules/ScenarioPurchaseList`. `Can't Buy` stays
- * purchase-only because its wording says only that (`docs/og-fidelity-plan.md` §Q.1).
+ * purchase-only because its wording says only that.
  */
 fun Player.upgradeUnit(
     unit: GameUnit,
@@ -182,15 +183,23 @@ fun Player.upgradeUnit(
     return true
 }
 
-/** Buys attachment [slotNumber] for [unit]'s formation (DEFERRED.md §1.4), same check-then-mutate-
- *  then-deduct shape as [upgradeUnit]. Fails without spending prestige when the slot is unaffordable
- *  or [HeroCampaign.purchaseAttachment] itself refuses (no formation, already full, already owned). */
+/** Buys attachment [slotNumber] for [unit]'s formation (`docs/design/attachments.md`), same check-then-mutate-
+ *  then-deduct shape as [upgradeUnit] -- or, for a unit with no active formation (a standalone
+ *  scenario's, a campaign auxiliary), for the unit itself ([UnitAttachments]). Fails without
+ *  spending prestige when the slot is unaffordable or the store refuses it (already full, already
+ *  owned). A cost of 0 is a free attachment the efile defined, and is bought like any other. */
 fun Player.purchaseAttachment(
     unit: GameUnit,
     slotNumber: Int,
 ): Boolean {
     val cost = Attachments.cost(unit, slotNumber) ?: -1
-    val purchased = cost in 0..prestige && HeroCampaign.purchaseAttachment(unit, slotNumber)
+    val purchased =
+        cost in 0..prestige &&
+            if (UnitAttachments.buyer(unit)) {
+                UnitAttachments.purchase(unit, slotNumber)
+            } else {
+                HeroCampaign.purchaseAttachment(unit, slotNumber)
+            }
     if (purchased) prestige -= cost
     return purchased
 }

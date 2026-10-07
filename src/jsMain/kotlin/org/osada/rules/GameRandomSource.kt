@@ -4,7 +4,7 @@ import org.osada.multiplayer.sync.SeededGameRandom
 
 /**
  * The one random stream every GAMEPLAY outcome draws from, and the reason combat may be stochastic
- * at all (`docs/design/ruleset-profiles.md` §2, `docs/og-fidelity-plan.md` §H.6).
+ * at all (`docs/design/ruleset-profiles.md` §2).
  *
  * ### The problem this exists to solve
  *

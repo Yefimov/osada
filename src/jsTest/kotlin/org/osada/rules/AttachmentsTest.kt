@@ -33,13 +33,18 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /**
- * Attachments (DEFERRED.md §1.4, `docs/design/attachments.md`), Tier 1: pure stat deltas over
+ * Attachments (`docs/design/attachments.md`), Tier 1: pure stat deltas over
  * existing read sites. A per-unit query layer over `CoreFormation.attachmentIds` -- never a
  * mutation of the shared `EquipmentData` (§3.1's trap), which
  * [aBonusDoesNotLeakToOtherUnitsOfTheSameEquipment] exists specifically to catch.
  */
 class AttachmentsTest {
     private val eqid = 501
+
+    private companion object {
+        /** Above OG's twelve slot numbers: definable by an efile, but no mechanic exists for it. */
+        const val UNKNOWN_SLOT = 13
+    }
 
     @BeforeTest
     fun setup() {
@@ -120,7 +125,7 @@ class AttachmentsTest {
         )
 
     /** LXF-shaped config: slot 1 Recon (+2 spot, -1 movement penalty), slot 3 Bridging disabled,
-     *  slot 5 Support (+3 ammo, -2 ammo penalty, zero cost columns to force the global default). */
+     *  slot 5 Support (+3 ammo, -2 ammo penalty, OMITTED cost columns to force the global default). */
     private fun lxfShapedConfig() =
         EfileConfig.AttachmentConfig(
             armyCost = true,
@@ -156,8 +161,8 @@ class AttachmentsTest {
                             disabled = false,
                             bonus = 3,
                             penalty = -2,
-                            minCost = 0,
-                            factCost = 0,
+                            minCost = null,
+                            factCost = null,
                             penaltyType = 3,
                         ),
                 ),
@@ -249,8 +254,8 @@ class AttachmentsTest {
     }
 
     @Test
-    fun costUsesGlobalDefaultsWhenSlotColumnsAreZero() {
-        // GCE-shaped: Support's own minCost/factCost are 0 (omitted), so the global
+    fun costUsesGlobalDefaultsWhenSlotColumnsAreOmitted() {
+        // Support's own minCost/factCost are omitted (null), so the global
         // attach_mincost=20 / attach_factor=10 must be used instead of the hardcoded 30/25.
         EfileConfig.setForTest(attachmentConfigValue = lxfShapedConfig())
         HeroCampaign.roster().putFormation(formation("F-A"))
@@ -324,7 +329,7 @@ class AttachmentsTest {
     }
 
     /** LXF-shaped: `attach_minmove`/`attach_minfuel` are set, so slots 11/12's columns are
-     *  PERCENTAGES of the unit's base stat, floored at the key -- DEFERRED.md §1.17. The old flat
+     *  PERCENTAGES of the unit's base stat, floored at the key -- `docs/design/attachments.md`. The old flat
      *  reading gave a 6-MP unit +20 MP. */
     @Test
     fun fastSpeedAndFuelPodsArePercentagesWhenTheMinKeysAreSet() {
@@ -381,7 +386,7 @@ class AttachmentsTest {
         assertEquals(25, pods, "40 * 50 / 100 = 20, floored to minFuel 25")
     }
 
-    /** DEFERRED.md §1.16: `attach_minmove` used to cap the whole post-attachment range at the
+    /** `docs/design/attachments.md`: `attach_minmove` used to cap the whole post-attachment range at the
      *  pre-attachment one, so Fast Speed's bonus was discarded whenever the unit also carried a
      *  movement malus. It is not a cap on the range at all. */
     @Test
@@ -406,7 +411,7 @@ class AttachmentsTest {
         assertEquals(8, MovementRules.getUnitMoveRange(unit), "6 + 3 - 1; the old cap clamped this back to 6")
     }
 
-    /** DEFERRED.md §1.14: an out-of-fuel unit carrying a movement-malus attachment must stay at 0.
+    /** `docs/design/attachments.md`: an out-of-fuel unit carrying a movement-malus attachment must stay at 0.
      *  It used to be handed `attach_minmove` movement points it had no fuel for. */
     @Test
     fun anOutOfFuelUnitWithAMovementMalusStaysAtZero() {
@@ -430,7 +435,7 @@ class AttachmentsTest {
     /** GCE ships `penalty = -1` with the malus-type column OMITTED on all eight of its slots.
      *  `EFILE_NOKORP/equip.cfg`: `0 = Default/Omitted (current penalty)` -- so the slot's built-in
      *  default applies, and Recon's default is Movement. These penalties used to be dropped whole.
-     *  DEFERRED.md §1.19. */
+     *  `docs/design/attachments.md`. */
     @Test
     fun anOmittedMalusTypeFallsBackToTheSlotsDocumentedDefault() {
         val base = lxfShapedConfig()
@@ -454,18 +459,19 @@ class AttachmentsTest {
     }
 
     /** A slot whose mechanic this engine does not implement must never be offered -- the player
-     *  would pay real prestige for a no-op. Forward Observer (6) is Tier 3. */
+     *  would pay real prestige for a no-op. All twelve OG slots are built since 2026-10-06, so the
+     *  case left is a number above OG's twelve that an efile might still define. */
     @Test
     fun slotsWithNoImplementedMechanicAreNotOffered() {
         val base = lxfShapedConfig()
-        val withTier3 =
+        val withUnknown =
             base.copy(
                 slots =
                     base.slots +
                         mapOf(
-                            6 to
+                            UNKNOWN_SLOT to
                                 EfileConfig.AttachmentSlot(
-                                    "Forward Observer",
+                                    "Not an OG slot",
                                     disabled = false,
                                     bonus = 2,
                                     penalty = -1,
@@ -475,13 +481,13 @@ class AttachmentsTest {
                                 ),
                         ),
             )
-        EfileConfig.setForTest(attachmentConfigValue = withTier3)
+        EfileConfig.setForTest(attachmentConfigValue = withUnknown)
         HeroCampaign.roster().putFormation(formation("F-A"))
         val unit = coreUnit("F-A")
 
         val offered = Attachments.availableSlots(unit).map { it.first }
 
-        assertFalse(6 in offered, "Forward Observer has no mechanic yet and must not be sold")
+        assertFalse(UNKNOWN_SLOT in offered, "a slot with no mechanic must not be sold")
         assertTrue(Attachments.SLOT_RECON in offered, "Tier 1 slots are still offered")
         assertTrue(offered.all { it in Attachments.IMPLEMENTED_SLOTS })
     }
@@ -540,16 +546,20 @@ class AttachmentsTest {
         )
     }
 
+    /** A campaign unit with no formation is offered attachments for ITSELF (`rules/UnitAttachments`);
+     *  the formation path still refuses it, so the hero roster is not widened to make room. */
     @Test
-    fun formationlessUnitHasNoAttachmentsToOffer() {
+    fun formationlessUnitBuysOntoItselfNotOntoTheRoster() {
         EfileConfig.setForTest(attachmentConfigValue = lxfShapedConfig())
         val unit = GameUnit(eqid).apply { player = Player().apply { id = 0 } }
 
-        assertEquals(emptyList(), Attachments.availableSlots(unit))
+        assertTrue(Attachments.availableSlots(unit).any { it.first == Attachments.SLOT_RECON })
         assertFalse(HeroCampaign.purchaseAttachment(unit, Attachments.SLOT_RECON))
+        assertTrue(UnitAttachments.purchase(unit, Attachments.SLOT_RECON))
+        assertEquals(listOf(Attachments.SLOT_RECON), unit.purchasedAttachmentIds)
     }
 
-    // ---------------------------------------------------------------- Tier 2 (DEFERRED.md §1.4)
+    // ---------------------------------------------------------------- Tier 2 (`docs/design/attachments.md`)
 
     private fun withTier2Slots(base: EfileConfig.AttachmentConfig) =
         base.copy(

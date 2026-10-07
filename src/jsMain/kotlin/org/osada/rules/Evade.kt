@@ -83,8 +83,8 @@ internal object Evade {
      * OSADA's `UnitClass` in OG's own class numbering, which is what `class_evade` is indexed by.
      *
      * **The two are NOT the same list, and reading one as the other is a trap this project has
-     * already fallen into once** (`docs/og-fidelity-plan.md` §U.8: OG class 17 is the Destroyer,
-     * OSADA's is the Carrier). This was derived from the merge's own `eqid-map.json` by comparing
+     * already fallen into once** (`docs/og/og-sources.md`: OG class 17 is the Destroyer, OSADA's
+     * is the Carrier). This was derived from the merge's own `eqid-map.json` by comparing
      * every OG record's `equip.xeqp` class byte against the `uclass` its merged twin carries, over
      * all eleven readable efiles; every row came back at 100% agreement except OG's *Spare*,
      * *Install* and *Special* slots, which efiles repurpose freely. `EFILE_LUPO`'s readme is an

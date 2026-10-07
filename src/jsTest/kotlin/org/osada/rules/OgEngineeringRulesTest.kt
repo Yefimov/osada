@@ -7,6 +7,7 @@ import org.osada.TerrainType
 import org.osada.model.EfileConfig
 import org.osada.model.EngineeringActionResult
 import org.osada.model.Hex
+import org.osada.model.SapperWorks
 import org.osada.model.beginEngineering
 import org.osada.restoreEngineering
 import org.osada.rules.ruleset.RuleKey
@@ -523,5 +524,25 @@ class OgEngineeringRulesTest : OgRulesTestHarness() {
         restoreEngineering(legacy, payload)
         assertEquals(-1, legacy.constructionPlayer, "absent is not player zero")
         assertEquals(0, legacy.constructionSide, "and the side is what such a job falls back on")
+    }
+
+    /** What sappers built is recorded so the map can draw it (`ui/BuiltFacilityRenderer`), and the
+     *  record survives a save. */
+    @Test
+    fun aFinishedBridgeIsRecordedAsSapperWorkAndSurvivesASave() {
+        ruleset(RuleKey.BUILD_AND_REPAIR to 1)
+        val map = world(prestige = 100)
+        GameHolder.instance = holderFor(map)
+        val river = map.map!![2][2]
+        river.terrain = TerrainType.RIVER.value
+        val sapper = place(map, sapperEqid, 2, 2, side = 0)
+
+        map.beginEngineering(sapper, EngineeringWork.BRIDGE)
+        repeat(EngineeringWork.BRIDGE.turns) { Engineering.advanceTurn(map.map, 0, builderOwner()) }
+
+        assertEquals(SapperWorks.BRIDGE, river.sapperWorks)
+        val restored = Hex(2, 2)
+        restoreEngineering(restored, reparse(GameStateSerializer.serializeHex(river)))
+        assertEquals(SapperWorks.BRIDGE, restored.sapperWorks)
     }
 }

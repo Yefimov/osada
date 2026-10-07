@@ -4,7 +4,7 @@ import org.osada.LeaderType
 import org.osada.model.OgLeaderPools
 
 /**
- * How much scrutiny a cooperative ability still needs (`docs/design/cooperative-commanders-multiplayer.md` §5.1).
+ * How much scrutiny a cooperative ability still needs (`docs/multiplayer/cooperative-commanders.md` §5.1).
  *
  * A [RESTRICTED] ability multiplies action economy or reaches many units at once, so the first
  * balance pass lets a commander carry at most [CoopLoadout.MAX_RESTRICTED] of them. Its presence in

@@ -5,6 +5,7 @@ import org.osada.hero.CampaignHeroScope
 import org.osada.i18n.GameText
 import org.osada.i18n.I18n
 import org.osada.model.GameUnit
+import org.osada.rules.Airbase
 import org.osada.rules.UnitCapabilities
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
@@ -71,7 +72,8 @@ internal object UnitServiceChip {
         val data = unit.unitData(true)
         val service = serviceKey(unit)
         val lines = mutableListOf<Pair<String, String>>()
-        roleKey(data.uclass)?.let { lines += "dim" to I18n.t("unit_info.identity.role.$it") }
+        val role = if (Airbase.isAirbase(data)) "airbase" else roleKey(data.uclass)
+        role?.let { lines += "dim" to I18n.t("unit_info.identity.role.$it") }
         // Read from the same predicate CombatApplication consults, so a class default and an
         // efile's per-record `Capture Flag` are both reported as the rules will treat them.
         lines +=

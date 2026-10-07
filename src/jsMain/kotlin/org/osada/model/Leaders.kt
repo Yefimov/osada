@@ -314,9 +314,10 @@ object Leaders {
 
     /**
      * The led formation's **class attribute** -- OG's second leader trait, the one fixed by unit
-     * class rather than picked per formation (`docs/leaders.md` §1).
+     * class rather than picked per formation (`docs/heroes/legacy-leaders.md` §1).
      *
-     * Derived from OG's class table ([OgLeaderPools.classTrait]) by default, and **overridden by the scenario author when
+     * Derived from OG's class table ([OgLeaderPools.classTrait]) by default, and **overridden by the scenario author
+     * when
      * [GameUnit.leaderClassTrait] is set**: that is OG's `.xscn` unit `@37`, the Suite's *"According
      * unit's class"* selector, whose zero means exactly this function's derivation and whose
      * non-zero value is the author choosing a different signature for this one formation. 1,401

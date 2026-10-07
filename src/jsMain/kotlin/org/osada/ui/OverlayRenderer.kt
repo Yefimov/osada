@@ -4,6 +4,7 @@ import org.osada.TerrainType
 import org.osada.model.GameMap
 import org.osada.model.Hex
 import org.osada.model.getPlayer
+import org.osada.rules.AirfieldQuality
 import org.osada.uiSettings
 
 /**
@@ -28,7 +29,13 @@ internal class OverlayRenderer(
         private const val HIDDEN_OBJECTIVE_BORDER_WIDTH = 6.0
     }
 
-    /** A map-independent facility sign for painted maps whose artwork omits the runway. */
+    /**
+     * A map-independent facility sign for painted maps whose artwork omits the runway.
+     *
+     * A field (dirt) airfield gets an earth-coloured ring and a dashed runway, so it reads differently
+     * from a proper airfield before the player hovers it. A sapper-built strip also has its runway
+     * drawn in every mode ([BuiltFacilityRenderer]).
+     */
     @Suppress("MagicNumber")
     fun drawTerrainFacility(
         ctx: dynamic,
@@ -37,6 +44,7 @@ internal class OverlayRenderer(
         y: Double,
     ) {
         if (!uiSettings.airMode || hex.terrain != TerrainType.AIRFIELD.value) return
+        val field = AirfieldQuality.isDirt(hex)
         val cx = x + 3.0
         val cy = y + 13.0
         ctx.save()
@@ -44,7 +52,7 @@ internal class OverlayRenderer(
         ctx.arc(cx, cy, 9.0, 0.0, 2.0 * kotlin.math.PI)
         ctx.fillStyle = "rgba(15,18,20,.78)"
         ctx.fill()
-        ctx.strokeStyle = "rgba(221,174,68,.95)"
+        ctx.strokeStyle = if (field) "rgba(160,112,62,.95)" else "rgba(221,174,68,.95)"
         ctx.lineWidth = 2.0
         ctx.stroke()
         ctx.translate(cx, cy)
@@ -58,8 +66,9 @@ internal class OverlayRenderer(
         ctx.lineTo(-5.0, 4.0)
         ctx.moveTo(5.0, -4.0)
         ctx.lineTo(5.0, 4.0)
-        ctx.strokeStyle = "#f2d184"
+        ctx.strokeStyle = if (field) "#d2a679" else "#f2d184"
         ctx.lineWidth = 1.5
+        if (field) ctx.setLineDash(arrayOf(2.0, 1.5))
         ctx.stroke()
         ctx.restore()
     }

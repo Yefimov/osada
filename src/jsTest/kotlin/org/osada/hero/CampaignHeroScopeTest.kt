@@ -30,8 +30,8 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
- * The campaign-hero scope (`hero/CampaignHeroScope`, `docs/design/combat-movement-heroes-weather-audit.md`
- * §3): heroes exist only for the campaign player inside a campaign run, everyone else keeps the
+ * The campaign-hero scope (`hero/CampaignHeroScope`, `docs/heroes/README.md`
+ * §1): heroes exist only for the campaign player inside a campaign run, everyone else keeps the
  * legacy leader path, and records that should never have been enrolled are kept but inert.
  */
 class CampaignHeroScopeTest {

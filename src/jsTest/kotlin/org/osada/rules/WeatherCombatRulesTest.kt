@@ -28,7 +28,7 @@ import kotlin.test.assertTrue
 
 /**
  * The three Open General weather rules OSADA was missing
- * (`Manual_OG-en.pdf`, recorded in `tools/og-import/DEFERRED.md` §7.45):
+ * (`Manual_OG-en.pdf`, recorded in):
  * halved strength across the air/ground boundary, +3 defence in rain or snow, and halved spotting.
  *
  * The property that matters most is the first case: in Fair weather every one of these must be a

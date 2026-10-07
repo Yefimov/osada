@@ -5,6 +5,10 @@ import org.osada.PlayerType
 import org.osada.i18n.I18n
 import org.osada.model.GameUnit
 import org.osada.model.getUnits
+import org.osada.multiplayer.client.OsadaMultiplayer
+import org.osada.multiplayer.command.EndPlayerTurn
+import org.osada.multiplayer.coop.CoopRuntime
+import org.osada.multiplayer.ui.CoopHud
 import org.osada.rules.GameRules
 import org.osada.rules.getUnitAttackCells
 import org.w3c.dom.HTMLElement
@@ -86,6 +90,8 @@ internal class ReadyUnitNavigator(
     fun toggleUnitSleep(unit: GameUnit) {
         val map = ui.game.scenario?.map ?: return
         TurnSleep.toggle(map, unit)
+        // In a cooperative room "Wait" is also the way to take a unit without moving it.
+        if (CoopRuntime.governs(unit)) OsadaMultiplayer.takeUnitForSelf(unit.id)
         updateTurnControls()
     }
 
@@ -106,9 +112,38 @@ internal class ReadyUnitNavigator(
         updateEndTurnButton(fullyReadyUnits().size)
     }
 
+    /**
+     * In a cooperative room, once this commander is done and teammates are not, the button reads
+     * "waiting for ..." and its ✗ takes the "done" back -- the same inline shape as the confirm.
+     */
+    private fun showCoopWaiting(btn: org.w3c.dom.HTMLElement): Boolean {
+        val waiting = CoopHud.waitingForOthers()
+        val actor = CoopRuntime.state?.humanPlayerId
+        if (waiting == null || actor == null) return false
+        btn.className = "osada-et osada-et--confirm"
+        btn.title = ""
+        clearTag(btn)
+        addTag(btn, "span").also {
+            it.className = "osada-et__msg"
+            it.textContent = waiting
+        }
+        addTag(btn, "span").also {
+            it.className = "osada-et__no"
+            it.innerHTML = "✗"
+            it.title = I18n.t("common.cancel.label")
+            it.onclick = { e: MouseEvent ->
+                e.stopPropagation()
+                OsadaMultiplayer.submitOrder(EndPlayerTurn(actor))
+            }
+        }
+        btn.onclick = { e: MouseEvent -> e.stopPropagation() }
+        return true
+    }
+
     private fun updateEndTurnButton(n: Int) {
         val btn = byId("osadaEndTurn") ?: return
-        if (btn.getAttribute("confirming") == "on") return // don't clobber an active inline confirm
+        // Don't clobber an active inline confirm; in a cooperative room, "waiting for ..." wins.
+        if (btn.getAttribute("confirming") == "on" || showCoopWaiting(btn)) return
         btn.className = "osada-et " + if (n > 0) "osada-et--warn" else "osada-et--ready"
         clearTag(btn)
         val label = addTag(btn, "span")

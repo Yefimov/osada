@@ -27,7 +27,7 @@ internal object StartMenuCampaignData {
     // only; the individual scenarios stayed playable from Scenario Selection throughout.
     //
     // `volarm` and `simpob` LEFT this list on 2026-09-03, when that rework was actually done
-    // (`docs/design/progressive-side-campaign-rework.md`, `tools/og-import/rework_red_campaigns.py`
+    // (`docs/campaigns/progressive-side-rework.md`, `tools/og-import/rework_red_campaigns.py`
     // and `rework_red_campaign_text.py`): simpob's XMLs were re-flipped, both campaigns got the
     // enemy force, deployment zone and victory conditions the flip had left them without, both
     // branching graphs were rebuilt so a successful defence returns to the Red line, and every
@@ -167,22 +167,39 @@ internal object StartMenuCampaignData {
         return "$help — " + I18n.t("campaign.progress.last_played", mapOf("when" to stamp))
     }
 
-    /** Lazily computes and toggles the collapsible campaign-path (victory/defeat tree). */
+    /** Lazily loads and toggles the collapsible campaign-path summary (figures, branch points,
+     *  survivable defeats); the full route is the operations map it links to. */
     fun toggleCampaignPath() {
         val path = byId("smCampPath") ?: return
         val body = byId("smCampPathBody") ?: return
         val open = path.classList.toggle("osadaCollapse--open")
-        if (open && body.innerHTML.isBlank()) {
-            val selectedCampaign = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int
-            if (selectedCampaign != null) {
-                var campaignRef: Campaign? = null
-                val campaign =
-                    Campaign(selectedCampaign, DIFFICULTY_HISTORICAL) {
-                        campaignRef?.let { body.innerHTML = it.getCampaignFlow() }
+        val selectedCampaign = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int
+        if (open && body.innerHTML.isBlank() && selectedCampaign != null) {
+            body.textContent =
+                org.osada.ui.campaignmap.CampaignMapText
+                    .t("loading")
+            org.osada.ui.campaignmap.CampaignGraphSource.load(selectedCampaign) { data ->
+                // The player may have picked another campaign while this one loaded.
+                val still = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int == selectedCampaign
+                if (still && data != null) {
+                    org.osada.ui.campaignmap.CampaignPathOutline.render(body, data) { node ->
+                        org.osada.ui.campaignmap.CampaignMapPresenter
+                            .open(selectedCampaign, node)
                     }
-                campaignRef = campaign
+                } else if (still) {
+                    body.textContent =
+                        org.osada.ui.campaignmap.CampaignMapText
+                            .t("error")
+                }
             }
         }
+    }
+
+    /** Opens the full operations map of the campaign selected on the campaign screen. */
+    fun openCampaignMap() {
+        val selectedCampaign = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int ?: return
+        org.osada.ui.campaignmap.CampaignMapPresenter
+            .open(selectedCampaign)
     }
 
     fun collapsePath(path: org.w3c.dom.HTMLElement) {

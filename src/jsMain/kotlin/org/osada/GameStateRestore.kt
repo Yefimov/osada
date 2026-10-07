@@ -180,7 +180,7 @@ class GameStateRestore(
         // OG's authored per-scenario options. Absence-preserving: a key the save does not carry
         // leaves the field alone, so a save written before the block existed reaches
         // `AuthoredOptionsBackfill` with its 27 nulls intact and is completed from the scenario XML
-        // (`docs/og-import-rules-backlog.md` — this is the gap that entry recorded).
+        // (`docs/og/import-rules-backlog.md` — this is the gap that entry recorded).
         AuthoredScenarioOptions.restore(newScenario, scenarioData.options)
     }
 

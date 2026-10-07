@@ -34,8 +34,7 @@ import kotlin.test.assertTrue
 
 /**
  * The five schema-5 keys: OG's aircraft fuel model, its initiative model, its two spotting rules and
- * the scope of automatic ground resupply
- * (`docs/og-fidelity-plan.md` B.3, B.6, B.4, B.5 and A.3 item 2).
+ * the scope of automatic ground resupply.
  *
  * Every test asserts the OFF case as well as the ON one. That was the substance of the promise these
  * keys were admitted on: none of the 502 shipped scenarios changes arithmetic until somebody selects

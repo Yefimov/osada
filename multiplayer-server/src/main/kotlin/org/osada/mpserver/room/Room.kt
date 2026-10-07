@@ -33,7 +33,7 @@ class Member(
  *
  * The server is the room authority (membership, ordering, revisions, stored snapshots); the *game*
  * authority stays on the host client, which owns the rules and produces every snapshot. See
- * docs/multiplayer-server-deployment.md for why the split is drawn here.
+ * docs/multiplayer/deployment.md for why the split is drawn here.
  */
 @Suppress("TooManyFunctions")
 class Room(

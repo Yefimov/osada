@@ -18,8 +18,8 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * What a transport pool COUNTS, and for how long -- the question `docs/og-open-questions.md` §1 led
- * with, closed on 2026-08-29 from the author's own pages.
+ * What a transport pool COUNTS, and for how long -- an open question
+ * closed on 2026-08-29 from the author's own pages.
  *
  * > *"it requires to be configured at design time **how many trains can be used at any time**
  * > (trains pool), similar to air/naval/helo transports."*

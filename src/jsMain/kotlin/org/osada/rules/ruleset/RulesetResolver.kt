@@ -104,8 +104,7 @@ object RulesetResolver {
      *
      * Resolving these to 1 is therefore not "switch the rule on": it is *stop overriding the
      * author*. Until 2026-08-28 Author's Vision resolved them to OSADA's off, which silently
-     * discarded every one of those imported bits and made the profile's own name untrue
-     * (`docs/og-fidelity-plan.md` §AC).
+     * discarded every one of those imported bits and made the profile's own name untrue.
      *
      * The rules with no per-scenario content gate — `counterbattery`, `minefields`,
      * `naval_critical_hits`, `depot_supply` — are deliberately NOT here: nothing in the content

@@ -22,9 +22,9 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * The opt-in "aircraft in bad weather" trial (`docs/design/combat-movement-heroes-weather-audit.md`
- * §7.3): a built-in overlay that lets aircraft start attacks in overcast, rain and snow while every
- * existing weather penalty still applies. It must never change the other profiles.
+ * The opt-in "aircraft in bad weather" trial (`tools/og-import/OG_REGISTER.md` §2.3): a built-in overlay that lets
+ * aircraft start attacks in overcast, rain and snow while every existing weather penalty still applies. It must never
+ * change the other profiles.
  */
 class AviationTrialProfileTest {
     private val fighterEqid = 7301

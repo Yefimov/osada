@@ -14,8 +14,7 @@ import org.osada.model.isWorking
  *
  * `Hex.isWorking` rather than a bare terrain comparison, for the same reason
  * `MovementRules.hasAirfield` uses it: OG's shelled facility is *"unusable until Repaired"*, and a
- * city reduced to rubble by a barrage cannot be a supply source while it is rubble
- * (`docs/og-fidelity-plan.md` §R.7).
+ * city reduced to rubble by a barrage cannot be a supply source while it is rubble.
  */
 internal object SupplyFacilities {
     /** Whether [unit] stands in, or beside, a working city or port. */
@@ -25,7 +24,7 @@ internal object SupplyFacilities {
     ): Boolean {
         val pos = unit.getPos() ?: return false
         // OG's "ports do not supply hexes", authored by 84 scenarios and read by nothing until
-        // 2026-08-28 (`docs/og-fidelity-plan.md` §AD). Null -- an unreadable source -- stays
+        // 2026-08-28. Null -- an unreadable source -- stays
         // permitted, as every authored switch does.
         val portsSupply = GameHolder.instance?.scenario?.portsNoSupply != true
         val cells = listOf(pos) + HexGeometry.getAdjacent(pos.row, pos.col)

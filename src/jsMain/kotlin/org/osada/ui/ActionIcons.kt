@@ -66,6 +66,30 @@ internal object ActionIcons {
             """<rect x="4" y="2.5" width="16" height="6.5" rx="1.2"/>""" +
             """<rect x="10.3" y="8" width="3.4" height="14" rx="1.2"/></g></svg>"""
 
+    /** An arched hangar with its doors -- the container's hangar window. */
+    const val HANGAR: String =
+        """<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" """ +
+            """d="M1.5 21V11.5C1.5 6.8 6.2 3 12 3s10.5 3.8 10.5 8.5V21h-4v-7.5h-13V21z"/>""" +
+            """<path d="M6.5 15h4.6v6H6.5zm6.4 0h4.6v6h-4.6z"/></svg>"""
+
+    /** An aircraft over a downward arrow -- landing in a hangar. */
+    const val LAND_IN_HANGAR: String =
+        """<svg viewBox="0 0 24 24" aria-hidden="true"><g transform="translate(5 0) scale(.7)">""" +
+            """<path d="M10 1c.9 0 1.5.8 1.5 1.9v4.4l7 4v2l-7-2v4.6l2.1 1.6V19l-3.6-1.1L6.4""" +
+            """ 19v-1.5l2.1-1.6v-4.6l-7 2v-2l7-4V2.9C8.5 1.8 9.1 1 10 1z"/></g>""" +
+            """<path d="M10.8 14.5h2.4v4h3.3L12 23l-4.5-4.5h3.3z"/></svg>"""
+
+    /** A bunker with its embrasure -- a fortification's garrison window. */
+    const val COVER: String =
+        """<svg viewBox="0 0 24 24" aria-hidden="true">""" +
+            """<path fill-rule="evenodd" d="M1.5 21V10.5L12 3.5l10.5 7V21zM6.5 12.6v2.6h11v-2.6z"/></svg>"""
+
+    /** A bunker over a downward arrow -- taking cover in it. */
+    const val ENTER_COVER: String =
+        """<svg viewBox="0 0 24 24" aria-hidden="true"><g transform="translate(3 0) scale(.75)">""" +
+            """<path fill-rule="evenodd" d="M1.5 19V9.2L12 2.5l10.5 6.7V19zM6.5 11.4v2.4h11v-2.4z"/></g>""" +
+            """<path d="M10.8 15h2.4v4h3.3L12 23.5l-4.5-4.5h3.3z"/></svg>"""
+
     /** Hammer and wrench, crossed. */
     const val REPAIR: String =
         """<svg viewBox="0 0 24 24" aria-hidden="true">""" +

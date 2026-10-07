@@ -17,7 +17,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * OG's `Evade` (manual §7.2), wired 2026-08-27 (`docs/og-fidelity-plan.md` §W).
+ * OG's `Evade` (manual §7.2), wired 2026-08-27.
  *
  * The probability itself is rolled from the shared random stream, so these tests assert the two
  * things that are deterministic and that matter: **who is eligible** (the ability, `evade_special`

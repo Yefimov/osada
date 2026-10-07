@@ -75,7 +75,7 @@ internal object HeroTraitResolver {
 
     /**
      * The pre-hero behaviour, preserved exactly: a unit with any leader has both its rolled trait
-     * and its class's signature trait (`docs/leaders.md` §1).
+     * and its class's signature trait (`docs/heroes/legacy-leaders.md` §1).
      *
      * ## The authored pair resolves here, and only here
      *

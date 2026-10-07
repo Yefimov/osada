@@ -2,7 +2,7 @@ package org.osada.hero
 
 /**
  * One selectable biography fact, with the tags that decide whether it may be selected at all —
- * `docs/design/hero-biography-service-network-and-soviet-distinction.md` §10.
+ * `docs/heroes/biography-and-distinctions.md` §10.
  *
  * The design's own instruction is to "prefer explicit compatibility tags over a growing chain of
  * special-case `if` statements", and that is the whole reason this type exists. A life path is

@@ -15,7 +15,7 @@ import kotlin.js.json
  *
  * What is NOT here is as much the point as what is: a run carries no ruleset library and no hero
  * archive. Both are profile-level state and travel only with a whole-profile backup
- * (`docs/design/ruleset-profiles.md` §6, `docs/design/hero-desk-and-profile-archive.md` §4), so
+ * (`docs/design/ruleset-profiles.md` §6, `docs/heroes/hero-desk-and-archive.md` §4), so
  * importing one campaign can never silently rewrite the player's named rulesets or another
  * campaign's archived career.
  */

@@ -11,7 +11,7 @@ import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 
 /**
- * The main-menu **Hero Desk** (`docs/design/hero-desk-and-profile-archive.md` §6): the one
+ * The main-menu **Hero Desk** (`docs/heroes/hero-desk-and-archive.md` §6): the one
  * cross-campaign place to inspect regular, legendary, active, wounded, missing, fallen and retired
  * commanders, drawn from live campaign-run snapshots and the profile archive together.
  *

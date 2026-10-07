@@ -6,7 +6,7 @@ import kotlin.math.sin
 
 /**
  * Optional shape-based allegiance channel for strategic-zoom unit flags
- * (`docs/design/accessible-side-identification.md`).
+ * (`docs/design/action-affordances-and-objectives.md` §13).
  *
  * Several scenarios put historically related red palettes on both sides -- Hungarian Revolution is
  * the reported case -- so the national flag cannot answer "whose unit is that?" on its own. This
@@ -16,7 +16,7 @@ import kotlin.math.sin
  *
  * - allegiance comes from the unit owner's **side**, never from equipment country, the displayed
  *   national flag, palette or unit name. A support-country formation is part of the player's order
- *   of battle and stays friendly even though its flag is foreign (`DEFERRED.md` §§5.2, 5.6);
+ *   of battle and stays friendly even though its flag is foreign (`tools/og-import/OG_REGISTER.md` D§5.2, D§5.6);
  * - the reference side is the SPOTTING side, not the current player's id, so an observer (and the
  *   player watching an AI turn) keeps reading the map from their own point of view.
  *

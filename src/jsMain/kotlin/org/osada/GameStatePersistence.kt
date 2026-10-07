@@ -1,12 +1,12 @@
 package org.osada
 
-import kotlinx.browser.localStorage
 import org.osada.rules.GameRandomSource
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.deserializeRuleset
 import org.osada.save.CampaignRunBundle
 import org.osada.save.CampaignRunMetadata
 import org.osada.save.LocalStorageSaveSnapshotStore
+import org.osada.save.ResumeTarget
 import org.osada.save.SaveResult
 import org.osada.save.SaveResultKind
 import org.osada.save.SaveSnapshot
@@ -14,6 +14,8 @@ import org.osada.save.SaveSnapshotStore
 import org.osada.save.SaveStatus
 import org.osada.save.SaveStatusBus
 import org.osada.save.SavedGameSummary
+import org.osada.storage.BrowserStorage
+import org.osada.storage.localStorage
 import kotlin.js.Date
 import kotlin.js.json
 
@@ -63,16 +65,18 @@ class GameStatePersistence(
     fun save() {
         // Network snapshots have their own recovery namespace, including campaign rooms.
         if (org.osada.multiplayer.client.OsadaMultiplayer.active) return
-        val scenario = game.scenario ?: return
+        if (game.scenario == null) return
         val campaign = game.campaign
         SaveStatusBus.update(SaveStatus.Saving)
         if (campaign != null) {
             activeCampaignRunId = campaign.file
             val result = commitCampaignSnapshot(campaign.file)
             reportResult(result)
-        } else {
-            saveStandaloneSession(scenario)
-            SaveStatusBus.update(SaveStatus.Saved(Date().getTime()))
+            if (result.isSuccess) ResumeTarget.clear()
+        } else if (saveStandaloneSession()) {
+            // A failed write already published Failed; reporting Saved here used to overwrite it.
+            reportResult(SaveResult.success())
+            ResumeTarget.clear()
         }
     }
 
@@ -84,8 +88,13 @@ class GameStatePersistence(
         localStorageSet(settingsKey, uiSettings)
     }
 
+    @Suppress("ReturnCount") // Unchanged, invalid and written are three different answers.
     private fun commitCampaignSnapshot(campaignRunId: String): SaveResult {
         val payload = GameStateSerializer.exportGameState(game)
+        // Restoring a battle saves it again at once. Byte-identical content is not a new save: writing
+        // it would rotate the genuine previous generation out of recovery for a duplicate and make the
+        // profile look changed to online sync on every page load.
+        if (store.readCurrent(campaignRunId)?.payload == payload) return SaveResult.success()
         val parsedPayload = JSON.parse<dynamic>(payload)
         val scenario = game.scenario
         val phase =
@@ -125,8 +134,20 @@ class GameStatePersistence(
     }
 
     private fun reportResult(result: SaveResult) {
-        if (result.isSuccess) {
-            SaveStatusBus.update(SaveStatus.Saved(Date().getTime()))
+        if (result.isSuccess && !BrowserStorage.persistent) {
+            // Written to the page's memory only: claiming "Saved" would promise survival of a reload.
+            SaveStatusBus.update(SaveStatus.Failed(SaveStatus.SESSION_ONLY))
+        } else if (result.isSuccess) {
+            // "Saved" means on disk: with IndexedDB that is the transaction's completion, not the write.
+            BrowserStorage.whenDurable { durable ->
+                SaveStatusBus.update(
+                    if (durable) {
+                        SaveStatus.Saved(Date().getTime())
+                    } else {
+                        SaveStatus.Failed(BrowserStorage.lastDurableErrorName ?: "storage error")
+                    },
+                )
+            }
         } else {
             console.error("[osada] campaign save FAILED (${result.kind}): ${result.message}")
             SaveStatusBus.update(SaveStatus.Failed(result.message ?: result.kind.name))
@@ -136,7 +157,7 @@ class GameStatePersistence(
     /** Wrapped in a `{savedAt, payload}` envelope so [restore] can tell whether this session or a
      *  campaign run was played more recently. A bare pre-envelope payload is still readable --
      *  see [readStandaloneSession]. */
-    private fun saveStandaloneSession(scenario: org.osada.scenario.Scenario) {
+    private fun saveStandaloneSession(): Boolean =
         try {
             val envelope =
                 json(
@@ -144,11 +165,12 @@ class GameStatePersistence(
                     Pair("payload", GameStateSerializer.exportGameState(game)),
                 )
             localStorage.setItem(standaloneSessionKey, JSON.stringify(envelope))
+            true
         } catch (e: Throwable) {
             console.error("[osada] standalone session snapshot FAILED", e)
             SaveStatusBus.update(SaveStatus.Failed(e.message ?: "storage error"))
+            false
         }
-    }
 
     /**
      * Reads the standalone/tutorial session snapshot in either shape: the current
@@ -189,6 +211,7 @@ class GameStatePersistence(
         onFail: () -> Unit,
     ) {
         (store as? LocalStorageSaveSnapshotStore)?.pruneOrphans()
+        if (restoreResumeTarget(onSuccess)) return
         val attempts = mutableListOf<Pair<Double, () -> Boolean>>()
         store.listCampaignRuns().firstOrNull()?.let { run ->
             attempts += run.lastPlayedAt to { openCampaignRun(run.campaignRunId, onSuccess) }
@@ -202,6 +225,17 @@ class GameStatePersistence(
         }
         restoreFromLegacyKeys(onSuccess, onFail)
     }
+
+    /** An explicit import target outranks recency; a stale or unloadable one falls through. */
+    private fun restoreResumeTarget(onSuccess: () -> Unit): Boolean =
+        when (val target = ResumeTarget.read()) {
+            ResumeTarget.Standalone ->
+                readStandaloneSession()?.let { restoreFromString(it.payload, onSuccess) } == true
+            is ResumeTarget.Campaign ->
+                store.listCampaignRuns().any { it.campaignRunId == target.campaignRunId } &&
+                    openCampaignRun(target.campaignRunId, onSuccess)
+            null -> false
+        }
 
     private data class StandaloneSession(
         val savedAt: Double,
@@ -218,7 +252,7 @@ class GameStatePersistence(
      * single small `localStorage` read rather than parsing a ~130 KB payload on every menu show.
      */
     fun savedGameSummary(): SavedGameSummary? =
-        store
+        targetSummary() ?: store
             .listCampaignRuns()
             .firstOrNull()
             ?.let { SavedGameSummary(it.scenarioName, it.turn, it.maxTurns) }
@@ -229,6 +263,18 @@ class GameStatePersistence(
             ?: localStorage.getItem(legacyScenarioKey)?.let { raw ->
                 summaryOf(parseOrNull(raw)) ?: SavedGameSummary.UNREADABLE
             }
+
+    /** The Continue label for [ResumeTarget], so the button names what [restore] will open. */
+    private fun targetSummary(): SavedGameSummary? =
+        when (val target = ResumeTarget.read()) {
+            ResumeTarget.Standalone -> readStandaloneSession()?.let { summaryOf(parseOrNull(it.payload)?.scenario) }
+            is ResumeTarget.Campaign ->
+                store
+                    .listCampaignRuns()
+                    .firstOrNull { it.campaignRunId == target.campaignRunId }
+                    ?.let { SavedGameSummary(it.scenarioName, it.turn, it.maxTurns) }
+            null -> null
+        }
 
     private fun summaryOf(scenario: dynamic): SavedGameSummary? {
         val name = (scenario?.name as? String)?.takeIf { it.isNotBlank() } ?: return null
@@ -304,7 +350,7 @@ class GameStatePersistence(
 
     /**
      * The best readable generation of [campaignRunId] for a READ-ONLY projection -- the hero desk's
-     * live cards (`docs/design/hero-desk-and-profile-archive.md` §2).
+     * live cards (`docs/heroes/hero-desk-and-archive.md` §2).
      *
      * Falls through current -> recovery on exactly the same previous-good path [openCampaignRun]
      * uses, and applies the same [isRestorableGeneration] check, so the desk never shows a roster

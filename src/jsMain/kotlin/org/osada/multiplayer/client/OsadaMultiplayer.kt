@@ -22,9 +22,8 @@ import org.osada.multiplayer.command.HexCoordinate
 import org.osada.multiplayer.command.MoveUnit
 import org.osada.multiplayer.command.OsadaGameCommandApplier
 import org.osada.multiplayer.command.OsadaGameCommandValidator
-import org.osada.multiplayer.command.ProposeTransfer
-import org.osada.multiplayer.command.RespondTransfer
 import org.osada.multiplayer.command.SetLoadout
+import org.osada.multiplayer.command.SetSeatSymbol
 import org.osada.multiplayer.command.SetUnitAssignment
 import org.osada.multiplayer.command.toPayloadJson
 import org.osada.multiplayer.coop.CoopAbilityCatalogue
@@ -38,6 +37,7 @@ import org.osada.multiplayer.coop.CoopPortrait
 import org.osada.multiplayer.coop.CoopPortraitGeneration
 import org.osada.multiplayer.coop.CoopRecoveryPlan
 import org.osada.multiplayer.coop.CoopRuntime
+import org.osada.multiplayer.coop.CoopSeatSymbols
 import org.osada.multiplayer.coop.CoopState
 import org.osada.multiplayer.coop.CoopStateJson
 import org.osada.multiplayer.model.MatchStatus
@@ -73,6 +73,7 @@ import org.osada.multiplayer.ui.MultiplayerScreen
 import org.osada.multiplayer.ui.ScenarioChoice
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RulesetCompatibility
+import org.osada.storage.localStorage
 import org.osada.ui.MinimapPings
 import org.osada.ui.ObserverModeLock
 import org.osada.ui.StartMenuBuilder
@@ -193,7 +194,7 @@ object OsadaMultiplayer : RoomLinkListener {
     }
 
     /**
-     * An attack ORDER, sent to the host like a move (`docs/OSADA_MULTIPLAYER_TECH_SPEC.md` lists
+     * An attack ORDER, sent to the host like a move (`docs/multiplayer/tech-spec.md` lists
      * `AttackUnit` among the commands). Until 2026-09-27 an attack in a room ran only on the clicking
      * client: a peer's attack was overwritten by the host's next snapshot, and the host's own attack
      * reached the peers only with whatever command came after it. The host resolves the complete
@@ -217,6 +218,18 @@ object OsadaMultiplayer : RoomLinkListener {
         if (!active || !acceptsLocalCommands()) return false
         retryAttempts = 0
         return submit(coopRouted(command))
+    }
+
+    /**
+     * A cooperative commander taking [unitId] for themselves without moving it -- what "Wait" does.
+     * Nothing is sent when the unit is already theirs or the room is not cooperative.
+     */
+    fun takeUnitForSelf(unitId: Int) {
+        val coop = CoopRuntime.state ?: return
+        val self = coop.commanderOfParticipant(selfId)
+        if (self != null && coop.ownerOf(unitId) != self.id) {
+            submitOrder(SetUnitAssignment(unitId, selfId, coop.humanPlayerId))
+        }
     }
 
     /**
@@ -712,6 +725,7 @@ object OsadaMultiplayer : RoomLinkListener {
                     updateDraft(portrait = CoopPortraitGeneration.generate(Random.nextInt(), era, female))
                 },
                 onAbilityToggled = ::toggleAbility,
+                onSymbolChosen = { updateDraft(symbol = it) },
                 onToggleReady = { setReady(participants[selfId]?.ready != true) },
                 onStart = ::startMatch,
                 onLeave = ::leaveRoom,
@@ -728,6 +742,7 @@ object OsadaMultiplayer : RoomLinkListener {
         name: String? = null,
         portrait: CoopPortrait? = null,
         abilityIds: List<String>? = null,
+        symbol: String? = null,
     ) {
         val current = coopDraft ?: defaultDraft()
         coopDraft =
@@ -735,8 +750,10 @@ object OsadaMultiplayer : RoomLinkListener {
                 name = name ?: current.name,
                 portrait = portrait ?: current.portrait,
                 abilityIds = abilityIds ?: current.abilityIds,
+                symbol = symbol?.takeIf(CoopSeatSymbols::isValid) ?: current.symbol,
             )
-        participants[selfId]?.ready = false
+        // A mark is cosmetic: changing it keeps the player ready.
+        if (symbol == null) participants[selfId]?.ready = false
         publishProfile()
         renderLobby()
     }
@@ -884,7 +901,7 @@ object OsadaMultiplayer : RoomLinkListener {
             if (paused) {
                 I18n.t("multiplayer.status.paused")
             } else {
-                I18n.t("multiplayer.status.online", mapOf("revision" to revision))
+                onlineStatusText()
             },
         )
     }
@@ -1125,6 +1142,8 @@ object OsadaMultiplayer : RoomLinkListener {
 
     private fun saveCheckpoint(snapshot: MultiplayerSnapshot) {
         if (roomMode != ROOM_MODE_COOP) return
+        // The network autosave: every participant keeps the latest acknowledged checkpoint in its
+        // browser. A file on disk is only ever written by hand (Resume session -> export).
         runCatching { CoopCheckpointStore.save(snapshot) }.onFailure {
             console.warn("[coop] checkpoint refused", it.message)
         }
@@ -1206,6 +1225,7 @@ object OsadaMultiplayer : RoomLinkListener {
                         name = profile.name.ifBlank { participant.displayName },
                         portrait = profile.portrait,
                         abilityIds = profile.abilityIds,
+                        symbol = profile.symbol,
                     )
                 }
         val state = CoopState(commanders, humanPlayerId)
@@ -1269,15 +1289,14 @@ object OsadaMultiplayer : RoomLinkListener {
             if (held) {
                 MultiplayerScreen.statusText()
             } else {
-                I18n.t(
-                    "multiplayer.status.online",
-                    mapOf(
-                        "revision" to revision,
-                    ),
-                )
+                onlineStatusText()
             },
         )
     }
+
+    /** A cooperative room says nothing while all is well: the revision number is not for players. */
+    private fun onlineStatusText(): String =
+        if (roomMode == ROOM_MODE_COOP) "" else I18n.t("multiplayer.status.online", mapOf("revision" to revision))
 
     private fun renderOnlineStatus() {
         org.osada.ui.briefing.CoopBriefingBridge
@@ -1286,7 +1305,7 @@ object OsadaMultiplayer : RoomLinkListener {
         // A refusal must stay readable: the winner's commit arrives a moment later and used to wipe
         // the very sentence that explained why the order did not happen.
         if (Date.now() >= statusHoldUntil) {
-            MultiplayerScreen.setStatus(I18n.t("multiplayer.status.online", mapOf("revision" to revision)))
+            MultiplayerScreen.setStatus(onlineStatusText())
         }
         refreshCoopHud()
     }
@@ -1324,20 +1343,8 @@ object OsadaMultiplayer : RoomLinkListener {
                 isHost = isHost,
                 connected = participants.mapValues { it.value.connected },
                 gameEnded = game?.gameEnded == true,
-                checkpointDurable = CoopCheckpointStore.durable,
-                onExportCheckpoint = CoopRecoveryScreen::exportLatest,
-                onToggleDone = { submitOrder(EndPlayerTurn(coop.humanPlayerId)) },
-                onTransferProposal = { unitId, to -> submitOrder(ProposeTransfer(unitId, to, coop.humanPlayerId)) },
-                onTransferAnswer = {
-                    unitId,
-                    accept,
-                    ->
-                    submitOrder(RespondTransfer(unitId, accept, coop.humanPlayerId))
-                },
                 onSetLoadout = { abilityIds -> submitOrder(SetLoadout(abilityIds, coop.humanPlayerId)) },
-                onReserveUnit = { unitId, reserve ->
-                    submitOrder(SetUnitAssignment(unitId, if (reserve) selfId else null, coop.humanPlayerId))
-                },
+                onSetSymbol = { symbol -> submitOrder(SetSeatSymbol(symbol, coop.humanPlayerId)) },
                 onExcuse = { commanderId, excused, delegate ->
                     submitOrder(ExcuseSeat(commanderId, excused, delegate, coop.humanPlayerId))
                 },
@@ -1419,13 +1426,13 @@ object OsadaMultiplayer : RoomLinkListener {
     }
 
     private fun storedDisplayName(): String =
-        window.localStorage.getItem(DISPLAY_NAME_KEY)
+        localStorage.getItem(DISPLAY_NAME_KEY)
             ?: displayName.takeIf { it.isNotBlank() }
             ?: I18n.t("multiplayer.default_name")
 
     private fun rememberDisplayName(rawName: String): String {
         val name = normalizedName(rawName)
-        window.localStorage.setItem(DISPLAY_NAME_KEY, name)
+        localStorage.setItem(DISPLAY_NAME_KEY, name)
         return name
     }
 
@@ -1434,7 +1441,7 @@ object OsadaMultiplayer : RoomLinkListener {
         token: String,
     ) {
         runCatching {
-            window.localStorage.setItem(
+            localStorage.setItem(
                 SESSION_KEY,
                 JSON.stringify(json("roomCode" to code, "reconnectToken" to token)),
             )
@@ -1443,7 +1450,7 @@ object OsadaMultiplayer : RoomLinkListener {
 
     private fun reconnectTokenFor(code: String): String? =
         runCatching {
-            val stored = window.localStorage.getItem(SESSION_KEY) ?: return null
+            val stored = localStorage.getItem(SESSION_KEY) ?: return null
             val value = JSON.parse<dynamic>(stored)
             if (value.roomCode as? String != code) null else value.reconnectToken as? String
         }.getOrNull()

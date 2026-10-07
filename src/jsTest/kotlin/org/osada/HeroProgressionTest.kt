@@ -403,7 +403,7 @@ class HeroProgressionTest {
         assertEquals(first.map { it.id }, second.map { it.id }, "the same state must always offer the same pair")
     }
 
-    // ------------------------------------------------- newly-wired traits, DEFERRED.md §1.6/§7.43
+    // ------------------------------------------------- newly-wired traits, `docs/heroes/README.md` §2
 
     @Test
     fun groundAttackSpecialistIsOnlyOfferedToAirClasses() {

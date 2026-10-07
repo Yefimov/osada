@@ -7,8 +7,8 @@ import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 
 /**
- * Open General's operational fuel model for aircraft (OG manual 6.23,
- * `docs/og-fidelity-plan.md` B.3), behind the `air_fuel` ruleset key.
+ * Open General's operational fuel model for aircraft (OG manual 6.23), behind the `air_fuel`
+ * ruleset key.
  *
  * Two rules, one key, because in OG they are one model:
  *
@@ -20,8 +20,8 @@ import org.osada.rules.ruleset.RuleKey
  *     move it, which leaves a stranded aircraft sitting on the map indefinitely.
  *
  * **The trigger for rule 2 is being OUT OF FUEL, not being away from base.** That distinction is
- * the whole reason this is safe to ship: `docs/og-fidelity-plan.md` B.3 names OSADA's behaviour as
- * *"OSADA only stops the aircraft moving"*, so the rule OG adds is what happens to an aircraft the
+ * the whole reason this is safe to ship: OSADA on its own only stops the aircraft
+ * moving, so the rule OG adds is what happens to an aircraft the
  * engine has already immobilised. Destroying every unbased aircraft regardless of fuel would delete
  * authored deployments in scenarios that were never written for it.
  *
@@ -29,7 +29,7 @@ import org.osada.rules.ruleset.RuleKey
  * punitive and OSADA Default is deliberately the gentler game. It is on in Open General Fidelity.
  *
  * Every loss is reported. A formation that disappears between turns with no line in the Turn Report
- * is the same failure `tools/og-import/DEFERRED.md` §1.1 forbids for AA interception, and an
+ * is the same failure `docs/design/action-affordances-and-objectives.md` §1.1 forbids for AA interception, and an
  * end-of-turn sweep is even less visible than movement damage -- see [strandedAircraft]'s callers in
  * `model/GameMap.endTurn`.
  */
@@ -111,7 +111,7 @@ internal object AirOperations {
      * The inverse of [chargedMovePoints], and it has to exist separately: an aircraft that cannot
      * afford the whole sortie floor cannot take off at all, so the honest preview is zero rather
      * than "as far as the raw fuel divides". Promising a route the aircraft cannot finish is the
-     * failure `docs/og-fidelity-plan.md` B.2 already called the real work in the snow-fuel rule.
+     * same failure the snow-fuel preview guards against.
      *
      * [fuelPerPoint] is `WeatherCombatRules.fuelPerMovePoint()`, passed in so the two fuel rules
      * compound in one place rather than each halving the other's arithmetic.

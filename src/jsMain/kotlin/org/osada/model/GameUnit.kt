@@ -96,7 +96,7 @@ class GameUnit(
      * * [aiOrdinal] -- `@46`, the per-player ordinal the two fields above address a formation by.
      *
      * Two decoded fields are deliberately absent. **AI stance** (`@57`) is blocked by
-     * `docs/og-fidelity-plan.md` §0, which forbids shipping stances before the P3 benchmark exists;
+     * `tools/og-import/OG_REGISTER.md` F§0, which forbids shipping stances before the P3 benchmark exists;
      * **avoid auto hold** (`@50` bit 4) suppresses an automatic hold behaviour OSADA's planner does
      * not have, so importing it would be a field with nothing to switch off.
      */
@@ -125,6 +125,14 @@ class GameUnit(
     var authoredAttachmentIds: List<Int> = emptyList()
 
     /**
+     * Attachments BOUGHT for this unit while it had no active formation, as slot numbers -- every
+     * unit of a standalone scenario, and a borrowed or non-roster unit in a campaign
+     * (`rules/UnitAttachments`). A roster formation keeps its purchases on `CoreFormation.attachmentIds`
+     * so they carry between battles; this store lives exactly as long as the unit does.
+     */
+    var purchasedAttachmentIds: List<Int> = emptyList()
+
+    /**
      * OG's *"disable attachments"* (`.xscn` unit `@50` bit 3) -- the author forbidding this
      * formation any attachment at all.
      *
@@ -141,8 +149,8 @@ class GameUnit(
      * OG has two ways to make a Depot and this is the older one — the other is the May 2024
      * `Supply Unit` equipment special, which [org.osada.rules.DepotSupply.isDepot] already read.
      * OpenSuite spells this one *"Can supply units on ZOC"* in a unit's right-click Misc. panel;
-     * `DEFERRED.md` §2.10 quotes *"enemy ZOC does not reduce it"* as one of the three clauses that
-     * define what a Depot does.
+     * `tools/og-import/OG_ABILITY_AUDIT.md` §7.5 quotes *"enemy ZOC does not reduce it"* as one of
+     * the clauses that define what a Depot does.
      *
      * **Recovered 2026-08-29** from `.xscn` unit record `@50` bit 1, by controlled OpenSuite diff.
      * It defeated `depot_flag_hunt.py`'s 328,638-record correlation sweep because that sweep
@@ -267,7 +275,8 @@ class GameUnit(
      * have already intercepted in the turn cannot intercept again"* -- a budget of its own, unlike
      * [hasInterceptedThisTurn], which is only `g2a_intercept_mode`'s air-defence restriction and is
      * not set at all under the default mode. Reset every round in [unitEndTurn]; turn-scoped and not
-     * serialized, like its neighbours. (OG's FlaK Support leader, which lifts it, has no OSADA slot.)
+     * serialized, like its neighbours. OG's FlaK Support leader lifts it
+     * (`LeaderSupportFire.interceptsRepeatedly`).
      */
     var hasInterceptedMovingAirThisTurn: Boolean = false
 
@@ -297,7 +306,7 @@ class GameUnit(
      * OG's penalties: −2 attack and −2 defence, the next move and the next attack lost, and no
      * reinforcing, resupplying or evading. Two further clauses — it cannot act as a Depot or a
      * Healer — are inert here because OSADA has neither, and they are recorded rather than
-     * approximated (`DEFERRED.md` §2.10 is the Depot's own blocker).
+     * approximated (`tools/og-import/OG_ABILITY_AUDIT.md` §7.5 is the Depot's own blocker).
      *
      * Unlike [hasInterceptedThisTurn] and [hasSupportedThisTurn] beside it this is NOT turn-scoped
      * and IS serialized: OG describes sabotage as a state a unit is put into, not a flag that
@@ -350,7 +359,7 @@ class GameUnit(
      * `Shock Tactics` ("suppression inflicted lasts the entire player turn").
      *
      * OSADA's suppression is [hits], cleared for every unit at once when the turn wraps back to
-     * player 0 (`GameMap.endTurn`) -- see `docs/og-fidelity-plan.md` 0.1.1 for why that timing is a
+     * player 0 (`GameMap.endTurn`) -- see `tools/og-import/OG_REGISTER.md` F§0.1.1 for why that timing is a
      * faithful port and is not being changed. Lasting suppression is therefore expressed the only
      * way it can be here, and the way that document prescribes: as points that survive the victim's
      * next [unitEndTurn] rather than as a second suppression pool with its own units.
@@ -505,6 +514,7 @@ class GameUnit(
         aiFollowsObjectiveUnit = other.aiFollowsObjectiveUnit
         aiOrdinal = other.aiOrdinal
         authoredAttachmentIds = other.authoredAttachmentIds
+        purchasedAttachmentIds = other.purchasedAttachmentIds
         attachmentsForbidden = other.attachmentsForbidden
         nodossier = other.nodossier
         isScenarioDepot = other.isScenarioDepot

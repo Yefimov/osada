@@ -2,6 +2,7 @@ package org.osada.ui
 
 import org.osada.PlayerType
 import org.osada.evaluateScenarioEvents
+import org.osada.forCurrentScenario
 import org.osada.handleMoveVictory
 import org.osada.hero.HeroCampaign
 import org.osada.i18n.I18n
@@ -280,7 +281,8 @@ internal class AnimationOrchestrator(
     }
 
     private fun animationCallback(onComplete: () -> Unit): dynamic {
-        val cb: (dynamic) -> Unit = { _: dynamic -> onComplete() }
+        val complete = ui.game.forCurrentScenario(onComplete)
+        val cb: (dynamic) -> Unit = { _: dynamic -> complete() }
         val wrapper = js("{}")
         wrapper.cbfunc = cb
         return wrapper
@@ -416,10 +418,10 @@ private fun reportCapture(
  * This move walked into a minefield (`rules/Minefields`, OG 9.9).
  *
  * Reported for the same reason interception is: the formation stopped short, and possibly lost
- * strength, from something the player did not order and did not watch. `DEFERRED.md` §1.1 is
- * explicit that movement damage with no visible cause reads as a bug, and an undetected minefield is
- * the one case in this engine that can produce it — so it gets an alert on the hex and a clickable
- * HUD-log line, and the wording distinguishes a field that was already known from one that was not.
+ * strength, from something the player did not order and did not watch.
+ * `docs/design/action-affordances-and-objectives.md` §1.1 is explicit that movement damage with no visible cause reads
+ * as a bug, and an undetected minefield is the one case in this engine that can produce it — so it gets an alert on the
+ * hex and a clickable HUD-log line, and the wording distinguishes a field that was already known from one that was not.
  *
  * Top-level for the same reason as [reportInterceptions]: [AnimationOrchestrator]'s function budget.
  */
@@ -499,8 +501,9 @@ private fun reportWithdrawal(
  *
  * Reported for the same reason a capture is: something happened that the player did not order and
  * that changed their position -- prestige, experience, a leader or a formation appeared out of the
- * map. `DEFERRED.md` 1.1's rule is about damage with no visible cause, and a silent GIFT is the
- * same failure with the sign flipped: a player who never sees it cannot tell the mechanic works.
+ * map. The visible-cause rule (`docs/design/action-affordances-and-objectives.md` §1.1) covers
+ * gifts too: a silent GIFT is the same failure with the sign flipped: a player who never sees it cannot tell the
+ * mechanic works.
  *
  * The author's own text is used verbatim where they wrote one, because it is authored scenario
  * prose in the same sense a briefing is -- 33 of the corpus's 850 triggers carry text, and OG's
@@ -548,7 +551,7 @@ private fun reportTrigger(
  *
  * The player DID order this combat, unlike an interception -- but they did not order the reply, and
  * an artillery piece that comes back from a successful bombardment two points weaker with nothing
- * on screen to explain it is the same `DEFERRED.md` 1.1 failure by another route.
+ * on screen to explain it is the same `docs/design/action-affordances-and-objectives.md` §1.1 failure by another route.
  *
  * `GameMap.lastCounterBattery` is a one-shot channel cleared at the start of every attack, so this
  * can be called unconditionally: it does nothing on a combat that drew none.
@@ -640,8 +643,9 @@ private fun reportInterceptions(
  * when the aircraft goes down.
  *
  * **Only a gun the observer can see is drawn.** A hidden battery must never be placed on the map by
- * the UI (`DEFERRED.md` §1.1). Firing already reveals a gun for the turn (`tempSpotted`), so in
- * practice the shooter is drawn -- but that is the rules' decision, read here, not re-made.
+ * the UI (`docs/design/action-affordances-and-objectives.md` §1.1). Firing already reveals a gun
+ * for the turn (`tempSpotted`), so in practice the shooter is drawn -- but that is the rules' decision, read here, not
+ * re-made.
  */
 internal object InterceptionAnimation {
     fun play(

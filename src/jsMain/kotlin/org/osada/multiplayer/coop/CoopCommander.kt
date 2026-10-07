@@ -78,7 +78,12 @@ data class CoopCommander(
     val name: String,
     val portrait: CoopPortrait,
     val abilityIds: List<String>,
+    /** The mark this commander's units wear on the map; empty means the seat number. */
+    val symbol: String = "",
 ) {
+    /** The seat number, shown wherever no symbol was chosen. */
+    val mark: String get() = "${seat + 1}"
+
     val leaderEffects: Set<org.osada.LeaderType>
         get() = abilityIds.mapNotNull(CoopAbilityCatalogue::leaderFor).toSet()
 
@@ -95,6 +100,46 @@ data class CoopCommander(
 
         fun idForSeat(seat: Int): String = "c${seat + 1}"
     }
+}
+
+/**
+ * The marks a commander may wear instead of a seat number: a closed set of small filled glyphs on a
+ * 24x24 grid, drawn the same way on the map canvas (`Path2D`) and in the interface (inline SVG).
+ * The id is what travels and is stored; anything not listed is refused.
+ */
+object CoopSeatSymbols {
+    /** id -> SVG path data (filled, even-odd), 24x24 box. */
+    val PATHS: Map<String, String> =
+        linkedMapOf(
+            "tank" to "M2 15h20v3a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z M6 10h9v4H6z M15 11h8v2h-8z",
+            "artillery" to "M3 18a3 3 0 1 0 6 0a3 3 0 1 0-6 0z M7.5 15.5L19.6 4.4l1.6 1.8L9.4 17.3z M10 18h11v2H10z",
+            "plane" to
+                "M11 2h2l1 7 8 4v2l-8-2-.5 5 2.5 2v1.5L12 20.5 8 21.5V20l2.5-2L10 13l-8 2v-2l8-4z",
+            "blast" to
+                "M12 1l2.2 6.2L20 4l-2.6 5.8L23 12l-5.6 2.2L20 20l-5.8-2.6L12 23l-2.2-5.6L4 20l2.6-5.8L1 12" +
+                "l5.6-2.2L4 4l5.8 3.2z",
+            "infantry" to "M3 15a9 8 0 0 1 18 0z M1 15h22v2.5H1z",
+            "ship" to "M1 15h22l-3.5 5h-15z M6 10h10v4H6z M10 4h2v6h-2z",
+            "rocket" to "M12 1c3 3 4 7 3.2 12l2.3 3v4l-3.5-2h-4l-3.5 2v-4l2.3-3C8 8 9 4 12 1z",
+            "star" to "M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7.3L12 17.8l-6.2 3.7 1.6-7.3L2 9.5l7.1-.6z",
+            "shield" to "M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z",
+            "skull" to
+                "M12 2a8 8 0 0 0-8 8c0 3 1.5 5 3 6v4h10v-4c1.5-1 3-3 3-6a8 8 0 0 0-8-8z " +
+                "M7 10.5a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0-4.4 0z M12.6 10.5a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0-4.4 0z",
+        )
+
+    val ALL: List<String> = PATHS.keys.toList()
+
+    fun isValid(symbol: String): Boolean = symbol.isEmpty() || symbol in PATHS
+
+    fun pathOf(symbol: String): String? = PATHS[symbol]
+
+    /** Inline SVG for a known id. The markup is built only from the constants above, never from input. */
+    fun svg(symbol: String): String? =
+        pathOf(symbol)?.let {
+            "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" " +
+                "fill-rule=\"evenodd\" d=\"$it\"/></svg>"
+        }
 }
 
 /** Slot allowance and loadout legality (§5.1, §5.4). */

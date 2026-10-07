@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
- * Author's Vision, after it was made to mean what its name says (`docs/og-fidelity-plan.md` §AC).
+ * Author's Vision, after it was made to mean what its name says.
  *
  * This class replaces `OgFidelityProfileTest`, which asserted a third built-in profile that no
  * longer exists. The reason it no longer exists is the thing under test here: **Author's Vision

@@ -23,7 +23,7 @@ import kotlin.math.roundToInt
  * GCE, OLGCW and OLGWW2 never had the file at all, and not every efile that does has been run
  * through the importer -- and for any terrain id the data omits. [terrainInitiative] is
  * element-for-element identical to the initiative-cap column of every TerrainEx.txt we import, so
- * that fallback is exact, not approximate (see `docs/design/terrain-supply-and-initiative.md` §1).
+ * that fallback is exact, not approximate (see `docs/design/efile-driven-rules.md` §2.1).
  * The movement-cost fallback is NOT exact: see [movementCostTable].
  */
 object TerrainEx {
@@ -53,7 +53,7 @@ object TerrainEx {
     /**
      * Percentage supply factor (0..100) for [terrain] plus [road]/[rail] presence and [ground]
      * condition, under the currently active efile. OG's own wording: modifiers are "added to
-     * terrain supply percentage" (`docs/design/terrain-supply-and-initiative.md` §3.3) -- road and
+     * terrain supply percentage" (`docs/design/efile-driven-rules.md` §2.4) -- road and
      * rail do NOT stack (`INFERENCE`: every efile that sets both uses the identical 30/20 value, so
      * the distinction is theoretical, but "added" does not mean the larger of the two doubled).
      *

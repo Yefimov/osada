@@ -11,7 +11,7 @@ import org.osada.model.EquipmentData
  *
  * ### The question this answers, and how long it was open
  *
- * `docs/og-open-questions.md` Q1.3 asked, for two days, **which field the TRANSPORT side reads**.
+ * For two days the open question was **which field the TRANSPORT side reads**.
  * The cargo side was never in doubt — a formation carries `AtpW`/`NtpW`/`RtpW`/`HtpW`, one per
  * transport type. Two candidates were proposed for the transport side and both were refuted by a
  * shuffled-null control (`GtpW`, +0.09 pp; `HangarW`, no effect on any of the four types), and a
@@ -41,7 +41,7 @@ import org.osada.model.EquipmentData
  * not the naval transport** — it is the carrier/capital tier, which has no `*tpW` at all and
  * carries `HangarW` instead. The naval transport is class 20. One wrong class byte made a
  * populated field look empty and sent the whole question down a two-day detour, which is exactly
- * the trap `docs/og-sources.md` records under *"OG's unit classes are not OSADA's"*.
+ * the trap `docs/og/og-sources.md` records under *"OG's unit classes are not OSADA's"*.
  *
  * ### The predicate, and why the zero escapes matter
  *
@@ -62,7 +62,7 @@ object TransportWeights {
             UnitClass.AIR_TRANSPORT.value -> data.airWeight
             UnitClass.NAVAL_TRANSPORT.value -> data.navalWeight
             // Rail is deliberately absent. OSADA folds OG's RT class into `GROUND_TRANSPORT`
-            // (`docs/og-sources.md`), which is ALSO the organic truck -- and the organic side reads
+            // (`docs/og/og-sources.md`), which is ALSO the organic truck -- and the organic side reads
             // `GtpW`, which `ui/EquipmentCatalogStrip` has been ANDing since before this question
             // was asked. Deciding between them from the class byte alone is impossible, and rail
             // entrainment does not go through `embark` at all: `rules/RailTransport` owns it.

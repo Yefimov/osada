@@ -1,7 +1,7 @@
 package org.osada.save
 
-import kotlinx.browser.localStorage
 import org.osada.VERSION
+import org.osada.storage.localStorage
 import kotlin.js.Date
 import kotlin.js.json
 
@@ -115,30 +115,52 @@ class LocalStorageSaveSnapshotStore : SaveSnapshotStore {
 
     override fun exportProfile(): ProfileBundle =
         ProfileBundle(
-            runs = readIndex().keys.mapNotNull { readCampaignRunBundle(it) },
+            runs =
+                readIndex(
+                    strict = true,
+                ).keys.map { requireNotNull(readCampaignRunBundle(it)) { "Unreadable campaign: $it" } },
             exportedAt = Date().getTime(),
             gameVersion = org.osada.VERSION,
         )
 
     override fun replaceProfile(bundle: ProfileBundle): SaveResult =
         try {
-            // Transactional in intent: validate every run's shape before writing any of them, so a
-            // malformed file in the middle of a large profile does not leave a half-applied import.
-            for (run in bundle.runs) {
-                if (!SaveValidation.isWellFormedSnapshotJson(JSON.stringify(snapshotToJson(run.current)))) {
-                    return SaveResult(
-                        SaveResultKind.CORRUPT_READBACK,
-                        "profile contains an invalid run: ${run.metadata.campaignRunId}",
-                    )
-                }
-            }
-            // Whole-profile replace: drop every existing run first, then write the imported set.
-            for (existingId in readIndex().keys.toList()) deleteCampaignRun(existingId)
-            for (run in bundle.runs) replaceCampaignRun(run)
-            SaveResult.success()
+            LocalStorageBatch().apply(profileChanges(bundle))
         } catch (e: Throwable) {
-            SaveResult(classifyFailure(e), e.message)
+            SaveResult(SaveResultKind.CORRUPT_READBACK, e.message)
         }
+
+    /** Prepare without writing, so the file importer can commit archive/checkpoints in the SAME batch. */
+    internal fun profileChanges(bundle: ProfileBundle): Map<String, String?> {
+        require(
+            bundle.runs
+                .map { it.metadata.campaignRunId }
+                .distinct()
+                .size == bundle.runs.size,
+        )
+        val changes = mutableMapOf<String, String?>()
+        readIndex().keys.forEach { id ->
+            changes[currentKey(id)] = null
+            changes[recoveryKey(id)] = null
+        }
+        bundle.runs.forEach { run ->
+            require(run.metadata.campaignRunId == run.current.campaignRunId)
+            require(run.metadata.campaignFile == run.current.campaignFile)
+            listOfNotNull(run.current, run.recovery).forEach { snapshot ->
+                require(snapshot.campaignRunId == run.metadata.campaignRunId)
+                require(SaveValidation.isWellFormedSnapshotJson(JSON.stringify(snapshotToJson(snapshot))))
+            }
+            changes[currentKey(run.metadata.campaignRunId)] = JSON.stringify(snapshotToJson(run.current))
+            changes[recoveryKey(run.metadata.campaignRunId)] = run.recovery?.let { JSON.stringify(snapshotToJson(it)) }
+        }
+        changes[indexKey] =
+            JSON.stringify(
+                json(
+                    "rows" to bundle.runs.map { CampaignRunCodec.metadataToJson(it.metadata) }.toTypedArray(),
+                ),
+            )
+        return changes
+    }
 
     override fun deleteCampaignRun(campaignRunId: String): SaveResult =
         try {
@@ -237,15 +259,19 @@ class LocalStorageSaveSnapshotStore : SaveSnapshotStore {
 
     // ---- index -------------------------------------------------------------------------------
 
-    private fun readIndex(): Map<String, CampaignRunMetadata> {
+    private fun readIndex(strict: Boolean = false): Map<String, CampaignRunMetadata> {
         val raw = localStorage.getItem(indexKey) ?: return emptyMap()
         return try {
             val parsed = JSON.parse<dynamic>(raw)
             val rows = parsed.rows.unsafeCast<Array<dynamic>>()
-            rows
-                .mapNotNull { row -> rowToMetadata(row) }
-                .associateBy { it.campaignRunId }
+            val index =
+                rows
+                    .mapNotNull { row -> rowToMetadata(row) }
+                    .associateBy { it.campaignRunId }
+            if (strict) require(index.size == rows.size) { "Unreadable or duplicate campaign index rows" }
+            index
         } catch (e: Throwable) {
+            if (strict) throw e
             console.warn("[osada] save index unreadable, treating as empty", e)
             emptyMap()
         }

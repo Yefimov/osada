@@ -76,8 +76,8 @@ internal class HexDrawer(
         ctx.lineJoin = style.lineJoin as? String ?: "miter"
         ctx.strokeStyle = style.lineColor as? String ?: "transparent"
         applyShadow(ctx, style)
-        // A style may ask for a dashed outline (e.g. "aathreat" -- DEFERRED.md §1.15: dashed reads
-        // as a conditional warning, "dangerous only if you stop here", rather than the solid
+        // A style may ask for a dashed outline (e.g. "aathreat", `docs/design/efile-driven-rules.md`
+        // §3.5: dashed reads as a conditional warning, "dangerous only if you stop here", rather than the solid
         // "attack" outline's unconditional one). Reset after stroking so the dash never leaks onto
         // the next hex's draw call, which reuses this same canvas context.
         val dash = style.lineDash

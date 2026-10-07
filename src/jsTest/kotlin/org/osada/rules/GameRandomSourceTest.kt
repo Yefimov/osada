@@ -33,7 +33,7 @@ import kotlin.test.assertTrue
 
 /**
  * The shared gameplay random stream and the invariant that makes it safe
- * (`rules/GameRandomSource`, `docs/og-fidelity-plan.md` §H.2).
+ * (`rules/GameRandomSource`).
  *
  * These are the tests that stand between OSADA and a multiplayer desync, so each is written as the
  * failure it prevents rather than as the behaviour it observes:

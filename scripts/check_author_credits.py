@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validates the authorship sidecar and keeps credits out of description prose.
 
-`docs/player-comfort-roadmap.md`'s authorship contract: campaign/scenario credits live in a
+`docs/design/player-comfort-roadmap.md`'s authorship contract: campaign/scenario credits live in a
 hand-authored sidecar keyed by stable file id, never as an `Author:` sentence inside the
 player-facing synopsis and never inside the generated positional arrays that a re-import rewrites.
 

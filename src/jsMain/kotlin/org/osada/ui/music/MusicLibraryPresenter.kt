@@ -202,7 +202,12 @@ internal object MusicLibraryPresenter {
 }
 
 private fun musicDecisionOpen(): Boolean {
-    val gameDecision = UIBuilder.isScenarioBriefingVisible() || HeroPromotionPresenter.isOpen() || ConfirmCard.isOpen()
+    val gameDecision =
+        UIBuilder.isScenarioBriefingVisible() ||
+            HeroPromotionPresenter.isOpen() ||
+            ConfirmCard.isOpen() ||
+            org.osada.ui.campaignmap.CampaignMapPresenter
+                .isOpen()
     val mobileDecision = isVisible("osadaOrientationGate") || isVisible("osadaGestureTutorial")
     return gameDecision || mobileDecision || isVisible("ui-message")
 }

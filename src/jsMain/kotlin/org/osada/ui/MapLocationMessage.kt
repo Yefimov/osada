@@ -1,7 +1,10 @@
 package org.osada.ui
 
 import org.osada.RoadType
+import org.osada.TerrainType
 import org.osada.i18n.I18n
+import org.osada.model.Hex
+import org.osada.rules.AirfieldQuality
 import org.osada.rules.UnitConcealment
 import org.osada.terrainNames
 import org.osada.uiSettings
@@ -37,12 +40,7 @@ internal fun updateMapLocationMessage(
         .append(",")
         .append(row)
         .append(")")
-    // §1.15: the dashed ring alone doesn't say the danger is conditional on landing here (as
-    // opposed to merely flying over it on the way to a farther, unmarked hex) -- spell it out.
-    if (hex.isAaThreat) sb.append(" — ").append(I18n.t("hud.status.location.aa_threat"))
-    // Same reasoning as the AA line: the dashed ring and the truck cursor both say "only by
-    // riding", but neither says what it costs you — arriving mounted (`rules/AutoMount`).
-    if (hex.needsTransport) sb.append(" — ").append(I18n.t("hud.status.location.needs_transport"))
+    hexNotes(hex).forEach { sb.append(" — ").append(it) }
     byId("locmsg")?.innerHTML = sb.toString()
     MobileContextDock.updateLocation(sb.toString())
     // When a unit card replaces the passive context rail, keep the old transient strip as the
@@ -52,3 +50,18 @@ internal fun updateMapLocationMessage(
         MobileStatusStrip.show(sb.toString())
     }
 }
+
+/** The warnings appended to the location line, in display order. */
+private fun hexNotes(hex: Hex): List<String> =
+    buildList {
+        // §1.15: the dashed ring alone doesn't say the danger is conditional on landing here (as
+        // opposed to merely flying over it on the way to a farther, unmarked hex) -- spell it out.
+        if (hex.isAaThreat) add(I18n.t("hud.status.location.aa_threat"))
+        // Same reasoning as the AA line: the dashed ring and the truck cursor both say "only by
+        // riding", but neither says what it costs you — arriving mounted (`rules/AutoMount`).
+        if (hex.needsTransport) add(I18n.t("hud.status.location.needs_transport"))
+        // A field airfield looks like any other on the map; say that not every aircraft may use it.
+        if (hex.terrain == TerrainType.AIRFIELD.value && AirfieldQuality.isDirt(hex)) {
+            add(I18n.t("hud.status.location.field_airfield"))
+        }
+    }

@@ -5,7 +5,7 @@ import org.osada.rules.Minefields
 
 /*
  * The two minefield commands, as [GameMap] extensions beside the other unit operations
- * (`docs/og-fidelity-plan.md` C.1, OG manual 9.9).
+ * (OG manual 9.9).
  *
  * Kept out of [UnitDeployOperations] deliberately: these are not supply or deployment, they mutate
  * HEX state rather than unit state, and both are gated on a ruleset key the other operations know

@@ -79,8 +79,7 @@ internal class UnitMountOperations(
      * transport alone, and a ship that carries a battalion carries its lorries.
      *
      * Wired 2026-08-27. Until then a truck flew wherever its infantry did, which is the one
-     * unenforced constraint `docs/og-fidelity-plan.md` §M's approximations table named for
-     * `Air Transportable` — *"treated as redundant with `embark`"*.
+     * unenforced constraint of `Air Transportable`, once *"treated as redundant with `embark`"*.
      */
     private fun leaveGroundedTransportBehind(unit: GameUnit) {
         val transport = unit.transport ?: return

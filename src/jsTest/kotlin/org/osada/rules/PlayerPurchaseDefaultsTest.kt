@@ -9,7 +9,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 /**
- * OG's two per-player purchase defaults, imported 2026-08-29 (`docs/og-fidelity-plan.md` §AF).
+ * OG's two per-player purchase defaults, imported 2026-08-29.
  *
  * `opt_default_xp` (224 of the 397 deployed scenarios whose source parses) and
  * `opt_allow_default_str` (149) were the two largest authored options that never reached the game.

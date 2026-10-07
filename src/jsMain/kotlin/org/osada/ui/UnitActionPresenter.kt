@@ -10,6 +10,7 @@ import org.osada.rules.ActionAvailability
 import org.osada.rules.ActionBlock
 import org.osada.rules.ActionEffect
 import org.osada.rules.ActionEffectKind
+import org.osada.rules.Airbase
 import org.osada.rules.RailTransport
 import org.osada.rules.SupplyContext
 import org.osada.rules.SupplyContextRules
@@ -152,7 +153,14 @@ internal object UnitActionPresenter {
                 availability.action == UnitActionId.REINFORCE ||
                 availability.action == UnitActionId.OVERSTRENGTH
         if (!usesSupply) return emptyList()
-        return supplyFactorLines(SupplyContextRules.getSupplyContext(map, unit))
+        val lines = supplyFactorLines(SupplyContextRules.getSupplyContext(map, unit)).toMutableList()
+        // The discount is already in the quoted price; this line says where it came from.
+        val repairs = availability.action != UnitActionId.RESUPPLY
+        if (repairs && Airbase.servicing(unit, map) != null) {
+            val note = I18n.t("unit_info.supply_factor.airbase", mapOf("percent" to Airbase.REPAIR_COST_PERCENT))
+            lines += Line(GOOD, note)
+        }
+        return lines
     }
 
     fun supplyFactorLines(context: SupplyContext): List<Line> {

@@ -9,7 +9,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * The abilities widened into `attr2`/`attrEx` on 2026-08-19 (`docs/og-fidelity-plan.md` §C) --
+ * The abilities widened into `attr2`/`attrEx` on 2026-08-19 --
  * ASW submarine-attack eligibility, `Lasting Suppression`, and the purchase-window ability catalog
  * itself. `UnitCapabilities.hasAllWeather`/`hasNoInterceptAir`/RCN-OVR-AA badge coverage live in
  * their own existing test files (`AllWeatherCombatTest`, `AAInterceptionTest`,
@@ -65,7 +65,7 @@ class EquipmentAbilityCatalogTest {
     // ---- Lasting Suppression: the equipment-level source alongside SHOCK_TACTICS ----------------
 
     /** OG's `Lasting Suppression` (`SpecialEx` bit 60.1, `attrEx` bit 1), wired the way
-     *  `docs/og-fidelity-plan.md` §0.1 said it must be: "this unit's `hits` survive the victim's
+     *  `tools/og-import/OG_REGISTER.md` F§0.1 said it must be: "this unit's `hits` survive the victim's
      *  `unitEndTurn`" -- read through [GameUnit.hit]'s `lasting` parameter. */
     @Test
     fun lastingSuppressionEquipmentBitBehavesLikeTheLeaderTrait() {
@@ -151,7 +151,7 @@ class EquipmentAbilityCatalogTest {
     /**
      * The four abilities whose badge was shown unconditionally while their own rule was off.
      *
-     * `docs/og-fidelity-plan.md` §K.4 settled the principle for the minefield three — *"Don't show
+     * The owner settled the principle for the minefield three — *"Don't show
      * it for rulesets that are not OG (I mean, that don't use mines!)"* — and the gate table simply
      * stopped growing when the schema-11/12 keys arrived. Until 2026-08-29 a player on the default
      * ruleset saw `Carrier Deploy`, `No Need Station`, `Supply Unit` and `Mechanized` advertised on

@@ -19,8 +19,8 @@ import org.osada.rules.ruleset.RuleKey
  *
  * Both commented `equip.cfg` copies carry this text identically, and **`eqp-lxf` sets
  * `critical_hit = 2`** — the efile behind more shipped campaigns than any other that has an
- * `equip.cfg`. The formula has never run. `docs/og-fidelity-plan.md` §AA.6 records how it was found:
- * not by working through the manual, but by finally reading a config key nobody had looked up.
+ * `equip.cfg`. The formula had never run; it was found not by working through the manual
+ * but by finally reading a config key nobody had looked up.
  *
  * ### The one correction made to the quoted text
  *

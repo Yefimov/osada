@@ -5,7 +5,7 @@ import org.osada.scenario.AuthorCredits
 
 /**
  * The selection screens' dedicated localized **Author / Authors** row
- * (`docs/player-comfort-roadmap.md`, "Authorship metadata contract").
+ * (`docs/design/player-comfort-roadmap.md`, "Authorship metadata contract").
  *
  * A row of its own rather than a sentence inside the synopsis: the label is translated, the names
  * never are, and a description that is purely a description can be localized later without dragging

@@ -22,6 +22,13 @@ fun GameMap.addUnit(unit: GameUnit) {
     unit.transport?.let { unitImages.add(it.eqid) }
     if (unit.carrier > 0) unitImages.add(unit.carrier)
     unit.player = getPlayer(unit.owner)
+    // A container's passengers are off the map but still this battle's units: their ids stay
+    // reserved, and they answer to the same player (a restored hangar arrives with neither).
+    unit.hangar.forEach { passenger ->
+        nextUnitId = maxOf(nextUnitId, passenger.id + 1)
+        passenger.player = getPlayer(passenger.owner)
+        unitImages.add(passenger.eqid)
+    }
     if (GameHolder.instance?.scenario?.isLoaded == true) {
         unit.synchronizeStalinRegime(unit.player?.usesStalinRegime() == true)
     }

@@ -1,16 +1,16 @@
 package org.osada.hero
 
-import kotlinx.browser.localStorage
 import org.osada.VERSION
 import org.osada.save.HeroArchiveStore
 import org.osada.save.LocalStorageHeroArchiveStore
 import org.osada.save.SaveResult
+import org.osada.storage.localStorage
 import kotlin.js.Date
 import kotlin.js.json
 
 /**
  * Owns the profile hero archive's LIFETIME
- * (`docs/design/hero-desk-and-profile-archive.md` §§4, 7). Its read side lives in [HeroDeskSource].
+ * (`docs/heroes/hero-desk-and-archive.md` §§4, 7). Its read side lives in [HeroDeskSource].
  *
  * Responsibilities, and equally what this is NOT:
  *
@@ -112,7 +112,7 @@ internal object HeroArchiveService {
 
 /**
  * The `runEpoch` map: which universe of a campaign the archive and the live run currently belong to
- * (`docs/design/hero-desk-and-profile-archive.md` §3).
+ * (`docs/heroes/hero-desk-and-archive.md` §3).
  *
  * Kept beside the archive rather than inside it because it has to survive the archive's own
  * deletion: [HeroArchiveService.beginRun] drops the previous roster and mints the next epoch in the

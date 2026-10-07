@@ -137,7 +137,7 @@ class HeroDossierTest {
         }
     }
 
-    /** DEFERRED.md §6.6 item 6a / `docs/design/hero-presentation.md` §1: every renown tier maps to
+    /** `docs/heroes/README.md` §3.1: every renown tier maps to
      *  exactly one CSS class, UNKNOWN gets none, and no two tiers can ever collide. */
     @Test
     fun renownTierMapsToExactlyOneCssClass() {

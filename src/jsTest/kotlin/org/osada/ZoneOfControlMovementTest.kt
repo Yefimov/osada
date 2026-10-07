@@ -28,7 +28,7 @@ import kotlin.test.assertTrue
  * OG's Basic Manual §5.2 makes ZOC a movement-TERMINATION rule: a move ends when the unit becomes
  * adjacent to an enemy. This engine expresses that as a `254` cost floor on the ZOC hex, which
  * reproduces the observable outcome — the hex itself stays enterable, nothing beyond it is — but is
- * not the same model (see `DEFERRED.md` for what that costs us).
+ * not the same model (see for what that costs us).
  *
  * The rule these tests pin down, because it is the one that explains the `Falciu 1` naval report:
  * **leaving** a ZOC hex is free, only **entering** one stops you. A unit that begins its turn

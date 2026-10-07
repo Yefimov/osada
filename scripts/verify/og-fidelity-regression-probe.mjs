@@ -1,5 +1,5 @@
-// Drives the SHIPPED build through a real scenario after the 2026-08-28 fidelity work
-// (`docs/og-fidelity-plan.md` §Z and §AA), and asserts the two things a unit test cannot:
+// Drives the SHIPPED build through a real scenario after the 2026-08-28 fidelity work,
+// and asserts the two things a unit test cannot:
 //
 //   1. a scenario and its map still LOAD AND PLAY -- units placed, terrain resolved, move ranges
 //      computed, a turn ended -- with no runtime error. No gate in this repo did that: the

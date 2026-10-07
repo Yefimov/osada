@@ -11,7 +11,7 @@ import org.osada.model.getUnits
  *
  * ## The decision this object embodies
  *
- * `docs/og-import-rules-backlog.md` §6 asked one question before any of these fields could be
+ * `docs/og/import-rules-backlog.md` §6 asked one question before any of these fields could be
  * deployed: **does the scenario author or `org/osada/ai/` command the enemy?** The answer taken, and
  * the reason:
  *
@@ -38,12 +38,12 @@ import org.osada.model.getUnits
  * ## What is deliberately not here
  *
  * * **AI stance** (`@57`, 29,294 records) is the largest authored field of the nine and is blocked
- *   by an older decision: `docs/og-fidelity-plan.md` §0 rules that stances stay unbuilt until the P3
+ *   by an older decision: `tools/og-import/OG_REGISTER.md` F§0 rules that stances stay unbuilt until the P3
  *   benchmark exists and must never ship labelled "OG AI". Deploying the byte without that would be
  *   the labelled-but-unmeasured AI that section forbids.
  * * **Avoid auto hold** (`@50` bit 4, 17,537) suppresses OG's automatic hold behaviour. OSADA's
  *   planner has no automatic hold to suppress, so the field would be imported with nothing to
- *   switch off — the "a bit imported is not a rule" failure `og-fidelity-plan.md` §M names.
+ *   switch off — the "a bit imported is not a rule" failure.
  */
 object AiOrders {
     /**

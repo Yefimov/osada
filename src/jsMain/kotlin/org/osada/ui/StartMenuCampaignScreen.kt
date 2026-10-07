@@ -7,7 +7,6 @@ import org.osada.hero.HeroArchiveService
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryNameByEqp
-import org.osada.scenario.Campaign
 import org.w3c.dom.HTMLElement
 
 /**
@@ -126,7 +125,7 @@ internal object StartMenuCampaignScreen {
                     // action -- see the row's "Start over" link, built in renderCampaignRow.
                     existingRun != null -> StartMenuBuilder.resumeCampaignRun(existingRun.campaignRunId)
                     // No live run, but a career from a completed or cleared run may still be archived
-                    // — and starting over replaces it (`hero-desk-and-profile-archive.md` §4). That
+                    // — and starting over replaces it (`heroes/hero-desk-and-archive.md` §4). That
                     // needs the same one explicit confirmation the live-run path already gives.
                     else ->
                         confirmArchiveReplacement(file, campaign?.title as? String) {
@@ -137,17 +136,7 @@ internal object StartMenuCampaignScreen {
         }
 
         byId("smCFlowBut")?.title = I18n.t("campaign.flow.help")
-        byId("smCFlowBut")?.onclick = { _: org.w3c.dom.events.MouseEvent ->
-            val selectedCampaign = byId("smCamp")?.asDynamic()?.selectedCampaign as? Int
-            if (selectedCampaign != null) {
-                var campaignRef: Campaign? = null
-                val campaign =
-                    Campaign(selectedCampaign, StartMenuCampaignData.DIFFICULTY_HISTORICAL) {
-                        campaignRef?.let { byId("smCampDesc")?.innerHTML = it.getCampaignFlow() }
-                    }
-                campaignRef = campaign
-            }
-        }
+        byId("smCFlowBut")?.onclick = { _: org.w3c.dom.events.MouseEvent -> StartMenuCampaignData.openCampaignMap() }
 
         if (DEBUG_CAMPAIGN) {
             byId("smCV")?.onclick = { StartMenuBuilder.continueCampaign("victory") }
@@ -184,7 +173,6 @@ internal object StartMenuCampaignScreen {
         byId("smCampScenarios")?.innerHTML = "<b>${I18n.t("campaign.operations.label")}</b><br/>" +
             (operations?.let(I18n::formatNumber) ?: (campaign.scenarios as? String ?: ""))
         byId("smCamp")?.asDynamic()?.selectedCampaign = value.toInt()
-        CampaignBackupButtons.refresh()
         refreshRulesLockForSelection(campaign.file as? String)
         StartMenuCampaignData.updateCampaignPrestigeDisplay()
         updateCampaignDossierHead(campSelect, campaign, country)
@@ -281,9 +269,8 @@ internal object StartMenuCampaignScreen {
             // Page-level Rules button, never an automatic modal in front of the launch
             // (`docs/design/ruleset-profiles.md` §6).
             RulesWindow.installButton(buttons, RulesetSelection.Surface.CAMPAIGN)
-            // Per-campaign file export/import, acting on the register's selected campaign
-            // (`docs/design/save-recovery.md` §2).
-            CampaignBackupButtons.install(buttons)
+            // The body ends above the footer's measured top edge, not at a fixed offset.
+            ScreenFooterReserve.install(root, buttons)
         }
         // The native flow glyph is superseded by the collapsible "Campaign path" line.
         byId("smCFlowBut")?.style?.display = "none"
@@ -382,12 +369,27 @@ internal object StartMenuCampaignScreen {
         path.className = "osadaCollapse"
         val summary = addTag(path, "div")
         summary.className = "osadaCollapseSummary"
-        summary.textContent = I18n.t("campaign.path.label")
+        addTag(summary, "span").apply {
+            className = "osadaCollapseLabel"
+            textContent = I18n.t("campaign.path.label")
+        }
         summary.title = I18n.t("campaign.path.help")
         val pathBody = addTag(path, "div")
         pathBody.id = "smCampPathBody"
         pathBody.className = "osadaCollapseBody"
         summary.onclick = { _: org.w3c.dom.events.MouseEvent -> StartMenuCampaignData.toggleCampaignPath() }
+        // The expand glyph opens the full operations map without folding the summary open.
+        val expand = addTag(summary, "button")
+        expand.id = "smCampPathMap"
+        expand.className = "osadaCollapseExpand"
+        expand.setAttribute("type", "button")
+        expand.textContent = "⤢"
+        expand.title = I18n.t("campaign.map.open.help")
+        expand.setAttribute("aria-label", I18n.t("campaign.map.open.label"))
+        expand.onclick = { event ->
+            event.stopPropagation()
+            StartMenuCampaignData.openCampaignMap()
+        }
     }
 
     private fun renderCampaignRow(
@@ -507,7 +509,7 @@ internal object StartMenuCampaignScreen {
     }
 
     /**
-     * The archived-career half of the replay confirmation (`hero-desk-and-profile-archive.md` §4).
+     * The archived-career half of the replay confirmation (`heroes/hero-desk-and-archive.md` §4).
      *
      * Clearing a campaign's slot deliberately KEEPS its archived roster — that is how a fallen
      * officer survives an abandoned run — so a campaign with no live run can still have a complete

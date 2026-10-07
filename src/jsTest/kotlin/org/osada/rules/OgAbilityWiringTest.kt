@@ -24,7 +24,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * The three equipment abilities wired on 2026-08-26 (`docs/og-fidelity-plan.md` §N), plus the
+ * The three equipment abilities wired on 2026-08-26, plus the
  * `blow_any_terrain` efile switch that landed with them.
  *
  * Each test is written to FAIL against the previous behaviour: the three abilities were

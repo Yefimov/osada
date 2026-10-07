@@ -4,7 +4,7 @@ import org.osada.i18n.I18n
 
 /*
  * Pure read model for the main-menu Hero Desk
- * (`docs/design/hero-desk-and-profile-archive.md` §§2, 6).
+ * (`docs/heroes/hero-desk-and-archive.md` §§2, 6).
  *
  * Everything here is a total function over its inputs: no storage, no GameHolder, no DOM. That is
  * the point — §2 requires reading every card to leave the live game completely alone, and §9 asks

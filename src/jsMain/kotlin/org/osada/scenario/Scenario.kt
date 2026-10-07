@@ -114,10 +114,10 @@ class Scenario(
      * whole 6,046-file OG corpus set it**, so there is nothing for a rule to run on. Removing the
      * attribute would cost the import a decoded bit and gain nothing; building the mechanic would
      * serve no content OSADA ships. It stays as data with a stated reason, and
-     * `docs/og-fidelity-plan.md` §Y.4's standing instruction applies: re-take the measurement if
+     * The standing instruction applies (`tools/og-import/OG_REGISTER.md` §4.2): re-take the measurement if
      * an imported campaign ever authors it, and it jumps the queue. The old text read
-     * [airMissions] — the only one **no** shipped scenario sets at all, which is why
-     * `docs/og-fidelity-plan.md` §M puts building it last.
+     * [airMissions] — the only one **no** shipped scenario sets at all, which is why building it
+     * comes last.
      */
     var trueDirectLof: Boolean? = null
     var unitsBlockLof: Boolean? = null
@@ -131,7 +131,7 @@ class Scenario(
      * anti-aircraft interception, authored by **404 of the 457** scenarios whose source parses.
      *
      * Null means the scenario's source could not be read, and every reader treats that as
-     * permitted, exactly as the other authored switches do (`docs/og-fidelity-plan.md` §AD).
+     * permitted, exactly as the other authored switches do.
      */
     var airIntercept: Boolean? = null
 
@@ -146,7 +146,7 @@ class Scenario(
      * 397 deployed scenarios whose source parses.
      *
      * Null means the source could not be read, and every reader treats that as PERMITTED, exactly
-     * as the other authored switches do (`docs/og-fidelity-plan.md` §AD).
+     * as the other authored switches do.
      */
     var prototypesAllowed: Boolean? = null
 

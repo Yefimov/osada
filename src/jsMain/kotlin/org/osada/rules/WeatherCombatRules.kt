@@ -14,8 +14,7 @@ import org.osada.rules.ruleset.RuleKey
  *
  * Ported from Open General's manual, which is the only place these rules are written down that
  * OSADA can check. Panzer Marshal, the engine OSADA is otherwise a port of, reads `atmosferic` in
- * six places and every one is presentation — weather there is purely cosmetic
- * (`tools/og-import/DEFERRED.md` §7.45).
+ * six places and every one is presentation — weather there is purely cosmetic.
  *
  * > Bad weather affects air to ground or ground to air combat, as **attacking strength is halved**
  * > except with All weather combat leader of ability. **In rain or snow defense is modified by +3.**

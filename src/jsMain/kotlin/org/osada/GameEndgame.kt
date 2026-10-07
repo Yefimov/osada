@@ -17,6 +17,7 @@ import org.osada.rules.CampaignPrestigeCap
 import org.osada.rules.CampaignSwitches
 import org.osada.save.SaveStatus
 import org.osada.save.SaveStatusBus
+import org.osada.scenario.CampaignRouting
 import org.osada.scenario.ScenarioTextLocalization
 import org.osada.scenario.TimedDefeatReason
 import org.osada.scenario.getReinforcements
@@ -94,9 +95,10 @@ fun Game.continueCampaign(
     val player = campaignPlayer ?: return
     if (offerRestartBeforeDefeat(outcome, reason)) return
     // A player CHOICE (BGCchoice-style), committed earlier in this scenario's own briefing
-    // dialogue, overrides the outcome-branch goto entirely. Taken once, here, so it cannot leak
-    // into resolving some later, unrelated transition.
-    val routeOverride = CampaignNarrative.takeCommittedRoute()
+    // dialogue, overrides the winning outcome-branch gotos; a loss keeps its own transition
+    // (`CampaignRouting`). Taken once, here, either way, so it cannot leak into resolving some
+    // later, unrelated transition.
+    val routeOverride = CampaignRouting.effectiveRoute(outcome, CampaignNarrative.takeCommittedRoute())
     // The scenario is definitively over at this single funnel, so this is the one correct place
     // to record the REAL outcome. recordScenarioCompletion is idempotent per scenario: the
     // move-capture and end-turn completion paths can both reach here for the same battle.
@@ -124,7 +126,7 @@ fun Game.continueCampaign(
     }
     // Formation experience is captured HERE, before `setPlayerToHQ` drops destroyed units from the
     // core roster, so the archive keeps the number the dossier would have shown at the end of the
-    // battle (`docs/design/hero-desk-and-profile-archive.md` §4: archive before scenario cleanup
+    // battle (`docs/heroes/hero-desk-and-archive.md` §4: archive before scenario cleanup
     // can discard a formation detail).
     val formationExperience =
         player
@@ -201,7 +203,7 @@ private fun Game.awardOutcomePrestige(
 
 /**
  * Upserts this campaign run's complete hero roster into the profile archive
- * (`docs/design/hero-desk-and-profile-archive.md` §4).
+ * (`docs/heroes/hero-desk-and-archive.md` §4).
  *
  * Runs inside `continueCampaign`, the single funnel that knows a mission outcome is committed, so
  * the archive is written in the same logical operation as the campaign transition. A failed write
@@ -309,6 +311,9 @@ fun Game.deployReinforcements(
 
 fun Game.cleanup() {
     console.log("[OSADA] cleanup")
+    gameStarted = false
+    waitUIAnimation = false
+    ui?.render?.animator?.cancel()
     org.osada.ui.WeatherRenderer
         .stop()
     org.osada.ui.WeatherModel

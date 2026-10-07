@@ -2,7 +2,7 @@ package org.osada.multiplayer.coop
 
 /**
  * When a campaign grants a cooperative commander's third and fourth ability slot
- * (`docs/design/cooperative-commanders-multiplayer.md` §5.4, §7).
+ * (`docs/multiplayer/cooperative-commanders.md` §5.4, §7).
  *
  * Two SEPARATE unlocks, each +1 for every commander, granted at common campaign milestones and never
  * for individual score. The default tuning is "the third slot after two completed missions and the

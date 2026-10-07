@@ -7,8 +7,8 @@ import org.osada.model.InterceptionEvent
 import org.w3c.dom.events.MouseEvent
 
 /**
- * The non-modal AA-interception event banner (`docs/player-comfort-roadmap.md` P1,
- * `docs/design/aa-interception.md`).
+ * The non-modal AA-interception event banner (`docs/design/player-comfort-roadmap.md` P1,
+ * `docs/design/efile-driven-rules.md` §3).
  *
  * Interception is the one combat the player does not initiate and does not watch happen: an
  * aircraft simply arrives weaker. Until now the only record was a combat-log row nobody had a

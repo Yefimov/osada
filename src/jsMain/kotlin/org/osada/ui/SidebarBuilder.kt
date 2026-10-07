@@ -2,9 +2,9 @@
 
 package org.osada.ui
 
-import kotlinx.browser.localStorage
 import org.osada.GameHolder
 import org.osada.i18n.I18n
+import org.osada.storage.localStorage
 import org.osada.uiSettings
 
 /**

@@ -102,31 +102,6 @@ class Campaign(
         return CampaignContentLocalization.outcome(file, current.scenario as? String, outcome, authored)
     }
 
-    fun getCampaignFlow(): String {
-        val sb = StringBuilder()
-        for (i in scenarios.indices) {
-            val scenarioName = getScenarioNameFromId(i)
-            val lose = getScenarioNameFromId(scenarios[i].outcome.lose.goto as Int)
-            val tactical = getScenarioNameFromId(scenarios[i].outcome.tactical.goto as Int)
-            val victory = getScenarioNameFromId(scenarios[i].outcome.victory.goto as Int)
-            val briliant = getScenarioNameFromId(scenarios[i].outcome.briliant.goto as Int)
-            if (tactical == victory && victory == briliant) {
-                sb.append(
-                    "- <b>$scenarioName</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;Lose: $lose<br/>" +
-                        "&nbsp;&nbsp;&nbsp;&nbsp;Victory: $victory<br/><br/>",
-                )
-            } else {
-                sb.append(
-                    "- <b>$scenarioName</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;Lose: $lose<br/>" +
-                        "&nbsp;&nbsp;&nbsp;&nbsp;Tactical: $tactical<br/>" +
-                        "&nbsp;&nbsp;&nbsp;&nbsp;Victory: $victory<br/>" +
-                        "&nbsp;&nbsp;&nbsp;&nbsp;Brilliant: $briliant<br/><br/>",
-                )
-            }
-        }
-        return sb.toString()
-    }
-
     fun getScenarioNameFromId(id: Int): String =
         when (id) {
             CAMPAIGN_DEFEAT_SCENARIO_ID -> "Defeat (End Campaign)"

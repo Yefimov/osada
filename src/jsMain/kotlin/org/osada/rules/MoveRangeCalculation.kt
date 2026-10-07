@@ -100,14 +100,14 @@ internal object MoveRangeCalculation {
 
         // OG's Alpine Training: "When moving the unit treats forest and mountain hexes as clear
         // terrain." Advertised since the port began with no rule behind it -- the same defect class
-        // as Superior Maneuver above (`docs/og-fidelity-plan.md` A.4). It is a MOVEMENT-COST rule
+        // as Superior Maneuver above. It is a MOVEMENT-COST rule
         // only: the trait says nothing about combat, so terrain defence, entrenchment baselines and
         // close-combat all keep reading the real terrain.
         //
         // WIDENED 2026-09-28 from forest and mountain to OG's CURRENT wording, the `* Leaders` list
         // shipped with the engine (`OPENTXT_SAMPLE/strings-en-template.txt`): *"Mountain Training :
         // Moves through Forest, Hill, Rough and Mountain as clear"*. The two-terrain reading came
-        // from `Manual_OG-en.pdf`, which is v0.5 and describes an older engine (`docs/og-sources.md`).
+        // from `Manual_OG-en.pdf`, which is v0.5 and describes an older engine (`docs/og/og-sources.md`).
         val alpineTrained = Leaders.unitHasLeader(unit, LeaderType.ALPINE_TRAINING)
 
         // OG's Bridging leader, first half: *"unit treats river hexes like rough terrain"*
@@ -442,8 +442,7 @@ private fun MutableList<ExtendedCell>.removeCheapest(): ExtendedCell {
  * **A pontoon costs exactly what a road costs.** OG's `allow_pontoon_ex` charges road cost + 1 by
  * default and `eqp-lxf` waives it, and that divergence WAS built on 2026-08-28 and reverted the
  * same day: equipment is merged into one `eqp-united` database, so a unit must move the same
- * distance whatever efile it came from. A per-efile movement rule contradicts the merge
- * (`docs/og-fidelity-plan.md` §AB).
+ * distance whatever efile it came from. A per-efile movement rule contradicts the merge.
  */
 private fun baseTerrainCost(
     hex: Hex,

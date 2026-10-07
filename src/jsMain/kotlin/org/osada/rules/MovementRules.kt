@@ -39,15 +39,15 @@ object MovementRules {
      *  `attach_minmove` is deliberately NOT read here. It was previously applied as a floor this
      *  range could not fall below, which was an INFERENCE and is now known to be wrong: the key
      *  selects Fast Speed's flat-vs-percentage spelling and floors THE BONUS, not the unit's
-     *  resulting movement (the scaling lives in [Attachments.bonus]). Applying it here was DEFERRED.md
-     *  §1.14, and the cap added to contain it was §1.16 -- both dissolve with the correct reading. */
+     *  resulting movement (the scaling lives in [Attachments.bonus]). Applying it here was a defect,
+     *  and so was the cap added to contain it -- both dissolve with the correct reading. */
     fun getUnitMoveRange(unit: GameUnit): Int {
         var range = unit.getMovesLeft()
         val data = unit.unitData()
         // The fuel clamp is in MOVEMENT POINTS, so it must divide by what a point actually costs --
         // in snow under `snow_fuel` that is two (OG 6.23). Reading the raw fuel here would promise a
-        // route the unit runs dry halfway along, which is the whole reason `docs/og-fidelity-plan.md`
-        // B.2 calls the preview the real work rather than the multiplication.
+        // route the unit runs dry halfway along, which is why the preview, not the multiplication,
+        // is the real work.
         val fuelPerPoint = WeatherCombatRules.fuelPerMovePoint()
         // Aircraft additionally have to be able to afford the whole sortie floor before they may
         // take off at all under `air_fuel`, so the budget is not simply fuel/point for them
@@ -101,7 +101,7 @@ object MovementRules {
     }
 
     /** A friendly non-mounted bridge unit on a river/stream/major-river hex acts as a road for [side]. The
-     *  Bridging attachment (`Attachments.SLOT_BRIDGING`, DEFERRED.md §1.4 Tier 2) is a second,
+     *  Bridging attachment (`Attachments.SLOT_BRIDGING`, `docs/design/attachments.md` Tier 2) is a second,
      *  OR'd source of the same boolean capability -- `Attachments.availableSlots` already refuses
      *  to sell it to a unit that has [Equipment.isBridge] itself, so the two can never both be true
      *  for the same unit and there is nothing to double-count.

@@ -167,7 +167,7 @@ def validate_value(path: Path, key: str, english: Any, translated: Any, errors: 
 
 
 def check_gendered_branches(path: Path, key: str, value: Any, errors: list[str]) -> None:
-    """Every selector in a gendered branch object needs its feminine sibling (DEFERRED.md §4.16).
+    """Every selector in a gendered branch object needs its feminine sibling.
 
     `HeroBiographyNarrator` picks the branch `"<selector>_f"` for a female officer, and
     `I18n.branchValue` resolves a missing branch by falling back to `"other"` — which in these
@@ -190,7 +190,7 @@ def check_gendered_branches(path: Path, key: str, value: Any, errors: list[str])
             errors.append(
                 f"{path.relative_to(ROOT)}:{key}.{branch}: gendered branch object is missing "
                 f"'{branch}_f'; a missing feminine branch falls back to 'other' (masculine) in "
-                f"silence — see DEFERRED.md §4.16"
+                f"silence"
             )
 
 

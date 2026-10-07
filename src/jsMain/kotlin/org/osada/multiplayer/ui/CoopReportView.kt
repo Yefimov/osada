@@ -10,7 +10,7 @@ import org.osada.multiplayer.coop.CoopState
 import org.w3c.dom.HTMLElement
 
 /**
- * The mission report (`docs/design/cooperative-commanders-multiplayer.md` §8.1): the army's result
+ * The mission report (`docs/multiplayer/cooperative-commanders.md` §8.1): the army's result
  * FIRST, then one card per commander in stable seat order -- never a winner-to-loser ranking.
  *
  * Counters that overlap (support, assists) are labelled as such and are not added to the unique
@@ -57,7 +57,7 @@ object CoopReportView {
         listOf(armySummary(state), commanderCards(state, state.ledger.perCommander))
 
     /** Every finished mission plus the one in progress, summed by commander. */
-    private fun campaignView(state: CoopState): List<HTMLElement> {
+    internal fun campaignTotals(state: CoopState): Map<String, CoopCounters> {
         val totals = linkedMapOf<String, CoopCounters>()
 
         fun add(source: Map<String, CoopCounters>) =
@@ -80,6 +80,11 @@ object CoopReportView {
             }
         state.summaries.forEach { add(it.perCommander) }
         add(state.ledger.perCommander)
+        return totals
+    }
+
+    private fun campaignView(state: CoopState): List<HTMLElement> {
+        val totals = campaignTotals(state)
         val missions = state.summaries.size + 1
         val box = HtmlBits.div("osada-coop-report-army")
         box.appendChild(
@@ -165,7 +170,7 @@ object CoopReportView {
     ): HTMLElement {
         val el = HtmlBits.div("osada-coop-report-card")
         val head = HtmlBits.div("osada-coop-report-head")
-        head.appendChild(HtmlBits.text("${commander.seat + 1}").apply { className = "osada-coop-seat" })
+        head.appendChild(CoopHud.seatMark(commander, "osada-coop-seat"))
         head.appendChild(CoopHud.portrait(commander, "osada-coop-portrait"))
         head.appendChild(HtmlBits.text(commander.name).apply { className = "osada-coop-hud-name" })
         el.appendChild(head)
@@ -173,7 +178,7 @@ object CoopReportView {
         return el
     }
 
-    private fun statLines(c: CoopCounters): List<String> =
+    internal fun statLines(c: CoopCounters): List<String> =
         listOf(
             I18n.t("multiplayer.coop.report.stat.points", mapOf("count" to c.points)),
             I18n.t("multiplayer.coop.report.stat.objectives", mapOf("count" to c.objectives)),

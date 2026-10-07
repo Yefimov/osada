@@ -22,7 +22,7 @@ import kotlin.test.assertTrue
 
 /**
  * The replacement-experience rule decided by the owner on 2026-08-18
- * (`docs/player-comfort-roadmap.md` P2 item 9).
+ * (`docs/design/player-comfort-roadmap.md` P2 item 9).
  *
  * The arithmetic is tested separately from the ruleset gate, because the action tooltip and the
  * mutation both call [ReplacementExperience] and a divergence between preview and effect is the one

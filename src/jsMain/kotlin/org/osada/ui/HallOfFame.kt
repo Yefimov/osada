@@ -1,7 +1,7 @@
 package org.osada.ui
 
-import kotlinx.browser.window
 import org.osada.campaign.BriefingDynamic
+import org.osada.storage.localStorage
 import kotlin.js.json
 
 /**
@@ -57,7 +57,7 @@ internal object HallOfFame {
 
     private fun read(): String? = runCatching { storage()?.getItem(KEY) }.getOrNull()
 
-    private fun storage() = runCatching { window.localStorage }.getOrNull()
+    private fun storage() = runCatching { localStorage }.getOrNull()
 
     private fun serializeEntry(entry: Entry): dynamic =
         json(

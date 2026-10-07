@@ -11,7 +11,7 @@ import org.w3c.dom.events.MouseEvent
 
 /**
  * Makes a non-`<button>` element behave like one: `role`/`tabindex` for assistive technology AND
- * the Enter/Space handler that role promises (DEFERRED.md §4.14).
+ * the Enter/Space handler that role promises.
  *
  * **Use this instead of setting the two attributes by hand.** Setting them without a key handler is
  * worse than setting neither — the element takes focus and announces itself as a button, then does

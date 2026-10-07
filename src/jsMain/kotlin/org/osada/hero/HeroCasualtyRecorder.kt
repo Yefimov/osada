@@ -23,7 +23,7 @@ internal object HeroCasualtyRecorder {
      * not campaign-persistent — the formation itself does not reach the next scenario. Keeping a
      * lightly wounded commander "with his formation" therefore stranded him: still `ACTIVE`, still
      * pointing at a formation no unit would ever carry again, and unreachable by any reassignment
-     * (transfers are still deferred, see `docs/hero-leader-implementation-phases.md` Phase 4).
+     * (transfers are still deferred, see `docs/heroes/README.md` §2).
      */
     @Suppress("LongParameterList", "ReturnCount") // the unit's own facts; a missing hero is not an outcome
     fun apply(

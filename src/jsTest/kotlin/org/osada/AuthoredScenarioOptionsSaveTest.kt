@@ -23,7 +23,7 @@ import kotlin.test.assertTrue
  * Until now the save wrote exactly one of OG's 27 authored options — and wrote it as `== true`,
  * which cannot say "the author said nothing" — so every reload silently re-authored the battle:
  * `canbuild`, `barrage`, `truerange0`, the Fronts/Factions masks and the shipped `.buy4` lists all
- * came back as unauthored. `docs/og-import-rules-backlog.md` recorded the gap; this is the test
+ * came back as unauthored. `docs/og/import-rules-backlog.md` recorded the gap; this is the test
  * that closes it.
  *
  * Three properties are load-bearing and each has its own test:

@@ -6,7 +6,7 @@ import org.osada.model.GameUnit
 
 /**
  * Who may take part in the persistent **campaign hero system** -- the one eligibility rule every
- * hero entry point asks (`docs/design/combat-movement-heroes-weather-audit.md` §3.1).
+ * hero entry point asks (`docs/heroes/README.md` §1).
  *
  * The owner's decisions it encodes:
  *

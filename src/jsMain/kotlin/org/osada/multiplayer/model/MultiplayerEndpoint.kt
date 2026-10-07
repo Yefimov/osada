@@ -1,6 +1,7 @@
 package org.osada.multiplayer.model
 
 import kotlinx.browser.window
+import org.osada.storage.localStorage
 
 /**
  * Where the room server lives.
@@ -57,10 +58,10 @@ object MultiplayerEndpoint {
                 ?.let { decodeURIComponent(it) }
                 ?.takeIf { it.startsWith("ws://") || it.startsWith("wss://") }
         if (fromQuery != null) {
-            runCatching { window.localStorage.setItem(OVERRIDE_STORAGE_KEY, fromQuery) }
+            runCatching { localStorage.setItem(OVERRIDE_STORAGE_KEY, fromQuery) }
             return fromQuery
         }
-        return runCatching { window.localStorage.getItem(OVERRIDE_STORAGE_KEY) }
+        return runCatching { localStorage.getItem(OVERRIDE_STORAGE_KEY) }
             .getOrNull()
             ?.takeIf { it.startsWith("ws://") || it.startsWith("wss://") }
     }

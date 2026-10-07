@@ -51,11 +51,11 @@ import org.osada.model.Player
  * five that do (`bn9s02`, `bn9s05`, `bn9s11`, `bn9s14`, `bn9s16`, all `eqp-lxf`) fill both sides.
  * The importer never writes an empty list, so "the author allowed nothing" is not a state this can
  * be in — 83 corpus files carry an empty section for one player and that is read as *not
- * customised*, the reading `docs/og-sources.md` step 3 prescribes when two are available.
+ * customised*, the reading `docs/og/og-sources.md` step 3 prescribes when two are available.
  *
  * **Purchase AND upgrade, unlike `Can't Buy`.** The manual's own sentence names both, which is the
  * difference between this and `Equipment.isPurchasable`: that bit is worded *"can't be bought"* and
- * `docs/og-fidelity-plan.md` §Q.1 forbids widening it to upgrades on an inference. Here the source
+ * widening that to upgrades would be an inference. Here the source
  * says *"buy new units or upgrade existing ones"*, so both are gated.
  *
  * **No ruleset key.** A purchase list is an authored scenario decision in the same family as

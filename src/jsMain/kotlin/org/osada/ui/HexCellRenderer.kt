@@ -9,6 +9,7 @@ import org.osada.model.isInDeployZone
 import org.osada.model.isOutOfZoneDeployTarget
 import org.osada.rules.Craters
 import org.osada.rules.Engineering
+import org.osada.rules.HangarStowage
 import org.osada.rules.Minefields
 import org.osada.rules.UnitConcealment
 
@@ -25,6 +26,7 @@ internal class HexCellRenderer(
     private val cursorRenderer: CursorRenderer,
 ) {
     private val destroyedBridgeRenderer = DestroyedBridgeRenderer(rc)
+    private val builtFacilityRenderer = BuiltFacilityRenderer(rc)
 
     companion object {
         // Stacked-layer marker: two short bars at the top of the hex. Brass is the HUD's own
@@ -55,6 +57,7 @@ internal class HexCellRenderer(
         }
         // Terrain damage stays below units, flags and selection, in both zoom modes and on AI turns.
         destroyedBridgeRenderer.draw(hex, x, y)
+        builtFacilityRenderer.draw(hex, x, y)
         if (isCurrentHex) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["currentstroke"])
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["current"])
@@ -119,7 +122,7 @@ internal class HexCellRenderer(
                     isOwnDeployZone ||
                         frame.deployUnit?.let { frame.q.isOutOfZoneDeployTarget(it, pos.row, pos.col) } == true
                 )
-        if (showDeployHighlight) {
+        if (showDeployHighlight || hangarTakesReserve(frame, hex, ownSide)) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["deploy"])
         }
     }
@@ -174,7 +177,7 @@ internal class HexCellRenderer(
 
     /**
      * The opt-in star/skull badge on a strategic unit flag
-     * (`docs/design/accessible-side-identification.md`).
+     * (`docs/design/action-affordances-and-objectives.md` §13).
      *
      * Reached only from inside the spotting-gated unit-flag branch above, so it inherits that
      * check exactly: an unspotted enemy has no flag here and therefore no badge either.
@@ -305,7 +308,8 @@ internal class HexCellRenderer(
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["attack"])
         }
         // Outline-only so it composites over the move fill just drawn -- covers only spotted AA,
-        // by construction of AAInterception.visibleThreatHexes (DEFERRED.md §1.1).
+        // by construction of AAInterception.visibleThreatHexes
+        // (`docs/design/action-affordances-and-objectives.md` §1.1).
         if (hex.isAaThreat) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["aathreat"])
         }
@@ -342,7 +346,8 @@ internal class HexCellRenderer(
      *
      * The map is a pre-rendered image, so terrain damage cannot be painted into it — this sprite is
      * how a cratered hex differs from the field beside it, and without it the movement cost and the
-     * entrenchment floor would be rules with no visible cause, which `DEFERRED.md` §1.1 forbids.
+     * entrenchment floor would be rules with no visible cause
+     * (`docs/design/action-affordances-and-objectives.md` §1.1).
      * Wreckage from a destroyed facility gets no sprite: that hex already changed terrain.
      */
     private fun drawCraters(
@@ -409,4 +414,19 @@ private fun sideMarkStyle(
         frame.markEnemyHexes && viewingSide != null && unit.player?.side != viewingSide -> hexStyles["enemyunit"]
         else -> null
     }
+}
+
+/** A friendly carrier or airbase with room takes the selected reserve aircraft into its hangar. */
+private fun hangarTakesReserve(
+    frame: RenderFrame,
+    hex: Hex,
+    side: Int?,
+): Boolean {
+    val reserve = frame.deployUnit
+    val container = hex.unit
+    return frame.deployMode &&
+        side != null &&
+        reserve != null &&
+        container != null &&
+        HangarStowage.canStowAtDeployment(reserve, container, side)
 }

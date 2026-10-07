@@ -104,6 +104,13 @@ object CombatResolver {
         if (usesSpecialHitThreshold(attackerClass, attacker, defender)) {
             target = SPECIAL_TARGET_HIT_THRESHOLD
         }
+        // Special Munition (slot 7, `docs/design/attachments.md` Tier 3), on the unit FIRING: OG's
+        // *"If Active has SpecialAmmoAttachment threshold is reduced according the value defined in
+        // it: DiceToSuppress is reduced by attach-bonus, DiceToKill is reduced by attach-bonus"*.
+        // [target] IS OG's DiceToKill (15, or 19 for the special-target rule). OSADA has no separate
+        // DiceToSuppress roll -- suppression follows the kills (`CombatApplication`) -- so lowering
+        // the kill threshold is the whole of the rule here, and suppression rises with it.
+        target -= Attachments.bonus(attacker, Attachments.SLOT_SPECIAL_MUNITION)
         var kills = 0.0
         if (useRandom) {
             var q = p + ROLL_TO_HIT_OFFSET - target
@@ -139,7 +146,7 @@ object CombatResolver {
      * [attackerIsFiringSupport] marks the exchange as a Fire Support shot, i.e. this call resolves an
      * adjacent unit firing in support of someone else's defence rather than its own attack. OG does
      * not let a unit collect Combat Support for the exchange in which it is itself providing Fire
-     * Support, so the attacker's support bars are suppressed (`DEFERRED.md` §4.6, second divergence).
+     * Support, so the attacker's support bars are suppressed (second divergence).
      * The *defender* of a support shot -- the original attacker -- keeps its own bars: it is being
      * shot at, which is exactly the case Combat Support exists to cushion.
      */
@@ -156,7 +163,7 @@ object CombatResolver {
         val context = AttackCalculation.resolveCombatContext(attacker, defender) ?: return result
 
         val stats = AttackCalculation.resolveCrossIndexedStats(context)
-        AttackCalculation.applyAttachmentBonuses(stats, attacker, defender, context)
+        AttackCalculation.applyAttachmentBonuses(stats, attacker, defender, context, units)
         val closeCombat = AttackCalculation.applyCloseCombat(stats, context)
         // OG's Rugged mode (surprise, close combat or a raised rugged defence) is an INPUT to the
         // modifiers below, not a penalty on their total -- see [RuggedCombat.isRuggedCombat]. The
@@ -466,7 +473,7 @@ object CombatResolver {
             terrain == TerrainType.CITY.value ||
                 terrain == TerrainType.ROUGH.value ||
                 terrain == TerrainType.PORT.value
-        // Bunker Buster (Attachments.SLOT_BUNKER_BUSTER, DEFERRED.md §1.4 Tier 2) is modelled on
+        // Bunker Buster (Attachments.SLOT_BUNKER_BUSTER, `docs/design/attachments.md` Tier 2) is modelled on
         // the same "Ignore trench" attr bit Equipment.ignoresEntrenchment reads -- an unconditional
         // bypass, not restricted to fortification-class defenders, exactly like that bit's own
         // grant (`OG_ABILITY_AUDIT.md` §4).

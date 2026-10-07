@@ -38,7 +38,7 @@ internal fun GameUnit.synchronizeStalinRegime(enabled: Boolean) {
 fun GameUnit.entrench(): Boolean {
     val hex = this.hex
     if (!GameRules.canEntrench(this) || hex == null) return false
-    // Fast Entrench (Attachments.SLOT_FAST_ENTRENCH, DEFERRED.md §1.4 Tier 2) raises the terrain's
+    // Fast Entrench (Attachments.SLOT_FAST_ENTRENCH, `docs/design/attachments.md` Tier 2) raises the terrain's
     // own entrenchment ceiling for this unit -- both the immediate snap-to-baseline below and the
     // slow tick-up toward baseline+5 pair naturally with the existing per-efile terrain value
     // rather than needing a new mechanic. The baseline (crater floor included) has one owner, which
@@ -112,7 +112,7 @@ fun GameUnit.unitEndTurn(spotSide: Int) {
     // Suppression clears once per ROUND (`GameMap.endTurn` drives this for every unit at the wrap
     // back to player 0), except for points inflicted by a `Shock Tactics` commander: those survive
     // exactly one clear, which is how OG's "lasts the entire player turn" is expressed against
-    // OSADA's round-scoped counter (`docs/og-fidelity-plan.md` 0.1).
+    // OSADA's round-scoped counter (`tools/og-import/OG_REGISTER.md` F§0.1).
     hits = lastingHits
     lastingHits = 0
     if (unitData().uclass != UnitClass.FORTIFICATION.value) {

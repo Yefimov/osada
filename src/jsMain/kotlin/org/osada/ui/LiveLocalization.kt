@@ -165,15 +165,19 @@ internal object LiveLocalization {
         (byId("smCampSel")?.querySelector("select") as? org.w3c.dom.HTMLElement)?.title =
             I18n.t("campaign.select.help")
         (byId("smCampPath")?.querySelector(".osadaCollapseSummary") as? org.w3c.dom.HTMLElement)?.apply {
-            textContent = I18n.t("campaign.path.label")
             title = I18n.t("campaign.path.help")
+            (querySelector(".osadaCollapseLabel") as? org.w3c.dom.HTMLElement)?.textContent =
+                I18n.t("campaign.path.label")
+        }
+        byId("smCampPathMap")?.apply {
+            title = I18n.t("campaign.map.open.help")
+            setAttribute("aria-label", I18n.t("campaign.map.open.label"))
         }
 
         refreshDifficultySelector()
         StartMenuCampaignScreen.refreshLocalizedContent()
         refreshSelectedCampaignDossier()
         refreshCampaignRows()
-        CampaignBackupButtons.refresh()
         byId("osadaCampList")?.let { list ->
             refreshListToolbar(list, "campaign.filter.placeholder", campaignModes)
             StartMenuListToolbar.applyListView(list)

@@ -32,7 +32,7 @@ fun GameUnit.unmount() {
  * Falls back to the first record of the class when nothing is compatible. That is deliberate and
  * permissive: refusing the embarkation outright would strand a formation on a rule this project
  * has only just learned, and the weights are dense enough that a false refusal is the likelier
- * error. See `docs/og-open-questions.md` Q1.3.
+ * error. The transport side's weight rule is `rules/TransportWeights`.
  */
 fun GameUnit.embark(carrierClass: UnitClass): Boolean {
     val candidates = Equipment.getCountryEquipmentByClass(carrierClass, (player?.country ?: 0) + 1)

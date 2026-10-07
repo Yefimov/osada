@@ -24,6 +24,8 @@ internal fun attachmentBonusStatName(slotNumber: Int): String =
         Attachments.SLOT_AIR_DEFENSE -> I18n.t("attachments.stat.airdefence")
         Attachments.SLOT_ANTI_TANK -> I18n.t("attachments.stat.hardattack")
         Attachments.SLOT_SUPPORT_AMMO -> I18n.t("attachments.stat.ammo")
+        Attachments.SLOT_FORWARD_OBSERVER -> I18n.t("attachments.stat.observer")
+        Attachments.SLOT_SPECIAL_MUNITION -> I18n.t("attachments.stat.munition")
         Attachments.SLOT_FAST_ENTRENCH -> I18n.t("attachments.stat.entrenchment")
         Attachments.SLOT_FUEL_PODS -> I18n.t("attachments.stat.fuel")
         Attachments.SLOT_FAST_SPEED -> I18n.t("attachments.stat.movement")
@@ -33,7 +35,7 @@ internal fun attachmentBonusStatName(slotNumber: Int): String =
 /**
  * The penalty line. Resolves the malus type through [effectiveMalusType], so a slot whose efile
  * omits the column shows the documented default rather than "no penalty" — the same correction the
- * rules layer makes (DEFERRED.md §1.19).
+ * rules layer makes (`docs/design/attachments.md`).
  */
 internal fun attachmentPenaltyText(
     slotNumber: Int,

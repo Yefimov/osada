@@ -3,12 +3,12 @@
   <player id="0" country="89" side="1" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="90,24,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <player id="1" country="5" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="6,25,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reserve>
-    <unit id="25429" owner="0" flag="24" face="0"/>
-    <unit id="39815" owner="0" flag="90" face="0"/>
-    <unit id="39870" owner="0" flag="90" face="0"/>
-    <unit id="39981" owner="0" flag="90" face="0"/>
-    <unit id="40252" owner="0" flag="90" face="0" transport="40142"/>
-    <unit id="40448" owner="0" flag="90" face="0"/>
+    <unit id="25429" owner="0" flag="24" face="0" attach="12" core="1"/>
+    <unit id="39815" owner="0" flag="90" face="0" core="1"/>
+    <unit id="39870" owner="0" flag="90" face="0" core="1"/>
+    <unit id="39981" owner="0" flag="90" face="0" core="1"/>
+    <unit id="40252" owner="0" flag="90" face="0" transport="40142" core="1"/>
+    <unit id="40448" owner="0" flag="90" face="0" attach="2,4" core="1"/>
   </reserve>
   <hex row="0" col="6" terrain="7"/>
   <hex row="0" col="7" terrain="7"/>

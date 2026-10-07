@@ -19,8 +19,8 @@ import org.osada.rules.ruleset.RuleKey
  * ### Why this needed a rule at all, when it is one word
  *
  * The option has been imported since §O (`Scenario.airZoc`, authored by **79 of the 457** scenarios
- * whose source is readable) and read by nothing, which `docs/og-fidelity-plan.md` §M called *"the
- * sharper omission of the two"* among the systems named to the player: the switch was in the data,
+ * whose source is readable) and read by nothing, the sharper of two omissions among the systems named to the
+ * player: the switch was in the data,
  * in the save and in the profile's own gap list, and no line of engine code consulted it.
  *
  * It is a one-line rule because §L.4 already did the hard part. `No ZOC` (`attr2` bit 6) turned

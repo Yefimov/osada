@@ -6,7 +6,7 @@ import kotlin.test.assertTrue
 
 /**
  * The minimap half of the accessibility audit
- * (`docs/design/accessible-side-identification.md` §3, roadmap P2 item 2).
+ * (`docs/design/action-affordances-and-objectives.md` §13.3, roadmap P2 item 2).
  *
  * The design asks whether the existing black enemy outline survives "every supported scale and
  * palette", and says Enhanced Side Markers should only touch the minimap if it does not. The two

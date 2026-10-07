@@ -2,7 +2,7 @@ package org.osada.model
 
 /**
  * One AA gun firing on one moving aircraft, as it actually resolved
- * (`docs/design/aa-interception.md`, `docs/player-comfort-roadmap.md` P1).
+ * (`docs/design/efile-driven-rules.md` §3, `docs/design/player-comfort-roadmap.md` P1).
  *
  * Carried out of the rules layer on [MovementResults] so the HUD can raise an obvious, non-modal
  * event for something the player otherwise only discovers by noticing their aircraft is suddenly
@@ -28,7 +28,7 @@ data class InterceptionEvent(
  * One vocabulary rather than three parallel event types, because every one of them has the same
  * player-facing problem and therefore the same answer: a formation arrives weaker from a combat
  * nobody watched, so it must be named out loud in the same banner and the same HUD log
- * (`DEFERRED.md` §1.1 — *"Movement damage with no visible cause reads as a bug"*).
+ * (`docs/design/action-affordances-and-objectives.md` §1.1 — *"Movement damage with no visible cause reads as a bug"*).
  */
 enum class MoveReactionKind {
     /** Anti-aircraft fire on a moving aircraft (`rules/AAInterception`). */

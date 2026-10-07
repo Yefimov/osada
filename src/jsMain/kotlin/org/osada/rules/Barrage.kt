@@ -29,8 +29,8 @@ import org.osada.rules.ruleset.RuleKey
  *
  * ### Why this was blocked, and what unblocked it
  *
- * `docs/og-fidelity-plan.md` §L.6 filed Barrage as un-buildable because the ability was *"not among
- * the decoded 52"* equipment specials. It is not a bit at all: it is the record's **Bomber Size**
+ * Barrage was once filed as un-buildable because the ability is *"not among the decoded 52"*
+ * equipment specials. It is not a bit at all: it is the record's **Bomber Size**
  * ([org.osada.model.EquipmentData.bombsize]), the `'='` mark `tips1.txt` tells the player to look
  * for. That was settled on 2026-08-26 by the owner reading OG directly, and the population proves
  * it — every LXF Level Bomber and every Battleship carries it (§Q.2).
@@ -44,7 +44,7 @@ import org.osada.rules.ruleset.RuleKey
  *
  * ### The honesty rule this mechanic had to satisfy
  *
- * `tools/og-import/DEFERRED.md` §1.1 forbids damage with no visible cause. A barrage is the exact
+ * `docs/design/action-affordances-and-objectives.md` §1.1 forbids damage with no visible cause. A barrage is the exact
  * shape that rule guards against: fire into a hex nobody can see. It is admissible because the
  * player ORDERS it — the damage is theirs, not a surprise — and because every outcome is reported
  * ([BarrageResult] is what `CombatLog` and the HUD banner read). The defender's side is told
@@ -210,7 +210,7 @@ internal object Barrage {
             // Nothing OG would destroy: facilities and roads are its whole list, widened only by
             // an efile's `blow_any_terrain` (the same set `Can Blow` reads). Open ground then takes
             // craters instead of nothing -- OSADA's own rule, off unless the player asks for it
-            // (`rules/Craters`, and `docs/og-fidelity-plan.md` §S).
+            // (`rules/Craters`).
             Craters.dig(hex) -> BarrageResult(hit = true, leftCrater = true)
             else -> BarrageResult(hit = true)
         }

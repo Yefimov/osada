@@ -16,10 +16,9 @@ import kotlin.test.assertTrue
 /**
  * The four largest authored scenario options that had no reader until 2026-08-30.
  *
- * `docs/og-fidelity-plan.md` §AF.5 ranked the undeployed options by how much content sets them and
- * these were the top of the list — 295, 295, 202 and 197 of the 397 deployed scenarios whose source
- * parses. Every one of them was decoded years' worth of sessions ago; what was missing was a rule
- * that read the switch.
+ * Ranked by how much content sets them, these were the top of the list — 295, 295, 202 and 197 of the 397 deployed
+ * scenarios whose source parses. Every one of them was decoded years' worth of sessions ago; what was missing was a
+ * rule that read the switch.
  *
  * **Two of them turned out to be options OSADA already behaved as if ON**, which is a different and
  * worse failure than not reading a switch: the scenarios that author them were right by accident

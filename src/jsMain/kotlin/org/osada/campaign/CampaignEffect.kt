@@ -101,9 +101,9 @@ internal sealed class CampaignEffect {
     ) : CampaignEffect()
 
     /**
-     * Re-routes the campaign to an existing scenario index. Engine-supported but NOT authored by
-     * either shipping campaign — both are strictly linear (all wins -> i+1, lose -> campaign end),
-     * so there is no alternate or recovery scenario to target. See the design doc, section 7.
+     * Re-routes the campaign to an existing scenario index after a WIN; a loss keeps its authored
+     * transition (`scenario.CampaignRouting`). Authored by the imported OG route decisions
+     * (`forward`, `camp6bn4`) as the choices of a briefing dialogue.
      */
     data class Route(
         override val id: String,

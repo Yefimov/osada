@@ -4,7 +4,7 @@
   <player id="1" country="7" side="0" airtrans="0" navaltrans="0" railtrans="2" defaultxp="25" defaultstr="10" support="8,0,0,0" turnprestige="0, 0, 36, 0, 36, 0, 36, 0, 36, 0, 0, 36, 0, 36, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25" ff="8:4:99584"/>
   <reinforce turn="2">
     <at row="5" col="3">
-      <unit id="20863" owner="0" flag="20" face="0" transport="20655" exp="44" ldr="1" fuel="0" bstr="5"/>
+      <unit id="20863" owner="0" flag="20" face="0" transport="20655" exp="300" ldr="1" fuel="0" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="4">
@@ -20,10 +20,10 @@
       <unit id="10884" owner="1" flag="8" face="0" exp="100" fuel="12" ammo="0" bstr="5"/>
     </at>
     <at row="18" col="4">
-      <unit id="8598" owner="1" flag="8" face="0" exp="44" str="5" ldr="1" bstr="5"/>
+      <unit id="8598" owner="1" flag="8" face="0" exp="300" str="5" ldr="1" bstr="5"/>
     </at>
     <at row="18" col="3">
-      <unit id="9419" owner="1" flag="8" face="0" exp="44" str="5" bstr="5"/>
+      <unit id="9419" owner="1" flag="8" face="0" exp="300" str="5" bstr="5"/>
     </at>
     <at row="17" col="3">
       <unit id="7976" owner="1" flag="8" face="0" exp="200" str="11" bstr="8"/>
@@ -43,10 +43,10 @@
       <unit id="10921" owner="1" flag="8" face="0" exp="100" fuel="12" ammo="0" bstr="5"/>
     </at>
     <at row="19" col="2">
-      <unit id="10344" owner="1" flag="8" face="0" exp="44" str="5" bstr="5"/>
+      <unit id="10344" owner="1" flag="8" face="0" exp="300" str="5" bstr="5"/>
     </at>
     <at row="19" col="4">
-      <unit id="7976" owner="1" flag="8" face="0" exp="44" str="11" bstr="8"/>
+      <unit id="7976" owner="1" flag="8" face="0" exp="300" str="11" bstr="8"/>
     </at>
     <at row="18" col="2">
       <unit id="7976" owner="1" flag="8" face="0" exp="200" str="11" bstr="8"/>
@@ -272,7 +272,7 @@
   <hex row="4" col="31" terrain="3"/>
   <hex row="4" col="32" road="18"/>
   <hex row="4" col="33">
-    <unit id="26700" owner="1" flag="8" face="0" exp="44" str="5" bstr="5"/>
+    <unit id="26700" owner="1" flag="8" face="0" exp="300" str="5" bstr="5"/>
   </hex>
   <hex row="4" col="34" road="17"/>
   <hex row="4" col="35" terrain="10"/>
@@ -700,7 +700,7 @@
     <unit id="20371" owner="0" flag="20" face="0" exp="100" bstr="7"/>
   </hex>
   <hex row="14" col="36" terrain="1" name="Village" owner="0" flag="19" deploy="0">
-    <unit id="20422" owner="0" flag="20" face="0" exp="44" str="8" bstr="5"/>
+    <unit id="20422" owner="0" flag="20" face="0" exp="300" str="8" bstr="5"/>
   </hex>
   <hex row="14" col="40" terrain="3"/>
   <hex row="14" col="41" terrain="3"/>
@@ -789,7 +789,7 @@
   <hex row="17" col="4" terrain="3" road="18"/>
   <hex row="17" col="5" name="Railroad" rail="34"/>
   <hex row="17" col="6" name="Railroad" rail="34">
-    <unit id="26700" owner="1" flag="8" face="0" exp="44" str="5" bstr="5"/>
+    <unit id="26700" owner="1" flag="8" face="0" exp="300" str="5" bstr="5"/>
   </hex>
   <hex row="17" col="7" terrain="2" owner="1" flag="7"/>
   <hex row="17" col="8" terrain="10"/>

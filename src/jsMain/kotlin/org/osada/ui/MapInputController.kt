@@ -74,6 +74,11 @@ internal class MapInputController(
         kind: MapActivationKind,
         touch: Boolean,
     ) {
+        // An armed ping marks the tapped hex for the whole room, on anyone's turn, and does nothing else.
+        if (MinimapPings.armed) {
+            val pinged = cellAt(clientX, clientY)
+            if (pinged != null && MinimapPings.placeCell(pinged.row, pinged.col)) return
+        }
         val map = resolvePlayableMap() ?: return
         val cell = cellAt(clientX, clientY) ?: return
         val hex = resolveHex(map, cell) ?: return

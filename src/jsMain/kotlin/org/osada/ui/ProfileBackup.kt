@@ -1,193 +1,339 @@
 package org.osada.ui
 
+import kotlinx.browser.window
 import org.osada.Game
+import org.osada.GameStateSerializer
+import org.osada.PlayerType
 import org.osada.current
-import org.osada.hero.HeroArchive
 import org.osada.hero.HeroArchiveCodec
 import org.osada.hero.HeroArchiveService
 import org.osada.i18n.I18n
+import org.osada.multiplayer.client.OsadaMultiplayer
 import org.osada.rules.ruleset.RulesetProfileStore
 import org.osada.save.CampaignRunCodec
-import org.osada.save.CampaignRunMetadata
-import org.osada.save.ProfileBundle
+import org.osada.save.LocalStorageBatch
+import org.osada.save.LocalStorageSaveSnapshotStore
+import org.osada.save.ResumeTarget
 import org.osada.save.SaveResult
+import org.osada.save.SaveResultKind
+import org.osada.storage.BrowserStorage
+import org.osada.storage.localStorage
 import kotlin.js.Date
 import kotlin.js.json
 
-/**
- * "Export full profile backup" / "Import full profile backup" from
- * `docs/design/save-recovery.md` section 6: every campaign run plus completion metadata in one
- * file, distinct from the existing single-campaign disk save/load already built in
- * [GameStateMenuBuilder] (that one exports/imports the live in-memory game only). Reuses the
- * existing hidden-anchor download technique from [org.osada.OSGlue.disksave] rather than adding a
- * second download mechanism.
- *
- * The bundle carries three things: every campaign run's saved state, the named ruleset library, and
- * the profile-level hero archive (`docs/design/hero-desk-and-profile-archive.md` §4). The last two
- * are additive fields -- a backup written before either existed simply lacks them and imports with
- * the local copy left alone rather than cleared.
- */
+/** One file surface for all campaigns; older campaign and battle files remain readable. */
+@Suppress("TooGenericExceptionCaught", "TooManyFunctions") // Export, import and the cloud copy share one journal.
 internal object ProfileBackup {
+    /** The game is mid-action (animation, computer turn, online session): retry later, not a fault. */
+    internal class BackupBusy : IllegalStateException("backup refused while the game is busy")
+
     fun exportToFile() {
-        // The campaign on the map is exported as it stands, not as of its last autosave; storage
-        // is left at the autosave (`CampaignRunBackup.withLiveBattle`).
-        val bundle =
-            Game.current?.state?.exportProfile()?.let {
-                it.copy(runs = it.runs.map(CampaignRunBackup::withLiveBattle))
-            } ?: return
-        val json = bundleToJson(bundle)
-        downloadJson("osada-profile-backup-${Date().getTime().toLong()}.json", json)
+        try {
+            downloadJson("osada-backup-${Date().getTime().toLong()}.json", prepareExport())
+            status("save_load.backup.exported")
+        } catch (error: BackupBusy) {
+            console.warn("[osada] backup export deferred", error)
+            status("save_load.backup.busy")
+        } catch (error: Throwable) {
+            console.warn("[osada] backup export refused", error)
+            status("save_load.backup.failed")
+        }
     }
 
     /**
-     * Reads the file, shows what it would replace, and only then applies it.
-     *
-     * A whole-profile import is the single most destructive action in the game -- it drops EVERY
-     * existing campaign run and writes the file's set in their place, with no partial merge in this
-     * release. It previously committed the moment the file finished loading, with the file picker
-     * as the only confirmation, so a mis-picked backup silently destroyed live progress. The
-     * preview names both sides: the runs about to be replaced and the runs arriving.
-     *
-     * Reads an external, untrusted JSON file, so any parse/shape error must fail gracefully through
-     * [onError] rather than crash -- hence the broad catch.
+     * The whole profile as one backup document. [includeLiveBattle] false is the cloud-sync view:
+     * only what is already committed to this browser's store (autosaves at their own boundaries),
+     * never a half-played turn, and dated by the latest save rather than "now" so unchanged
+     * content serializes to the same bytes.
      */
-    @Suppress("TooGenericExceptionCaught")
+    internal fun prepareExport(includeLiveBattle: Boolean = true): dynamic {
+        if (includeLiveBattle && !canImport()) throw BackupBusy()
+        val game = Game.current
+        val liveGame = game?.takeIf { includeLiveBattle && it.gameStarted && !it.gameEnded }
+        val stored = LocalStorageSaveSnapshotStore().exportProfile()
+        val now =
+            if (includeLiveBattle) {
+                Date().getTime()
+            } else {
+                stored.runs.maxOfOrNull { it.metadata.lastPlayedAt }
+                    ?: 0.0
+            }
+        var runs = if (includeLiveBattle) stored.runs.map(CampaignRunBackup::withLiveBattle) else stored.runs
+        if (liveGame?.campaign != null &&
+            runs.none { it.metadata.campaignRunId == liveGame.campaign?.file }
+        ) {
+            runs = runs + ProfileBackupCodec.runFromSave(GameStateSerializer.exportGameState(liveGame), now)
+        }
+        val checkpoints = js("Object.create(null)")
+        runs.forEach { run ->
+            checkpoints[run.metadata.campaignRunId] =
+                game?.missionRestartCheckpoint?.exportFor(
+                    run.current.campaignFile,
+                    run.current.campaignScenario,
+                    run.current.scenarioFile,
+                )
+        }
+        val result =
+            json(
+                "kind" to ProfileBackupCodec.FILE_KIND,
+                "backupVersion" to ProfileBackupCodec.FILE_VERSION,
+                "exportedAt" to now,
+                "gameVersion" to stored.gameVersion,
+                "runs" to runs.map(CampaignRunCodec::runToJson).toTypedArray(),
+                "rulesetProfiles" to
+                    JSON.parse<dynamic>(
+                        localStorage.getItem(ProfileBackupCodec.RULESETS_KEY)
+                            ?: RulesetProfileStore.serialize(RulesetProfileStore.custom()),
+                    ),
+                "heroArchive" to (
+                    localStorage.getItem(ProfileBackupCodec.archiveKey)?.let { JSON.parse<dynamic>(it) }
+                        ?: HeroArchiveCodec.serialize(HeroArchiveService.archive())
+                ),
+                "missionStarts" to checkpoints,
+                "standalone" to exportStandalone(game, liveGame, now),
+            )
+        ProfileBackupCodec.decode(result)
+        return result
+    }
+
+    private fun exportStandalone(
+        game: Game?,
+        liveGame: Game?,
+        now: Double,
+    ): dynamic {
+        val rawSession = localStorage.getItem(ProfileBackupCodec.standaloneKey)
+        var standalone: dynamic = rawSession?.let { JSON.parse<dynamic>(it) }
+        if (standalone != null && standalone.payload == null) {
+            standalone = json("savedAt" to 0.0, "payload" to rawSession)
+        }
+        if (liveGame != null && liveGame.campaign == null) {
+            standalone = json("savedAt" to now, "payload" to GameStateSerializer.exportGameState(liveGame))
+        }
+        if (standalone != null) {
+            val saved = JSON.parse<dynamic>(standalone.payload as String)
+            standalone.missionStart =
+                game?.missionRestartCheckpoint?.exportFor(null, null, saved.scenario.file as? String)
+        }
+        return standalone
+    }
+
+    /** [onError] receives the i18n key of the message to show; each names a different remedy. */
     fun importFromFile(
         file: dynamic,
         onSuccess: (Int) -> Unit,
-        onError: () -> Unit,
+        onError: (String) -> Unit,
     ) {
+        importRefusalKey()?.let {
+            onError(it)
+            return
+        }
+        if ((file.size as? Double ?: 0.0) > MAX_FILE_BYTES) {
+            onError("save_load.backup.import_invalid")
+            return
+        }
         val reader = js("new FileReader()")
-        reader.onloadend = {
+        reader.onload = {
             try {
-                val parsed = jsonToBundle(JSON.parse<dynamic>(reader.result as String))
-                if (parsed == null) onError() else confirmThenApply(parsed, onSuccess, onError)
-            } catch (e: Throwable) {
-                console.error("[osada] profile backup import failed", e)
-                onError()
+                val plan = ProfileBackupCodec.decode(JSON.parse<dynamic>(reader.result as String))
+                confirmThenApply(plan, onSuccess, onError)
+            } catch (error: Throwable) {
+                console.warn("[osada] backup rejected", error)
+                onError("save_load.backup.import_invalid")
             }
         }
+        reader.onerror = { onError("save_load.backup.import_invalid") }
         reader.readAsText(file)
     }
 
+    /** Which message a failed [apply] deserves. Only a pending journal means "reload now". */
+    internal fun importFailureKey(result: SaveResult): String =
+        when {
+            localStorage.getItem(LocalStorageBatch.JOURNAL_KEY) != null -> "save_load.backup.import_failed"
+            result.kind == SaveResultKind.QUOTA_EXCEEDED -> "save_load.backup.import_quota"
+            else -> "save_load.backup.import_unchanged"
+        }
+
     /**
-     * A parsed backup file, before anything has been applied.
-     *
-     * The whole file is decoded and validated first and written only after the player confirms.
-     * That ordering is the point: the ruleset library used to be replaced inside the PARSER, so
-     * picking a backup and then cancelling the confirmation still overwrote every named profile the
-     * player had -- a destructive side effect of reading a file.
+     * Replaces the whole profile with [document] (a downloaded online copy) through the same
+     * journaled path as a file import, then reloads. [beforeReload] runs once the import is
+     * durable, so the caller can record what this device now holds. [confirm] false skips the
+     * preview: only for a copy that descends from this device's own acknowledged state.
      */
-    private data class ParsedProfile(
-        val bundle: ProfileBundle,
-        val rulesetProfiles: dynamic,
-        val heroArchive: HeroArchive?,
-    )
+    internal fun applyDocument(
+        document: dynamic,
+        confirm: Boolean,
+        beforeReload: () -> Unit,
+        onError: (String) -> Unit,
+    ) {
+        val plan =
+            try {
+                ProfileBackupCodec.decode(document)
+            } catch (error: Throwable) {
+                console.warn("[osada] online copy rejected", error)
+                onError("save_load.backup.import_invalid")
+                return
+            }
+        if (confirm) {
+            confirmThenApply(plan, { beforeReload() }, onError)
+        } else {
+            commit(plan, { beforeReload() }, onError)
+        }
+    }
 
     private fun confirmThenApply(
-        parsed: ParsedProfile,
+        plan: ProfileBackupCodec.ImportPlan,
         onSuccess: (Int) -> Unit,
-        onError: () -> Unit,
+        onError: (String) -> Unit,
     ) {
-        val existing =
-            Game.current
-                ?.state
-                ?.listCampaignRuns()
-                .orEmpty()
+        val existing = LocalStorageSaveSnapshotStore().listCampaignRuns()
         ConfirmCard.open(
-            I18n.t("save_load.profile_import.confirm.title"),
-            buildPreview(parsed.bundle, existing),
-            I18n.t("save_load.profile_import.confirm.confirm_button"),
-        ) {
-            val result: SaveResult? = Game.current?.state?.importProfile(parsed.bundle)
-            if (result?.isSuccess == true) {
-                // Applied together with the runs, and only once they are in: a file whose runs were
-                // rejected must leave the local rulesets and hero archive exactly as they were.
-                restoreRulesetProfiles(parsed.rulesetProfiles)
-                parsed.heroArchive?.let(HeroArchiveService::replaceAll)
-                onSuccess(parsed.bundle.runs.size)
-            } else {
-                onError()
+            I18n.t(if (plan.replaceAll) "save_load.profile_import.confirm.title" else "save_load.backup.legacy.title"),
+            ProfileBackupPreview.preview(plan, existing),
+            I18n.t(
+                if (plan.replaceAll) {
+                    "save_load.profile_import.confirm.confirm_button"
+                } else {
+                    "save_load.backup.legacy.confirm"
+                },
+            ),
+        ) { commit(plan, onSuccess, onError) }
+    }
+
+    private fun commit(
+        plan: ProfileBackupCodec.ImportPlan,
+        onSuccess: (Int) -> Unit,
+        onError: (String) -> Unit,
+    ) {
+        val refusal = importRefusalKey()
+        val result = if (refusal == null) apply(plan) else null
+        if (result == null) {
+            onError(refusal ?: "save_load.backup.busy")
+        } else if (result.isSuccess) {
+            // Reload only once the whole import is on disk: an unload with the IndexedDB
+            // transaction still open would abort it after the player was told it succeeded.
+            BrowserStorage.whenDurable { durable ->
+                if (durable) {
+                    onSuccess(plan.bundle.runs.size)
+                    // The old in-memory game must not autosave over the imported profile.
+                    window.location.reload()
+                } else {
+                    // The transaction aborted as a whole: disk still holds the old profile. Stop
+                    // this page from retrying the import later, and ask for the reload.
+                    BrowserStorage.suspendWrites()
+                    onError("save_load.backup.import_failed")
+                }
+            }
+        } else {
+            onError(importFailureKey(result))
+            if (localStorage.getItem(LocalStorageBatch.JOURNAL_KEY) != null) {
+                BrowserStorage.whenDurable { window.location.reload() }
             }
         }
     }
 
-    /** Names every run on both sides of the replacement. Campaign titles come from the file's own
-     *  metadata, which is all an offline backup carries -- falling back to the run id. */
-    private fun buildPreview(
-        bundle: ProfileBundle,
-        existing: List<CampaignRunMetadata>,
-    ): String {
-        val incoming = bundle.runs.map { describe(it.metadata) }
-        val outgoing = existing.map { describe(it) }
-        val incomingBlock =
-            I18n.t("save_load.profile_import.confirm.incoming", mapOf("count" to incoming.size)) +
-                "<br>" + incoming.joinToString("<br>") { "&nbsp;&nbsp;• $it" }
-        val outgoingBlock =
-            if (outgoing.isEmpty()) {
-                I18n.t("save_load.profile_import.confirm.replaces_nothing")
-            } else {
-                I18n.t("save_load.profile_import.confirm.replaces", mapOf("count" to outgoing.size)) +
-                    "<br>" + outgoing.joinToString("<br>") { "&nbsp;&nbsp;• $it" }
+    internal fun apply(plan: ProfileBackupCodec.ImportPlan): SaveResult =
+        try {
+            val store = LocalStorageSaveSnapshotStore()
+            val bundle =
+                if (plan.replaceAll) {
+                    plan.bundle
+                } else {
+                    val ids =
+                        plan.bundle.runs
+                            .map { it.metadata.campaignRunId }
+                            .toSet()
+                    plan.bundle.copy(
+                        runs =
+                            store.exportProfile().runs.filter { it.metadata.campaignRunId !in ids } + plan.bundle.runs,
+                    )
+                }
+            val changes = store.profileChanges(bundle).toMutableMap()
+            changes.putAll(plan.extras)
+            changes[ResumeTarget.key] = resumeTargetFor(plan)?.let(ResumeTarget::encode)
+            if (plan.replaceAll) {
+                store
+                    .listCampaignRuns()
+                    .filter { old ->
+                        bundle.runs.none {
+                            it.metadata.campaignRunId ==
+                                old.campaignRunId
+                        }
+                    }.forEach { changes["${ProfileBackupCodec.checkpointPrefix}:${it.campaignFile}"] = null }
             }
-        return "$incomingBlock<br><br>$outgoingBlock"
+            if (plan.extras.keys.any { it.startsWith(ProfileBackupCodec.checkpointPrefix + ":") }) {
+                changes[ProfileBackupCodec.checkpointPrefix] = null
+            }
+            val checkpointIndex = "${ProfileBackupCodec.checkpointPrefix}:index"
+            val existingCheckpoints =
+                localStorage
+                    .getItem(checkpointIndex)
+                    ?.let {
+                        JSON.parse<Array<String>>(it).toList()
+                    }.orEmpty()
+            val checkpointChanges = changes.filterKeys { it.startsWith(ProfileBackupCodec.checkpointPrefix + ":") }
+            if (checkpointChanges.isNotEmpty()) {
+                changes[checkpointIndex] =
+                    JSON.stringify(
+                        (
+                            existingCheckpoints.filter { it !in checkpointChanges } +
+                                checkpointChanges.filterValues { it != null }.keys
+                        ).toTypedArray(),
+                    )
+            }
+            LocalStorageBatch().apply(changes)
+        } catch (error: Throwable) {
+            SaveResult(SaveResultKind.CORRUPT_READBACK, error.message)
+        }
+
+    /**
+     * A single-campaign or raw-battle file opens what it imported, even though its honest
+     * timestamp (often unknown) is older than other local progress. A full profile replaces
+     * everything and keeps ordinary recency, so it clears any older pointer instead.
+     */
+    internal fun resumeTargetFor(plan: ProfileBackupCodec.ImportPlan): ResumeTarget.Target? =
+        when {
+            plan.replaceAll -> null
+            plan.bundle.runs.isNotEmpty() ->
+                ResumeTarget.Campaign(
+                    plan.bundle.runs
+                        .first()
+                        .metadata.campaignRunId,
+                )
+            plan.extras[ProfileBackupCodec.standaloneKey] != null -> ResumeTarget.Standalone
+            else -> null
+        }
+
+    private fun status(key: String) {
+        byId("diskloaderror")?.textContent = I18n.t(key)
     }
 
-    private fun describe(m: CampaignRunMetadata): String {
-        val name = m.campaignName.ifBlank { m.campaignRunId }
-        val where = m.scenarioName.ifBlank { null }
-        return escapeBackupHtml(if (where == null) name else "$name — $where")
+    /**
+     * Why an import cannot start now, before anything is read or written; null when it can.
+     *
+     * An import ends in a reload that rebuilds the game from the imported profile. With site
+     * storage blocked the profile lives in this page's memory, so that reload would erase the import
+     * the moment it succeeded: refuse instead of pretending.
+     */
+    internal fun importRefusalKey(): String? =
+        when {
+            !BrowserStorage.persistent -> "save_load.backup.import_session_only"
+            !canImport() -> "save_load.backup.busy"
+            else -> null
+        }
+
+    private fun canImport(): Boolean {
+        val game = Game.current
+        return !OsadaMultiplayer.active &&
+            game?.waitUIAnimation != true &&
+            (
+                game?.gameStarted != true ||
+                    game.gameEnded ||
+                    game.scenario
+                        ?.map
+                        ?.currentPlayer
+                        ?.type == PlayerType.HUMAN_LOCAL
+            )
     }
 
-    private fun bundleToJson(bundle: ProfileBundle): dynamic =
-        json(
-            Pair("exportedAt", bundle.exportedAt),
-            Pair("gameVersion", bundle.gameVersion),
-            Pair(
-                "runs",
-                bundle.runs
-                    .map { CampaignRunCodec.runToJson(it) }
-                    .toTypedArray(),
-            ),
-            // Additive: the named ruleset library travels with a WHOLE-profile backup, never with a
-            // campaign-only export (`docs/design/ruleset-profiles.md` §6). A backup written before
-            // this field existed simply has no `rulesetProfiles`, and imports unchanged.
-            Pair("rulesetProfiles", JSON.parse<dynamic>(RulesetProfileStore.serialize(RulesetProfileStore.custom()))),
-            // Same rule for the complete versioned hero archive: it is profile-level state, not
-            // per-campaign, so it belongs to the whole-profile backup and to nothing smaller.
-            Pair("heroArchive", HeroArchiveCodec.serialize(HeroArchiveService.archive())),
-        )
-
-    @Suppress("ReturnCount") // two early rejections (no runs array, no readable run) plus the result
-    private fun jsonToBundle(d: dynamic): ParsedProfile? {
-        val rawRuns = d?.runs as? Array<dynamic> ?: return null
-        val runs = rawRuns.mapNotNull { CampaignRunCodec.jsonToRun(it) }
-        if (runs.isEmpty()) return null
-        return ParsedProfile(
-            bundle = ProfileBundle(runs, d.exportedAt as? Double ?: 0.0, d.gameVersion as? String ?: ""),
-            rulesetProfiles = d.rulesetProfiles,
-            // An older profile file without `heroArchive` imports with the local archive left
-            // alone; the desk then rebuilds live cards from the imported runs' own hero blocks,
-            // which is exactly what §4 asks for.
-            heroArchive = readHeroArchive(d.heroArchive),
-        )
-    }
-}
-
-/** Null for a backup written before the hero archive existed, which leaves the local archive alone
- *  rather than clearing it (`docs/design/hero-desk-and-profile-archive.md` §4). */
-private fun readHeroArchive(raw: dynamic): HeroArchive? =
-    if (raw == null || raw == undefined) null else HeroArchiveCodec.parse(raw)
-
-/**
- * Replaces the ruleset library from a whole-profile backup, transactionally with the runs
- * (`docs/design/ruleset-profiles.md` §6). Two profiles are never merged merely because their
- * display names match; the backup's library replaces the local one outright.
- *
- * A backup with no `rulesetProfiles` field (any written before rulesets shipped) leaves the local
- * library untouched rather than clearing it.
- */
-private fun restoreRulesetProfiles(raw: dynamic) {
-    if (raw == null || raw == undefined) return
-    RulesetProfileStore.replaceAll(RulesetProfileStore.parse(JSON.stringify(raw)))
+    private const val MAX_FILE_BYTES = 64 * 1024 * 1024
 }

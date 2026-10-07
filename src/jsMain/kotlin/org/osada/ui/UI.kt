@@ -14,7 +14,6 @@ import org.osada.model.getCountriesBySide
 import org.osada.model.getCountryName
 import org.osada.model.selectUnit
 import org.osada.multiplayer.client.OsadaMultiplayer
-import org.osada.multiplayer.ui.CoopHud
 import org.osada.scenario.objectiveReport
 import org.osada.ui.briefing.BriefingIntroTracker
 import org.osada.ui.briefing.ScenarioFacts
@@ -97,8 +96,7 @@ class UI(
         // The one document-level gameplay keyboard listener, registered once here since UI is
         // constructed exactly once per page load (Game reuses this instance across scenario/
         // campaign transitions). It owns Escape as well: a second independent listener would fire
-        // on the same press, which is how Escape once closed a window underneath a modal
-        // (DEFERRED.md §4.13).
+        // on the same press, which is how Escape once closed a window underneath a modal.
         CommandRouter.install(this)
     }
 
@@ -131,7 +129,6 @@ class UI(
             render.render()
             MinimapBuilder.refresh()
             AttackRingBuilder.refresh()
-            CoopHud.onUnitSelected(unit)
             true
         }
 

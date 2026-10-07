@@ -48,7 +48,7 @@ data class UnmountUnit(
 ) : GameCommand
 
 /**
- * OG 9.9's two minefield actions (`docs/og-fidelity-plan.md` C.1).
+ * OG 9.9's two minefield actions.
  *
  * They belong in the command set for the same reason every other unit action does, and for one more:
  * [ClearMines] is the only unit action whose OUTCOME is rolled rather than derived, so it is the one
@@ -204,7 +204,7 @@ data class DismissLeader(
 ) : UnitOrder
 
 /**
- * The orders only a cooperative-commanders room understands (`docs/design/cooperative-commanders-multiplayer.md`
+ * The orders only a cooperative-commanders room understands (`docs/multiplayer/cooperative-commanders.md`
  * §6). They are about COMMANDERS, not about a unit's move, so they name no unit the way a [UnitOrder]
  * does -- a commander asking for a teammate's unit is exactly the case the unit-ownership gate must
  * not refuse. The authority resolves them against the cooperative state; a room without that state
@@ -272,6 +272,12 @@ data class ExcuseSeat(
  */
 data class SetLoadout(
     val abilityIds: List<String>,
+    override val actorPlayerId: Int,
+) : CoopOrder
+
+/** A commander choosing the mark their units wear on the map; empty restores the seat number. */
+data class SetSeatSymbol(
+    val symbol: String,
     override val actorPlayerId: Int,
 ) : CoopOrder
 
@@ -416,6 +422,7 @@ private fun CoopOrder.writeCoopOrder(payload: dynamic) {
         }
 
         is SetLoadout -> payload["abilityIds"] = abilityIds.toTypedArray()
+        is SetSeatSymbol -> payload["symbol"] = symbol
     }
 }
 

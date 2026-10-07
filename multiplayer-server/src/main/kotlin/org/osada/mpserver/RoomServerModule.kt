@@ -24,12 +24,19 @@ import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import org.osada.mpserver.account.AccountBootstrap
+import org.osada.mpserver.account.AccountConfig
+import org.osada.mpserver.account.AccountModule
+import org.osada.mpserver.account.accountRoutes
 import org.osada.mpserver.protocol.ErrorCode
 import org.osada.mpserver.protocol.Wire
 import org.osada.mpserver.protocol.WireFormatException
 import org.osada.mpserver.room.RoomConnection
 import org.osada.mpserver.room.RoomRegistry
 import org.osada.mpserver.room.RoomRouter
+import org.osada.mpserver.saves.SaveModule
+import org.osada.mpserver.saves.SaveRepository
+import org.osada.mpserver.saves.saveRoutes
 import org.slf4j.LoggerFactory
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.time.Duration.Companion.seconds
@@ -37,8 +44,15 @@ import kotlin.time.Duration.Companion.seconds
 private val logger = LoggerFactory.getLogger("org.osada.mpserver")
 private val connectionCounter = AtomicLong()
 
-/** Ktor module: the game's static build, a health endpoint and the `/mp` room socket. */
-fun Application.roomServerModule(config: ServerConfig = ServerConfig.fromEnvironment()) {
+/**
+ * Ktor module: the game's static build, a health endpoint, the `/mp` room socket and, when
+ * configured, the optional account endpoints under `/api` (online-saves-and-player-profile.md §6).
+ */
+fun Application.roomServerModule(
+    config: ServerConfig = ServerConfig.fromEnvironment(),
+    accounts: AccountModule? = AccountBootstrap.open(AccountConfig.fromEnvironment(), config.allowedOrigins),
+    saves: SaveModule? = accounts?.let { SaveModule(it, SaveRepository(it.service.database)) },
+) {
     val registry = RoomRegistry(config)
     val router = RoomRouter(registry, config)
     val startedAt = System.currentTimeMillis()
@@ -63,6 +77,8 @@ fun Application.roomServerModule(config: ServerConfig = ServerConfig.fromEnviron
         }
     }
 
+    if (accounts != null) launchAccountSweep(accounts, saves)
+
     routing {
         get("/healthz") {
             call.respondText(
@@ -72,6 +88,9 @@ fun Application.roomServerModule(config: ServerConfig = ServerConfig.fromEnviron
                 ContentType.Application.Json,
             )
         }
+
+        accountRoutes(accounts)
+        saveRoutes(saves)
 
         webSocket("/mp") {
             if (!originAllowed(call.request.header(HttpHeaders.Origin), config)) {
@@ -91,6 +110,22 @@ fun Application.roomServerModule(config: ServerConfig = ServerConfig.fromEnviron
                     status = HttpStatusCode.OK,
                 )
             }
+        }
+    }
+}
+
+/** Forgets expired sign-ins, sessions and idempotency receipts; never touches saves themselves. */
+private fun Application.launchAccountSweep(
+    accounts: AccountModule,
+    saves: SaveModule?,
+) {
+    launch {
+        while (isActive) {
+            delay(ACCOUNT_SWEEP_INTERVAL)
+            runCatching {
+                accounts.sessions.sweep(accounts.clock())
+                saves?.repository?.sweepReceipts(accounts.clock())
+            }.onFailure { logger.warn("Account sweep failed", it) }
         }
     }
 }
@@ -158,4 +193,5 @@ private suspend fun handleFrame(
 private val PING_PERIOD_MILLIS = 20.seconds.inWholeMilliseconds
 private val SOCKET_TIMEOUT_MILLIS = 60.seconds.inWholeMilliseconds
 private val SWEEP_INTERVAL = 15.seconds
+private val ACCOUNT_SWEEP_INTERVAL = 600.seconds
 private const val COMPRESSION_MINIMUM_BYTES = 1024L

@@ -21,8 +21,8 @@ import kotlin.test.assertTrue
 /**
  * The three mechanics unblocked on 2026-08-29 by the owner's controlled OpenSuite diffs.
  *
- * `docs/og-fidelity-plan.md` §Y.1 had listed all three as *"blocked on a controlled OpenSuite diff —
- * a human must take these"* for four days. The offsets are in `SCENARIO_FORMAT_NOTES.md`; this
+ * All three were *"blocked on a controlled OpenSuite diff — a human must take these"* for four
+ * days. The offsets are in `SCENARIO_FORMAT_NOTES.md`; this
  * suite is about what the engine does with them now that they arrive.
  *
  * Each of the three is tested for the same two things: that it DOES what OG says, and that it is

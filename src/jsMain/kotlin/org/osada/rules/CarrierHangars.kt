@@ -1,13 +1,16 @@
 package org.osada.rules
 
 import org.osada.TerrainType
+import org.osada.UnitClass
 import org.osada.model.Cell
 import org.osada.model.EfileConfig
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
 import org.osada.model.Hex
+import org.osada.model.Supply
 import org.osada.model.addUnit
 import org.osada.model.isWorking
+import org.osada.model.reinforceUnit
 import org.osada.model.resupply
 import org.osada.model.unitEndTurn
 import org.osada.rules.ruleset.ActiveRuleset
@@ -84,7 +87,7 @@ import org.osada.rules.ruleset.RuleKey
  * `rules/FrontsAndFactions.cargoMatchesCarrier` is the check; it is off in every shipped efile.
  *
  * **Not built, and stated so rather than guessed:**
- *  - **campaign handoff.** `DEFERRED.md` records that OG unlinks passengers from containers between
+ *  - **campaign handoff.** OG unlinks passengers from containers between
  *    scenarios; OSADA's core roster carries units forward individually, so a contained formation
  *    simply arrives as its own. That matches OG's outcome without modelling the transfer.
  *
@@ -105,20 +108,43 @@ object CarrierHangars {
     /** *"8 allow land units to enter naval-class carriers out of port"*. */
     private const val LAND_AT_SEA = 8
 
-    private fun mode(): Int =
-        if (!ActiveRuleset.flag(RuleKey.CARRIER_HANGARS, false)) 0 else EfileConfig.intKey("ground_carrier", 0)
+    private fun mode(): Int = if (!active()) 0 else EfileConfig.intKey("ground_carrier", 0)
 
-    /** Whether containers operate at all — the player's key AND the efile's. */
+    /**
+     * Whether the hangar mechanic runs at all: the player's `carrier_hangars` key, on by default
+     * since 2026-10-07.
+     *
+     * **Aircraft need nothing more.** Owner's decision 2026-10-07: carriers and airbases hold
+     * aircraft in every efile. `ground_carrier` describes LAND units entering containers (bit 8's
+     * own words), and reading it as the gate for aircraft too left every efile that does not set it
+     * -- most of them -- with carriers that could not take a single plane.
+     */
+    fun active(): Boolean = ActiveRuleset.flag(RuleKey.CARRIER_HANGARS, true)
+
+    /** Whether LAND formations may use containers: the player's key AND the efile's `ground_carrier`. */
     fun enabled(): Boolean = mode() != 0
+
+    /** Whether land formations may go in and come out during play: `ground_carrier` bit 1. */
+    fun admitsLandUnits(): Boolean = mode() and ENTER_LAUNCH != 0
+
+    /**
+     * Whether [container] is somewhere aircraft are kept: an aircraft carrier, or an Airbase unit
+     * (`rules/Airbase`). A bunker or a battleship may have hangar room for a garrison; it is not an
+     * airfield.
+     */
+    fun holdsAircraft(container: GameUnit): Boolean {
+        val data = container.unitData(true)
+        return data.uclass == UnitClass.CARRIER.value || Airbase.isAirbase(data)
+    }
 
     /**
      * How many formations [container] can hold, or 0 when it carries nobody.
      *
      * **No class test.** `hangarCap` is the whole gate, because the record's own capacity is what
      * OG stores and 13 classes carry it; requiring class 17 here is what hid bunkers, IFVs and
-     * landing ships until 2026-08-31.
+     * landing ships until 2026-08-31. Which formations may use that room is [canBoard]'s question.
      */
-    fun capacity(container: GameUnit): Int = if (!enabled()) 0 else container.unitData(true).hangarCap
+    fun capacity(container: GameUnit): Int = if (!active()) 0 else container.unitData(true).hangarCap
 
     /** Whether [container] has room for one more. */
     fun hasRoom(container: GameUnit): Boolean = container.hangar.size < capacity(container)
@@ -134,17 +160,28 @@ object CarrierHangars {
         passenger: GameUnit,
         container: GameUnit,
     ): Boolean =
-        enabled() &&
-            mode() and ENTER_LAUNCH != 0 &&
+        active() &&
             passenger !== container &&
             !passenger.destroyed &&
             !container.destroyed &&
+            passenger.containedIn == null &&
             passenger.player?.side == container.player?.side &&
             hasRoom(container) &&
-            boardingPermitted(passenger, container) &&
+            kindPermitted(passenger, container) &&
             // `equip.cfg`'s `ff_mustmatch`, on the EQUIPMENT masks of both sides. Inert until an
             // efile sets the key, which none of the twelve OSADA deploys does.
             FrontsAndFactions.cargoMatchesCarrier(passenger, container)
+
+    /** An aircraft into a carrier or an airbase; a land formation where the efile lets it in. */
+    private fun kindPermitted(
+        passenger: GameUnit,
+        container: GameUnit,
+    ): Boolean =
+        if (UnitPredicates.isAir(passenger)) {
+            holdsAircraft(container)
+        } else {
+            mode() and ENTER_LAUNCH != 0 && boardingPermitted(passenger, container)
+        }
 
     /**
      * Bit 8 — *"allow land units to enter naval-class carriers out of port"*.
@@ -189,21 +226,26 @@ object CarrierHangars {
      * Whether [passenger] may leave [container] this turn.
      *
      * Two clauses, both OG's: `ground_carrier` bit 4 *"disables being launched (taking off)
-     * units"* outright, and a passenger may not leave on the turn it boarded — the rule
-     * `DEFERRED.md` records for OG's containers and the one that stops a container being used as a
-     * free teleport within a single turn.
+     * units"* outright, and a passenger may not leave on the turn it boarded — OG's container
+     * rule, and the one that stops a container being used as a free teleport within a single turn.
      */
     fun canLaunch(
         map: GameMap,
         passenger: GameUnit,
         container: GameUnit,
     ): Boolean =
-        enabled() &&
+        active() &&
             mode() and NO_LAUNCH == 0 &&
-            mode() and ENTER_LAUNCH != 0 &&
+            (UnitPredicates.isAir(passenger) || mode() and ENTER_LAUNCH != 0) &&
             !container.destroyed &&
             passenger in container.hangar &&
-            passenger.landedTurn != map.turn
+            !landedThisTurn(map, passenger)
+
+    /** OG's container rule: a formation that went in this turn comes out next turn at the earliest. */
+    fun landedThisTurn(
+        map: GameMap,
+        passenger: GameUnit,
+    ): Boolean = passenger.landedTurn == map.turn
 
     /**
      * Put [passenger] back on the map, returning whether it left.
@@ -234,11 +276,35 @@ object CarrierHangars {
         if (!permitted || hex == null) return false
         container.hangar.remove(passenger)
         passenger.containedIn = null
+        passenger.owner = container.owner
         hex.setUnit(passenger)
-        map.addUnit(passenger)
-        GameRules.setZOCRange(map, passenger, true)
-        GameRules.setSpotRange(map, passenger, true)
+        // The passenger keeps the id it went in with: undo, heroes and the turn report all know it
+        // by that id, and `addUnit` would otherwise mint a new one.
+        val preserving = map.preserveUnitIds
+        map.preserveUnitIds = true
+        try {
+            map.addUnit(passenger)
+        } finally {
+            map.preserveUnitIds = preserving
+        }
         return true
+    }
+
+    /**
+     * Every hex [passenger] may leave [container] onto right now: the container's own hex or one
+     * beside it, with the passenger's slot free. Empty when it may not leave at all.
+     */
+    fun launchCells(
+        map: GameMap,
+        passenger: GameUnit,
+        container: GameUnit,
+    ): List<Hex> {
+        val pos = container.getPos()
+        val grid = map.map
+        if (pos == null || grid == null || !canLaunch(map, passenger, container)) return emptyList()
+        return (listOf(pos) + HexGeometry.getAdjacent(pos.row, pos.col))
+            .mapNotNull { grid.getOrNull(it.row)?.getOrNull(it.col) }
+            .filter { !slotTaken(it, passenger) }
     }
 
     /** Whether the slot [passenger] would occupy on [hex] is already filled. */
@@ -327,14 +393,45 @@ object CarrierHangars {
      * battle and then fall silent for reasons the player could not see.
      */
     fun endRoundForContained(
-        map: GameMap,
+        @Suppress("UnusedParameter") map: GameMap,
         container: GameUnit,
         spotSide: Int,
     ) {
-        if (!enabled() || container.destroyed) return
+        if (!active() || container.destroyed) return
         container.hangar.forEach { passenger ->
-            passenger.resupply(GameRules.getResupplyValue(map, passenger, true))
+            passenger.resupply(fullSupply(passenger))
+            repairAircraft(passenger)
             passenger.unitEndTurn(spotSide)
         }
+    }
+
+    /**
+     * A hangar is the aircraft's workshop (owner's decision 2026-10-07): an aircraft inside is brought
+     * back to full strength every round, as far as its owner's prestige pays for it, at the ordinary
+     * replacement price -- halved in an Airbase ([Airbase.repairCost]). Land formations in a
+     * bunker are only resupplied: a garrison is not in a workshop.
+     */
+    private fun repairAircraft(passenger: GameUnit) {
+        val player = passenger.player
+        val missing = passenger.basicStrength - passenger.strength
+        if (player == null || missing <= 0 || !UnitPredicates.isAir(passenger)) return
+        player.reinforceUnit(passenger, missing, false)
+    }
+
+    /**
+     * Everything [passenger] is short of, in full. Not `SupplyRules.getResupplyValue`: that one asks
+     * where the formation STANDS (an airfield beside an aircraft, a city under a battalion), and a
+     * passenger stands nowhere -- it was answering zero, so nothing in a hangar was ever refuelled.
+     */
+    private fun fullSupply(passenger: GameUnit): Supply {
+        val transport = passenger.transport
+        val transportAmmo = transport?.let { it.unitData().ammo - it.ammo } ?: 0
+        val transportFuel = transport?.let { it.unitData().fuel - it.fuel } ?: 0
+        return Supply(
+            (SupplyRules.maxAmmo(passenger) - passenger.ammo).coerceAtLeast(0),
+            (SupplyRules.maxFuel(passenger) - passenger.fuel).coerceAtLeast(0),
+            transportAmmo.coerceAtLeast(0),
+            transportFuel.coerceAtLeast(0),
+        )
     }
 }

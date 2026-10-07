@@ -7,7 +7,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
- * Per-efile `equip.cfg` settings (DEFERRED.md §6.6 item 0, `docs/design/efile-config.md`).
+ * Per-efile `equip.cfg` settings (`docs/design/efile-driven-rules.md` §1).
  * [EfileConfig.intKey]/[EfileConfig.flag]/[EfileConfig.attachments] must prefer the imported
  * per-efile value and fall back to the documented default whenever the active efile has no
  * `equip.cfg`, or the key is absent, or (for [EfileConfig.attachments]) `attach_on` is 0/absent.

@@ -260,7 +260,7 @@ internal object HeroCampaign {
     fun formationIdForHero(heroId: HeroId): FormationId? = roster.state(heroId)?.assignedFormationId
 
     /**
-     * Adds [slotNumber] to [unit]'s formation's attachments (DEFERRED.md §1.4). Refuses when: the
+     * Adds [slotNumber] to [unit]'s formation's attachments (`docs/design/attachments.md`). Refuses when: the
      * formation doesn't exist (a formationless scenario/auxiliary unit never gets attachments —
      * §3.2); the active efile has attachments off or no definition for this slot number, or
      * disables it (LXF disables Bridging); the formation is already at `Attachments.MAX_PER_UNIT`;
@@ -409,7 +409,7 @@ internal object HeroCampaign {
 
     /**
      * Credits [unit]'s commander with reconnaissance evidence for revealing [newlySpotted]
-     * previously unseen enemies (§8.4, `tools/og-import/DEFERRED.md` §7.43), and reports whether
+     * previously unseen enemies (§8.4, `docs/heroes/README.md` §2), and reports whether
      * anything was credited.
      *
      * **Evidence only** — no leader XP, no recognition, no promotion check, no service-history

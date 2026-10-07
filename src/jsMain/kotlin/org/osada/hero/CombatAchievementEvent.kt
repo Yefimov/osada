@@ -10,7 +10,7 @@ package org.osada.hero
  * from shared structured events" (§29.12) rather than two independently-invented logs.
  *
  * Only the fields Phase 3 can actually populate from a resolved combat are present — see
- * `docs/hero-leader-implementation-phases.md` for the ones deliberately left out (encirclement,
+ * `docs/heroes/README.md` §2 for the ones deliberately left out (encirclement,
  * objective id, enemy strength) until a later phase's pipeline can supply them honestly.
  */
 data class CombatAchievementEvent(

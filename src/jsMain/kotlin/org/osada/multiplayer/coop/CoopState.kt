@@ -29,6 +29,7 @@ enum class CoopRefusal {
     UNIT_ALREADY_CLAIMED,
     LOADOUT_LOCKED,
     LOADOUT_INVALID,
+    SYMBOL_INVALID,
     NOT_PRE_BATTLE,
     PURCHASE_NOT_AVAILABLE,
     PRICE_CHANGED,
@@ -147,6 +148,22 @@ class CoopState(
      */
     fun preBattle(): Boolean = ordersThisMission == 0
 
+    /** A commander's own map mark, changeable at any time. */
+    fun setSymbol(
+        commanderId: String,
+        symbol: String,
+    ): CoopRefusal? {
+        val index = roster.indexOfFirst { it.id == commanderId }
+        return when {
+            index < 0 -> CoopRefusal.UNKNOWN_COMMANDER
+            !CoopSeatSymbols.isValid(symbol) -> CoopRefusal.SYMBOL_INVALID
+            else -> {
+                roster[index] = roster[index].copy(symbol = symbol)
+                null
+            }
+        }
+    }
+
     // -- Loadouts ------------------------------------------------------------------------------
 
     /** Replaces [commanderId]'s abilities if the window is open and the choice is legal for [slotCap]. */
@@ -175,6 +192,14 @@ class CoopState(
     ): Boolean {
         if (commanderById(commanderId) == null) return false
         return assignments.getOrPut(unitId) { commanderId } == commanderId
+    }
+
+    /** The commander who actually acts on a unit holds it, whoever held it before. */
+    fun takeCommand(
+        unitId: Int,
+        commanderId: String,
+    ) {
+        if (commanderById(commanderId) != null) assignments[unitId] = commanderId
     }
 
     /** Gives an owned unit back to the pool (pre-battle board only; the caller checks the window). */

@@ -26,6 +26,8 @@ dependencies {
     implementation("io.ktor:ktor-server-call-logging-jvm:$ktorVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     implementation("ch.qos.logback:logback-classic:1.5.20")
+    // Optional accounts and online saves: one SQLite file on the VPS's persistent volume.
+    implementation("org.xerial:sqlite-jdbc:3.53.4.0")
 
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-server-test-host-jvm:$ktorVersion")

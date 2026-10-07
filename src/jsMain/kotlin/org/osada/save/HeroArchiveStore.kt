@@ -1,14 +1,14 @@
 package org.osada.save
 
-import kotlinx.browser.localStorage
 import org.osada.VERSION
 import org.osada.hero.CampaignHeroArchive
 import org.osada.hero.HeroArchive
 import org.osada.hero.HeroArchiveCodec
+import org.osada.storage.localStorage
 
 /**
  * Narrow persistence collaborator for the profile-level hero archive
- * (`docs/design/hero-desk-and-profile-archive.md` §7).
+ * (`docs/heroes/hero-desk-and-archive.md` §7).
  *
  * Deliberately its own store rather than another responsibility on `HallOfFame` or
  * `GameStatePersistence`: the archive has a different lifetime from every campaign save (it

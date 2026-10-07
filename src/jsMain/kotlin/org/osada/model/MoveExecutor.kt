@@ -44,7 +44,7 @@ internal class MoveExecutor(
         }
         commitUndoState(unit, snapshot)
         val totalCost = traversePath(unit, setup, result)
-        // AA interception can destroy the plane mid-path (§3.4, docs/design/aa-interception.md):
+        // AA interception can destroy the plane mid-path (`docs/design/efile-driven-rules.md` §3.4):
         // it is already correctly positioned at the intercepting cell (applyAAInterception moved
         // it there before applying damage), so the normal destroyed-unit sweep finds and removes
         // it from exactly where it fell -- applyMove must NOT also run, or a dead unit would be
@@ -141,10 +141,10 @@ internal class MoveExecutor(
         return totalCost - stepBackOffOccupiedHexes(unit, setup, result)
     }
 
-    /** DEFERRED.md §1.12: whether `AI_SCRIPTED` bypassing fog here (animating in full through
+    /** Whether `AI_SCRIPTED` bypassing fog here (animating in full through
      *  hexes the human side has not spotted) is deliberate was previously undecided. **Decided:
      *  deliberate.** `AI_SCRIPTED` exists only for the Khalkhin Gol tutorial's scripted
-     *  demonstration turns (`docs/tutorial.md`), and every other place that branches on player
+     *  demonstration turns (`docs/campaigns/tutorial.md`), and every other place that branches on player
      *  type treats it the same as `HUMAN_LOCAL` for exactly this reason -- `UICombatLog` logs its
      *  combats, `StatusBarController` narrates its turn -- because a guided demonstration that
      *  vanishes into "fogged, snap to destination" defeats the point of demonstrating it. Do not

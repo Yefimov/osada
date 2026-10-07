@@ -22,7 +22,7 @@ import org.osada.rules.ruleset.RuleKey
  * styling and lead the row; the rest follow.
  *
  * Two tiers, and the badge SHOWS which is which — a muted badge is not a decorative choice, it is
- * the honest statement `docs/og-fidelity-plan.md` §I.2 already required of the prose:
+ * the honest statement the ability register requires of the prose:
  *
  *  - **WIRED** — OSADA executes it. Normal badge, and the line states what happens.
  *  - **DESCRIPTIVE ONLY** — decoded from OG's data, no OSADA subsystem reads it yet. Muted badge,
@@ -178,7 +178,7 @@ private val WIRED_ABILITIES: List<AbilityEntry> =
         // (`rules/CarrierDeploy`); `No Need Station` needed a rail pool read from the scenario XML
         // rather than the unconfirmed `.xscn` byte (`rules/RailTransport`); and `Supply Unit` is a
         // mobile Depot, whose behaviour was documented in `EFILE_NOKORP/equip.cfg` and in
-        // `DEFERRED.md` §2.10 the whole time (`rules/DepotSupply`).
+        // `tools/og-import/OG_ABILITY_AUDIT.md` §7.5 the whole time (`rules/DepotSupply`).
         //
         // One of the three is still inert on shipped content and says so in its own KDoc: no efile
         // sets `supply_ex`. `railtrans` no longer belongs on that list -- the pools were imported on
@@ -260,8 +260,7 @@ class AbilityGates(
  *
  * Wired abilities first, then descriptive-only ones, both in the table order above. Empty when
  * the record carries none of them (most scenario filler, and every PM-stock `eqp-adlerkorps`/
- * `eqp-pacific` record, which has no OG source to import `attr2`/`attrEx` from at all —
- * `docs/og-fidelity-plan.md` §J.3).
+ * `eqp-pacific` record, which has no OG source to import `attr2`/`attrEx` from at all).
  */
 fun EquipmentData.abilityCatalogKeys(gates: AbilityGates = AbilityGates()): List<String> =
     abilityCatalog(gates).map { it.key }

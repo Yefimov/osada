@@ -22,8 +22,8 @@ import org.osada.scenario.getRandomPrototype
  *
  * ### Four days blocked on two bytes, and how they were unblocked
  *
- * `docs/og-fidelity-plan.md` §L.6 filed this mechanic as blocked because *"the per-hex trigger flag
- * is unlocated in the `.xscn` binary"*, and §Z.0 later narrowed that correctly: **all nine actions
+ * This mechanic was once filed as blocked because *"the per-hex trigger flag is unlocated in the
+ * `.xscn` binary"*, later narrowed correctly: **all nine actions
  * and their parameter conventions were published all along; only the storage was unknown.** The
  * owner took the controlled OpenSuite diff on 2026-08-29 and both offsets fell in one sitting —
  * `@20` type, `@21` parameter, plus `@22` equipment id and `@26` message index nobody had
@@ -54,7 +54,7 @@ import org.osada.scenario.getRandomPrototype
  *
  * A second, smaller refusal: OG's own parameter convention for action 6 says *"0 not expiring, or
  * number of turns to expire"*, and the author's current Features page says that parameter is not
- * meaningful at all (`docs/og-sources.md` §5). Two sources disagree, the newer wins, and neither
+ * meaningful at all (`docs/og/og-sources.md` §5). Two sources disagree, the newer wins, and neither
  * matters while the action does not run.
  *
  * ### Firing once is an inference, and it is the one that cannot overstate
@@ -62,7 +62,7 @@ import org.osada.scenario.getRandomPrototype
  * OG says what happens, never how often. [Hex.triggerFired] makes it once-only because every one of
  * the eight executed actions is a **gift** — prestige, experience, a leader, a free formation — and
  * a repeating trigger is a tap the player farms by stepping off the hex and back on. That would
- * silently re-tune all 86 scenarios; once-only can only under-deliver. `docs/og-sources.md` step 3.
+ * silently re-tune all 86 scenarios; once-only can only under-deliver. `docs/og/og-sources.md` step 3.
  *
  * ### Whose unit, and when — `trigger_ex`, and there is no separate owner field
  *

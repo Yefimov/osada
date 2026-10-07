@@ -13,7 +13,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
- * OG's `critical_hit`, built 2026-08-28 (`docs/og-fidelity-plan.md` §AA.6) — the complete combat
+ * OG's `critical_hit`, built 2026-08-28 — the complete combat
  * formula `eqp-lxf` has been setting to 2 all along while nothing read it.
  *
  * Every number here comes from the quoted formula. The one place this project departs from the

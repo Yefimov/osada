@@ -125,7 +125,7 @@ object HeroDisplay {
 
     fun renown(r: HeroRenown): String = I18n.t("hero.renown.${r.name.lowercase()}")
 
-    /** CSS class for the renown portrait frame (`docs/design/hero-presentation.md` §1), applied
+    /** CSS class for the renown portrait frame (`docs/heroes/README.md` §3.1), applied
      *  identically wherever a hero's portrait appears (dossier, roster row, unit-card leader slot,
      *  Hall of Fame) so one tier means one appearance everywhere. [HeroRenown.UNKNOWN] gets no
      *  frame at all -- a tier system where every tier is decorated communicates nothing. */

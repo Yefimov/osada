@@ -172,6 +172,11 @@ class Animation(
         intervalId = window.setInterval({ step() }, delay)
     }
 
+    fun stop() {
+        window.clearInterval(intervalId)
+        intervalId = -1
+    }
+
     private fun step() {
         if (clearByComposite) {
             drawFrame(frame - 1, "destination-out")
@@ -215,39 +220,78 @@ class Animation(
 }
 
 /**
- * Sequences multiple [Animation] objects one after another and optionally
- * invokes a callback when the chain finishes.
+ * Sequences [Animation] objects one after another. Each [start] closes a run of the animations added
+ * since the previous one; runs play in order, and each calls its own callback when it ends.
  */
 class AnimationChain {
     companion object {
         private const val CHAIN_GAP_MS = 500
-        private const val CLEAR_DELAY_MS = 100
     }
 
-    private val animations: MutableList<Animation> = mutableListOf()
-    private var index: Int = 0
+    /** One [start]: the animations queued before it, played in order, then its own callback. */
+    private class Run(
+        val animations: List<Animation>,
+        val callback: dynamic,
+    ) {
+        var index = 0
+    }
+
+    /** Added since the last [start]; the next [start] takes them as its run. */
+    private val pending: MutableList<Animation> = mutableListOf()
+
+    /**
+     * Runs wait for one another; the first is playing. Starts can overlap -- an interception or a
+     * barrage runs without a callback and the next order may begin before it ends -- and each
+     * run's callback must still fire: a lost combat callback leaves `waitUIAnimation` up for good.
+     */
+    private val runs = ArrayDeque<Run>()
+    private var timer: Int? = null
+    private var playing: Animation? = null
 
     fun add(animation: Animation) {
-        animations.add(animation)
+        pending.add(animation)
     }
 
+    /** Teardown only: drops every queued and playing run without calling any of them back. */
     fun clear() {
-        animations.clear()
-        index = 0
+        timer?.let { window.clearTimeout(it) }
+        timer = null
+        playing?.stop()
+        playing = null
+        runs.clear()
+        pending.clear()
     }
 
     fun start(callback: dynamic = null) {
-        if (index < animations.size) {
-            animations[index].start()
-            window.setTimeout(
-                { start(callback) },
-                animations[index].duration + CHAIN_GAP_MS,
-            )
-            index++
-        } else {
-            val cbfunc = callback?.cbfunc
-            if (callback != null && cbfunc != null && cbfunc != undefined) cbfunc(callback)
-            window.setTimeout({ clear() }, CLEAR_DELAY_MS)
+        runs.addLast(Run(pending.toList(), callback))
+        pending.clear()
+        if (runs.size == 1) advance()
+    }
+
+    private fun advance() {
+        val run = runs.firstOrNull() ?: return
+        if (run.index < run.animations.size) {
+            val animation = run.animations[run.index++]
+            playing = animation
+            animation.start()
+            timer =
+                window.setTimeout(
+                    {
+                        timer = null
+                        advance()
+                    },
+                    animation.duration + CHAIN_GAP_MS,
+                )
+            return
         }
+        playing = null
+        runs.removeFirst()
+        // A callback that starts the next order with nothing else queued plays it itself;
+        // otherwise the next queued run goes once this callback returns. A callback that tears
+        // the game down has cleared the queue, and nothing follows.
+        val othersQueued = runs.isNotEmpty()
+        val cbfunc = run.callback?.cbfunc
+        if (run.callback != null && cbfunc != null && cbfunc != undefined) cbfunc(run.callback)
+        if (othersQueued) advance()
     }
 }

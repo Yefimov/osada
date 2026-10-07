@@ -9,7 +9,7 @@ import org.osada.rules.ruleset.RuleKey
  * Shell craters — **an OSADA rule, not an Open General one**, behind [RuleKey.CRATERS].
  *
  * A barrage that lands on open ground has nothing to wreck: OG destroys facilities and roads, and
- * clear ground, snow and sand are on nobody's list (`docs/og-fidelity-plan.md` §R.7). Under this
+ * clear ground, snow and sand are on nobody's list. Under this
  * rule the shells leave holes instead of leaving nothing — holes that cost a movement point to
  * cross and that a formation can fight from.
  *

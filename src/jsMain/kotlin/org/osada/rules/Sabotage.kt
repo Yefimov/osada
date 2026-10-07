@@ -11,8 +11,7 @@ import org.osada.model.hit
  *
  * Ten shipped records carry it (Infantry 6, Fighter 3, Recon 1), which is the whole population and
  * makes this the rarest ability OSADA executes. It is built anyway because it is cheap once the
- * numbers are known and because a badge that states a rule the engine does not run is the defect
- * `docs/og-fidelity-plan.md` §L.10 exists to prevent.
+ * numbers are known and because a badge must never state a rule the engine does not run.
  *
  * ### The sequence
  *

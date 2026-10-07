@@ -29,7 +29,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
- * AA interception of moving aircraft (DEFERRED.md §1.1, `docs/design/aa-interception.md`).
+ * AA interception of moving aircraft (`docs/design/efile-driven-rules.md` §3).
  * `g2a_intercept_mode` is a bitmask; mode 0 is NOT "off" -- hidden AA already intercepts there.
  */
 class AAInterceptionTest {
@@ -269,7 +269,7 @@ class AAInterceptionTest {
     }
 
     // --- Threat overlay: visibleThreatHexes must NEVER leak hidden AA, and must never draw
-    // --- spotted-AA coverage that cannot actually fire (bit 2 unset -- DEFERRED.md §3) ---
+    // --- spotted-AA coverage that cannot actually fire (bit 2 unset -- `docs/design/efile-driven-rules.md` §3.1) ---
 
     @Test
     fun visibleThreatHexesIncludesOnlySpottedAaCoverage() {

@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import kotlinx.browser.document
+import kotlinx.browser.window
 
 /**
  * The file-writing and text-escaping mechanics shared by the two backup surfaces
@@ -15,9 +16,16 @@ internal fun downloadJson(
 ) {
     val anchor = document.createElement("a").asDynamic()
     anchor.download = fileName
-    anchor.href = "data:application/force-download," + encodeURIComponentSafe(JSON.stringify(payload))
+    val blob = js("(function(text) { return new Blob([text], {type: 'application/json'}); })")(JSON.stringify(payload))
+    val url = js("URL.createObjectURL")(blob) as String
+    anchor.href = url
+    document.body?.appendChild(anchor)
     anchor.click()
+    anchor.remove()
+    window.setTimeout({ js("URL.revokeObjectURL")(url) }, DOWNLOAD_URL_LIFETIME_MS)
 }
+
+private const val DOWNLOAD_URL_LIFETIME_MS = 30_000
 
 /**
  * Escapes text taken from an imported file before it goes into a confirmation card.
@@ -31,5 +39,3 @@ internal fun escapeBackupHtml(value: String): String =
         .replace("&", "&amp;")
         .replace("<", "&lt;")
         .replace(">", "&gt;")
-
-private fun encodeURIComponentSafe(value: String): String = js("encodeURIComponent")(value) as String

@@ -1,7 +1,7 @@
 package org.osada
 
-import kotlinx.browser.localStorage
 import org.osada.multiplayer.client.OsadaMultiplayer
+import org.osada.storage.localStorage
 
 /**
  * An immutable save of the current operation at the instant control is handed to the player.

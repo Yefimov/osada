@@ -21,7 +21,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Open General's **Barrage** (manual §9.2, `docs/og-fidelity-plan.md` §R) — shelling a hex nobody
+ * Open General's **Barrage** (manual §9.2) — shelling a hex nobody
  * can see.
  *
  * The three outcomes asserted here are the three the game's own `tips1.txt` names: strength, fuel

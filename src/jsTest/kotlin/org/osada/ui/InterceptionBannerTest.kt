@@ -21,7 +21,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /**
- * The non-modal AA-interception event (`docs/player-comfort-roadmap.md` P1).
+ * The non-modal AA-interception event (`docs/design/player-comfort-roadmap.md` P1).
  *
  * The rules that must not regress: the banner reports an interception that ALREADY happened and
  * never anything before it, it never takes focus, and it stays out of a third party's business.

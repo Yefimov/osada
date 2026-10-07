@@ -71,7 +71,7 @@ internal object StartMenuSettingsBuilder {
                     "markOwnUnits" to "settings.map.mark_own_units.label",
                     "markEnemyHexes" to "settings.map.mark_enemy_hexes.label",
                     "markEnemyUnits" to "settings.map.mark_enemy_units.label",
-                    // Accessibility (`docs/design/accessible-side-identification.md`): a plain
+                    // Accessibility (`docs/design/action-affordances-and-objectives.md` §13): a plain
                     // checkbox in the section that already owns map marking, not a new settings
                     // subsystem for one boolean.
                     "enhancedSideMarkers" to "settings.map.enhanced_side_markers.label",
@@ -445,7 +445,9 @@ internal object StartMenuSettingsBuilder {
                 ui.addSmallToolTips()
             }
             if (byId("smSettings")?.asDynamic()?.needPageReload == true) {
-                window.location.reload()
+                // Let any profile transaction still in flight reach disk before the page goes.
+                org.osada.storage.BrowserStorage
+                    .whenDurable { window.location.reload() }
             }
             if (byId("smSettings")?.asDynamic()?.messageHidden == true) {
                 makeVisible("ui-message")

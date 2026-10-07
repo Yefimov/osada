@@ -19,7 +19,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * The three independent equipment abilities wired on 2026-08-27 (`docs/og-fidelity-plan.md` §U):
+ * The three independent equipment abilities wired on 2026-08-27:
  * `Cannot use dirt airfields`, `Rocket bomber` and `SingleFireSup.`
  *
  * Each is built as the narrowest reading of OG's own sentence, so the tests that matter most are

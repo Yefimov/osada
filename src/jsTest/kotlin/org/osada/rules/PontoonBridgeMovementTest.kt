@@ -104,6 +104,21 @@ class PontoonBridgeMovementTest {
         assertTrue(PontoonBridges.completeLaying(map, 0).isEmpty())
     }
 
+    /** A road over the river is a real bridge (authored, or built by sappers): a bridge unit arriving
+     *  there drives on it and does not start laying a pontoon beside it (reported 2026-10-07). */
+    @Test
+    fun aBridgedRiverIsNotSpannedAgain() {
+        val map = world()
+        val bridge = place(map, bridgeEqid, 4, 3)
+        val river = map.map!![4][3]
+        river.terrain = TerrainType.RIVER.value
+        river.road = 255
+
+        assertFalse(PontoonBridges.onArrival(bridge, river))
+        assertFalse(bridge.bridgeLaying)
+        assertFalse(MovementRules.isBridgeForSide(river, 0), "the road carries traffic, not the unit")
+    }
+
     @Test
     fun bridgeUnitEntersMajorRiverOnlyFromItsStartHex() {
         val map = world()

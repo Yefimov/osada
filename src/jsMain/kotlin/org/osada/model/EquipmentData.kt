@@ -46,7 +46,7 @@ class EquipmentData {
     var embark: Int = 0
 
     /**
-     * OG's `Special4` byte, added 2026-08-19 (`docs/og-fidelity-plan.md` §C). Bits 0..7:
+     * OG's `Special4` byte, added 2026-08-19. Bits 0..7:
      * Build/Repair, Dismount After Move, No Dirt Airfields, Rocket Bomber, Cut LOS, Allow LOF,
      * No ZOC, Evade. Defaults to 0 ("no data imported") for any equipment JSON whose parsehints
      * don't carry it -- see [EquipmentCombatEligibility.kt] for the full bit table and which of
@@ -70,7 +70,7 @@ class EquipmentData {
      * It is what gates OG's `Can bombard/barrage` ability — the `'='` mark the game's own
      * `tips1.txt` tells the player to look for — and it is **not** one of the 52 special bits, which
      * is why the ability was filed as "blocked on an unknown bit" until the owner checked in OG
-     * itself (`docs/og-fidelity-plan.md` §Q.2). Every LXF Level Bomber and every Battleship carries
+     * itself. Every LXF Level Bomber and every Battleship carries
      * a non-zero value; 6,872 of the 56,970 merged records do.
      *
      * Defaults to 0 for the 4,271 records whose pre-merge source could not be re-identified and for
@@ -82,7 +82,7 @@ class EquipmentData {
      * OG's **Hangar Capacity** (`equip.xeqp` @120, OpenSuite's `HangarCap` column), imported
      * 2026-08-27 — how many aircraft a carrier holds (manual §9.7).
      *
-     * `docs/og-fidelity-plan.md` §M recorded carrier capacity as absent for exactly one reason:
+     * Carrier capacity was once absent for exactly one reason:
      * the byte *"is dumped to CSV by `tools/og-import/xeqp_to_csv.py` and is not deployed into the
      * game's equipment data"*. It is now, by `tools/eqp-merge/add_hangar_capacity.py`.
      *
@@ -115,7 +115,7 @@ class EquipmentData {
      * `tools/eqp-merge/add_rail_transportable.py`, which leaves the sentinel on the 4,140 Panzer
      * Marshal stock records that have no OG source at all. Reading those as "cannot rail" would
      * silently strip the mechanic from content OG never spoke about, so [canUseRailTransport] reads
-     * unknown as PERMITTED — `docs/og-sources.md`: a RULE-level permission reads silence as
+     * unknown as PERMITTED — `docs/og/og-sources.md`: a RULE-level permission reads silence as
      * permission, and only a sub-option that ADDS an obstruction reads silence as false.
      */
     var railTransportable: Int = RAIL_UNKNOWN
@@ -161,8 +161,8 @@ class EquipmentData {
      * mask — is confirmed for ground (`ui/EquipmentCatalogStrip` already applies it to
      * [groundweight]) and **refuted for naval**: 7,166 of 7,187 naval-transport records carry
      * `NtpW = 0`, which would make the test vacuous, and [hangarWeight] does not share the cargo
-     * mask space either. The carrier-side field is `docs/og-open-questions.md` Q1.3. The data is
-     * deployed now so that answering it is a rule change and not another import.
+     * mask space either. The carrier side reads its own same-named weight (`rules/TransportWeights`).
+     * The data is deployed so that a rule change, not another import, is all a correction needs.
      *
      * [RAIL_UNKNOWN] on a record with no OG source: 0 is a real mask value here, so it cannot
      * double as "no data".

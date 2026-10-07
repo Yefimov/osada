@@ -16,7 +16,7 @@ import kotlin.test.assertTrue
 
 /**
  * OG §6.30's *"Air units **usually** don't have a zone of control"* — the scenario option behind
- * that one word, wired 2026-08-27 as schema 10 (`docs/og-fidelity-plan.md` §U).
+ * that one word, wired 2026-08-27 as schema 10.
  *
  * The option has been imported since §O and read by nothing, which is why the OFF cases here are
  * the ones that would have passed before: they pin that an aircraft still controls nothing unless

@@ -16,8 +16,8 @@ import org.osada.rules.ruleset.RuleKey
  * Open General's **Extended LOS** optional rule (manual §9.5), plus the two equipment attributes
  * that only mean anything while it is on.
  *
- * `docs/og-fidelity-plan.md` never tracked this as work. §B.5 mentions it exactly once, in a
- * parenthetical predicting that *"Extended LOS, if ever built, is a third key and not a value of
+ * The fidelity plan never tracked this as work; it mentioned it once, in a parenthetical
+ * predicting that *"Extended LOS, if ever built, is a third key and not a value of
  * either"* — of `spotting_memory` or `installation_spotting`. That prediction is honoured here:
  * [RuleKey.EXTENDED_LOS] is a third key beside those two, and it is OFF by default, so nothing in
  * the 502 shipped scenarios changes until a profile asks for it.
@@ -63,7 +63,7 @@ import org.osada.rules.ruleset.RuleKey
  * **The line-of-fire reading is KEPT.** OG's own wording puts `Cut LOS` on sight, which is why the
  * sight half is now built; whether it *also* blocks fire is not settled, and `UnitsBlockDLOF` needs
  * the machinery either way. Keeping both is the superset, so no scenario loses a shot it had.
- * `docs/og-open-questions.md` carries the question.
+ * `tools/og-import/OG_ABILITY_AUDIT.md` §7.10 records what is still open.
  *
  * ### Line of fire is behind this key even though OG §6.18 is not an optional rule
  *
@@ -274,8 +274,8 @@ internal object ExtendedLos {
      * it would be the invention §7.10 warns against. 999 shipped records carry the bit — the
      * `Il-2m3` / `Il-10` family and their equivalents.
      *
-     * `docs/og-fidelity-plan.md` §M listed the "exact OG condition for hex types" as not well
-     * established. It is now: the condition is that there ISN'T one.
+     * The "exact OG condition for hex types" was once listed as not well established. It is now:
+     * the condition is that there ISN'T one.
      */
     private fun rocketBomberFreeOfTerrain(
         attackerData: org.osada.model.EquipmentData,

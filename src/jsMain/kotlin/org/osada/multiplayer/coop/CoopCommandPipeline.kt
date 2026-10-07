@@ -24,6 +24,7 @@ import org.osada.multiplayer.command.PurchaseUnit
 import org.osada.multiplayer.command.ResolveCampaignVote
 import org.osada.multiplayer.command.RespondTransfer
 import org.osada.multiplayer.command.SetLoadout
+import org.osada.multiplayer.command.SetSeatSymbol
 import org.osada.multiplayer.command.SetUnitAssignment
 import org.osada.multiplayer.command.findCommandUnit
 import org.osada.multiplayer.command.kind
@@ -103,24 +104,15 @@ object CoopCommandPipeline {
                 ) {
                     deny(MultiplayerErrorCode.NOT_YOUR_CONTROL_SCOPE, "briefing_pending")
                 } else {
-                    ownershipCheck(coop, commander, command)
+                    null
                 }
         }
     }
 
-    private fun ownershipCheck(
-        coop: CoopState,
-        commander: CoopCommander,
-        command: GameCommand,
-    ): CommandRejection? {
-        val unitId = command.unitIdOrNull() ?: return null
-        val owner = coop.ownerOf(unitId) ?: return null
-        if (owner == commander.id) return null
-        val ownerName = coop.commanderById(owner)?.name.orEmpty()
-        return deny(MultiplayerErrorCode.NOT_YOUR_CONTROL_SCOPE, "unit_commanded_by", ownerName)
-    }
-
-    /** The pre-battle board lets a commander reserve an UNCLAIMED unit for themselves, nothing else. */
+    /**
+     * A commander may take any unit for themselves at any time -- the "Wait" button does exactly
+     * that. Giving a unit back to the pool is a pre-battle decision only.
+     */
     private fun claimBoardCheck(
         coop: CoopState,
         commander: CoopCommander,
@@ -130,7 +122,7 @@ object CoopCommandPipeline {
         val owner = coop.ownerOf(command.unitId)
         val releasing = command.assignedParticipantId == null
         return when {
-            !coop.preBattle() -> deny(MultiplayerErrorCode.NOT_YOUR_CONTROL_SCOPE, "board_closed")
+            releasing && !coop.preBattle() -> deny(MultiplayerErrorCode.NOT_YOUR_CONTROL_SCOPE, "board_closed")
             releasing && owner != commander.id ->
                 deny(
                     MultiplayerErrorCode.NOT_YOUR_CONTROL_SCOPE,
@@ -139,13 +131,6 @@ object CoopCommandPipeline {
             releasing -> null
             command.assignedParticipantId != sender ->
                 deny(MultiplayerErrorCode.NOT_YOUR_CONTROL_SCOPE, "claim_for_self_only")
-
-            owner != null && owner != commander.id ->
-                deny(
-                    MultiplayerErrorCode.NOT_YOUR_CONTROL_SCOPE,
-                    "unit_commanded_by",
-                    coop.commanderById(owner)?.name.orEmpty(),
-                )
 
             else -> null
         }
@@ -165,16 +150,10 @@ object CoopCommandPipeline {
             when (command) {
                 is CoopEconomyOrder -> CoopEconomyPipeline.execute(ctx, command, commander)
                 is CoopBriefingOrder -> executeBriefingOrder(ctx, command, commander)
-                is ProposeTransfer ->
-                    commander?.let { coop.requestTransfer(command.unitId, it.id, command.toCommanderId) }
-                        ?: CoopRefusal.UNKNOWN_COMMANDER.takeIf { commander == null }
-
-                is RespondTransfer ->
-                    commander?.let { coop.respondTransfer(command.unitId, it.id, command.accept) }
-                        ?: CoopRefusal.UNKNOWN_COMMANDER.takeIf { commander == null }
-
+                is ProposeTransfer, is RespondTransfer -> transferOrder(coop, command, commander)
                 is ExcuseSeat -> excuse(ctx, command)
                 is SetLoadout -> commander?.let { coop.setLoadout(it.id, command.abilityIds) }
+                is SetSeatSymbol -> commander?.let { coop.setSymbol(it.id, command.symbol) }
             }
         if (refusal !=
             null
@@ -182,6 +161,19 @@ object CoopCommandPipeline {
             return CommandValidation.Rejected(deny(MultiplayerErrorCode.INVALID_MESSAGE, refusal.name.lowercase()))
         }
         return CommandValidation.Accepted
+    }
+
+    private fun transferOrder(
+        coop: CoopState,
+        command: CoopOrder,
+        commander: CoopCommander?,
+    ): CoopRefusal? {
+        val by = commander ?: return CoopRefusal.UNKNOWN_COMMANDER
+        return when (command) {
+            is ProposeTransfer -> coop.requestTransfer(command.unitId, by.id, command.toCommanderId)
+            is RespondTransfer -> coop.respondTransfer(command.unitId, by.id, command.accept)
+            else -> null
+        }
     }
 
     private fun executeVote(
@@ -359,12 +351,13 @@ object CoopCommandPipeline {
             ) {
                 coop.release(command.unitId, commander.id)
             } else {
-                coop.claim(command.unitId, commander.id)
+                coop.takeCommand(command.unitId, commander.id)
             }
         }
         val subject = seen.subject
-        if (subject != null && coop.ownerOf(subject.id) == null && fingerprint(subject) != seen.fingerprintBefore) {
-            coop.claim(subject.id, commander.id)
+        // Whoever really acts on a unit commands it from then on, taking it from a teammate if need be.
+        if (subject != null && fingerprint(subject) != seen.fingerprintBefore) {
+            coop.takeCommand(subject.id, commander.id)
         }
         if (clearsReadiness(command)) {
             coop.clearDone()

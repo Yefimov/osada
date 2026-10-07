@@ -15,10 +15,10 @@ import org.w3c.dom.HTMLElement
  *
  * Two tiers, and the colour is the difference between them.
  *
- * **BRASS — the primary badges** (HQ/RCN/OVR/SUP/AA, plus AIR for paratroops). Six things at most,
- * every one of them something the player steers a formation by: who lends experience, who moves in
- * phases, who charges, who answers a call, who shoots at aircraft, who can be dropped. These go
- * everywhere the unit is shown.
+ * **BRASS — the primary badges** (HQ/RCN/OVR/SUP/AA, plus AIR for paratroops and SAP for
+ * engineers). Seven things at most, every one of them something the player steers a formation by:
+ * who lends experience, who moves in phases, who charges, who answers a call, who shoots at
+ * aircraft, who can be dropped, who builds. These go everywhere the unit is shown.
  *
  * **MUTED GREY, dashed — the extended abilities** ([org.osada.model.abilityCatalog]): the rest of
  * OG's 47 badged specials, `NIA`/`+AA`/`CAP`/`ATP` and the like. A record can carry a dozen, and
@@ -37,6 +37,9 @@ internal object EquipmentMarkings {
     /** Badges past this many are folded into one `+N` chip whose tooltip lists the rest, so a
      *  19-ability outlier can never push the unit card's stat bars out of the bottom zone. */
     private const val EXTENDED_BADGE_LIMIT = 8
+
+    /** The catalog badge of OG's `Build/Repair`, drawn as a primary badge. */
+    private const val SAPPER_BADGE = "SAP"
 
     fun render(
         parent: HTMLElement?,
@@ -83,6 +86,12 @@ internal object EquipmentMarkings {
         if (data.embark == EmbarkType.AIRBORNE.value) {
             addMark(parent, "AIR", I18n.t("equipment.mechanics.airborne"), "airborne")
         }
+        // Engineers, promoted from the extended row (owner's request 2026-10-07): building is an
+        // order the player gives, like the badges above. Read from the catalog entry so it stays
+        // hidden exactly when the catalog hides it (Build and Repair off).
+        data.abilityCatalog().firstOrNull { it.badge == SAPPER_BADGE }?.let {
+            addMark(parent, SAPPER_BADGE, I18n.t(it.key))
+        }
         if (extended) renderAbilityBadges(parent, data)
     }
 
@@ -90,7 +99,8 @@ internal object EquipmentMarkings {
         parent: HTMLElement,
         data: EquipmentData,
     ) {
-        val abilities = data.abilityCatalog()
+        // SAP is drawn with the primary badges in [render]; listing it again here would show it twice.
+        val abilities = data.abilityCatalog().filter { it.badge != SAPPER_BADGE }
         // One tier, not two. `wired` used to pick between brass and muted, meaning "a rule reads
         // this bit" -- a distinction that has been EMPTY since 2026-08-28 (all 47 badged abilities
         // are executed by a rule, and `EquipmentAbilityCatalogTest` asserts the descriptive tier

@@ -32,8 +32,8 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * The nine leader traits that were advertised to the player and read by no rule anywhere
- * (`docs/og-fidelity-plan.md` A.4), each with the test that entry demands: *"Minimum acceptable
+ * The nine leader traits that were advertised to the player and read by no rule anywhere,
+ * each with the test that entry demands: *"Minimum acceptable
  * outcome per trait is one of: wired (with a test), or removed."*
  *
  * Three of the nine are covered by their own existing files rather than here — `SKILLED_INTERCEPTOR`

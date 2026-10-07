@@ -4,34 +4,34 @@
   <player id="1" country="150" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="0" defaultstr="0" support="151,0,0,0" turnprestige="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"/>
   <reinforce turn="2">
     <at row="28" col="32">
-      <unit id="1431" owner="0" flag="163" face="0" exp="89"/>
+      <unit id="1431" owner="0" flag="163" face="0" exp="345"/>
     </at>
     <at row="27" col="31">
-      <unit id="1431" owner="0" flag="163" face="0" exp="165"/>
+      <unit id="1431" owner="0" flag="163" face="0" exp="421"/>
     </at>
     <at row="28" col="33">
-      <unit id="1432" owner="0" flag="163" face="0" exp="185"/>
+      <unit id="1432" owner="0" flag="163" face="0" exp="441"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="28" col="30">
-      <unit id="1432" owner="0" flag="163" face="0" exp="86"/>
+      <unit id="1432" owner="0" flag="163" face="0" exp="342"/>
     </at>
     <at row="29" col="32">
-      <unit id="1431" owner="0" flag="163" face="0" exp="195"/>
+      <unit id="1431" owner="0" flag="163" face="0" exp="451"/>
     </at>
     <at row="28" col="31">
-      <unit id="1431" owner="0" flag="163" face="0" exp="9"/>
+      <unit id="1431" owner="0" flag="163" face="0" exp="521"/>
     </at>
   </reinforce>
   <reinforce turn="6">
     <at row="27" col="32">
-      <unit id="1431" owner="0" flag="163" face="0"/>
+      <unit id="1431" owner="0" flag="163" face="0" exp="512"/>
     </at>
   </reinforce>
   <reinforce turn="8">
     <at row="27" col="33">
-      <unit id="1431" owner="0" flag="163" face="0" exp="145"/>
+      <unit id="1431" owner="0" flag="163" face="0" exp="401"/>
     </at>
   </reinforce>
   <hex row="0" col="1" terrain="15" name="Mobile Bay"/>
@@ -238,7 +238,7 @@
   <hex row="5" col="28" terrain="15" name="Mobile Bay"/>
   <hex row="5" col="29" terrain="15" name="Mobile Bay"/>
   <hex row="5" col="30" terrain="15" name="Mobile Bay">
-    <unit id="1418" owner="1" flag="151" face="0" exp="186"/>
+    <unit id="1418" owner="1" flag="151" face="0" exp="442"/>
   </hex>
   <hex row="5" col="31" terrain="15" name="Mobile Bay"/>
   <hex row="5" col="32" terrain="15" name="Mobile Bay"/>
@@ -328,7 +328,7 @@
   <hex row="8" col="14" terrain="15" name="Mobile Bay"/>
   <hex row="8" col="15" terrain="15" name="Mobile Bay"/>
   <hex row="8" col="16" terrain="15" name="Mobile Bay">
-    <unit id="1430" owner="1" flag="151" face="0" exp="166"/>
+    <unit id="1430" owner="1" flag="151" face="0" exp="422"/>
   </hex>
   <hex row="8" col="17" terrain="15" name="Mobile Bay"/>
   <hex row="8" col="18" terrain="15" name="Mobile Bay"/>
@@ -404,7 +404,7 @@
   <hex row="10" col="20" terrain="15" name="Mobile Bay"/>
   <hex row="10" col="21" terrain="15" name="Mobile Bay"/>
   <hex row="10" col="22" terrain="15" name="Mobile Bay">
-    <unit id="1418" owner="1" flag="151" face="0" exp="29"/>
+    <unit id="1418" owner="1" flag="151" face="0" exp="541"/>
   </hex>
   <hex row="10" col="23" terrain="15" name="Mobile Bay"/>
   <hex row="10" col="24" terrain="15" name="Mobile Bay"/>
@@ -460,13 +460,13 @@
   <hex row="12" col="10" terrain="8"/>
   <hex row="12" col="11" terrain="3"/>
   <hex row="12" col="12">
-    <unit id="44781" owner="1" flag="151" face="0" exp="65"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="321"/>
   </hex>
   <hex row="12" col="13" terrain="11" name="Fort Gaines" owner="1" flag="150" victory="1">
-    <unit id="44824" owner="1" flag="151" face="0" exp="9" str="12" ldr="1" bstr="2"/>
+    <unit id="44824" owner="1" flag="151" face="0" exp="521" str="12" ldr="1" bstr="2"/>
   </hex>
   <hex row="12" col="14" terrain="11" name="Fort Gaines" owner="1" flag="150" victory="1">
-    <unit id="44781" owner="1" flag="151" face="0" exp="39" ldr="1"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="551" ldr="1"/>
   </hex>
   <hex row="12" col="15" terrain="15" name="Mobile Bay"/>
   <hex row="12" col="16" terrain="15" name="Mobile Bay"/>
@@ -474,7 +474,7 @@
   <hex row="12" col="18" terrain="15" name="Mobile Bay"/>
   <hex row="12" col="19" terrain="15" name="Mobile Bay"/>
   <hex row="12" col="20" terrain="15" name="Mobile Bay">
-    <unit id="44836" owner="1" flag="151" face="0" exp="161" str="14" bstr="8"/>
+    <unit id="44836" owner="1" flag="151" face="0" exp="417" str="14" bstr="8"/>
   </hex>
   <hex row="12" col="21" terrain="15" name="Mobile Bay"/>
   <hex row="12" col="22" terrain="15" name="Mobile Bay"/>
@@ -501,7 +501,7 @@
   </hex>
   <hex row="13" col="13" terrain="14"/>
   <hex row="13" col="14" terrain="11" name="Fort Gaines" owner="1" flag="150" victory="1">
-    <unit id="647" owner="1" flag="151" face="0" exp="65" str="12" bstr="2"/>
+    <unit id="647" owner="1" flag="151" face="0" exp="321" str="12" bstr="2"/>
   </hex>
   <hex row="13" col="15" terrain="15" name="Mobile Bay"/>
   <hex row="13" col="16" terrain="15" name="Mobile Bay"/>
@@ -658,13 +658,13 @@
   <hex row="17" col="22" terrain="15" name="Mobile Bay"/>
   <hex row="17" col="23" terrain="15" name="Mobile Bay"/>
   <hex row="17" col="24" terrain="11" name="Fort Morgan" owner="1" flag="150" victory="1">
-    <unit id="44781" owner="1" flag="151" face="0" exp="156" ldr="1"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="412" ldr="1"/>
   </hex>
   <hex row="17" col="25" terrain="11" name="Fort Morgan" owner="1" flag="150" victory="1">
-    <unit id="44824" owner="1" flag="151" face="0" exp="11" str="12" ldr="1" bstr="2"/>
+    <unit id="44824" owner="1" flag="151" face="0" exp="523" str="12" ldr="1" bstr="2"/>
   </hex>
   <hex row="17" col="26">
-    <unit id="44781" owner="1" flag="151" face="0" exp="105"/>
+    <unit id="44781" owner="1" flag="151" face="0" exp="361"/>
   </hex>
   <hex row="17" col="27" terrain="3"/>
   <hex row="17" col="28" terrain="8"/>
@@ -702,7 +702,7 @@
     <unit id="1350" owner="1" flag="151" face="0" exp="50" str="4" bstr="1"/>
   </hex>
   <hex row="18" col="24" terrain="11" name="Fort Morgan" owner="1" flag="150" victory="1">
-    <unit id="647" owner="1" flag="151" face="0" exp="49" str="12" bstr="2"/>
+    <unit id="647" owner="1" flag="151" face="0" exp="305" str="12" bstr="2"/>
   </hex>
   <hex row="18" col="25" terrain="14"/>
   <hex row="18" col="26">
@@ -880,7 +880,7 @@
   <hex row="23" col="22" terrain="15" name="Gulf of Mexico"/>
   <hex row="23" col="23" terrain="15" name="Gulf of Mexico"/>
   <hex row="23" col="24" terrain="15" name="Gulf of Mexico">
-    <unit id="46018" owner="0" flag="163" face="0" exp="178"/>
+    <unit id="46018" owner="0" flag="163" face="0" exp="434"/>
   </hex>
   <hex row="23" col="25" terrain="15" name="Gulf of Mexico" deploy="0"/>
   <hex row="23" col="26" terrain="15" name="Gulf of Mexico"/>
@@ -918,7 +918,7 @@
   <hex row="24" col="24" terrain="15" name="Gulf of Mexico"/>
   <hex row="24" col="25" terrain="15" name="Gulf of Mexico"/>
   <hex row="24" col="26" terrain="15" name="Gulf of Mexico">
-    <unit id="46018" owner="0" flag="163" face="0" exp="67"/>
+    <unit id="46018" owner="0" flag="163" face="0" exp="323"/>
   </hex>
   <hex row="24" col="27" terrain="15" name="Gulf of Mexico"/>
   <hex row="24" col="28" terrain="15" name="Gulf of Mexico"/>
@@ -955,7 +955,7 @@
   <hex row="25" col="25" terrain="15" name="Gulf of Mexico"/>
   <hex row="25" col="26" terrain="15" name="Gulf of Mexico"/>
   <hex row="25" col="27" terrain="15" name="Gulf of Mexico">
-    <unit id="1432" owner="0" flag="163" face="0" exp="85"/>
+    <unit id="1432" owner="0" flag="163" face="0" exp="341"/>
   </hex>
   <hex row="25" col="28" terrain="15" name="Gulf of Mexico"/>
   <hex row="25" col="29" terrain="15" name="Gulf of Mexico"/>
@@ -992,10 +992,10 @@
   <hex row="26" col="26" terrain="15" name="Gulf of Mexico"/>
   <hex row="26" col="27" terrain="15" name="Gulf of Mexico"/>
   <hex row="26" col="28" terrain="15" name="Gulf of Mexico">
-    <unit id="1431" owner="0" flag="163" face="0" exp="90" str="14"/>
+    <unit id="1431" owner="0" flag="163" face="0" exp="602" str="14"/>
   </hex>
   <hex row="26" col="29" terrain="15" name="Gulf of Mexico">
-    <unit id="1431" owner="0" flag="163" face="0" exp="155"/>
+    <unit id="1431" owner="0" flag="163" face="0" exp="411"/>
   </hex>
   <hex row="26" col="30" terrain="15" name="Gulf of Mexico"/>
   <hex row="26" col="31" terrain="15" name="Gulf of Mexico"/>
@@ -1127,25 +1127,25 @@
   <hex row="30" col="21" terrain="15" name="Gulf of Mexico"/>
   <hex row="30" col="22" terrain="15" name="Gulf of Mexico"/>
   <hex row="30" col="23" terrain="15" name="Gulf of Mexico">
-    <unit id="46020" owner="0" flag="163" face="0" exp="172"/>
+    <unit id="46020" owner="0" flag="163" face="0" exp="428"/>
   </hex>
   <hex row="30" col="24" terrain="15" name="Gulf of Mexico">
-    <unit id="46020" owner="0" flag="163" face="0" exp="69"/>
+    <unit id="46020" owner="0" flag="163" face="0" exp="325"/>
   </hex>
   <hex row="30" col="25" terrain="15" name="Gulf of Mexico">
-    <unit id="46020" owner="0" flag="163" face="0" exp="65"/>
+    <unit id="46020" owner="0" flag="163" face="0" exp="321"/>
   </hex>
   <hex row="30" col="26" terrain="15" name="Gulf of Mexico">
-    <unit id="46020" owner="0" flag="163" face="0" exp="57"/>
+    <unit id="46020" owner="0" flag="163" face="0" exp="313"/>
   </hex>
   <hex row="30" col="27" terrain="15" name="Gulf of Mexico">
-    <unit id="46020" owner="0" flag="163" face="0" exp="145"/>
+    <unit id="46020" owner="0" flag="163" face="0" exp="401"/>
   </hex>
   <hex row="30" col="28" terrain="15" name="Gulf of Mexico">
-    <unit id="46020" owner="0" flag="163" face="0" exp="46"/>
+    <unit id="46020" owner="0" flag="163" face="0" exp="302"/>
   </hex>
   <hex row="30" col="29" terrain="15" name="Gulf of Mexico">
-    <unit id="46020" owner="0" flag="163" face="0" transport="45989" exp="147"/>
+    <unit id="46020" owner="0" flag="163" face="0" transport="45989" exp="403"/>
   </hex>
   <hex row="30" col="30" terrain="15" name="Gulf of Mexico"/>
   <hex row="30" col="31" terrain="15" name="Gulf of Mexico"/>

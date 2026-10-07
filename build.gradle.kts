@@ -194,7 +194,7 @@ tasks.register<Exec>("verifyKeyboardManual") {
 
 tasks.register<Exec>("verifyTrackedSources") {
     group = "verification"
-    description = "Fails when a Kotlin source under src/ is untracked by git (DEFERRED.md §4.7)"
+    description = "Fails when a Kotlin source under src/ is untracked by git (DEFERRED-2026-10-05.md §4.7)"
 
     // Never up-to-date: the answer depends on the git index, not on any file this task reads.
     outputs.upToDateWhen { false }

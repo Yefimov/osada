@@ -257,7 +257,7 @@ class CombatTest {
     /**
      * Same infantry(ini 5)-attacks-tank(ini 6) engagement as [infantryAttacksTankExactValues], but
      * the defender's hex is SWAMP (`Constants.terrainInitiative[8] == 2`) instead of clear, which
-     * isolates the initiative cap (DEFERRED.md §1.3/§7.16; `docs/design/terrain-supply-and-initiative.md`
+     * isolates the initiative cap (`docs/design/efile-driven-rules.md` §2; `docs/design/efile-driven-rules.md` §2
      * §4.2 caps by the DEFENDER's hex).
      *
      * This used to be MOUNTAIN. Since 2026-09-26 infantry attacking into mountain is OG's close

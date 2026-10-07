@@ -151,7 +151,7 @@ internal class MainMenuButtonHandler(
      * it belongs as a branch here, not a second document-level listener (two independent listeners
      * would both fire on the same keypress, e.g. closing a window AND opening the pause menu).
      *
-     * **The branch order IS the z-order, and it has to be maintained by hand (DEFERRED.md §4.13).**
+     * **The branch order IS the z-order, and it has to be maintained by hand.**
      * `ui-message` used to be commented "topmost layer of all (--z-msg)"; that stopped being true
      * when §7.28/§7.37 rebuilt three dialogs onto the same `--z-msg` tier and none of them was
      * registered here. The visible consequence was that Escape over the attachment picker matched
@@ -174,10 +174,10 @@ internal class MainMenuButtonHandler(
             MessageDialogs.isDynamicMessageOpen() -> MessageDialogs.dismissDynamicMessage()
             HeroPromotionPresenter.isOpen() -> Unit // modal by design — see the doc comment
             CommanderRosterPresenter.isTransferPickerOpen() -> CommanderRosterPresenter.closeTransferPicker()
-            AttachmentPickerPresenter.isOpen() -> AttachmentPickerPresenter.close()
+            ModalPickers.isOpen() -> ModalPickers.close()
             CommanderRosterPresenter.isOpen() -> CommanderRosterPresenter.close()
             // The Hero Desk layers a dossier over itself, so Escape has to peel them in that order
-            // -- the same ordered-stack rule the transfer picker above follows (DEFERRED.md §4.13).
+            // -- the same ordered-stack rule the transfer picker above follows.
             HeroDeskPresenter.isDossierOpen() -> HeroDeskPresenter.closeDossier()
             HeroDeskPresenter.isOpen() -> HeroDeskPresenter.close()
             isVisible("equipment") -> byId("eqCloseBut")?.click()

@@ -12,7 +12,7 @@ package org.osada.hero
  * for routine movement onto the terrain — keeping faith with §7.1's "notable actions, not every
  * routine attack" for progression the same way [RecognitionService] already does for emergence.
  *
- * ## The three non-terrain qualifiers (`tools/og-import/DEFERRED.md` §7.43)
+ * ## The three non-terrain qualifiers (`docs/heroes/README.md` §2)
  *
  * [GROUND_ATTACK_KILL] and [MANEUVER_KILL] follow the same discipline: both ride along an existing
  * kill rather than firing on their own, so neither can be farmed by flying sorties or driving around.

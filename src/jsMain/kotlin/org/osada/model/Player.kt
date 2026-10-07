@@ -43,7 +43,7 @@ class Player {
      *  `airtrans`, `navaltrans` and the helo pool OSADA does not model yet.
      *
      *  Imported since 2026-08-29 from player record `+21`, confirmed by OpenSuite's own REPORT
-     *  logs (`docs/og-open-questions.md` §Y.1). Spent by `rules/RailTransport` and returned at the
+     *  logs. Spent by `rules/RailTransport` and returned at the
      *  owner's next turn — `model/TransportPools` carries the reasoning. */
     var railTransports: Int = 0
 

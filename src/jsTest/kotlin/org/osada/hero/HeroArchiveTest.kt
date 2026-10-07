@@ -14,7 +14,7 @@ import kotlin.test.assertTrue
 
 /**
  * The archive's storage contract and the live/archived dossier parity §9 asks for
- * (`docs/design/hero-desk-and-profile-archive.md`).
+ * (`docs/heroes/hero-desk-and-archive.md`).
  */
 class HeroArchiveTest {
     private val heroId = HeroId("H-7")

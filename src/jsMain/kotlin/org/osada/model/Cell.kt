@@ -73,7 +73,7 @@ class MovementResults {
     /** Set when AA fired on this move (`AAInterception`), whether or not the unit survived. An
      *  intercepted move must never be undoable -- see `MoveExecutor.isUndoable` -- allowing undo
      *  would let a player probe for hidden AA for free and take the probe back, destroying the
-     *  entire point of hidden AA (docs/design/aa-interception.md §3.4). */
+     *  entire point of hidden AA (`docs/design/efile-driven-rules.md` §3.4). */
     var wasIntercepted: Boolean = false
 
     /** Every AA gun that actually fired on this move, with the strength it took off. Empty unless
@@ -96,7 +96,7 @@ class MovementResults {
 
     /** Strength lost to an UNDETECTED minefield on this move; 0 when the field was already known
      *  (a detected field costs movement, never strength). Reported to the HUD so movement damage is
-     *  never unexplained (`DEFERRED.md` §1.1). */
+     *  never unexplained (`docs/design/action-affordances-and-objectives.md` §1.1). */
     var minefieldLosses: Int = 0
 
     /** Set when the walk stopped short because it met the zone of control of an enemy its side
@@ -111,7 +111,7 @@ class MovementResults {
 /**
  * One exchange's outcome.
  *
- * **`defSuppress` / `atkSuppress` were deleted 2026-08-18** (`docs/og-fidelity-plan.md` A.6). They
+ * **`defSuppress` / `atkSuppress` were deleted 2026-08-18**. They
  * were declared, serialized by nothing and read by nothing, and their presence is what made a
  * 2026-08-18 survey conclude OSADA had no suppression at all. It has: suppression is `GameUnit.hits`
  * -- accrued in `GameUnitActions.hit`, spent as a -2 defence per point in `AttackCalculation`, and

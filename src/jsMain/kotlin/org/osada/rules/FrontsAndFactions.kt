@@ -137,7 +137,7 @@ object FrontsAndFactions {
      * did not provide. Panzer Marshal's own inherited campaigns (adlerkorps, pacific) author no
      * pools at all and have always bought transports; reading their silence as OG's zero would
      * remove air transport from those campaigns entirely, which is the failure mode
-     * `docs/design/efile-config.md` §2 trap 4 names.
+     * `docs/design/efile-driven-rules.md` §1.2 item 4 names.
      */
     fun poolClassPurchasable(
         player: Player?,

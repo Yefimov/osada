@@ -53,7 +53,14 @@ internal fun GameUnit.isCampaignPersistentFor(player: Player): Boolean =
 internal fun GameMap.collectPersistentCampaignUnits(player: Player): CampaignCarryOverReport {
     ensureFormationIds(player)
 
-    val candidates = (player.getCoreUnitList() + getUnits().toList()).distinct()
+    // OG unlinks passengers from their containers between scenarios: each formation in a hangar
+    // carries forward as itself, and the container arrives empty.
+    val passengers = units.flatMap { it.hangar }
+    units.forEach { container ->
+        container.hangar.forEach { it.containedIn = null }
+        container.hangar.clear()
+    }
+    val candidates = (player.getCoreUnitList() + getUnits().toList() + passengers).distinct()
     // Every other figure in the report is already scoped to the player; `candidates` was not, and
     // it is the one the headline divides by. See [CampaignCarryOverReport].
     val owned = candidates.count { it.owner == player.id }

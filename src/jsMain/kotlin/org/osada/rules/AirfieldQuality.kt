@@ -6,7 +6,7 @@ import org.osada.model.Hex
 
 /**
  * Open General's **`Cannot use dirt airfields`** (`Special4` bit 2, `attr2` bit 2) — wired
- * 2026-08-27 (`docs/og-fidelity-plan.md` §U).
+ * 2026-08-27.
  *
  * > *"Cannot use dirt airfields: unit can't refuel nor deploy in airfields defined as dirt or built
  * > by sappers during the scenario."* — manual §7.2
@@ -25,8 +25,9 @@ import org.osada.model.Hex
  *    the work completes, and `terrain == AIRFIELD` cannot tell a scraped strip from a permanent
  *    one.
  *  - **Authored dirt: BUILT 2026-08-29**, once the flag stopped being missing. `.xscn` grid byte
- *    `@19` bit 6, found by the controlled OpenSuite diff `og-fidelity-plan.md` §Y.1 had been
- *    waiting on — 29 hexes across 15 shipped scenarios, [Hex.dirt]. The refusal to approximate it
+ *    `@19` bit 6, found by the owner's controlled OpenSuite diff
+ *    (`tools/og-import/SCENARIO_FORMAT_NOTES.md`) — 29 hexes across 15 shipped scenarios, [Hex.dirt]. The refusal to
+ * approximate it
  *    was the right call and cost nothing: when the real flag arrived, the rule gained one clause
  *    rather than having to unpick a guess.
  *

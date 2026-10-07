@@ -170,12 +170,16 @@ object MultiplayerScreen {
                 document.body?.appendChild(it)
             }
         status.textContent = text
+        status.style.display = if (text.isEmpty()) "none" else ""
     }
 
     fun statusText(): String = (document.getElementById(STATUS_ID) as? HTMLDivElement)?.textContent.orEmpty()
 
     fun setStatus(value: String) {
-        (document.getElementById(STATUS_ID) as? HTMLDivElement)?.textContent = value
+        (document.getElementById(STATUS_ID) as? HTMLDivElement)?.let {
+            it.textContent = value
+            it.style.display = if (value.isEmpty()) "none" else ""
+        }
     }
 
     /** Shown when the page was not served over HTTP, where no socket can be opened at all. */
@@ -198,7 +202,7 @@ object MultiplayerScreen {
         return card
     }
 
-    /** The 2-4 player cooperative-commanders room (`docs/design/cooperative-commanders-multiplayer.md`). */
+    /** The 2-4 player cooperative-commanders room (`docs/multiplayer/cooperative-commanders.md`). */
     private fun coopCard(
         model: HubModel,
         nameInput: HTMLInputElement,

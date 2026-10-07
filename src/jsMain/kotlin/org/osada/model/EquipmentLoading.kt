@@ -1,5 +1,6 @@
 package org.osada.model
 
+import org.osada.rules.Airbase
 import org.w3c.xhr.XMLHttpRequest
 
 /** Equipment DB loading (network/XHR), split out of [Equipment] to keep its function count in bounds. */
@@ -121,6 +122,9 @@ fun Equipment.parseCountryEquipment(
             // set from the scenario's `eqp` before any country file is fetched. See
             // [EquipmentOverrides] for why a shared merged record needs this instead of an edit.
             EquipmentOverrides.apply(eqid, equipment)
+            // The UNIT some efiles call "Airfield" is shown as an Airbase, so it cannot be
+            // mistaken for the airfield hex (`rules/Airbase`).
+            Airbase.applyDisplayName(eqid, equipment)
             equipmentMap[eqid] = equipment
             loaded++
         }

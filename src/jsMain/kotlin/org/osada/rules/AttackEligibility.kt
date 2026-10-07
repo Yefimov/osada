@@ -52,7 +52,7 @@ internal object AttackEligibility {
      * OG also grants the exception through an EQUIPMENT special (`All weather`, `SpecialEx` bit
      * 60.2). **Wired 2026-08-19** (`UnitCapabilities.hasAllWeather`) now that `attrEx` carries
      * `SpecialEx` at all — until then the bit lived outside the importer's 24-bit `attr` word
-     * entirely (`docs/og-fidelity-plan.md` §C) and granting it from a unit name or class would
+     * entirely and granting it from a unit name or class would
      * have been an invention.
      */
     fun airGroundedByWeather(attacker: GameUnit): Boolean =
@@ -64,7 +64,7 @@ internal object AttackEligibility {
 
     /**
      * OG's move/fire ordering: artillery and air defence *"must fire before moving unless they carry
-     * the Mechanized ability"* (`docs/og-fidelity-plan.md` B.1). OSADA has no ordering restriction of
+     * the Mechanized ability"*. OSADA has no ordering restriction of
      * its own, so this is entirely gated on `heavy_move_fire` and is a no-op under every default.
      *
      * Two independent exemptions, ORed: the equipment's own `Mechanized` attribute (`attr` bit 21),
@@ -89,8 +89,7 @@ internal object AttackEligibility {
      * OG's `CAN Air Attack`, second half: *"active attack requires the unit **has not moved**"*
      * (`tools/og-import/OG_ABILITY_AUDIT.md` §7.1's three-actions table, and its ability row —
      * *"ground/naval unit may attack air if it has not moved"*). OSADA granted the targeting and
-     * never read the condition, which `docs/og-fidelity-plan.md` §M.1 listed as one of the four
-     * abilities wired narrower than OG.
+     * never read the condition, one of four abilities once wired narrower than OG.
      *
      * **It applies to the ACTIVE attack only, and that is the whole reason [canInitiateAttack]
      * takes [asActiveAttack].** The same audit table separates three actions that must not be
@@ -168,7 +167,7 @@ internal object AttackEligibility {
      * **This is OG's own rule, and OG derives it exactly this way.** Its ability list shows
      * *"ground attack for AD and Flaks"* on a record when that record's hard/soft attack values are
      * non-zero, and on no other: three controlled exports settled it on 2026-08-26 with every
-     * special byte zeroed (`docs/og-fidelity-plan.md` §Q.4). Measured over LXF, 340 of 344 FlaK
+     * special byte zeroed. Measured over LXF, 340 of 344 FlaK
      * records display it and the four that do not are `Mobile Radar`; of 138 Air Defence records the
      * eleven without it are radars and two surface-to-air missiles.
      *

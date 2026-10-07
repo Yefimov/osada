@@ -171,7 +171,7 @@ internal class UnitStatCard(
         byId("uDAir")?.textContent = data.airdef.toString()
         byId("uDClose")?.textContent = data.closedef.toString()
         byId("uDRange")?.textContent = data.rangedefmod.toString()
-        // Must run LAST: it rewrites the chips above to their effective values (DEFERRED.md §1.4).
+        // Must run LAST: it rewrites the chips above to their effective values (`docs/design/attachments.md`).
         UnitStatAttachmentMarks.apply(unit)
     }
 

@@ -25,6 +25,18 @@ internal class MapAnimator(
     }
 
     private val animationChain = AnimationChain()
+    private val moveTimers = mutableMapOf<Int, GameUnit>()
+
+    /** Teardown never completes an old order against the replacement scenario. */
+    fun cancel() {
+        animationChain.clear()
+        moveTimers.forEach { (timer, unit) ->
+            window.clearInterval(timer)
+            unit.hasAnimation = false
+        }
+        moveTimers.clear()
+        rc.unitBackBuffer.style.display = "none"
+    }
 
     fun runAnimation(callback: dynamic) {
         animationChain.start(callback)
@@ -94,6 +106,7 @@ internal class MapAnimator(
             window.setInterval({
                 if (step >= path.size - 1) {
                     window.clearInterval(timer)
+                    moveTimers.remove(timer)
                     unit.hasAnimation = false
                     rc.unitBackBuffer.style.display = "none"
                     invokeCbFunc(callback, params)
@@ -124,6 +137,7 @@ internal class MapAnimator(
                     step++
                 }
             }, delay)
+        moveTimers[timer] = unit
     }
 
     /** Clears and redraws the moving unit into the off-screen unit back-buffer, revealing it. */

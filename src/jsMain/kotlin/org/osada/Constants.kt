@@ -597,7 +597,7 @@ class UiSettings {
 
     /**
      * Accessibility: adds a star to friendly and a skull to enemy strategic unit flags
-     * (`docs/design/accessible-side-identification.md`). Device-local, opt-in, and deliberately
+     * (`docs/design/action-affordances-and-objectives.md` §13). Device-local, opt-in, and deliberately
      * NOT part of the Observer badge -- it adds no information the player could not already read
      * from the flag, it only adds a second channel for reading it.
      */

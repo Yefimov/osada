@@ -20,8 +20,8 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * The six abilities wired on 2026-08-27 from Luis Guzman's own specials and combat references
- * (`docs/og-fidelity-plan.md` §X): `Jet (Stealth)`, `Partizan`, `Exploit Success`, `Kamikaze`,
+ * The six abilities wired on 2026-08-27 from Luis Guzman's own specials and combat references:
+ * `Jet (Stealth)`, `Partizan`, `Exploit Success`, `Kamikaze`,
  * `Torpedo bomber` and `Saboteur`.
  *
  * **`Jet (Stealth)` is the one worth reading twice.** `OG_ABILITY_AUDIT.md` §7.1.1 had it filed as

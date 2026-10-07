@@ -6,7 +6,7 @@ import org.osada.model.Hex
 
 /**
  * The surface zone of control a moving unit can run into -- one definition for the move overlay,
- * the route and the walk (`docs/design/combat-movement-heroes-weather-audit.md` §6).
+ * the route and the walk (`tools/og-import/OG_REGISTER.md` §2.3).
  *
  * **Known versus discovered.** The overlay and the route are built only from enemies the mover's
  * side can actually SEE (their hex is spotted, or they revealed themselves by firing), so a hidden

@@ -21,7 +21,7 @@ internal object UnitConditionPenalties {
     fun enabled(): Boolean = ActiveRuleset.flag(RuleKey.DRY_UNIT_PENALTIES, false)
 
     /**
-     * OG 6.23's dry-unit penalties (`docs/og-fidelity-plan.md` B.8), behind `dry_unit_penalties`.
+     * OG 6.23's dry-unit penalties, behind `dry_unit_penalties`.
      *
      * OSADA already enforces both PROHIBITIONS — no ammo cannot attack ([AttackEligibility.canFire]),
      * no fuel cannot move (the move range collapses to zero) — and neither halving. These are the

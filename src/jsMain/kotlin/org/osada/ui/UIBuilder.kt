@@ -60,6 +60,10 @@ object UIBuilder {
             "undo" to ActionIcons.UNDO,
             // Same back-arrow as Undo: both put the formation back where it was a moment ago.
             "withdraw" to ActionIcons.UNDO,
+            "hangar_land" to ActionIcons.LAND_IN_HANGAR,
+            "hangar" to ActionIcons.HANGAR,
+            "cover_enter" to ActionIcons.ENTER_COVER,
+            "cover" to ActionIcons.COVER,
             "sleep" to "t",
         )
 

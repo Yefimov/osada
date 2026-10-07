@@ -33,6 +33,7 @@ private fun GameUnit.applySerializedAiOrders(data: dynamic) {
     aiFollowsObjectiveUnit = data.aiFollowPos as? Boolean ?: false
     aiOrdinal = data.aiOrdinal as? Int ?: 0
     authoredAttachmentIds = readIntArray(data.authoredAttachments)
+    purchasedAttachmentIds = readIntArray(data.boughtAttachments)
     attachmentsForbidden = data.noAttachments as? Boolean ?: false
 }
 

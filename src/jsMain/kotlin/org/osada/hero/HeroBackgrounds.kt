@@ -8,7 +8,7 @@ import org.osada.UnitClass
  *
  * ## What this fixes
  *
- * In the old system (`docs/leaders.md` §1) a unit that gained ANY leader silently also gained the
+ * In the old system (`docs/heroes/legacy-leaders.md` §1) a unit that gained ANY leader silently also gained the
  * first trait in its unit-class list. Nothing in the UI attributed that second trait to anything;
  * it was not a reward for anything the unit had done, and `Leaders.unitHasLeader` granted it
  * purely as a side effect of `unit.leader != -1`.

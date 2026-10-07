@@ -1,8 +1,8 @@
 package org.osada.multiplayer.persistence
 
-import kotlinx.browser.window
 import org.osada.multiplayer.sync.MultiplayerSnapshot
 import org.osada.multiplayer.sync.MultiplayerSnapshotJson
+import org.osada.storage.localStorage
 import kotlin.js.json
 
 data class MultiplayerRecoveryRecord(
@@ -41,12 +41,12 @@ class LocalMultiplayerRecoveryStorage : MultiplayerRecoveryStorage {
                         MultiplayerSnapshotJson.encode(record.acknowledgedSnapshot),
                     ),
             )
-        window.localStorage.setItem(recoveryKey(record.roomId), JSON.stringify(value))
-        window.localStorage.setItem(LATEST_ROOM_KEY, record.roomId)
+        localStorage.setItem(recoveryKey(record.roomId), JSON.stringify(value))
+        localStorage.setItem(LATEST_ROOM_KEY, record.roomId)
     }
 
     override fun load(roomId: String): MultiplayerRecoveryRecord? {
-        val source = window.localStorage.getItem(recoveryKey(roomId)) ?: return null
+        val source = localStorage.getItem(recoveryKey(roomId)) ?: return null
         return runCatching {
             val value = JSON.parse<dynamic>(source)
             MultiplayerRecoveryRecord(
@@ -59,25 +59,25 @@ class LocalMultiplayerRecoveryStorage : MultiplayerRecoveryStorage {
         }.getOrNull()
     }
 
-    override fun loadLatest(): MultiplayerRecoveryRecord? = window.localStorage.getItem(LATEST_ROOM_KEY)?.let(::load)
+    override fun loadLatest(): MultiplayerRecoveryRecord? = localStorage.getItem(LATEST_ROOM_KEY)?.let(::load)
 
     override fun remove(roomId: String) {
-        window.localStorage.removeItem(recoveryKey(roomId))
-        if (window.localStorage.getItem(LATEST_ROOM_KEY) == roomId) {
-            window.localStorage.removeItem(LATEST_ROOM_KEY)
+        localStorage.removeItem(recoveryKey(roomId))
+        if (localStorage.getItem(LATEST_ROOM_KEY) == roomId) {
+            localStorage.removeItem(LATEST_ROOM_KEY)
         }
     }
 
     override fun saveDisplayName(displayName: String) {
         val sanitized = displayName.trim().take(MAX_DISPLAY_NAME_LENGTH)
         if (sanitized.isEmpty()) {
-            window.localStorage.removeItem(DISPLAY_NAME_KEY)
+            localStorage.removeItem(DISPLAY_NAME_KEY)
         } else {
-            window.localStorage.setItem(DISPLAY_NAME_KEY, sanitized)
+            localStorage.setItem(DISPLAY_NAME_KEY, sanitized)
         }
     }
 
-    override fun loadDisplayName(): String? = window.localStorage.getItem(DISPLAY_NAME_KEY)
+    override fun loadDisplayName(): String? = localStorage.getItem(DISPLAY_NAME_KEY)
 
     private fun recoveryKey(roomId: String): String = "osada-mp-recovery-$roomId-v1"
 

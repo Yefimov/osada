@@ -15,7 +15,7 @@ import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
 /**
- * Hides `#equipment`, taking anything layered over it down with it (DEFERRED.md §4.13).
+ * Hides `#equipment`, taking anything layered over it down with it.
  *
  * **Every path that closes the equipment window must go through here**, not
  * `makeHidden("equipment")`. [AttachmentPickerPresenter] is opened from this file's unit strip but
@@ -144,7 +144,12 @@ internal object EquipmentUnitStrip {
                 UnitIconResolver.forCurrentScenario(unit.eqid, data.icon)
             }
         img.style.backgroundImage = "url($icon)"
-        nameDiv.textContent = unit.customName ?: data.name
+        // The name row holds the name and, right after it, the rename pencil (2026-10-07): the
+        // top-right corner belongs to the ability badges, as on the purchase tiles.
+        nameDiv.className = "osada-unitbox-name"
+        val nameText = addTag(nameDiv, "span")
+        nameText.className = "osada-unitbox-name__text"
+        nameText.textContent = unit.customName ?: data.name
         if (unit.customName != null) nameDiv.title = data.name // equipment identity on hover
         val location = if (unit.isDeployed) "deployed on the map" else "waiting in reserve"
         val formation = if (unit.isCore) "core formation" else "scenario unit"
@@ -163,18 +168,23 @@ internal object EquipmentUnitStrip {
         iconsDiv.textContent = icons
         // Rename pencil (Stage 3.5, Task 2). This strip only ever lists the CURRENT player's
         // units (updateEquipmentWindow filters on player id), so no ownership check is needed.
-        val rename = addTag(container, "span")
+        val rename = addTag(nameDiv, "span")
         rename.className = "osada-rename-btn osada-rename-btn--card"
         rename.innerHTML = "&#9998;" // ✎
         rename.title = I18n.t("unit_info.rename.label")
         rename.onclick = { e: MouseEvent ->
             e.stopPropagation() // must not select the card (that re-render would kill the input)
-            startCardRename(ui, container, nameDiv, unit)
+            startCardRename(ui, container, nameDiv, nameText, unit)
         }
         addAttachmentButton(ui, container, unit)
         addCommanderBadge(container, unit)
         addAuxiliaryMark(container, unit)
         addClassMark(container, data.uclass)
+        // The same primary (brass) badges as the purchase tiles, so the tray says which formation
+        // is a sapper, an HQ or paratroops before it is deployed (owner's request 2026-10-07).
+        val markings = addTag(container, "span")
+        markings.className = "osada-capability-marks"
+        EquipmentMarkings.render(markings, data, unit)
         ReserveRefitPresenter.addCardButton(ui, container, unit)
         return container
     }
@@ -221,7 +231,7 @@ internal object EquipmentUnitStrip {
         badge.setAttribute("aria-label", badge.title)
     }
 
-    /** Attachments (DEFERRED.md §1.4, §1.18). This strip is the attachment surface: OG allows
+    /** Attachments (`docs/design/attachments.md`). This strip is the attachment surface: OG allows
      *  attachment changes at initial HQ only, never mid-scenario, and the equipment window is
      *  where buying and upgrading already happen. It is also the one place carrying a real owned
      *  [org.osada.model.GameUnit] rather than an equipment TYPE, which is what made the picker
@@ -243,7 +253,7 @@ internal object EquipmentUnitStrip {
         // One star per slot, filled for each attachment fitted -- a bare count read as a
         // meaningless "0". This shows BOTH whether the unit carries anything and how much room is
         // left, in the width a digit occupied. Stars are UI-font characters, never osada-menu
-        // glyphs (DEFERRED.md §4.12).
+        // glyphs.
         button.textContent =
             "★".repeat(fitted.size) + "☆".repeat(Attachments.MAX_PER_UNIT - fitted.size)
         val summary =
@@ -259,6 +269,7 @@ internal object EquipmentUnitStrip {
             e.stopPropagation() // must not re-select the card out from under the dialog
             AttachmentPickerPresenter.open(unit, player) {
                 ui.updateEquipmentWindow(unit.unitData(true).uclass)
+                ui.updateStatusBar() // the top bar's prestige; nothing else on this path refreshes it
             }
         }
     }
@@ -312,6 +323,7 @@ internal object EquipmentUnitStrip {
         ui: UI,
         container: HTMLElement,
         nameDiv: HTMLElement,
+        nameText: HTMLElement,
         unit: org.osada.model.GameUnit,
     ) {
         if (container.query("input") != null) return
@@ -332,7 +344,7 @@ internal object EquipmentUnitStrip {
             delTag(input)
             nameDiv.style.visibility = ""
             if (commit) unit.customName = value.ifEmpty { null }
-            nameDiv.textContent = unit.customName ?: unit.unitData(true).name
+            nameText.textContent = unit.customName ?: unit.unitData(true).name
             // If this unit is the one on the bottom card, refresh that name too.
             ui.game.scenario
                 ?.map

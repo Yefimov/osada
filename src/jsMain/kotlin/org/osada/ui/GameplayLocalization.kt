@@ -559,7 +559,7 @@ internal object GameplayLocalization {
     }
 
     // TODO(detekt): CyclomaticComplexMethod (18) — deliberately deferred rather than rushed
-    // (DEFERRED.md §4.1). refreshUnitActions above was split out separately; this one wasn't.
+    // (`tools/og-import/OG_REGISTER.md` §4.1). refreshUnitActions above was split out separately; this one wasn't.
     @Suppress("CyclomaticComplexMethod")
     private fun refreshUnitIdentity(unit: GameUnit) {
         byId("osadaUcClass")?.let { UnitServiceChip.refresh(it, unit) }

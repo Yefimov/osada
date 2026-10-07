@@ -22,7 +22,12 @@ internal object OrientationGate {
     private var dismissedForSession = false
 
     fun update(mode: LayoutMode) {
-        val shouldShow = mode == LayoutMode.PHONE_PORTRAIT && !dismissedForSession
+        // The campaign map lays itself out for portrait, so it is not interrupted: the gate would sit
+        // under the map's modal isolation, where it could not be dismissed.
+        val mapOpen =
+            org.osada.ui.campaignmap.CampaignMapPresenter
+                .isOpen()
+        val shouldShow = mode == LayoutMode.PHONE_PORTRAIT && !dismissedForSession && !mapOpen
         if (shouldShow) {
             org.osada.ui.music.MusicLibraryPresenter
                 .yieldToDecision()

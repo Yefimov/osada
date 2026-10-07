@@ -34,10 +34,10 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Land minefields (`docs/og-fidelity-plan.md` C.1, OG manual 9.9).
+ * Land minefields (OG manual 9.9).
  *
  * The two properties worth locking hardest are not the arithmetic — they are the promises the
- * mechanic was allowed to ship on (`DEFERRED.md` §1.1):
+ * mechanic was allowed to ship on (`docs/design/action-affordances-and-objectives.md` §1.1):
  *
  *  1. **With `minefields` off, nothing exists.** No chip, no cost, no damage, even on a hex a
  *     scenario authored as mined.

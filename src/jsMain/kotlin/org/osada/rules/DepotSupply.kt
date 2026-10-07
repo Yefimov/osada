@@ -12,7 +12,7 @@ import org.osada.rules.ruleset.RuleKey
  * one.
  *
  * `OPENTXT_SAMPLE/equip.cfg` documents the whole mechanic, and it is the richer of the two
- * commented copies (`docs/og-sources.md` §3):
+ * commented copies (`docs/og/og-sources.md` §3):
  *
  * > *"Change supply rules. Air units are not affected by this config var. 0 = disabled (default
  * > supply rules). Any other value restricts units to resupply only from Depots and/or
@@ -33,20 +33,20 @@ import org.osada.rules.ruleset.RuleKey
  * > enemies on ZOC"*
  *
  * — named for mode 2 alone, so a formation supplied by a **Depot** is subject to none of the three.
- * That matches the changelog's own Depot bug fixes (`DEFERRED.md` §2.10): *"units failing to
+ * That matches the changelog's own Depot bug fixes (`tools/og-import/OG_ABILITY_AUDIT.md` §7.5): *"units failing to
  * resupply from an adjacent Depot after moving or firing"* was a BUG, so moving and firing must not
  * disqualify.
  *
  * ### What is inert, and why the rule exists anyway
  *
  * **No shipped efile sets `supply_ex`, and 0 of 56,970 shipped records carry `Supply Unit`.** Both
- * measurements are in `docs/og-fidelity-plan.md` §AA. The mechanic therefore cannot alter a single
+ * were measured over the merged roster and every shipped efile. The mechanic therefore cannot alter a single
  * shipped scenario — [enabled] is false everywhere today — and it needs no ruleset key, because the
  * efile key and the equipment bit are already its two gates.
  *
- * It is built because it stopped being blocked on evidence. `og-fidelity-plan.md` §Y filed the
- * Depot as a mechanic nobody understood; §Z found it documented in a file this project had already
- * read, in `DEFERRED.md` §2.10, and on the author's own Features page.
+ * It is built because it stopped being blocked on evidence: the Depot, once filed as a mechanic
+ * nobody understood, was documented all along (`tools/og-import/OG_ABILITY_AUDIT.md` §7.5 and the
+ * author's own Features page).
  *
  * ### Both of OG's two ways to BE a Depot are now read
  *
@@ -55,7 +55,7 @@ import org.osada.rules.ruleset.RuleKey
  * against the second alone, because the first was a byte nobody had located.
  *
  * **The byte was located 2026-08-29** — `.xscn` unit record `@50` bit 1, by the controlled
- * OpenSuite diff `DEFERRED.md` §2.10 had been asking for since the beginning — so [isDepot] now
+ * OpenSuite diff the Depot had been waiting on since the beginning — so [isDepot] now
  * reads both, and the prediction that entry made held exactly: *"this is the object that gains a
  * second source, not a second mechanic"*. Nothing below this line changed.
  *
@@ -108,7 +108,7 @@ object DepotSupply {
      *
      * Read on the unit's own record **or on its organic transport's**, because OG's own wording for
      * the special is that *an organic transport carrying it makes its main unit behave as a Supply
-     * Unit* (`DEFERRED.md` §2.10). A lorry-borne depot is the shape the ability was added for.
+     * Unit* (`tools/og-import/OG_ABILITY_AUDIT.md` §7.5). A lorry-borne depot is the shape the ability was added for.
      */
     fun isDepot(unit: GameUnit): Boolean {
         // The SCENARIO designation, recovered 2026-08-29 (`GameUnit.isScenarioDepot`): the designer

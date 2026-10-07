@@ -30,7 +30,7 @@ class Hex(
 
     /**
      * Sides that have a LAND MINEFIELD laid on this hex, as a bitmask (`1 shl side`), and the sides
-     * that have detected it (`docs/og-fidelity-plan.md` C.1, OG manual 9.9).
+     * that have detected it (OG manual 9.9).
      *
      * A minefield in Open General is a **characteristic of the hex, not a unit** -- authored by the
      * scenario designer or laid during play -- which is why it lives here beside `road` and `rail`
@@ -38,10 +38,10 @@ class Hex(
      * Axis and bit 2 for Allied (`tools/og-import/SCENARIO_FORMAT_NOTES.md`), so a hex really can
      * hold one field per side.
      *
-     * [minesDetected] is the half that keeps the mechanic honest. `DEFERRED.md` §1.1 forbids
-     * movement damage with no visible cause, so a field a side has detected is DRAWN and made to
-     * cost the rest of the move without damage, and only an undetected one may ambush. A side always
-     * counts as detecting its own field.
+     * [minesDetected] is the half that keeps the mechanic honest.
+     * `docs/design/action-affordances-and-objectives.md` §1.1 forbids movement damage with no visible cause, so a field
+     * a side has detected is DRAWN and made to cost the rest of the move without damage, and only an undetected one may
+     * ambush. A side always counts as detecting its own field.
      *
      * Both are 0 on every hex unless the `minefields` ruleset key is on, and every rule that reads
      * them checks that key first ([org.osada.rules.Minefields]).
@@ -146,6 +146,18 @@ class Hex(
     var sapperBuilt: Boolean = false
 
     /**
+     * Which facilities engineers have built on this hex during the battle, as [SapperWorks] bits:
+     * a bridge, a fortification, a port or a railroad station. The painted map image cannot show
+     * any of them, so this is what the renderer reads (`ui/BuiltFacilityRenderer`).
+     *
+     * A bit records that the facility was BUILT here, not that it still stands: the renderer also
+     * asks whether the hex still has it (a road over the river, the terrain, the station flag), so
+     * a blown and repaired bridge or a razed and repaired fort keeps its picture and nothing has to
+     * clear the bit. The airfield keeps its own [sapperBuilt], which OG's dirt-airfield rule reads.
+     */
+    var sapperWorks: Int = 0
+
+    /**
      * Whether this hex carries a **railroad station** (OG manual §9.3.6, and §6.12's rail
      * transport: *"the unit must be in a station hex"*).
      *
@@ -153,7 +165,7 @@ class Hex(
      * scenarios, imported by `tools/og-import/add_stations.py` from `.xscn` grid byte @13 bit 5.
      * That bit had never been located; OpenSuite's own map report counts stations as a per-hex
      * feature, which gave the correlation an oracle to check against. See `xscn.py` for the decode
-     * and `docs/og-fidelity-plan.md` §U for the evidence.
+     * and `tools/og-import/SCENARIO_FORMAT_NOTES.md` for the evidence.
      *
      * Unlike [sapperBuilt] this is NOT inert without a ruleset key: it is part of the map as the
      * author drew it, exactly as [rail] is, and it is loaded and saved whether or not any rule
@@ -169,8 +181,8 @@ class Hex(
      * > *"Dirt Airfield - deploy and supply Air Units"* — OG's own string,
      * > `OPENTXT_SAMPLE/strings-en-template.txt:850`
      *
-     * **Authored data, recovered 2026-08-29** from `.xscn` grid byte `@19` bit 6, by the controlled
-     * OpenSuite diff `docs/og-fidelity-plan.md` §Y.1 had been asking for since 2026-08-25. OG uses
+     * **Authored data, recovered 2026-08-29** from `.xscn` grid byte `@19` bit 6, by the owner's
+     * controlled OpenSuite diff (`tools/og-import/SCENARIO_FORMAT_NOTES.md`). OG uses
      * **one flag for both airfield and port**, which was the open half of that question: clearing
      * it on two airfield hexes and setting it on a port hex moved the same bit each time.
      *
@@ -219,8 +231,8 @@ class Hex(
      * whose meaning depends on the action; [triggerEquip] is the equipment id that actions 8 and 9
      * award; [triggerMessage] is the text OG keeps in a `.xtrig` sidecar and OSADA carries inline.
      *
-     * **Recovered 2026-08-29** from `.xscn` grid bytes `@20`/`@21`/`@22`/`@26`, by the controlled
-     * OpenSuite diff `docs/og-fidelity-plan.md` §Y.1 had been waiting on. 311 trigger hexes across
+     * **Recovered 2026-08-29** from `.xscn` grid bytes `@20`/`@21`/`@22`/`@26`, by the owner's
+     * controlled OpenSuite diff (`tools/og-import/SCENARIO_FORMAT_NOTES.md`). 311 trigger hexes across
      * 86 of the 502 deployed scenarios; corpus-wide 858 across 401. `@20` takes no value outside
      * 0..9 anywhere in the corpus, which a mis-located byte could not manage.
      *
@@ -241,7 +253,7 @@ class Hex(
      * Whether this hex's [trigger] has already fired.
      *
      * **A trigger is once-only, and that is an inference** — OG's manual says only what happens,
-     * never how often. It is the reading that cannot overstate (`docs/og-sources.md`): a repeating
+     * never how often. It is the reading that cannot overstate (`docs/og/og-sources.md`): a repeating
      * trigger is a prestige, experience and free-unit tap the player can farm by stepping off the
      * hex and back on, which would silently re-tune every one of the 86 scenarios that author one.
      * Once-only takes less from nobody and can only under-deliver.
@@ -336,8 +348,8 @@ class Hex(
     var isAttackSel: Boolean = false
 
     /** Set alongside [isMoveSel] when a SPOTTED enemy AA unit covers this hex and the currently
-     *  selected unit is an aircraft (DEFERRED.md §1.1). Never derived from hidden AA -- see
-     *  `AAInterception.visibleThreatHexes`. Cleared in `delMoveSel`. */
+     *  selected unit is an aircraft (`docs/design/action-affordances-and-objectives.md` §1.1). Never
+     *  derived from hidden AA -- see `AAInterception.visibleThreatHexes`. Cleared in `delMoveSel`. */
     var isAaThreat: Boolean = false
 
     /** Set alongside [isMoveSel] when the selected formation can reach this hex ONLY by climbing
@@ -420,6 +432,7 @@ class Hex(
         razedTerrain = other.razedTerrain
         blownRoad = other.blownRoad
         blownRail = other.blownRail
+        sapperWorks = other.sapperWorks
         mines = other.mines
         minesDetected = other.minesDetected
         spotMemory = other.spotMemory

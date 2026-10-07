@@ -26,7 +26,7 @@ import org.osada.rules.getUnitAttackRange
  *
  * Enemy batteries are filtered through [UnitConcealment.isVisibleTo] exactly as the unit sprites
  * are — an overlay that outlined a hidden battery's reach would be a free reveal, the same rule
- * hidden AA is drawn by (`DEFERRED.md` §1.1).
+ * hidden AA is drawn by (`docs/design/action-affordances-and-objectives.md` §1.1).
  */
 internal object ArtilleryRangeOverlay {
     /** Covered hexes as `row * cols + col` keys, split by whose guns cover them. */

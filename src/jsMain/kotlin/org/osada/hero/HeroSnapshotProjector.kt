@@ -4,7 +4,7 @@ import org.osada.campaign.BriefingDynamic
 
 /**
  * Turns a campaign save payload into an archive projection, and an archive entry into desk records
- * (`docs/design/hero-desk-and-profile-archive.md` §2).
+ * (`docs/heroes/hero-desk-and-archive.md` §2).
  *
  * Pure with respect to the game: it parses JSON and decodes a roster, and never restores a game
  * into `GameHolder`, changes the selected campaign, loads UI settings or mutates hero state. That

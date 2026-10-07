@@ -257,7 +257,7 @@
   <hex row="7" col="40" road="40"/>
   <hex row="7" col="41" road="136"/>
   <hex row="7" col="42" terrain="2" owner="0" flag="19" deploy="0">
-    <unit id="20774" owner="0" flag="20" face="0" exp="44" ldr="1" bstr="5"/>
+    <unit id="20774" owner="0" flag="20" face="0" exp="300" ldr="1" bstr="5"/>
   </hex>
   <hex row="7" col="43" terrain="2"/>
   <hex row="8" col="2" terrain="3"/>
@@ -331,7 +331,7 @@
   </hex>
   <hex row="9" col="40" terrain="13"/>
   <hex row="9" col="41" terrain="3" deploy="0">
-    <unit id="20724" owner="0" flag="20" face="0" exp="44" bstr="5"/>
+    <unit id="20724" owner="0" flag="20" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="9" col="42" terrain="3"/>
   <hex row="10" col="5" terrain="3"/>
@@ -357,10 +357,10 @@
   <hex row="10" col="35" road="130"/>
   <hex row="10" col="36" road="40"/>
   <hex row="10" col="37" road="136" deploy="0">
-    <unit id="20511" owner="0" flag="20" face="0" exp="194" ldr="1" bstr="5"/>
+    <unit id="20511" owner="0" flag="20" face="0" exp="450" ldr="1" bstr="5"/>
   </hex>
   <hex row="10" col="38" deploy="0">
-    <unit id="20368" owner="0" flag="20" face="0" transport="20674" exp="94" ldr="1" bstr="5"/>
+    <unit id="20368" owner="0" flag="20" face="0" transport="20674" exp="350" ldr="1" bstr="5"/>
   </hex>
   <hex row="10" col="39" road="40" deploy="0">
     <unit id="20511" owner="0" flag="20" face="0" exp="200" bstr="5"/>
@@ -403,7 +403,7 @@
   <hex row="11" col="33" road="18"/>
   <hex row="11" col="34" road="33"/>
   <hex row="11" col="37" terrain="3" deploy="0">
-    <unit id="20433" owner="0" flag="20" face="0" transport="20674" exp="144" ldr="1" bstr="5"/>
+    <unit id="20433" owner="0" flag="20" face="0" transport="20674" exp="400" ldr="1" bstr="5"/>
   </hex>
   <hex row="11" col="38" road="130" deploy="0">
     <unit id="20392" owner="0" flag="20" face="0" transport="20674" exp="200" bstr="5"/>
@@ -412,7 +412,7 @@
     <unit id="20687" owner="0" flag="20" face="0" transport="20674" exp="200" bstr="5"/>
   </hex>
   <hex row="11" col="40" terrain="3" road="136" deploy="0">
-    <unit id="20392" owner="0" flag="20" face="0" transport="20674" exp="44" bstr="5"/>
+    <unit id="20392" owner="0" flag="20" face="0" transport="20674" exp="300" bstr="5"/>
   </hex>
   <hex row="11" col="41" terrain="3" road="146" deploy="0">
     <unit id="20531" owner="0" flag="20" face="0" exp="100" bstr="5"/>
@@ -534,7 +534,7 @@
   <hex row="15" col="8" road="136"/>
   <hex row="15" col="9" terrain="3" road="144"/>
   <hex row="15" col="10">
-    <unit id="5694" owner="1" flag="7" face="0" exp="44" str="7" ldr="1" bstr="5"/>
+    <unit id="5694" owner="1" flag="7" face="0" exp="300" str="7" ldr="1" bstr="5"/>
   </hex>
   <hex row="15" col="11" terrain="13"/>
   <hex row="15" col="16" terrain="3"/>
@@ -670,7 +670,7 @@
   <hex row="19" col="11" road="17"/>
   <hex row="19" col="14" road="144"/>
   <hex row="19" col="15">
-    <unit id="6781" owner="1" flag="7" face="0" exp="44" bstr="5"/>
+    <unit id="6781" owner="1" flag="7" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="19" col="16" terrain="3"/>
   <hex row="19" col="17" terrain="13"/>
@@ -744,7 +744,7 @@
     <unit id="24015" owner="1" flag="23" face="0" exp="200" bstr="5"/>
   </hex>
   <hex row="21" col="12" terrain="2">
-    <unit id="7691" owner="1" flag="87" face="0" exp="44" bstr="5"/>
+    <unit id="7691" owner="1" flag="87" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="21" col="15" road="9"/>
   <hex row="21" col="17" terrain="3"/>
@@ -762,13 +762,13 @@
   <hex row="21" col="28" terrain="10" road="136"/>
   <hex row="21" col="29" road="136"/>
   <hex row="21" col="30" terrain="3">
-    <unit id="22978" owner="1" flag="23" face="0" transport="24180" exp="44" str="9" bstr="5"/>
+    <unit id="22978" owner="1" flag="23" face="0" transport="24180" exp="300" str="9" bstr="5"/>
   </hex>
   <hex row="21" col="31" terrain="3">
-    <unit id="24395" owner="1" flag="23" face="0" exp="44" bstr="5"/>
+    <unit id="24395" owner="1" flag="23" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="21" col="32" road="17">
-    <unit id="23514" owner="1" flag="23" face="0" exp="44" ldr="1" bstr="5"/>
+    <unit id="23514" owner="1" flag="23" face="0" exp="300" ldr="1" bstr="5"/>
   </hex>
   <hex row="21" col="33">
     <unit id="24594" owner="1" flag="23" face="0" exp="100" bstr="5"/>
@@ -809,7 +809,7 @@
     <unit id="22992" owner="1" flag="23" face="0" exp="200" str="6" bstr="5"/>
   </hex>
   <hex row="22" col="35" terrain="3">
-    <unit id="22978" owner="1" flag="23" face="0" transport="24180" exp="144" str="8" bstr="5"/>
+    <unit id="22978" owner="1" flag="23" face="0" transport="24180" exp="400" str="8" bstr="5"/>
   </hex>
   <hex row="22" col="36" terrain="10"/>
   <hex row="22" col="37" terrain="10"/>
@@ -823,10 +823,10 @@
   <hex row="23" col="17" terrain="3"/>
   <hex row="23" col="18" road="136"/>
   <hex row="23" col="19" terrain="1" road="136" owner="1" flag="6" victory="1" trigger="2" trigparam="0">
-    <unit id="7691" owner="1" flag="87" face="0" exp="144" bstr="5"/>
+    <unit id="7691" owner="1" flag="87" face="0" exp="400" bstr="5"/>
   </hex>
   <hex row="23" col="20" road="17">
-    <unit id="6207" owner="1" flag="7" face="0" exp="44" ldr="1" bstr="5"/>
+    <unit id="6207" owner="1" flag="7" face="0" exp="300" ldr="1" bstr="5"/>
   </hex>
   <hex row="23" col="21">
     <unit id="24015" owner="1" flag="23" face="0" exp="100" bstr="5"/>
@@ -835,7 +835,7 @@
     <unit id="6332" owner="1" flag="7" face="0" exp="200" bstr="5"/>
   </hex>
   <hex row="23" col="25" terrain="3">
-    <unit id="6781" owner="1" flag="7" face="0" exp="94" ldr="1" bstr="5"/>
+    <unit id="6781" owner="1" flag="7" face="0" exp="350" ldr="1" bstr="5"/>
   </hex>
   <hex row="23" col="28" terrain="15"/>
   <hex row="23" col="29" terrain="15"/>
@@ -1036,7 +1036,7 @@
   <hex row="30" col="7" terrain="3"/>
   <hex row="30" col="8" terrain="3"/>
   <hex row="30" col="9" terrain="1" road="1" owner="1" flag="6" victory="1">
-    <unit id="7691" owner="1" flag="87" face="0" exp="44" bstr="5"/>
+    <unit id="7691" owner="1" flag="87" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="30" col="14" terrain="3"/>
   <hex row="30" col="15" terrain="3"/>

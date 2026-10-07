@@ -297,8 +297,7 @@ class UnitActionAvailabilityTest {
                 UnitActionId.OVERSTRENGTH,
                 // The two minefield commands are always RESOLVED -- `all()` returns every action,
                 // applicable or not -- but a tank carries neither ability and the `minefields` key
-                // is off in this harness, so both come back not-applicable and the strip omits them
-                // (`docs/og-fidelity-plan.md` C.1).
+                // is off in this harness, so both come back not-applicable and the strip omits them.
                 UnitActionId.LAY_MINES,
                 // OG 9.2's barrage sits with them for the same reason: always resolved, and
                 // not-applicable for a tank, which has no Bomber Size (added 2026-08-26).
@@ -318,6 +317,12 @@ class UnitActionAvailabilityTest {
                 UnitActionId.REPAIR,
                 UnitActionId.DEMOLISH,
                 UnitActionId.BLOW_RAIL,
+                // The hangar pair (2026-10-07): resolved for every formation, applicable only beside
+                // or on a carrier or airbase.
+                UnitActionId.LAND_IN_HANGAR,
+                UnitActionId.HANGAR,
+                UnitActionId.ENTER_COVER,
+                UnitActionId.COVER,
                 UnitActionId.SLEEP,
             ),
             UnitActionAvailability.all(context(world, unit)).map { it.action },

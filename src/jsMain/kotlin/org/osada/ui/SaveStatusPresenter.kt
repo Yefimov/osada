@@ -1,6 +1,5 @@
 package org.osada.ui
 
-import org.osada.OSGlue
 import org.osada.i18n.I18n
 import org.osada.save.SaveStatus
 import org.osada.save.SaveStatusBus
@@ -38,13 +37,20 @@ internal object SaveStatusPresenter {
                 el.title = ""
             }
             is SaveStatus.Failed -> {
+                val sessionOnly = status.message == SaveStatus.SESSION_ONLY
                 el.classList.add("osadaSaveStatus--failed")
-                el.textContent = I18n.t("hud.save_status.failed")
-                el.title = I18n.t("hud.save_status.failed.export_now_help")
-                el.onclick = { _ ->
-                    val name = "osada-campaign-export-${Date().getTime().toLong()}.json"
-                    OSGlue.disksave(name)
-                }
+                el.textContent =
+                    I18n.t(if (sessionOnly) "hud.save_status.session_only" else "hud.save_status.failed")
+                el.title =
+                    I18n.t(
+                        if (sessionOnly) {
+                            "hud.save_status.session_only.help"
+                        } else {
+                            "hud.save_status.failed.export_now_help"
+                        },
+                    )
+                // The one backup surface: every campaign, heroes and rules, not just this battle.
+                el.onclick = { _ -> ProfileBackup.exportToFile() }
             }
         }
     }

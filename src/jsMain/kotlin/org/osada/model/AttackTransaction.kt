@@ -58,7 +58,7 @@ object AttackObservers {
 /**
  * A complete attack order, resolved in the model: the defender's support fire, Panzer Marshal's
  * "Attack Stopped", the overrun decision, the main exchange, and the defender's retreat or
- * surrender (`docs/design/combat-movement-heroes-weather-audit.md` §4.1).
+ * surrender.
  *
  * Until 2026-09-27 only the desktop/touch/AI path had all of this: it lived in the UI's
  * `AnimationOrchestrator.uiUnitAttack`, while a multiplayer `AttackUnit` command applied the bare

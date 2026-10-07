@@ -51,6 +51,17 @@ internal object ObjectivesRail {
     private var threatCells: Set<Pair<Int, Int>> = emptySet()
     private var threatTip: String = ""
     private var threatMarked = false
+    private var threatGarrisoned = false
+
+    private fun garrisoned(
+        map: org.osada.model.GameMap?,
+        row: Int,
+        col: Int,
+        side: Int,
+    ): Boolean {
+        val hex = map?.map?.getOrNull(row)?.getOrNull(col) ?: return false
+        return hex.unit?.player?.side == side
+    }
 
     fun render(
         container: HTMLElement,
@@ -67,7 +78,7 @@ internal object ObjectivesRail {
             empty.className = "osada-side-empty"
             empty.textContent = I18n.t("hud.objective.none_visible")
         } else {
-            prepareThreat(report)
+            prepareThreat(report, game)
             renderVictory(container, report, game)
             renderThreat(container, report)
             ExtendedObjectivesRail.render(container, report)
@@ -113,9 +124,26 @@ internal object ObjectivesRail {
         }
     }
 
-    private fun prepareThreat(report: ObjectiveReport) {
+    /**
+     * Only objectives the player is NOT standing on are flagged: a hex already garrisoned by one of
+     * the player's own units is being held, and a ⚠ on it was noise (2026-10-05 owner request).
+     */
+    private fun prepareThreat(
+        report: ObjectiveReport,
+        game: Game,
+    ) {
         val text = threatText(report)
-        threatCells = if (text == null) emptySet() else report.enemyNeeds.map { it.row to it.col }.toSet()
+        val map = game.scenario?.map
+        threatCells =
+            if (text == null) {
+                emptySet()
+            } else {
+                report.enemyNeeds
+                    .map { it.row to it.col }
+                    .filterNot { (row, col) -> garrisoned(map, row, col, game.spotSide) }
+                    .toSet()
+            }
+        threatGarrisoned = text != null && threatCells.isEmpty()
         threatTip = if (text == null) "" else text + "\n" + I18n.t("hud.objective.threat.help")
         threatMarked = false
     }
@@ -132,6 +160,8 @@ internal object ObjectivesRail {
         report: ObjectiveReport,
     ) {
         val text = threatText(report) ?: return
+        // Every threatened objective already has one of the player's units on it: nothing to warn about.
+        if (threatGarrisoned) return
         val line = addTag(container, "div")
         line.className = "osada-obj-threat" + if (threatMarked) " osada-obj-threat--marked" else ""
         line.textContent = text

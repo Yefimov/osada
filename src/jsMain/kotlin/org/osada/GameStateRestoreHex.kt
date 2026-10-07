@@ -34,6 +34,8 @@ internal fun restoreEngineering(
     hex.constructionCountry = hexData.constructionCountry as? Int ?: -1
     restoreHexDamage(hex, hexData)
     hex.sapperBuilt = (hexData.sapperBuilt as? Int ?: 0) != 0
+    // Absent in saves written before 2026-10-07: nothing drawn, exactly as those saves looked.
+    hex.sapperWorks = hexData.sapperWorks as? Int ?: 0
     hex.station = (hexData.station as? Int ?: 0) != 0
     hex.dirt = (hexData.dirt as? Int ?: 0) != 0
     // Absent in saves written before 2026-09-02, where `false` is the state they loaded in with

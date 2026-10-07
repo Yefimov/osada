@@ -103,10 +103,6 @@ internal object CoopRecoveryScreen {
         reader.readAsText(file)
     }
 
-    fun exportLatest() {
-        CoopCheckpointStore.latest()?.let(::exportCheckpoint)
-    }
-
     private fun exportCheckpoint(checkpoint: CoopCheckpoint) {
         downloadJson(
             "osada-coop-${checkpoint.scenarioFile}-r${checkpoint.snapshot.revision}.json",

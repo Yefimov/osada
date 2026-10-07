@@ -21,7 +21,7 @@ package org.osada.model
  * **It was reading the wrong bit** (`262144`, now known to be [ATTR_MASK_CANNOT_ATTACK_NAVAL])
  * until the `attr` table above was decoded, and was then kept rather than deleted because a
  * function named `isPurchasable` that silently answered "can it shoot at ships?" is a trap for the
- * next reader. `DEFERRED.md` §7.32 left the wiring as a separate decision on the grounds that
+ * next reader. The wiring was left as a separate decision on the grounds that
  * *"`Can't Buy` is set on a great many scenario-only records, so honouring it would visibly shrink
  * what the player may buy in every imported campaign"*.
  *
@@ -37,8 +37,7 @@ package org.osada.model
  * cards a player may not buy but may upgrade into (the support-country case) and explains the
  * refusal in the detail pane instead of hiding them, so this bit follows that established shape:
  * the card stays, the Buy button goes, and [org.osada.ui.EquipmentCostsCalculator] names the rule.
- * Widening it to upgrades would be an inference, and `docs/og-fidelity-plan.md` §Q.1 is the
- * standing warning against exactly that.
+ * Widening it to upgrades would be an inference: OG's wording names buying only.
  */
 fun Equipment.isPurchasable(eqid: Int): Boolean = (equipmentMap[eqid]?.attr?.and(ATTR_MASK_CANNOT_BUY) ?: 0) == 0
 
@@ -78,25 +77,24 @@ fun Equipment.canBeAwardedAsPrototype(eqid: Int): Boolean =
  * attack, cannot capture, and exists solely to carry something.
  *
  * **This replaced an attr-bit gate on 2026-07-26 (user request).** The previous rule permitted a
- * transport whose `attr` had bit 262144 -- which DEFERRED.md §1.5/§1.7 then recorded as
+ * transport whose `attr` had bit 262144 -- which `tools/og-import/OG_ABILITY_AUDIT.md` §2 then recorded as
  * "purchasable" -- with a per-country fallback for countries that never set the bit. That fallback
  * did NOT fire for every country: 29 of 289 `eqp-united` countries do set the bit on a transport,
  * and country 20 (USSR) flags only 4 of its 28, refusing the other 24.
  *
  * **262144 has since been identified, and it was never a purchasability bit: it is `Can't Naval
- * Atk`** -- see this file's own `attr` table above, and DEFERRED.md §7.32/§7.44. That explains every
+ * Atk`** -- see this file's own `attr` table above. That explains every
  * number the old note called "suspect": only 1,060 of 46,978 records carry it (2.3%) with **zero
  * Tank and zero Anti-tank** (class 2 = 0/3,024, class 4 = 0/3,186), which is nonsense for
  * purchasability and exactly right for a naval-attack prohibition.
  *
  * Purchasability is bit 7, `Can't Buy`, inverted -- `Equipment.isPurchasable` reads it and currently
- * has no caller (DEFERRED.md §7.32 item 2c). **So the standing advice is unchanged but for a new
+ * has no caller. **So the standing advice is unchanged but for a new
  * reason:** do not restore an attr-based gate *here*, because no attr bit describes what this
  * function decides. The flat class rule below is the rule.
  *
  * (This comment and the file header used to contradict each other -- the header naming the bit while
- * this block called it unidentified. DEFERRED.md §7.44 asked for them to be collapsed; done
- * 2026-07-28.)
+ * this block called it unidentified; collapsed 2026-07-28.)
  */
 fun Equipment.isPurchasableGroundTransport(eqid: Int): Boolean =
     equipmentMap[eqid]?.uclass != org.osada.UnitClass.GROUND_TRANSPORT.value

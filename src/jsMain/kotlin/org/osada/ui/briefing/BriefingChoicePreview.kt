@@ -36,7 +36,7 @@ internal object BriefingChoicePreview {
             // Engine-queued at a transition, never offered as a choice.
             is CampaignEffect.AutoRefit -> null
             // Parsed, clamped and persisted, but `CampaignEffectApplier` still no-ops them (see
-            // the effect catalogue in docs/campaign-dialogue-and-consequences.md §7). Previewing
+            // the effect catalogue in docs/campaigns/dialogue-and-consequences.md §7). Previewing
             // them would promise the player something that does not happen — worse than silence.
             // Re-enable each line here as its applier lands.
             is CampaignEffect.UnlockEquipment,

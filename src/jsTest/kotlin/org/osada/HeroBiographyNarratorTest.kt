@@ -14,7 +14,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * The biography narrator (DEFERRED.md §6.6 item 6a, `docs/design/hero-presentation.md` §2): a null
+ * The biography narrator (`docs/heroes/README.md` §3.2): a null
  * fact renders as an omitted clause, never as "unknown"; rendering is deterministic; and an
  * authored (legendary) biography's sparse facts are rendered honestly, never invented around.
  */

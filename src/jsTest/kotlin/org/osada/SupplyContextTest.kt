@@ -71,7 +71,7 @@ class SupplyContextTest {
         assertEquals(51, SupplyContextRules.getSupplyContext(map, unit).efficiencyPercent)
     }
 
-    /** DEFERRED.md §1.2/§7.21: a per-efile TerrainEx supply factor (BASEKORP-shaped: clear 70%,
+    /** `docs/design/efile-driven-rules.md` §2: a per-efile TerrainEx supply factor (BASEKORP-shaped: clear 70%,
      *  not PM's flat 77%) must actually change the resupply/reinforce efficiency, not just sit
      *  unread in the imported JSON. */
     @Test
@@ -139,7 +139,7 @@ class SupplyContextTest {
     }
 
     /** Road and rail are alternatives, not a stacking pair: OG adds one modifier to the terrain
-     *  percentage (`docs/design/terrain-supply-and-initiative.md` §3.3). */
+     *  percentage (`docs/design/efile-driven-rules.md` §2.4). */
     @Test
     fun roadAndRailDoNotStack() {
         val map =

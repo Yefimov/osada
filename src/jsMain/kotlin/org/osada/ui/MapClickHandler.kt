@@ -91,8 +91,8 @@ internal class MapClickHandler(
                 isValidDeployTarget(hex, map, map.currentPlayer?.side ?: 0)
 
         logIfEnemyUnattackable(map, hex, currentUnit, unit)
-        // The targeting mode swallows the click: an offered hex acts, anything else closes it.
-        if (uiSettings.barrageMode) return resolveBarrageClick(map, cell, hex)
+        // A targeting mode swallows the click: an offered hex acts, anything else closes it.
+        modalClick(map, cell, hex)?.let { return it }
         return when {
             currentUnit != null && hex.isAttackSel && !currentUnit.hasFired ->
                 tryAttackAt(cell.row, cell.col)
@@ -124,8 +124,8 @@ internal class MapClickHandler(
         currentPlayerSide: Int,
     ): Boolean {
         val currentUnit = map.currentUnit
-        // The targeting mode swallows the click: an offered hex acts, anything else closes it.
-        if (uiSettings.barrageMode) return resolveBarrageClick(map, cell, hex)
+        // A targeting mode swallows the click: an offered hex acts, anything else closes it.
+        modalClick(map, cell, hex)?.let { return it }
         return when {
             // Movement must win over deployment. In particular, aircraft may occupy the air layer
             // above a hex containing an enemy ground unit.

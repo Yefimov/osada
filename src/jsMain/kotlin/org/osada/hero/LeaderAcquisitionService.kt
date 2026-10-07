@@ -8,7 +8,7 @@ import org.osada.hero.LeaderAcquisitionService.tryGenerate
  *
  * This is the deliberate replacement for `Leaders.generateLeaderWithChance`, whose three
  * divergences from Panzer Marshal (and its latent crash above level 5) are catalogued in
- * `docs/leaders.md` §5 and were left unrepaired precisely because this supersedes them. The old
+ * `docs/heroes/legacy-leaders.md` §5 and were left unrepaired precisely because this supersedes them. The old
  * per-combat lottery is gone; acquisition is now a function of accumulated recognition plus
  * campaign-wide drought protection, so veterans reliably produce heroes (§29.3, §29.4).
  *

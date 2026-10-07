@@ -38,15 +38,18 @@ internal object BriefingLocalization {
         if (supports(source)) I18n.ensureDomain(source.domain, onReady) else onReady()
     }
 
-    fun parse(source: BriefingSource): ScenarioBriefing {
-        val resolver =
-            if (supports(source)) {
-                BriefingTextResolver { key, fallback ->
-                    I18n.tOrNull(key, domain = source.domain) ?: fallback
-                }
-            } else {
-                sourceText
+    /** The resolver [parse] reads [source]'s display strings through; [ensure] must have run first. */
+    fun textResolver(source: BriefingSource): BriefingTextResolver =
+        if (supports(source)) {
+            BriefingTextResolver { key, fallback ->
+                I18n.tOrNull(key, domain = source.domain) ?: fallback
             }
+        } else {
+            sourceText
+        }
+
+    fun parse(source: BriefingSource): ScenarioBriefing {
+        val resolver = textResolver(source)
         val parsed =
             BriefingParser.parse(
                 resolver.resolve("scenario.title", source.scenarioTitle),

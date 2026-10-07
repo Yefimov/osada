@@ -17,7 +17,7 @@ import kotlin.test.assertTrue
  * 28, refusing the other 24). But the bit still doesn't track purchasability — only 1,060 of 46,978
  * `eqp-united` records carry it (2.3%), **including zero Tank and zero Anti-tank records** (class 2
  * = 0/3,024, class 4 = 0/3,186). A bit that no tank in the game sets is not "purchasable". Do not
- * reinstate an attr-based gate here until DEFERRED.md §1.5/§1.7 have re-identified it.
+ * reinstate an attr-based gate here until `tools/og-import/OG_ABILITY_AUDIT.md` §2 have re-identified it.
  */
 class PurchasableGroundTransportTest {
     @BeforeTest

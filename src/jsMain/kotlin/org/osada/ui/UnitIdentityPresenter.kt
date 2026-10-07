@@ -10,6 +10,7 @@ import org.osada.model.GameUnit
 import org.osada.model.Leaders
 import org.osada.model.getUnits
 import org.osada.multiplayer.coop.CoopRuntime
+import org.osada.multiplayer.ui.CoopHud
 import org.osada.rules.UnitCapabilities
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
@@ -235,6 +236,17 @@ internal object UnitIdentityPresenter {
         }
         leader.setAttribute("aria-label", leader.title)
         disableInteraction(leader)
+        if (owner != null) {
+            // The commander line opens that player's dossier, as a hero's line opens the hero's.
+            leader.setAttribute("role", "button")
+            leader.setAttribute("tabindex", "0")
+            leader.removeAttribute("aria-disabled")
+            leader.onclick = { event: MouseEvent ->
+                event.stopPropagation()
+                CoopHud.openCommander(owner.id)
+            }
+            enableKeyboardActivation(leader)
+        }
     }
 
     private enum class CommanderMark(

@@ -66,6 +66,7 @@ class CoopLobbyModel(
     val onPortraitChosen: (CoopPortrait) -> Unit,
     val onReroll: (era: String?, female: Boolean) -> Unit,
     val onAbilityToggled: (String) -> Unit,
+    val onSymbolChosen: (String) -> Unit,
     val onToggleReady: () -> Unit,
     val onStart: () -> Unit,
     val onLeave: () -> Unit,
@@ -76,7 +77,7 @@ class CoopLobbyModel(
 )
 
 /**
- * The cooperative lobby (`docs/design/cooperative-commanders-multiplayer.md` §3.3, §4, §5).
+ * The cooperative lobby (`docs/multiplayer/cooperative-commanders.md` §3.3, §4, §5).
  *
  * Everyone sees every commander card; only their own is editable, and the host alone chooses the
  * battle. The screen is rebuilt on every lobby update, so a teammate's edit would normally steal the
@@ -87,12 +88,20 @@ object CoopLobbyScreen {
     private const val NAME_ID = "coopCommanderName"
     private var eraFilter: String = ""
     private var generatedFemale: Boolean? = null
+    private var pickingSymbol = false
     private var profileFilter: CoopProfile? = null
     private var resumeSelection = false
     private var displayedRoom: String? = null
     private var resumeSession = CoopRecoveryScreen.Selection()
 
+    private var lastModel: CoopLobbyModel? = null
+
+    private fun rebuildFromLastModel() {
+        lastModel?.let(::show)
+    }
+
     fun show(model: CoopLobbyModel) {
+        lastModel = model
         if (displayedRoom != model.roomCode) {
             displayedRoom = model.roomCode
             resumeSelection = false
@@ -332,7 +341,7 @@ object CoopLobbyScreen {
     ): HTMLElement {
         val el = MultiplayerScreen.panel("osada-coop-card" + if (card.isSelf) " osada-coop-card--self" else "")
         val profile = if (card.isSelf) model.draft else card.profile
-        el.appendChild(MultiplayerScreen.text((index + 1).toString()).apply { className = "osada-coop-seat" })
+        el.appendChild(seatChip(index, card, profile, model))
         el.appendChild(portraitFrame(profile?.portrait, profile?.name ?: card.displayName))
         el.appendChild(
             MultiplayerScreen
@@ -349,6 +358,43 @@ object CoopLobbyScreen {
         el.appendChild(abilityChips(profile?.abilityIds.orEmpty()))
         el.appendChild(readinessLabel(card))
         return el
+    }
+
+    /**
+     * The seat chip in the card's corner. On your own card it is a button that opens the choice of
+     * a map mark -- a drawn symbol instead of the seat number.
+     */
+    private fun seatChip(
+        index: Int,
+        card: CoopCardModel,
+        profile: CoopCommanderProfile?,
+        model: CoopLobbyModel,
+    ): HTMLElement {
+        val symbol = profile?.symbol.orEmpty()
+        if (!card.isSelf) {
+            return MultiplayerScreen.panel("osada-coop-seat").also { CoopHud.fillMark(it, index, symbol) }
+        }
+        val chip = CoopHud.button("")
+        chip.className = "osada-coop-seat osada-coop-seat--button"
+        CoopHud.fillMark(chip, index, symbol)
+        chip.title = I18n.t("multiplayer.coop.symbol.change")
+        chip.setAttribute("aria-label", chip.title)
+        chip.setAttribute("aria-expanded", pickingSymbol.toString())
+        chip.onclick = {
+            pickingSymbol = !pickingSymbol
+            rebuildFromLastModel()
+        }
+        val wrap = MultiplayerScreen.panel("osada-coop-seat-wrap")
+        wrap.appendChild(chip)
+        if (pickingSymbol) {
+            wrap.appendChild(
+                CoopHud.symbolPicker(index, symbol) {
+                    pickingSymbol = false
+                    model.onSymbolChosen(it)
+                },
+            )
+        }
+        return wrap
     }
 
     private fun readinessLabel(card: CoopCardModel): HTMLElement {

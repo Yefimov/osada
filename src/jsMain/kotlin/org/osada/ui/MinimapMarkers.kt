@@ -2,7 +2,7 @@ package org.osada.ui
 
 /**
  * Geometry and palette of the minimap's unit/objective dots, extracted from [MinimapBuilder] so the
- * accessibility audit in `docs/design/accessible-side-identification.md` §3 can be run as an
+ * accessibility audit in `docs/design/action-affordances-and-objectives.md` §13.3 can be run as an
  * assertion instead of by eye.
  *
  * That audit asks three questions of the existing black enemy rim, and this is where each is

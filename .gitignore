@@ -108,3 +108,6 @@ scripts/verify/*
 !scripts/verify/verify.mjs
 !scripts/verify/package.json
 !scripts/verify/package-lock.json
+# Prepared music tracks are large and stay local (Opus + MP3 fallback per track)
+/src/jsMain/resources/resources/sounds/music/osada-*.ogg
+/src/jsMain/resources/resources/sounds/music/osada-*.mp3

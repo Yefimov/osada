@@ -13,8 +13,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * OG 9.3.6's railroad station — the fifth facility, built 2026-08-27
- * (`docs/og-fidelity-plan.md` §U).
+ * OG 9.3.6's railroad station — the fifth facility, built 2026-08-27.
  *
  * > *"To build a railroad station, a unit with the Sapper ability must be in a rail hex and hasn't
  * > done any action... The construction of a railroad station costs 18 PP."*

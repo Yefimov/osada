@@ -81,7 +81,7 @@ internal object StartMenuMainButtons {
     }
 
     /**
-     * Hero Desk (`docs/design/hero-desk-and-profile-archive.md` §6): the cross-campaign commander
+     * Hero Desk (`docs/heroes/hero-desk-and-archive.md` §6): the cross-campaign commander
      * archive, and the surface that replaced the old Hall of Fame button — the Hall of Fame is now
      * one of the desk's filters, not a separate summary-only collection.
      *

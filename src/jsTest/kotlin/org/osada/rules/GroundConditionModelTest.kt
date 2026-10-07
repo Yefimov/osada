@@ -16,7 +16,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * The ground state machine (`tools/og-import/DEFERRED.md` §7.46).
+ * The ground state machine.
  *
  * OG: "When there are **several continuous turns of rain**, the ground condition changes to Mud, and
  * after several turns without rain, it changes to Dry. In case of several turns of snow, the ground

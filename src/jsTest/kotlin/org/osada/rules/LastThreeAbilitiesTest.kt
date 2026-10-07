@@ -22,7 +22,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
- * The last three descriptive-only abilities, wired 2026-08-28 (`docs/og-fidelity-plan.md` §AA):
+ * The last three descriptive-only abilities, wired 2026-08-28:
  * `Carrier Deploy`, `No Need Station` and `Supply Unit`.
  *
  * Two of the three are **inert on shipped content by construction** — no scenario authors

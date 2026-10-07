@@ -8,7 +8,7 @@ import org.osada.model.GameUnit
  * Whether [unit] standing in an intervening hex blocks SIGHT through it — OG's `Cut LOS`, read
  * on the line of sight its name actually names.
  *
- * **Built 2026-08-28 (`docs/og-fidelity-plan.md` §Z.4), reversing a narrowing
+ * **Built 2026-08-28, reversing a narrowing
  * [ExtendedLos]'s own header defended.** The narrowing was never about the evidence: the author's specials page says
  * `Cut LOS` blocks spotting, and for BOTH sides. It was about the fog being a per-side reference
  * count that a *moving* blocker would strand — a spot range added while the blocker stood there

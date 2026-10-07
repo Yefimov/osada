@@ -163,7 +163,9 @@ internal class CoreUnitListOperations(
         // own units, so the filter was safe without it. A scenario author may now tick Make Core on
         // ANY player's formation -- including the AI's -- and enrolling one of those into the human
         // roster would hand the player an enemy unit at the next transition.
-        gameMap.units
+        // Passengers are deployed core formations too -- they are in a hangar, not the tray -- and
+        // they are not in `units`, so the restored hangar is the only place they can come from.
+        (gameMap.units + gameMap.units.flatMap { it.hangar })
             .filter { it.owner == player.id && it.isCore && it.isDeployed }
             .forEach { player.addCoreUnit(it) }
         saved.filter { !(it.isDeployed as? Boolean ?: false) }.forEach { savedUnit ->

@@ -14,6 +14,11 @@ sealed class SaveStatus {
     data class Failed(
         val message: String,
     ) : SaveStatus()
+
+    companion object {
+        /** [Failed] message meaning "kept in this page's memory only: site storage is blocked". */
+        const val SESSION_ONLY = "session-only"
+    }
 }
 
 /** Tiny observable so `GameStatePersistence` (which has no UI dependency) can report status and

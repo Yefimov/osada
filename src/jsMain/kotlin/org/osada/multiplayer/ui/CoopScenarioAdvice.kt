@@ -8,7 +8,6 @@ import org.w3c.xhr.XMLHttpRequest
 /** Workload hints use only the chosen army's opening units, never enemies or future arrivals. */
 internal object CoopScenarioAdvice {
     private const val MAX_CACHED = 32
-    private const val MAX_COMMANDERS = 4
 
     data class Opening(
         val deployed: Int,
@@ -82,19 +81,5 @@ internal object CoopScenarioAdvice {
                 ),
             ),
         )
-        val total = opening.deployed + opening.reserve
-        for (count in 2..MAX_COMMANDERS) {
-            val text =
-                I18n.t(
-                    "multiplayer.coop.advice.workload",
-                    mapOf(
-                        "players" to count,
-                        "minimum" to total / count,
-                        "maximum" to (total + count - 1) / count,
-                    ),
-                )
-            box.appendChild(MultiplayerScreen.text(text))
-        }
-        box.appendChild(MultiplayerScreen.text(I18n.t("multiplayer.coop.advice.limit")))
     }
 }

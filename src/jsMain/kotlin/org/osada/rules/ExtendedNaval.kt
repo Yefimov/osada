@@ -9,8 +9,8 @@ import org.osada.rules.ruleset.RuleKey
 
 /**
  * Open General's **Extended Naval Rules** optional rule (manual §9.6) — the largest single gap this
- * project had, by shipped content: **238 of the 457 scenarios whose source is readable ask for it**
- * (`docs/og-fidelity-plan.md` §O.2), and until 2026-08-27 the switch was imported and no rule read
+ * project had, by shipped content: **238 of the 457 scenarios whose source is readable ask for it**,
+ * and until 2026-08-27 the switch was imported and no rule read
  * it.
  *
  * The manual states it as four bullets and nothing else:
@@ -35,10 +35,8 @@ import org.osada.rules.ruleset.RuleKey
  *
  * ### One key for four bullets, because OG has one switch for four bullets
  *
- * `docs/og-fidelity-plan.md` §C said this from the start — *"may ship as ONE key
- * `extended_naval_rules`, because OG itself treats them as one coherent optional set"* — and the
- * scenario bitfield agrees: there is a single `extnaval` bit, not four. Splitting them would invent
- * a granularity no author can express and no OG source describes.
+ * OG treats the four bullets as one coherent optional set, and the scenario bitfield agrees: there is a single
+ * `extnaval` bit, not four. Splitting them would invent a granularity no author can express and no OG source describes.
  *
  * **Counterbattery is NOT one of these four.** §C listed it here and was wrong; it is §9.4, a rule
  * about land artillery, and it has shipped under its own key since §L. Naval mines are §9.9. Do not

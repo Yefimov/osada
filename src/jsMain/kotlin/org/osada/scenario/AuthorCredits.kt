@@ -5,7 +5,7 @@ import kotlin.js.Json
 
 /**
  * Structured campaign/scenario authorship
- * (`docs/player-comfort-roadmap.md`, "Authorship metadata contract").
+ * (`docs/design/player-comfort-roadmap.md`, "Authorship metadata contract").
  *
  * Credits live in a hand-authored sidecar keyed by stable file id
  * (`resources/credits/authors.json`), NOT inside the description prose and NOT inside the generated

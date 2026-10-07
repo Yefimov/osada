@@ -4,47 +4,47 @@
   <player id="1" country="7" side="0" airtrans="0" navaltrans="0" railtrans="0" defaultxp="44" defaultstr="10" support="8,0,0,0" turnprestige="0, 30, 30, 30, 30, 30, 30, 30, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" ff="8:0:-2147483648"/>
   <reinforce turn="2">
     <at row="26" col="41">
-      <unit id="8227" owner="1" flag="8" face="0" exp="44" bstr="5"/>
+      <unit id="8227" owner="1" flag="8" face="0" exp="300" bstr="5"/>
     </at>
     <at row="27" col="41">
-      <unit id="8227" owner="1" flag="8" face="0" exp="44" ldr="1" bstr="5"/>
+      <unit id="8227" owner="1" flag="8" face="0" exp="300" ldr="1" bstr="5"/>
     </at>
     <at row="27" col="42">
-      <unit id="26454" owner="1" flag="8" face="0" transport="9740" exp="44" ldr="1" bstr="5"/>
+      <unit id="26454" owner="1" flag="8" face="0" transport="9740" exp="300" ldr="1" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="3">
     <at row="16" col="42">
-      <unit id="8272" owner="1" flag="8" face="0" exp="144" ldr="1" bstr="5"/>
+      <unit id="8272" owner="1" flag="8" face="0" exp="400" ldr="1" bstr="5"/>
     </at>
     <at row="37" col="37">
-      <unit id="38993" owner="0" flag="83" face="0" exp="44" str="2" attach="1" bstr="2"/>
+      <unit id="38993" owner="0" flag="83" face="0" exp="300" str="2" attach="1" bstr="2"/>
     </at>
   </reinforce>
   <reinforce turn="4">
     <at row="14" col="42">
-      <unit id="8272" owner="1" flag="8" face="0" exp="144" bstr="5"/>
+      <unit id="8272" owner="1" flag="8" face="0" exp="400" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="5">
     <at row="12" col="42">
-      <unit id="8272" owner="1" flag="8" face="0" exp="144" bstr="5"/>
+      <unit id="8272" owner="1" flag="8" face="0" exp="400" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="6">
     <at row="3" col="41">
-      <unit id="8227" owner="1" flag="8" face="0" exp="44" bstr="5"/>
+      <unit id="8227" owner="1" flag="8" face="0" exp="300" bstr="5"/>
     </at>
     <at row="2" col="41">
-      <unit id="8808" owner="1" flag="8" face="0" exp="44" bstr="5"/>
+      <unit id="8808" owner="1" flag="8" face="0" exp="300" bstr="5"/>
     </at>
     <at row="3" col="42">
-      <unit id="27021" owner="1" flag="8" face="0" transport="9708" exp="44" bstr="5"/>
+      <unit id="27021" owner="1" flag="8" face="0" transport="9708" exp="300" bstr="5"/>
     </at>
   </reinforce>
   <reinforce turn="8">
     <at row="19" col="2">
-      <unit id="24608" owner="0" flag="23" face="0" exp="44" bstr="5"/>
+      <unit id="24608" owner="0" flag="23" face="0" exp="300" bstr="5"/>
     </at>
   </reinforce>
   <hex row="0" col="1" terrain="9"/>
@@ -92,12 +92,12 @@
   <hex row="1" col="21" terrain="5" road="40"/>
   <hex row="1" col="22" terrain="4"/>
   <hex row="1" col="25">
-    <unit id="8222" owner="1" flag="8" face="0" exp="44" bstr="5"/>
-    <unit id="10884" owner="1" flag="8" face="0" exp="44" str="2" bstr="2" attach="1"/>
+    <unit id="8222" owner="1" flag="8" face="0" exp="300" bstr="5"/>
+    <unit id="10884" owner="1" flag="8" face="0" exp="300" str="2" bstr="2" attach="1"/>
   </hex>
   <hex row="1" col="26" terrain="2" owner="1" flag="7" victory="1">
-    <unit id="26700" owner="1" flag="8" face="0" transport="9729" exp="44" ldr="1" bstr="5" anchored="1"/>
-    <unit id="11045" owner="1" flag="8" face="0" exp="44" str="5" bstr="5"/>
+    <unit id="26700" owner="1" flag="8" face="0" transport="9729" exp="300" ldr="1" bstr="5" anchored="1"/>
+    <unit id="11045" owner="1" flag="8" face="0" exp="300" str="5" bstr="5"/>
   </hex>
   <hex row="1" col="28" terrain="4"/>
   <hex row="1" col="31" road="40"/>
@@ -160,10 +160,10 @@
   <hex row="3" col="36" road="136"/>
   <hex row="3" col="37" road="136"/>
   <hex row="3" col="39" terrain="1" road="50" name="Agorelitsa" owner="1" flag="7" victory="1" trigger="4" trigparam="0">
-    <unit id="8222" owner="1" flag="8" face="0" exp="44" bstr="5"/>
+    <unit id="8222" owner="1" flag="8" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="3" col="40" terrain="1" road="34" name="Agorelitsa">
-    <unit id="7983" owner="1" flag="8" face="0" transport="9878" exp="144" str="5" bstr="5"/>
+    <unit id="7983" owner="1" flag="8" face="0" transport="9878" exp="400" str="5" bstr="5"/>
   </hex>
   <hex row="3" col="42" road="130"/>
   <hex row="4" col="0" terrain="9"/>
@@ -196,7 +196,7 @@
   <hex row="4" col="38" road="170"/>
   <hex row="4" col="39" road="145"/>
   <hex row="4" col="40">
-    <unit id="8222" owner="1" flag="8" face="0" exp="44" bstr="5"/>
+    <unit id="8222" owner="1" flag="8" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="4" col="41" terrain="5"/>
   <hex row="4" col="42" terrain="5"/>
@@ -249,7 +249,7 @@
   <hex row="6" col="13" terrain="4"/>
   <hex row="6" col="14" road="9"/>
   <hex row="6" col="15" road="146">
-    <unit id="8986" owner="1" flag="8" face="0" exp="144" str="5" ldr="1" bstr="5" holduntil="7"/>
+    <unit id="8986" owner="1" flag="8" face="0" exp="400" str="5" ldr="1" bstr="5" holduntil="7"/>
   </hex>
   <hex row="6" col="16" road="40"/>
   <hex row="6" col="17" road="136"/>
@@ -294,10 +294,10 @@
   <hex row="7" col="19" terrain="6"/>
   <hex row="7" col="20" road="136"/>
   <hex row="7" col="21" terrain="1" road="136" name="Kanalos" owner="1" flag="7" victory="1" trigger="8" trigparam="0" trigequip="6670">
-    <unit id="8222" owner="1" flag="8" face="0" exp="44" bstr="5"/>
+    <unit id="8222" owner="1" flag="8" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="7" col="22" terrain="1" name="Kanalos">
-    <unit id="8222" owner="1" flag="8" face="0" exp="44" bstr="5"/>
+    <unit id="8222" owner="1" flag="8" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="7" col="23" terrain="5" road="40"/>
   <hex row="7" col="24" terrain="5"/>
@@ -368,7 +368,7 @@
   <hex row="9" col="12" terrain="7"/>
   <hex row="9" col="13" terrain="7"/>
   <hex row="9" col="15" terrain="11" road="34" owner="1" flag="7" victory="1">
-    <unit id="1156" owner="1" flag="8" face="0" exp="44" str="5" bstr="1"/>
+    <unit id="1156" owner="1" flag="8" face="0" exp="300" str="5" bstr="1"/>
   </hex>
   <hex row="9" col="16" terrain="5" road="33"/>
   <hex row="9" col="17" terrain="6"/>
@@ -610,7 +610,7 @@
   <hex row="15" col="25" terrain="5"/>
   <hex row="15" col="28" terrain="4"/>
   <hex row="15" col="32" terrain="1" name="Lefki" owner="1" flag="7" victory="1" trigger="7" trigparam="6">
-    <unit id="8222" owner="1" flag="8" face="0" exp="44" bstr="5"/>
+    <unit id="8222" owner="1" flag="8" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="15" col="33" terrain="5"/>
   <hex row="15" col="34" terrain="5" road="17"/>
@@ -993,7 +993,7 @@
   <hex row="25" col="39" terrain="5"/>
   <hex row="25" col="40" terrain="5"/>
   <hex row="25" col="41" terrain="1" road="16" name="Pisaski" owner="1" flag="7">
-    <unit id="8222" owner="1" flag="8" face="0" exp="44" bstr="5"/>
+    <unit id="8222" owner="1" flag="8" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="26" col="0" terrain="9"/>
   <hex row="26" col="1" terrain="9"/>
@@ -1109,7 +1109,7 @@
   <hex row="28" col="36" terrain="5"/>
   <hex row="28" col="37" terrain="13"/>
   <hex row="28" col="38" terrain="1" road="18" name="Korifasi" owner="1" flag="7" victory="1" trigger="8" trigparam="0" trigequip="6670">
-    <unit id="8222" owner="1" flag="8" face="0" exp="44" bstr="5"/>
+    <unit id="8222" owner="1" flag="8" face="0" exp="300" bstr="5"/>
   </hex>
   <hex row="28" col="40" terrain="2" owner="1" flag="7"/>
   <hex row="28" col="41" terrain="5"/>

@@ -45,6 +45,7 @@ import org.osada.rules.LeaderDismissal
 import org.osada.rules.RailTransport
 import org.osada.rules.SupplyContextRules
 import org.osada.rules.SupplyRules
+import org.osada.rules.turnsForBuilder
 
 /**
  * [UnitInfoPanel]'s per-unit action context menu action execution (Mount/Embark/Resupply/
@@ -112,7 +113,9 @@ internal class UnitContextMenu(
         if (map == null || pos == null) return
         val sentToHost = OsadaMultiplayer.active && routeToHost(action, unit, pos)
         if (!sentToHost && action == "withdraw") ui.withdrawToTray(map, unit, pos)
-        if (sentToHost || action == "withdraw") return
+        // Landing takes the formation off the map, and the hangar window takes over from the strip.
+        if (!sentToHost && action in HANGAR_ACTION_IDS) performHangarAction(action, map, unit, pos)
+        if (sentToHost || action == "withdraw" || action in HANGAR_ACTION_IDS) return
         val radius = getUnitRenderRadius(unit)
         performAction(action, map, unit, pos)
         buildUnitContext(unit)
@@ -246,7 +249,7 @@ internal class UnitContextMenu(
         }
         // Read before the order: the active efile's duration, the same figure the chip promised
         // (`work.turns` is only the fallback for an efile that names none).
-        val turns = work.turnsFor(unit.getHex())
+        val turns = work.turnsForBuilder(unit)
         val message =
             when (map.beginEngineering(unit, work)) {
                 EngineeringActionResult.DEMOLISHED -> I18n.t("unit_info.action.demolish.done")

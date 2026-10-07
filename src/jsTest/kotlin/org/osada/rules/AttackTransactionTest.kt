@@ -28,8 +28,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /**
- * The complete attack order as the model resolves it (`model/executeAttack`,
- * `docs/design/combat-movement-heroes-weather-audit.md` §4-§5): support fire, "Attack Stopped",
+ * The complete attack order as the model resolves it (`model/executeAttack`): support fire, "Attack Stopped",
  * overrun, retreat and surrender -- and a multiplayer `AttackUnit` command producing the same state
  * as a local attack, which it did not before 2026-09-27.
  */

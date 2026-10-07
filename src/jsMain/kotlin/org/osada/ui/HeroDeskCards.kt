@@ -8,7 +8,7 @@ import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
 /**
- * Renders one Hero Desk card (`docs/design/hero-desk-and-profile-archive.md` §6).
+ * Renders one Hero Desk card (`docs/heroes/hero-desk-and-archive.md` §6).
  *
  * Split from [HeroDeskPresenter] so the desk's shell (filters, search, dossier routing) and the
  * card itself stay within the project's per-object function budget, and so the card's rules —

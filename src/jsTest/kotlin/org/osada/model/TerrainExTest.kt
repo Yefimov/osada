@@ -15,7 +15,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
- * Per-efile terrain entrenchment, initiative cap and movement cost (DEFERRED.md §1.3).
+ * Per-efile terrain entrenchment, initiative cap and movement cost (`docs/design/efile-driven-rules.md` §2).
  * [TerrainEx.baseEntrenchment], [TerrainEx.initiativeCap] and [TerrainEx.movementCostTable] must
  * each prefer the imported per-efile value and fall back to PM's shared [terrainEntrenchment] /
  * [terrainInitiative] / [movTableDry] baseline whenever the active efile has no TerrainEx data for

@@ -54,7 +54,7 @@ internal object ScenarioHexParser {
         // Pre-placed land minefields, as a per-side bitmask (`1 shl side`). OG authors them in the
         // scenario binary's `byte6` -- bit 1 Axis, bit 2 Allied -- and 27 of the 502 scenarios OSADA
         // ships carry 320 mined hexes between them, every one of which was silently dropped on
-        // import before this attribute existed (`docs/og-fidelity-plan.md` C.1). Absent on every
+        // import before this attribute existed. Absent on every
         // scenario not yet re-exported, which reads as "no minefields" and is correct for them.
         //
         // Detection is deliberately NOT authored: a pre-placed field starts undetected by everyone

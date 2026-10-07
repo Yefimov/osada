@@ -1,10 +1,11 @@
 package org.osada.rules
 
+import org.osada.UnitClass
 import org.osada.UnitType
 import org.osada.model.GameUnit
 
 /**
- * Attachment combat bonuses (DEFERRED.md §1.4 Tier 1): AntiTank's +hard-attack and Air Defense's
+ * Attachment combat bonuses (`docs/design/attachments.md` Tier 1): AntiTank's +hard-attack and Air Defense's
  * +air-attack, applied to whichever side's attack figure [AttackCalculation.resolveCrossIndexedStats]
  * actually sourced from that stat. Symmetric by construction -- an attacker fighting a hard target
  * uses its own `hardatk` (so its AntiTank bonus applies to `attackerAttack`), and a defender
@@ -21,7 +22,10 @@ internal fun AttackCalculation.applyAttachmentBonuses(
     attacker: GameUnit,
     defender: GameUnit,
     context: AttackCalculation.CombatContext,
+    units: List<GameUnit> = emptyList(),
 ) {
+    stats.attackerAttack += forwardObserverBonus(attacker, defender, context.defenderTarget, units)
+    stats.defenderAttack += forwardObserverBonus(defender, attacker, context.attackerTarget, units)
     if (context.defenderTarget == UnitType.HARD.value) {
         stats.attackerAttack += Attachments.bonus(attacker, Attachments.SLOT_ANTI_TANK)
     }
@@ -33,5 +37,48 @@ internal fun AttackCalculation.applyAttachmentBonuses(
     }
     if (context.attackerTarget == UnitType.AIR.value) {
         stats.defenderAttack += Attachments.bonus(defender, Attachments.SLOT_AIR_DEFENSE)
+    }
+}
+
+/**
+ * Forward Observer (slot 6, `docs/design/attachments.md` Tier 3). OG's combat procedure
+ * (`luis-guzman.com/OpenGen_Combat.html`): *"If A is Arty-class, AD-class or naval-unit, engine
+ * scans adjacent hexes to P and for each A's friend-unit having ForwardObserver attachment, then:
+ * A.EffAtk += atcFO_AttachmentBonus"*.
+ *
+ * So the bonus belongs to the OBSERVER but is paid to the unit FIRING: every friendly observer next
+ * to [target] adds its own bonus, and several observers stack. [firing] is whichever side is
+ * shooting -- OG's "Active" -- so a gun returning fire is observed for the same way. The observer
+ * itself does not count for its own shot. Limited to soft and hard targets: every efile describes
+ * the slot as *"SA/HA to adjacent targets"*, and those are the two attack values it names.
+ *
+ * [units] is the map's unit list, the same one Combat Support reads; a preview without it simply
+ * shows no observer bonus.
+ */
+private fun forwardObserverBonus(
+    firing: GameUnit,
+    target: GameUnit,
+    targetType: Int,
+    units: List<GameUnit>,
+): Int {
+    val uclass = firing.unitData(true).uclass
+    val observed =
+        uclass == UnitClass.ARTILLERY.value ||
+            uclass == UnitClass.AIR_DEFENCE.value ||
+            UnitPredicates.isSea(firing)
+    val groundTarget = targetType == UnitType.SOFT.value || targetType == UnitType.HARD.value
+    val targetPos = target.getPos()
+    val side = firing.player?.side
+    val applies = observed && groundTarget
+    if (!applies || targetPos == null || side == null) return 0
+    return units.sumOf { observer ->
+        val pos = observer.getPos()
+        val eligible =
+            observer !== firing &&
+                !observer.destroyed &&
+                pos != null &&
+                observer.player?.side == side &&
+                HexGeometry.distance(pos.row, pos.col, targetPos.row, targetPos.col) == 1
+        if (eligible) Attachments.bonus(observer, Attachments.SLOT_FORWARD_OBSERVER) else 0
     }
 }

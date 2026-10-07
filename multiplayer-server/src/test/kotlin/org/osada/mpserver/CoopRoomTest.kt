@@ -17,7 +17,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-/** The 2-4 player cooperative-commanders room (`docs/design/cooperative-commanders-multiplayer.md` §11). */
+/** The 2-4 player cooperative-commanders room (`docs/multiplayer/cooperative-commanders.md` §11). */
 class CoopRoomTest {
     @Test
     fun `a cooperative room admits four and refuses a fifth`() =

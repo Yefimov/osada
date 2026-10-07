@@ -23,7 +23,7 @@ import org.w3c.dom.HTMLElement
 /**
  * Adds identified live state and the largest active combat modifiers to the enemy card.
  *
- * **Localized (DEFERRED.md §4.15).** Every chip label, tooltip and factor line used to be an
+ * **Localized.** Every chip label, tooltip and factor line used to be an
  * English string literal — this whole surface was invisible to §4.10's sweep because it predates it.
  * `terrainNames` / `unitClassNames` stay as they are: those are game-data name tables shared with
  * the rest of the engine, and localizing them is a separate job with a different blast radius.
@@ -165,7 +165,7 @@ internal object CombatTransparencyPresenter {
 
     /**
      * Whether the player's currently selected unit would ignore [defender]'s entrenchment
-     * (DEFERRED.md §1.20).
+     * (`docs/design/attachments.md`).
      *
      * **Asks the rule, it does not restate it.** `EntrenchmentDefence.forecast` is what combat itself adds,
      * so the chip and the resolution cannot drift — that matters here

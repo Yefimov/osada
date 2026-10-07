@@ -12,7 +12,7 @@
   </reinforce>
   <reinforce turn="5">
     <at row="10" col="1">
-      <unit id="21014" owner="1" flag="21" face="0" transport="21816" exp="144" str="5" bstr="3"/>
+      <unit id="21014" owner="1" flag="21" face="0" transport="21816" exp="400" str="5" bstr="3"/>
     </at>
     <at row="26" col="20">
       <unit id="37214" owner="0" flag="65" face="0" exp="195" ldr="1"/>
@@ -20,15 +20,15 @@
   </reinforce>
   <reinforce turn="7">
     <at row="19" col="22">
-      <unit id="37183" owner="0" flag="65" face="0" transport="37249" exp="243"/>
+      <unit id="37183" owner="0" flag="65" face="0" transport="37249" exp="499"/>
     </at>
   </reinforce>
   <reinforce turn="8">
     <at row="20" col="24">
-      <unit id="37262" owner="0" flag="65" face="0" exp="44"/>
+      <unit id="37262" owner="0" flag="65" face="0" exp="300"/>
     </at>
     <at row="17" col="23">
-      <unit id="37198" owner="0" flag="65" face="0" exp="44"/>
+      <unit id="37198" owner="0" flag="65" face="0" exp="300"/>
     </at>
   </reinforce>
   <hex row="0" col="8" terrain="10"/>
@@ -242,7 +242,7 @@
     <unit id="42285" owner="1" flag="104" face="0" exp="100" osada="rework" objrow="12" objcol="22"/>
   </hex>
   <hex row="7" col="2" terrain="1" name="Stantsiya" deploy="1">
-    <unit id="21134" owner="1" flag="21" face="0" transport="21857" exp="94"/>
+    <unit id="21134" owner="1" flag="21" face="0" transport="21857" exp="350"/>
   </hex>
   <hex row="7" col="4" road="18">
     <unit id="42323" owner="1" flag="104" face="0" exp="100" osada="rework" objrow="12" objcol="22"/>
@@ -322,7 +322,7 @@
     <unit id="21293" owner="1" flag="21" face="0" exp="100" osada="rework" objrow="12" objcol="22"/>
   </hex>
   <hex row="9" col="2" road="40" deploy="1" station="1" rail="187">
-    <unit id="21533" owner="1" flag="21" face="0" exp="28" ldr="1"/>
+    <unit id="21533" owner="1" flag="21" face="0" exp="3100" ldr="1"/>
   </hex>
   <hex row="9" col="3" road="130" rail="187"/>
   <hex row="9" col="4" road="163" rail="187"/>
@@ -362,7 +362,7 @@
   <hex row="9" col="38" road="137"/>
   <hex row="9" col="39" road="144"/>
   <hex row="10" col="2" terrain="8" deploy="1">
-    <unit id="21134" owner="1" flag="21" face="0" transport="21927" exp="134"/>
+    <unit id="21134" owner="1" flag="21" face="0" transport="21927" exp="390"/>
   </hex>
   <hex row="10" col="5" road="33"/>
   <hex row="10" col="6" terrain="10"/>
@@ -439,7 +439,7 @@
   <hex row="12" col="6" terrain="10"/>
   <hex row="12" col="7" terrain="10"/>
   <hex row="12" col="12">
-    <unit id="728" owner="0" flag="104" face="0" exp="84" str="8" bstr="8"/>
+    <unit id="728" owner="0" flag="104" face="0" exp="340" str="8" bstr="8"/>
   </hex>
   <hex row="12" col="14" road="144" rail="187"/>
   <hex row="12" col="15" rail="187"/>
@@ -997,7 +997,7 @@
   <hex row="27" col="4" terrain="3"/>
   <hex row="27" col="5" terrain="3"/>
   <hex row="27" col="7">
-    <unit id="37212" owner="0" flag="65" face="0" exp="144" ldr="1"/>
+    <unit id="37212" owner="0" flag="65" face="0" exp="400" ldr="1"/>
   </hex>
   <hex row="27" col="9" road="17" rail="187"/>
   <hex row="27" col="11" terrain="3"/>
@@ -1031,7 +1031,7 @@
   <hex row="28" col="3" terrain="3"/>
   <hex row="28" col="4" terrain="3"/>
   <hex row="28" col="7" owner="0" flag="103" deploy="0" rail="187">
-    <unit id="37199" owner="0" flag="65" face="0" transport="37242" exp="94"/>
+    <unit id="37199" owner="0" flag="65" face="0" transport="37242" exp="350"/>
   </hex>
   <hex row="28" col="8" rail="187"/>
   <hex row="28" col="9" terrain="3" road="17"/>

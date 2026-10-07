@@ -1,11 +1,11 @@
 package org.osada.ui.keyboard
 
 import kotlinx.browser.document
-import org.osada.ui.AttachmentPickerPresenter
 import org.osada.ui.CommanderRosterPresenter
 import org.osada.ui.ConfirmCard
 import org.osada.ui.HeroDeskPresenter
 import org.osada.ui.HeroPromotionPresenter
+import org.osada.ui.ModalPickers
 import org.osada.ui.UI
 import org.osada.ui.UIBuilder
 import org.osada.ui.isScenarioBriefingVisible
@@ -18,8 +18,8 @@ import org.w3c.dom.events.Event
  * (`docs/design/keyboard-shortcuts-and-help.md` В§5). Installed once from `UI.init`.
  *
  * It owns Escape too. There must be exactly one document-level gameplay listener: two independent
- * ones both fire on the same press, which is how Escape once closed a window *underneath* a modal
- * (`DEFERRED.md` В§4.13). Escape's ordered modal stack still lives in
+ * ones both fire on the same press, which is how Escape once closed a window *underneath* a modal.
+ * Escape's ordered modal stack still lives in
  * `MainMenuButtonHandler.handleGlobalEscape`; this router only decides whether Escape reaches it.
  */
 internal object CommandRouter {
@@ -50,11 +50,13 @@ internal object CommandRouter {
         event: Event,
         ui: UI,
     ) {
-        if (org.osada.ui.music.MusicLibraryPresenter
-                .handleKey(event)
-        ) {
-            return
-        }
+        // Open modal components own the keyboard outright, Escape and Tab included.
+        val owned =
+            org.osada.ui.music.MusicLibraryPresenter
+                .handleKey(event) ||
+                org.osada.ui.campaignmap.CampaignMapPresenter
+                    .handleKey(event)
+        if (owned) return
         val command = resolve(event) ?: return
         if (allowed(command, scope()) && dispatch(command, ui)) event.preventDefault()
     }
@@ -135,7 +137,7 @@ internal object CommandRouter {
             ConfirmCard.isOpen() -> Scope.CLOSE_ONLY
             isVisible("ui-message") -> Scope.CLOSE_ONLY
             CommanderRosterPresenter.isTransferPickerOpen() -> Scope.CLOSE_ONLY
-            AttachmentPickerPresenter.isOpen() -> Scope.CLOSE_ONLY
+            ModalPickers.isOpen() -> Scope.CLOSE_ONLY
             CommanderRosterPresenter.isOpen() -> Scope.CLOSE_ONLY
             HeroDeskPresenter.isOpen() -> Scope.CLOSE_ONLY
             isVisible("startmenu") -> Scope.CLOSE_ONLY

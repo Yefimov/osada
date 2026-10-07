@@ -82,8 +82,7 @@ object UnitPredicates {
      * A record with no ground weight has nothing to be carried by, which is OG's own gate: `GtpW`
      * is the organic weight, and 708 of the 710 shipped submarines carry 0.
      *
-     * **`sub_buytra` lifts that for submarines**, and it is one of the last `equip.cfg` keys
-     * `og-fidelity-plan.md` §Y.3 left unbuilt:
+     * **`sub_buytra` lifts that for submarines**, one of the last `equip.cfg` keys to be built:
      *
      * > *"sub_buytra — Set to 1, to allow subs to buy transport"* — `EFILE_NOKORP/equip.cfg`
      *

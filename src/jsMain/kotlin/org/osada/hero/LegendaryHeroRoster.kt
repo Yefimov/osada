@@ -29,7 +29,7 @@ private val RED_ARMY_89 = setOf("forward.json", "ga4.json")
 
 // `acampdf2` belongs here even though its opening scenario (Zborov, July 1917) predates every
 // hero below: the 2026-09-03 red rework moved its core to Red Russia for the whole campaign
-// (progressive-side-campaign-rework.md 12.3), so the pool is the right safety net from 1918 on,
+// (campaigns/progressive-side-rework.md 12.3), so the pool is the right safety net from 1918 on,
 // while 1917 itself is covered by the one hero authored for it -- [rcw_echelon_liaison].
 private val CIVIL_WAR =
     setOf("ccampdfc.json", "volarm.json", "simpob.json", "polsov.json", "acampdf2.json")
@@ -627,7 +627,7 @@ private val RUSSIAN_CIVIL_WAR: List<LegendaryHero> =
         // The one hero who can reach `acampdf2`'s opening scenario. Zborov is July 1917 -- before
         // every year range above -- and the campaign's player country is 103 from that scenario
         // onwards, because `Player.copy` carries one nation across a whole campaign
-        // (progressive-side-campaign-rework.md 12.3). So the officer section 8 of that document asks for
+        // (campaigns/progressive-side-rework.md 12.3). So the officer section 8 of that document asks for
         // is a RUSSIAN one attached to the Czechoslovak brigade, not a legionary who changes flag
         // halfway; he was authored as `czechoslovak_rail_guard` at nation 144 before the rework and
         // was left unreachable by it, which sent the whole campaign to the procedural fallback.

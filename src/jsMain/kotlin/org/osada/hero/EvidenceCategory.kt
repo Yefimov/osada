@@ -22,8 +22,8 @@ enum class CommandAttribute {
  * later phase wires a new source; this mirrors Phase 1's "reserved field" approach applied to enum
  * entries instead of data-class fields.
  *
- * **An unfed entry is only harmless while nothing is gated on it** (`tools/og-import/DEFERRED.md`
- * §7.43). A [HeroTraitDefinition] whose `requiredEvidence` names a category no rule produces is
+ * **An unfed entry is only harmless while nothing is gated on it** (`docs/heroes/README.md` §2,
+ * item 7). A [HeroTraitDefinition] whose `requiredEvidence` names a category no rule produces is
  * unobtainable; leaving that requirement off instead makes it a permanent §8.5.4 fallback and
  * displaces the ones meant to fill that role. Both happened here. Adding a catalogue entry means
  * adding its category's source in the same change.

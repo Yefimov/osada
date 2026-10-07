@@ -92,7 +92,7 @@ class BriefingChoicePreviewTest {
 
     /**
      * Effects that `CampaignEffectApplier` still no-ops (see the effect catalogue in
-     * `docs/campaign-dialogue-and-consequences.md` §7) must not be previewed: promising the player
+     * `docs/campaigns/dialogue-and-consequences.md` §7) must not be previewed: promising the player
      * something that does not happen is worse than saying nothing. Re-enable each as its applier
      * lands — this test is the reminder.
      */

@@ -21,7 +21,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Open General's ride-to-get-there (`rules/AutoMount`, `docs/og-fidelity-plan.md` §P): ordering a
+ * Open General's ride-to-get-there (`rules/AutoMount`): ordering a
  * formation somewhere its legs cannot reach mounts its own transport instead of refusing.
  *
  * The claim these tests defend is that **nothing new became possible** — the same hexes were always

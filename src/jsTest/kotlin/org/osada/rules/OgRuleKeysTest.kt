@@ -36,7 +36,7 @@ import kotlin.test.assertTrue
 
 /**
  * The three quoted Open General rules OSADA did not execute at all before 2026-08-18, each behind its
- * own schema-4 key and each defaulting OFF (`docs/og-fidelity-plan.md` B.2, B.8 and `UnitConcealment`).
+ * own schema-4 key and each defaulting OFF (and `UnitConcealment`).
  *
  * Every test here asserts the OFF case too. That is the substance of the promise these keys were
  * admitted on: nothing in the 502 shipped scenarios changes arithmetic until somebody selects a

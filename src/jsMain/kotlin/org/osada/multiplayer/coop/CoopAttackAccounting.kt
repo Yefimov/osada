@@ -36,7 +36,7 @@ data class CoopAttackFacts(
 )
 
 /**
- * Turns one resolved attack into ledger entries (`docs/design/cooperative-commanders-multiplayer.md`
+ * Turns one resolved attack into ledger entries (`docs/multiplayer/cooperative-commanders.md`
  * §8.2/§8.3). Called once per attack by the authority, from `AttackObservers`, which is what makes
  * an ENEMY-turn exchange -- the defender's endurance, an automatic supporter's shot, a counter-fire
  * kill -- credit the right commander using the assignment AT EVENT TIME.

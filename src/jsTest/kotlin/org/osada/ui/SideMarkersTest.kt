@@ -7,7 +7,7 @@ import kotlin.test.assertTrue
 
 /**
  * Locks the classification and sizing rules of the opt-in strategic star/skull badges
- * (`docs/design/accessible-side-identification.md` §§2, 7).
+ * (`docs/design/action-affordances-and-objectives.md` §§13.2, 13.5).
  *
  * The renderer test the design asks for is exactly this one: "renderer unit tests classify
  * same-side support units as friendly and opponents as enemy". Support-country units are the case
@@ -26,7 +26,7 @@ class SideMarkersTest {
     /**
      * A support-country formation has a different country, a different flag and a different palette
      * from the player's own units, and is still theirs. Only the SIDE answers this question
-     * (`DEFERRED.md` §§5.2, 5.6) -- which is why [SideMarkers.classify] takes a side and nothing
+     * (`tools/og-import/OG_REGISTER.md` D§5.2, D§5.6) -- which is why [SideMarkers.classify] takes a side and nothing
      * else, and cannot be handed a country by mistake.
      */
     @Test

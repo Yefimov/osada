@@ -24,7 +24,7 @@ internal fun ScenarioBriefingController.renderLocalizedChrome(
 
 internal fun ScenarioBriefingController.refreshLocalization() {
     // One guard rather than three `?: return`s: detekt's ReturnCount limit is 2, and a suppression
-    // here would join the eight already tracked as debt in `DEFERRED.md` 4.1 for no gain.
+    // here would join the eight already tracked as debt in `tools/og-import/OG_REGISTER.md` §4.1 for no gain.
     val source = currentSource
     val currentFacts = facts
     val currentView = view

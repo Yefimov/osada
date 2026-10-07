@@ -5,7 +5,7 @@ import org.osada.PlayerType
 import org.osada.model.isInitialDeploymentWindow
 
 /**
- * Commander reassignment and its cost (DEFERRED.md §1.10) — a sibling of [HeroCasualtyService] and
+ * Commander reassignment and its cost (`docs/heroes/README.md` §2) — a sibling of [HeroCasualtyService] and
  * [HeroPromotionService], split out of [HeroCampaign] once that object passed detekt's class-size
  * limit. Unlike those two it is not pure: posting an officer is a roster mutation, and the roster
  * has exactly one writer, so it mutates through [HeroCampaign.roster] rather than returning a
@@ -36,8 +36,8 @@ internal object HeroTransferService {
         setOf(HeroStatus.ACTIVE, HeroStatus.RESERVE, HeroStatus.WOUNDED, HeroStatus.SERIOUSLY_WOUNDED)
 
     /** Whether [status] is one an officer can be posted out of — the single source of truth the
-     *  commander-roster presenter queries instead of keeping its own copy of this set (DEFERRED.md
-     *  §4.10: the two used to state the rule twice and could drift). */
+     *  commander-roster presenter queries instead of keeping its own copy of this set (the
+     *  two used to state the rule twice and could drift). */
     fun isTransferEligible(status: HeroStatus): Boolean = status in transferEligibleStatuses
 
     /**

@@ -22,8 +22,8 @@ object SupplyRules {
     /**
      * True when [unit]'s type/terrain make it eligible for a supply action at all.
      *
-     * **The naval branch carried an inverted terrain test until 2026-08-18**
-     * (`docs/og-fidelity-plan.md` A.2): it refused a warship standing in a PORT and allowed one in
+     * **The naval branch carried an inverted terrain test until 2026-08-18**:
+     * it refused a warship standing in a PORT and allowed one in
      * open water. OG manual 6.23 names the port as the place a warship is resupplied
      * (*"naval units in a port that end the turn there"*), so the one hex the rule certainly permits
      * was the one hex OSADA forbade. The exclusion is deleted rather than reversed -- forbidding
@@ -81,9 +81,8 @@ object SupplyRules {
         } else {
             val adjacentEnemies = SupplyContextRules.countAdjacentEnemies(map, unit, pos)
             // OG 6.23 resupplies "ground units that do nothing in the turn" and names no terrain;
-            // OSADA additionally requires a CITY hex. `docs/og-fidelity-plan.md` A.3 item 2 records
-            // that as a BALANCE decision rather than a defect -- relaxing it hands every idle
-            // formation in the field a free full refit -- and required that it move behind a key if
+            // OSADA additionally requires a CITY hex. That is a BALANCE decision rather than a defect -- relaxing it
+            // hands every idle formation in the field a free full refit -- and required that it move behind a key if
             // it moved at all. `ground_auto_supply`, `city_only` by default.
             //
             // The adjacent-enemy condition is NOT part of the key: a formation being shot at is not
@@ -176,7 +175,7 @@ object SupplyRules {
      * Strength ceiling [unit]'s experience allows it to be raised to by overstrength: one point per
      * **completed** experience bar.
      *
-     * **Integer division, not [roundToInt] (2026-08-18, `docs/og-fidelity-plan.md` A.1).** Rounding
+     * **Integer division, not [roundToInt] (2026-08-18).** Rounding
      * gave a half-finished bar a whole strength point -- 150 XP bought two extra points where OG
      * manual 6.7 grants one (*"Each experience bar allows for one strength point over the normal
      * maximum"*), and the Overstrength button's own description repeats the same rule. A partial bar

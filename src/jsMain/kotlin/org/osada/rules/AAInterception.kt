@@ -16,7 +16,8 @@ import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 
 /**
- * AA interception of moving aircraft (DEFERRED.md §1.1, `docs/design/aa-interception.md`).
+ * AA interception of moving aircraft (`docs/design/efile-driven-rules.md` §3; visibility rule:
+ * `docs/design/action-affordances-and-objectives.md` §1.1).
  *
  * `g2a_intercept_mode` is a bitmask, and mode 0 is NOT "off": hidden AD/Flak already intercept a
  * plane moving through or finishing in range at mode 0. Bit 1 (`+1`) stops the interceptor from
@@ -47,7 +48,7 @@ internal object AAInterception {
         isDestination: Boolean,
     ): List<GameUnit> {
         // OG's own per-scenario switch, authored by 346 of the 397 scenarios that carry one and
-        // read by nothing until 2026-08-28 (`docs/og-fidelity-plan.md` §AD). A scenario whose
+        // read by nothing until 2026-08-28. A scenario whose
         // source could not be read is `null` and stays permitted, as every authored switch is.
         val authorAllows = GameHolder.instance?.scenario?.airIntercept != false
         // OG: *"Interception cannot happen if: Plane has Skilled Assault leader"*.
@@ -129,8 +130,8 @@ internal object AAInterception {
             // phase"): the gun keeps its defensive fire after intercepting, so the one flag that
             // spends it is never set. `hasInterceptedThisTurn` is read in exactly one place
             // (`CombatResolver.isSupportFireEligible`), which is why the exemption belongs here
-            // rather than at the read -- the trait was advertised and inert until 2026-08-18
-            // (`docs/og-fidelity-plan.md` A.4), and it is the guaranteed class trait of every
+            // rather than at the read -- the trait was advertised and inert until 2026-08-18,
+            // and it is the guaranteed class trait of every
             // Fighter commander.
             val keepsDefensiveFire =
                 Leaders.unitHasLeader(aa, LeaderType.SKILLED_INTERCEPTOR) || LeaderSupportFire.interceptsRepeatedly(aa)

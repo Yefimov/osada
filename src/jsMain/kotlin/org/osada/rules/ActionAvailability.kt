@@ -21,8 +21,8 @@ package org.osada.rules
  * formation carries the ability, so no existing campaign gains a chip. [DEMOLISH] is one chip for
  * OG's two demolition sub-rules (9.3.1 bridge, 9.3.7 terrain) because a hex can never offer both.
  *
- * [LAY_MINES] and [CLEAR_MINES] were added 2026-08-18 with the minefield mechanic
- * (`docs/og-fidelity-plan.md` C.1). They sit after the supply group and before Undo because that is
+ * [LAY_MINES] and [CLEAR_MINES] were added 2026-08-18 with the minefield mechanic.
+ * They sit after the supply group and before Undo because that is
  * where an engineer's work belongs in the reading order, and both are NOT APPLICABLE — absent from
  * the strip entirely — unless the `minefields` ruleset key is on and the formation actually carries
  * OG's ability, so no existing campaign gains a chip.
@@ -74,6 +74,19 @@ enum class UnitActionId(
      *  (`UnitActionAvailability.withdraw`). Absent from the strip -- not merely disabled -- once the window closes,
      *  so it takes no room for the rest of the battle (2026-09-25 user request). */
     WITHDRAW("withdraw"),
+
+    /** Puts the formation inside a friendly carrier's or airbase's hangar on or beside its hex
+     *  (`rules/HangarStowage`, 2026-10-07). */
+    LAND_IN_HANGAR("hangar_land"),
+
+    /** Opens a container's hangar: who is inside, and the take-off order (`ui/HangarDialog`). */
+    HANGAR("hangar"),
+
+    /** A land formation goes inside a friendly fortification on or beside its hex (2026-10-07). */
+    ENTER_COVER("cover_enter"),
+
+    /** Opens a fortification's garrison: who is inside, and the order to come out (`ui/HangarDialog`). */
+    COVER("cover"),
     SLEEP("sleep"),
 }
 
@@ -177,6 +190,27 @@ enum class ActionBlockReason {
     /** Another job is already under way on this hex; `amount` is the turns left on it. */
     ENGINEERING_IN_PROGRESS,
 
+    /** Every friendly hangar within reach is full. */
+    HANGAR_FULL,
+
+    /** Every friendly fortification within reach is full. */
+    COVER_FULL,
+
+    /** Build bridge: the hex is not an unbridged river or stream crossing. */
+    BRIDGE_NEEDS_CROSSING,
+
+    /** Build fortification: not dry buildable ground, or already fortified. */
+    FORTIFICATION_NEEDS_GROUND,
+
+    /** Build airfield: OG's "must be in a clear hex". */
+    AIRFIELD_NEEDS_CLEAR,
+
+    /** Build port: not dry ground on the coast, or already a port. */
+    PORT_NEEDS_COAST,
+
+    /** Build station: OG's "must be in a rail hex", without a station already. */
+    STATION_NEEDS_RAIL,
+
     /** The scenario author switched this kind of engineering off (OG's Build / Blow / Repair option). */
     SCENARIO_FORBIDS_ENGINEERING,
 
@@ -213,8 +247,9 @@ enum class ActionEffectKind {
      * be also Airmobile/Airborne"*.
      *
      * Shown BEFORE the player commits, because the rule takes away something they bought and
-     * OSADA has nowhere to park it: `DEFERRED.md` §1.1's rule is that a mechanic with a cost must
-     * have a visible cause, and 5,264 of the 5,937 shipped ground transports cannot fly.
+     * OSADA has nowhere to park it: a mechanic with a cost must have a visible cause
+     * (`docs/design/action-affordances-and-objectives.md` §1.1), and 5,264 of the 5,937 shipped ground transports
+     * cannot fly.
      */
     EMBARK_DROPS_TRANSPORT,
 
@@ -307,6 +342,17 @@ enum class ActionEffectKind {
 
     /** Destroys what is on this hex outright, with no waiting. */
     DEMOLISH_NOW,
+
+    /** Goes inside the hangar: out of sight and reach, refuelled and rearmed every round, and able
+     *  to take off from the next turn. */
+    HANGAR_STOW,
+
+    /** Goes inside the fortification: out of sight and reach, resupplied every round, and able to
+     *  come out from the next turn. */
+    COVER_STOW,
+
+    /** `amount` formations aboard out of `detail` places. */
+    HANGAR_OCCUPANCY,
 }
 
 /** One effect line plus its quantities. */

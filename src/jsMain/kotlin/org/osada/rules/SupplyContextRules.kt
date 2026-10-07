@@ -85,7 +85,7 @@ object SupplyContextRules {
      *  flat off-city penalty -- for the four efiles with no `TerrainEx.txt`, and for any terrain id
      *  a shipped efile omits, [TerrainEx.supplyFactor] falls back to that exact flat number, so this
      *  is a strict extension, not a behaviour change, where OG data is absent
-     *  (`docs/design/terrain-supply-and-initiative.md` §3.2). The enemy-pressure divisors are PM's
+     *  (`docs/design/efile-driven-rules.md` §2.3). The enemy-pressure divisors are PM's
      *  own rule, with no OG equivalent, and are unaffected. */
     internal fun supplyPenaltyModifier(
         hex: Hex?,

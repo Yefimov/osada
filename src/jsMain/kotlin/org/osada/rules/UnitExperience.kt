@@ -13,7 +13,7 @@ import org.osada.model.GameUnit
  * ### The two `equip.cfg` keys this object briefly read, and why it does not
  *
  * `exp_unit_cap` (`eqp-gce` 5000) and `exp_bar_factor` (`eqp-lxf` 5) were built on 2026-08-28 and
- * **reverted the same day** (`docs/og-fidelity-plan.md` §AB). They are per-efile divergences, and
+ * **reverted the same day**. They are per-efile divergences, and
  * OSADA merged every efile into one `eqp-united` database: a unit has one record, so it must earn
  * and hold experience at one rate. Reading them would have meant the same merged unit levelling at
  * two different speeds depending which campaign it appeared in.

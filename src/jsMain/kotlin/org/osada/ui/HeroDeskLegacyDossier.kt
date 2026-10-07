@@ -6,7 +6,7 @@ import org.osada.i18n.I18n
 
 /**
  * The explicitly limited dossier for a migrated Hall of Fame summary
- * (`docs/design/hero-desk-and-profile-archive.md` §5).
+ * (`docs/heroes/hero-desk-and-archive.md` §5).
  *
  * A separate, much smaller surface on purpose. The legacy `osada_hall_of_fame` store kept five
  * localized display strings and nothing else: no portrait recipe, no hero id, no traits, no medals,

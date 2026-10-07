@@ -193,7 +193,7 @@ try {
     const footerEl = document.getElementById('smCampButtons');
     const root = rootEl.getBoundingClientRect();
     const footer = footerEl.getBoundingClientRect();
-    const controls = ['osadaRulesButton-campaign', 'campaignRunExport', 'campaignRunImport', 'smCBackBut', 'smCPlayBut']
+    const controls = ['osadaRulesButton-campaign', 'smCBackBut', 'smCPlayBut']
       .map((id) => {
         const el = document.getElementById(id);
         const r = el.getBoundingClientRect();

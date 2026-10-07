@@ -419,8 +419,11 @@ internal object MusicMiniPlayer {
 private const val MUSIC_TOOLTIP_GAP = 4
 
 private fun bindMusicTitleTooltip(button: HTMLElement) {
-    button.onfocus = {
+    button.onfocus = focus@{
         byId("osadaMusicTitleTooltip")?.remove()
+        // Mouse users already get the native `title` on hover, and a clicked button keeps focus, so
+        // an unconditional panel doubled the same text. Keyboard focus is what has no hover.
+        if (!button.matches(":focus-visible")) return@focus null
         val tooltip = addTag(document.body, "div")
         tooltip.id = "osadaMusicTitleTooltip"
         tooltip.className = "osada-music-title-tooltip"

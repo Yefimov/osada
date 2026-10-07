@@ -20,7 +20,7 @@ import org.osada.model.listKey
  * bridge is exactly the invention `OG_ABILITY_AUDIT.md` §1 forbids.
  *
  * **`EFILE_NOKORP/equip.cfg` labels the columns itself**, and it is the same copy that documented
- * `supply_ex` for `DEFERRED.md` §2.10 — the one installed `equip.cfg` that ships its explanatory
+ * `supply_ex` for `tools/og-import/OG_ABILITY_AUDIT.md` §7.5 — the one installed `equip.cfg` that ships its explanatory
  * comments:
  *
  * ```
@@ -61,7 +61,7 @@ internal enum class EngineeringWork(
 
     /**
      * §9.3.6 — a railroad station on a rail hex. **BUILT 2026-08-27, and this is the fifth
-     * facility: OSADA built four until then** (`docs/og-fidelity-plan.md` §U).
+     * facility: OSADA built four until then**.
      *
      * > *"To build a railroad station, a unit with the Sapper ability must be in a rail hex and
      * > hasn't done any action. If you point to the unit, you get a menu with the '4 Bld Station'
@@ -376,7 +376,7 @@ internal enum class EngineeringWork(
         /**
          * [RAZEABLE_TERRAIN], widened by the active efile's own `blow_any_terrain`. An efile with
          * no `equip.cfg` at all — KAISER backs eight campaigns — says nothing, which reads as the
-         * narrow set, per `docs/design/efile-config.md` §2 trap 4.
+         * narrow set, per `docs/design/efile-driven-rules.md` §1.2 item 4.
          *
          * **`Barrage` reads this too** (OG 9.2, 2026-08-26): shelling a hex destroys exactly what a
          * demolition charge could have destroyed on it, so the two can never disagree about whether

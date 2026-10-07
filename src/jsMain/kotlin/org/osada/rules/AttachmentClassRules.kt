@@ -35,15 +35,11 @@ import org.osada.model.isBridge
  * idea for Bridging, and the reason is the one it gives -- the purchase would just waste prestige.
  */
 internal object AttachmentClassRules {
-    /** Not in [Attachments.IMPLEMENTED_SLOTS] yet; named so the table can already forbid them. */
-    private const val SLOT_FORWARD_OBSERVER = 6
-    private const val SLOT_FAST_BUILDER = 10
-
     /** Rule (A) plus ATOMIC's Fuel Pods restriction -- every aircraft class. */
     private val AIRCRAFT =
         setOf(
             Attachments.SLOT_BRIDGING,
-            SLOT_FORWARD_OBSERVER,
+            Attachments.SLOT_FORWARD_OBSERVER,
             Attachments.SLOT_FAST_ENTRENCH,
             Attachments.SLOT_FUEL_PODS,
         )
@@ -56,13 +52,13 @@ internal object AttachmentClassRules {
             UnitClass.FORTIFICATION.value to
                 setOf(
                     Attachments.SLOT_BRIDGING,
-                    SLOT_FORWARD_OBSERVER,
+                    Attachments.SLOT_FORWARD_OBSERVER,
                     Attachments.SLOT_FAST_ENTRENCH,
                     Attachments.SLOT_BUNKER_BUSTER,
                     Attachments.SLOT_FUEL_PODS,
                     Attachments.SLOT_FAST_SPEED,
                 ),
-            UnitClass.GROUND_TRANSPORT.value to setOf(SLOT_FORWARD_OBSERVER),
+            UnitClass.GROUND_TRANSPORT.value to setOf(Attachments.SLOT_FORWARD_OBSERVER),
             UnitClass.ARTILLERY.value to setOf(Attachments.SLOT_AIR_DEFENSE, Attachments.SLOT_BRIDGING),
             UnitClass.AIR_DEFENCE.value to setOf(Attachments.SLOT_BRIDGING, Attachments.SLOT_BUNKER_BUSTER),
             UnitClass.FIGHTER.value to AIRCRAFT,
@@ -96,7 +92,7 @@ internal object AttachmentClassRules {
                 Attachments.SLOT_BRIDGING ->
                     !Equipment.isBridge(unit.eqid) && !Leaders.unitHasLeader(unit, LeaderType.BRIDGING)
                 // Rule (C): only units having Sapper (Build/Repair) special can use Fast Builder.
-                SLOT_FAST_BUILDER -> Engineering.isSapper(unit)
+                Attachments.SLOT_FAST_BUILDER -> Engineering.isSapper(unit)
                 else -> true
             }
     }
@@ -110,7 +106,8 @@ internal object AttachmentClassRules {
      *  - Air Defense adds to an air attack, which a formation with none never makes or returns
      *    (`AttackEligibility.canFire` needs `airatk > 0`);
      *  - Fast Entrench raises the entrenchment a formation digs to, and some classes never dig;
-     *  - Fuel Pods and Support extend fuel and ammunition, and there is nothing to extend at zero.
+     *  - Fuel Pods and Support extend fuel and ammunition, and there is nothing to extend at zero;
+     *  - Special Munition sharpens the unit's own fire, which needs an attack value to fire with.
      */
     private fun addsSomething(
         unit: GameUnit,
@@ -123,6 +120,9 @@ internal object AttachmentClassRules {
             Attachments.SLOT_FAST_ENTRENCH -> entrenchRateFor(data.uclass) > 0
             Attachments.SLOT_FUEL_PODS -> data.fuel > 0
             Attachments.SLOT_SUPPORT_AMMO -> data.ammo > 0
+            // Lowers the firing unit's kill threshold, so a formation that never fires gains nothing.
+            Attachments.SLOT_SPECIAL_MUNITION ->
+                data.softatk > 0 || data.hardatk > 0 || data.airatk > 0 || data.navalatk > 0
             else -> true
         }
     }

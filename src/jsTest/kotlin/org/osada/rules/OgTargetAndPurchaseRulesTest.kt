@@ -21,7 +21,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * The four `attr` bits wired on 2026-08-27 (`docs/og-fidelity-plan.md` §U): the fourth target-type
+ * The four `attr` bits wired on 2026-08-27: the fourth target-type
  * prohibition, `CAN Air Atk`'s missing movement condition, and the three purchase/authoring bits.
  *
  * Every test here is written to FAIL against the previous behaviour. Three of the four bits had a

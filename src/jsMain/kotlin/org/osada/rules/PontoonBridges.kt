@@ -71,12 +71,18 @@ internal object PontoonBridges {
     /** One facing per axis in [AXES]; the sprite is symmetric, so either end of an axis draws the same. */
     private val AXIS_FACING = listOf(Direction.N.value, Direction.NW.value, Direction.NE.value)
 
-    /** Whether [unit] standing on [hex] is in a position to span it: a river, on foot or tracks
-     *  rather than aboard its transport, and with a bridge capability from any source. */
+    /** Whether [unit] standing on [hex] is in a position to span it: a river with no bridge of its
+     *  own, on foot or tracks rather than aboard its transport, and with a bridge capability from
+     *  any source. A road over the river is a real bridge -- authored, or built by sappers -- so a
+     *  bridge unit arriving there drives across it instead of laying a crossing beside it. */
     fun canSpan(
         unit: GameUnit,
         hex: Hex?,
-    ): Boolean = isRiver(hex) && !unit.isMounted && MovementRules.hasBridgeCapability(unit)
+    ): Boolean =
+        isRiver(hex) &&
+            hex!!.road <= RoadType.NONE.value &&
+            !unit.isMounted &&
+            MovementRules.hasBridgeCapability(unit)
 
     /**
      * Called wherever [unit] comes to rest on a new hex during play -- an ordinary move or a forced

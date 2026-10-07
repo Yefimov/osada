@@ -52,7 +52,7 @@ object UnitCapabilities {
      *
      * Panzer Marshal has no class check at all (`openpanzer.js:3926` `captureHex`), which is how a
      * destroyer came to "capture" the port at N_Kiel without ownership ever transferring — see
-     * `DEFERRED.md` §5.4, settled toward PM on 2026-07-20 and reversed toward OG on 2026-07-26.
+     * `tools/og-import/OG_REGISTER.md` D§5.4, settled toward PM on 2026-07-20 and reversed toward OG on 2026-07-26.
      *
      * Artillery, air defence, aircraft, ships, transports and fortifications may still occupy and
      * hold a hex, and still deny it to the enemy, without taking it.
@@ -98,7 +98,7 @@ object UnitCapabilities {
      *
      * OG's three abbreviations map onto OSADA's own classes exactly: BB = Battleship, CV = Carrier,
      * BC = Battle Cruiser. **Cruiser and Light Cruiser are deliberately excluded** — OG names three
-     * classes and OSADA has four where OG's `CShip` has one (`docs/og-sources.md`), so adding the
+     * classes and OSADA has four where OG's `CShip` has one (`docs/og/og-sources.md`), so adding the
      * two OG does not name would arm ships OG leaves unarmed. That is the reading that cannot
      * overstate; if `CShip` turns out to cover all four, this set is the one line to widen.
      *
@@ -117,8 +117,8 @@ object UnitCapabilities {
      * its `Recon Skill` attribute (`attr` bit 10) — the same `classDefault xor bit` shape as
      * [hasSupportFire], not a plain grant. `Recon Skill` was already inside the original 24-bit
      * `attr` word (no importer widening needed for this one), but was read only as the Recon class
-     * until 2026-08-19 — `docs/og-fidelity-plan.md`'s own approximations list named this as one of
-     * three badges (RCN/OVR/AA) sourced from class alone rather than OG's real equipment toggle.
+     * until 2026-08-19 — one of three badges (RCN/OVR/AA) sourced from class alone rather than OG's real equipment
+     * toggle.
      *
      * Measured over 46,978 `eqp-united` records: bit 10 is set on 10 of 2,880 Recon records
      * (0.3%) and 3,848 non-Recon ones — a grant would land on nearly every Recon unit, not ten, so
@@ -188,8 +188,8 @@ object UnitCapabilities {
      * command-tank variants are precisely the ones an efile author would exclude from an overrun
      * charge.
      *
-     * `eqp-united` population: 353 records carry the bit after the 2026-08-23 back-fill
-     * (`docs/og-fidelity-plan.md` §J). One source of inertness remains and is deliberate: a record
+     * `eqp-united` population: 353 records carry the bit after the 2026-08-23 back-fill.
+     * One source of inertness remains and is deliberate: a record
      * whose only source is `eqp-olgcw` keeps `attrEx` at 0 because that efile's format has no
      * `SpecialEx` field at all (§J.2), so the Tank-class default stands for it.
      */
@@ -286,7 +286,7 @@ object UnitCapabilities {
      * No class filter is layered on top of the toggle: 109 of the switched-on records are aircraft,
      * and whether OG lets an aircraft support-fire against a ground attacker is unverified — but
      * `isSupportFireEligible` still runs `AttackEligibility.canInitiateAttack`, which gates on ammo
-     * and on the can't-attack-soft/hard bits. Recorded in `DEFERRED.md` §7.32.
+     * and on the can't-attack-soft/hard bits.
      */
     fun hasSupportFire(data: EquipmentData): Boolean =
         (data.uclass in SUPPORT_FIRE_CLASSES) xor (data.attr and ATTR_MASK_SUPPORT_FIRE != 0)
@@ -304,8 +304,8 @@ object UnitCapabilities {
      * added 2026-08-19. `AD Support` is a plain grant, not a toggle — it **supplements**
      * [AIR_DEFENCE_FIRE_CLASSES] the same way `Capture Flag` supplements its four ground classes,
      * so OR is correct here: a class already in the set is unaffected by also carrying the bit,
-     * and a unit outside the set gains the role only by carrying it. `docs/og-fidelity-plan.md`'s
-     * approximations list named this the AA badge's third missing source, alongside RCN/OVR above.
+     * and a unit outside the set gains the role only by carrying it. This was the AA badge's third
+     * missing source, alongside RCN/OVR above.
      * No separate `airatk > 0` guard is needed on the bit path: `AttackEligibility.canFire` already
      * requires a nonzero `airatk` before any air target can be engaged, regardless of which path
      * granted eligibility — measured over `eqp-united`, only 1 of 745 `AD Support` records has
@@ -366,32 +366,46 @@ object UnitCapabilities {
     fun grantsCombatSupport(data: EquipmentData): Boolean = data.attr and ATTR_MASK_COMBAT_SUPPORT != 0
 
     /**
-     * Sum of experience bars lent by adjacent friendly Combat Support units.
-     *
-     * **`ground_carrier` bit 2 widens the list**, exactly as it widens `CombatResolver`'s: a staff
-     * element riding inside a container lends its bars from the container's hex. Both rules go
-     * through [CarrierHangars.supportPosition] so they can never disagree about where a passenger
-     * stands, and [CarrierHangars.supportingPassengers] returns nothing when the bit is off.
+     * Sum of experience bars lent by adjacent friendly Combat Support units ([combatSupporters]).
      */
     fun combatSupportBars(
         units: List<GameUnit>,
         recipient: GameUnit,
-    ): Int {
+    ): Int = combatSupporters(units, recipient).sumOf { lentBars(it) }
+
+    /**
+     * The friendly Combat Support units lending their bars to [recipient]: adjacent, on the same
+     * air/ground layer.
+     *
+     * **`ground_carrier` bit 2 widens the list**, exactly as it widens `CombatResolver`'s: a staff
+     * element riding inside a container lends its bars from the container's hex. Both rules go
+     * through [CarrierHangars.supportPosition] so they can never disagree about where a passenger
+     * stands, and [CarrierHangars.supportingPassengers] returns nothing when the bit is off. **It
+     * lends to its own container too** (owner's decision 2026-10-07): the staff inside a bunker
+     * commands the bunker, which is at distance 0 rather than 1.
+     */
+    fun combatSupporters(
+        units: List<GameUnit>,
+        recipient: GameUnit,
+    ): List<GameUnit> {
         val pos = recipient.getPos()
         val side = recipient.player?.side
-        if (pos == null || side == null) return 0
+        if (pos == null || side == null) return emptyList()
         val recipientIsAir = UnitPredicates.isAir(recipient)
-        return (units + CarrierHangars.supportingPassengers(units)).sumOf { supporter ->
+        return (units + CarrierHangars.supportingPassengers(units)).filter { supporter ->
             val supporterPos = CarrierHangars.supportPosition(supporter)
-            val eligible =
-                supporter !== recipient &&
-                    !supporter.destroyed &&
-                    supporterPos != null &&
-                    supporter.player?.side == side &&
-                    UnitPredicates.isAir(supporter) == recipientIsAir &&
-                    HexGeometry.distance(pos.row, pos.col, supporterPos.row, supporterPos.col) == 1 &&
-                    hasCombatSupport(supporter)
-            if (eligible) lentBars(supporter) else 0
+            val inReach =
+                supporterPos != null &&
+                    (
+                        HexGeometry.distance(pos.row, pos.col, supporterPos.row, supporterPos.col) == 1 ||
+                            supporter.containedIn === recipient
+                    )
+            supporter !== recipient &&
+                !supporter.destroyed &&
+                inReach &&
+                supporter.player?.side == side &&
+                UnitPredicates.isAir(supporter) == recipientIsAir &&
+                hasCombatSupport(supporter)
         }
     }
 
@@ -420,7 +434,7 @@ object UnitCapabilities {
      * ordinary per-round reset (`model/GameUnitLifecycle.kt`'s `unitEndTurn`, see §0.1.1) — OG's
      * `Lasting Suppression` equipment special (`SpecialEx` bit 60.1, `attrEx` bit 1) and the
      * `SHOCK_TACTICS` leader trait are two independent sources of the identical effect. Wired
-     * 2026-08-19 exactly as `docs/og-fidelity-plan.md` §0.1 said it must be when it became
+     * 2026-08-19 exactly as `tools/og-import/OG_REGISTER.md` F§0.1 said it must be when it became
      * reachable: *"this unit's `hits` survive the victim's `unitEndTurn`"*, not a second
      * suppression statistic — [GameUnit.lastingHits] is that same field either way.
      */

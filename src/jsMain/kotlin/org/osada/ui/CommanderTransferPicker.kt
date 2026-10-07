@@ -10,7 +10,7 @@ import org.w3c.dom.events.MouseEvent
 
 /**
  * The "post this officer somewhere else" dialog behind the roster's Transfer action
- * (DEFERRED.md §1.10).
+ * (`docs/heroes/README.md` §2).
  *
  * Split out of [CommanderRosterPresenter] to keep that object inside the project's function-count
  * limit, following the same sibling-file convention as the briefing package — and because the two
@@ -26,8 +26,8 @@ import org.w3c.dom.events.MouseEvent
  *   not after.
  *
  * Reuses [HeroPromotionPresenter]'s `.osada-hpp` dialog shape rather than the legacy
- * `.smallButton heroPromotionChoice` (DEFERRED.md §4.10/§4.12: same ICON-font trap, where real
- * words render as glyphs, and the same hardcoded z-index that opens behind `#equipment`).
+ * `.smallButton heroPromotionChoice` (the ICON-font trap, where real words render as glyphs, and the same hardcoded
+ * z-index that opens behind `#equipment`).
  */
 internal object CommanderTransferPicker {
     private const val BOX_ID = "uiHeroTransferBox"

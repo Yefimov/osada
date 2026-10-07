@@ -16,9 +16,9 @@ import kotlin.test.assertTrue
  *
  * Two of these are the ones worth locking. A hidden enemy battery must contribute NOTHING — an
  * envelope drawn around a formation the player cannot see would be a free reveal, the rule hidden
- * AA is drawn by (`DEFERRED.md` §1.1). And a long-ranged NON-artillery formation must contribute
- * nothing either, which is what keeps the shading meaning "artillery" rather than "anything that
- * shoots past its own hex".
+ * AA is drawn by (`docs/design/action-affordances-and-objectives.md` §1.1). And a long-ranged
+ * NON-artillery formation must contribute nothing either, which is what keeps the shading meaning "artillery" rather
+ * than "anything that shoots past its own hex".
  */
 class ArtilleryRangeOverlayTest : OgRulesTestHarness() {
     @BeforeTest

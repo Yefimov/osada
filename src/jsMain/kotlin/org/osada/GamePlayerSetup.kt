@@ -52,7 +52,7 @@ private fun Game.assignCampaignPlayerType(player: Player) {
 /**
  * The two `.xcam` switches that decide what a carried core IS in the battle being entered
  * (`rules/CampaignSwitches`). Without either, `Player.copy` keeps the first battle's country for
- * the whole campaign -- the constraint `docs/design/progressive-side-campaign-rework.md` §12.3
+ * the whole campaign -- the constraint `docs/campaigns/progressive-side-rework.md` §12.3
  * records -- and these two switches are exactly where an OG author lifted it:
  *
  * * *"Restart (lose) Core units"* -- the carried army is gone and this battle's own placed units

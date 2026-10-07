@@ -58,9 +58,11 @@ fun Game.processAIActions() {
         } else {
             endTurn()
         }
-        js("setTimeout")(fun() {
-            if (!gameEnded) ui?.uiEndTurnInfo()
-        }, Game.END_TURN_INFO_DELAY_MS)
+        val showEndTurnInfo =
+            forCurrentScenario {
+                if (!gameEnded) ui?.uiEndTurnInfo()
+            }
+        js("setTimeout")(showEndTurnInfo, Game.END_TURN_INFO_DELAY_MS)
         return
     }
     executeAction(action)
@@ -134,10 +136,15 @@ private fun Game.executeAction(action: dynamic) {
             val title = param[0] as String
             val body = param[1] as String
             waitUIAnimation = true
-            UIBuilder.message(title, body) {
-                uiMessageClicked = true
-                uiAnimationFinished()
-            }
+            UIBuilder.message(
+                title,
+                body,
+                callback =
+                    forCurrentScenario {
+                        uiMessageClicked = true
+                        uiAnimationFinished()
+                    },
+            )
         }
 
         ActionType.VIEWPORT.value -> {

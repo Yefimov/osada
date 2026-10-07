@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail when a Kotlin source under src/ is untracked by git (DEFERRED.md §4.7).
+"""Fail when a Kotlin source under src/ is untracked by git.
 
 Why this exists. Twice now a commit has shipped call sites, stylesheets and i18n bundles for new
 code whose *sources* it never staged, leaving a HEAD that does not compile from a clean checkout:
@@ -68,7 +68,7 @@ def main() -> int:
     if untracked:
         # ASCII only in printed output: this runs under Gradle on a Windows console whose code page
         # cannot necessarily encode the section sign.
-        print("Untracked Kotlin sources under src/ (DEFERRED.md 4.7):", file=sys.stderr)
+        print("Untracked Kotlin sources under src/:", file=sys.stderr)
         for path in untracked:
             print(f"  - {path}", file=sys.stderr)
         print(

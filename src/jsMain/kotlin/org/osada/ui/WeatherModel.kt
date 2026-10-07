@@ -13,7 +13,7 @@ import kotlin.random.Random
 
 /**
  * Per-turn weather, as Open General's author specifies it (`luis-guzman.com/OpenGen_Features.html`,
- * *Weather*; `docs/design/combat-movement-heroes-weather-audit.md` §7.1):
+ * *Weather*):
  *
  * 1. clear and overcast PERIODS alternate; the scenario's authored sky says which one is running at
  *    the start;

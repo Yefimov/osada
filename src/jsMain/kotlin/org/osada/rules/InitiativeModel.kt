@@ -5,7 +5,7 @@ import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 
 /**
- * Open General's extra initiative input (OG manual 6.10, `docs/og-fidelity-plan.md` B.6), behind the
+ * Open General's extra initiative input (OG manual 6.10), behind the
  * `initiative_model` key.
  *
  * OG: initiative *"is determined by equipment, terrain and experience of the units; it also it's
@@ -14,7 +14,7 @@ import org.osada.rules.ruleset.RuleKey
  *
  * **Default `og_full` since 2026-09-02, by owner decision, reversing the original default.** The
  * balance consequences that kept it off are unchanged and worth restating: adding experience
- * re-tunes every imported campaign in the veteran's favour, which is the `DEFERRED.md` §5.10 hazard
+ * re-tunes every imported campaign in the veteran's favour, which is the `tools/og-import/OG_REGISTER.md` D§5.10 hazard
  * this whole workstream is governed by, and it changes what `First Strike` is worth because that
  * trait re-signs the initiative difference rather than adding to it. The owner weighed those
  * against having OG's uncertainty in the default game and chose the uncertainty; a profile setting

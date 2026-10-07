@@ -16,10 +16,9 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
- * The interaction contracts the three `--z-msg` dialogs were rebuilt on (DEFERRED.md §4.13, §4.14,
- * §4.17). All three defects were invisible to the existing suite because they live in DOM wiring
- * rather than in rules: an ARIA role with no key handler, a teardown path that dropped a layer, and
- * a dialog id assigned N times.
+ * The interaction contracts the three `--z-msg` dialogs were rebuilt on. All three defects were invisible to the
+ * existing suite because they live in DOM wiring rather than in rules: an ARIA role with no key handler, a teardown
+ * path that dropped a layer, and a dialog id assigned N times.
  */
 class DialogInteractionTest {
     @BeforeTest
@@ -124,7 +123,7 @@ class DialogInteractionTest {
         assertFalse(
             AttachmentPickerPresenter.isOpen(),
             "the picker is attached to mainbody at --z-msg, so hiding #equipment alone used to " +
-                "orphan a live prestige-spending modal over the bare map (DEFERRED.md §4.13)",
+                "orphan a live prestige-spending modal over the bare map",
         )
         assertFalse(isVisible("equipment"))
     }
@@ -150,7 +149,7 @@ class DialogInteractionTest {
             1,
             document.querySelectorAll("#uiHeroPromotionBox").length,
             "two announcements used to build two nodes carrying the same id, stacked at the same " +
-                "centring transform (DEFERRED.md §4.17)",
+                "centring transform",
         )
 
         val first = byId("uiHeroPromotionBox")

@@ -68,7 +68,7 @@ internal object EmbarkRules {
      *
      * `RAIL_UNKNOWN` (-1) means the record has no OG source — 4,140 of the merged rosters are
      * Panzer Marshal stock — and a RULE-level permission reads silence as permission
-     * (`docs/og-sources.md`), so those keep exactly the behaviour `embark` gave them.
+     * (`docs/og/og-sources.md`), so those keep exactly the behaviour `embark` gave them.
      */
     private fun permits(
         permission: Int,

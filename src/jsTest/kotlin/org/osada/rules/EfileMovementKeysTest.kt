@@ -13,8 +13,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * `Cut LOS` read on the line of SIGHT rather than only the line of fire
- * (`docs/og-fidelity-plan.md` §Z.4).
+ * `Cut LOS` read on the line of SIGHT rather than only the line of fire.
  *
  * This class also covered `reinf_move` and `allow_pontoon_ex` on 2026-08-28. Both were reverted
  * the same day (§AB): they are per-efile divergences in MOVEMENT, and equipment is merged into one

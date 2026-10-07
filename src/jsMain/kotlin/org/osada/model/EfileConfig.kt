@@ -10,7 +10,7 @@ import kotlin.js.Json
  * Per-efile `equip.cfg` settings and attachment slot definitions, imported from OG's own
  * `$Variable` config file (`tools/og-import/equip_cfg_to_json.py` -> `resources/efile-cfg/<tag>.json`).
  *
- * Absence is meaningful and is never treated as "off" here -- `docs/design/efile-config.md` trap 4:
+ * Absence is meaningful and is never treated as "off" here -- `docs/design/efile-driven-rules.md` §1 trap 4:
  * `g2a_intercept_mode` unset means mode 0, which still intercepts; `attach_on` unset means 0, which
  * really is off. The DEFAULT for each key belongs at the call site (documented there), never baked
  * into this loader, so a caller can tell "efile said nothing" apart from "efile said 0".
@@ -43,8 +43,11 @@ object EfileConfig {
         val disabled: Boolean,
         val bonus: Int,
         val penalty: Int,
-        val minCost: Int,
-        val factCost: Int,
+        /** The slot's own `min-cost` column; null when omitted, i.e. inherit `attach_mincost`. An
+         *  explicit 0 is a real price (OG: *"any can be set to zero"*). */
+        val minCost: Int?,
+        /** The slot's own `fact-cost` column; null when omitted, i.e. inherit `attach_factor`. */
+        val factCost: Int?,
         val penaltyType: Int,
     )
 
@@ -52,8 +55,10 @@ object EfileConfig {
         val armyCost: Boolean,
         val minFuel: Int,
         val minMove: Int,
-        val factorDefaultPct: Int,
-        val minCostDefault: Int,
+        /** `attach_factor`; null when the efile does not set it (then OG's documented 25%). */
+        val factorDefaultPct: Int?,
+        /** `attach_mincost`; null when the efile does not set it (then OG's documented 30pp). */
+        val minCostDefault: Int?,
         val slots: Map<Int, AttachmentSlot>,
     )
 
@@ -133,17 +138,24 @@ object EfileConfig {
         val isLive = attachments != null && attachments != undefined && attachments.on == true
         if (!isLive) return null
 
+        // A file without `costPresence` predates 2026-10-06 and wrote 0 for an omitted cost column
+        // as well as for an explicit one, so its zeros keep the old meaning ("inherit"); only a
+        // file that records presence gets explicit zero honoured. Never reinterpret an old zero.
+        val presence = attachments.costPresence == true
         return AttachmentConfig(
             armyCost = attachments.armyCost == true,
             minFuel = (attachments.minFuel as? Int) ?: 0,
             minMove = (attachments.minMove as? Int) ?: 0,
-            factorDefaultPct = (attachments.factorDefaultPct as? Int) ?: DEFAULT_FACTOR_PCT,
-            minCostDefault = (attachments.minCostDefault as? Int) ?: DEFAULT_MIN_COST_PCT,
-            slots = parseSlots(attachments.slots),
+            factorDefaultPct = costColumn(attachments.factorDefaultPct, presence),
+            minCostDefault = costColumn(attachments.minCostDefault, presence),
+            slots = parseSlots(attachments.slots, presence),
         )
     }
 
-    private fun parseSlots(slotsJson: dynamic): Map<Int, AttachmentSlot> {
+    private fun parseSlots(
+        slotsJson: dynamic,
+        presence: Boolean,
+    ): Map<Int, AttachmentSlot> {
         val slots = mutableMapOf<Int, AttachmentSlot>()
         if (slotsJson == null || slotsJson == undefined) return slots
         js("Object.keys")(slotsJson).unsafeCast<Array<String>>().forEach { id ->
@@ -155,8 +167,8 @@ object EfileConfig {
                     disabled = s.disabled == true,
                     bonus = (s.bonus as? Int) ?: 0,
                     penalty = (s.penalty as? Int) ?: 0,
-                    minCost = (s.minCost as? Int) ?: 0,
-                    factCost = (s.factCost as? Int) ?: 0,
+                    minCost = costColumn(s.minCost, presence),
+                    factCost = costColumn(s.factCost, presence),
                     penaltyType = (s.penaltyType as? Int) ?: 0,
                 )
         }
@@ -186,13 +198,17 @@ object EfileConfig {
         efileWeather = null
         loadedForEfile = null
     }
+}
 
-    // `EFILE_GCE/equip.cfg`'s own comment: mincost + (1SP cost x base strength x factor)/100,
-    // defaults 25% factor / 30pp min-cost -- DEFERRED.md §1.4's design doc citation. Used only when
-    // an efile turns attachments on but omits its own factor/min-cost (none observed to do this yet;
-    // kept as the documented fallback rather than silently defaulting to 0).
-    private const val DEFAULT_FACTOR_PCT = 25
-    private const val DEFAULT_MIN_COST_PCT = 30
+/** A cost value as it was authored: null for "omitted, inherit". A file without the
+ *  `costPresence` marker wrote 0 for an omitted column too, so there 0 also means inherit
+ *  ([EfileConfig.parseAttachments]). Top-level only to keep [EfileConfig] inside its function budget. */
+private fun costColumn(
+    value: dynamic,
+    presence: Boolean,
+): Int? {
+    val number = value as? Int
+    return if (number == 0 && !presence) null else number
 }
 
 /** The `raw` block: every key as the string `equip.cfg` gave it, including the comma lists

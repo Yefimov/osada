@@ -79,6 +79,8 @@ internal object MobileLayoutController {
         val metrics = ViewportMetricsService.refresh()
         org.osada.ui.music.MusicLibraryPresenter
             .resize(metrics)
+        org.osada.ui.campaignmap.CampaignMapPresenter
+            .resize(metrics)
         val previous = mode
         mode = resolveLayoutMode(matches(MEDIA_COARSE), metrics.width, metrics.height, uiSettings.mobileUiMode)
         applyBodyClasses()

@@ -18,9 +18,9 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Ground combat units take hexes by default (`DEFERRED.md` §5.4, reversed in Open General's favour on
- * 2026-07-26), **plus anything carrying OG's `Capture Flag` attribute** (`attr` bit 20, wired up
- * 2026-07-27). PM had no class check at all, which is how a destroyer came to "capture" the port at
+ * Ground combat units take hexes by default (`tools/og-import/OG_REGISTER.md` D§5.4, reversed in
+ * Open General's favour on 2026-07-26), **plus anything carrying OG's `Capture Flag` attribute** (`attr` bit 20, wired
+ * up 2026-07-27). PM had no class check at all, which is how a destroyer came to "capture" the port at
  * N_Kiel without ownership ever transferring — and the reason that destroyer failed is now known: no
  * KAISER naval record carries the flag.
  */

@@ -1610,6 +1610,12 @@ body.osada-layout-phone #smScen .osadaScreenBody {
     min-width: 0;
 }
 
+/* Campaign body ends 8px above the footer's measured top edge (footer bottom inset 8px below);
+ * must outrank osada-theme.css's two-ID `#smCamp #smCampBody` rule. */
+body.osada-layout-phone #smCamp #smCampBody {
+    bottom: calc(8px + var(--osada-screen-footer-h, 48px) + 8px);
+}
+
 body.osada-layout-phone #smCampButtons,
 body.osada-layout-phone #smScenButtons {
     position: absolute;

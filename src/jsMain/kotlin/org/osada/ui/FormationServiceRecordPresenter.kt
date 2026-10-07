@@ -56,7 +56,7 @@ internal object FormationServiceRecordPresenter {
             I18n.t("formation.service_record.commander"),
             dossier?.let { "${it.rank} ${it.name}" } ?: I18n.t("common.none"),
         )
-        // Nothing writes attachmentIds yet (DEFERRED.md §1.4), so "Attachments: 0" would render
+        // Nothing writes attachmentIds yet (`docs/design/attachments.md`), so "Attachments: 0" would render
         // forever and read as broken rather than "the feature doesn't exist here yet". Hide the
         // row until there is something to report.
         if (formation.attachmentIds.isNotEmpty()) {

@@ -6,7 +6,7 @@ import kotlin.math.roundToInt
 
 /**
  * What ordinary replacements do to a formation's experience
- * (`docs/player-comfort-roadmap.md` P2 item 9, decided by the owner on 2026-08-18:
+ * (`docs/design/player-comfort-roadmap.md` P2 item 9, decided by the owner on 2026-08-18:
  * *"experienced unit when gains replacement it should lower their XP, because they invite new
  * soldiers to the unit"*).
  *

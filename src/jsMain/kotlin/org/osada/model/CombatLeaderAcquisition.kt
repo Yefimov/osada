@@ -13,7 +13,7 @@ import org.osada.rules.UnitPredicates
  * Phase 2 hero system: recognition accumulates on the formation and a seeded emergence check may
  * produce an officer whose traits live in the hero roster, so `unit.leader` is deliberately left
  * untouched. **Every other unit** -- standalone scenarios, the AI's forces, borrowed units -- keeps
- * the legacy integer path (`docs/leaders.md` §5). The boundary is
+ * the legacy integer path (`docs/heroes/legacy-leaders.md` §5). The boundary is
  * [org.osada.hero.CampaignHeroScope]; the open question of when to stop writing `unit.leader`
  * entirely is deferred until nothing reads it (it needs a save-format bump).
  */
@@ -139,7 +139,7 @@ internal object CombatLeaderAcquisition {
             experienceAfter / EXPERIENCE_PER_LEVEL > (experienceAfter - expGained) / EXPERIENCE_PER_LEVEL
 
     /**
-     * The pre-hero path for a formation-less unit (`docs/leaders.md` §5).
+     * The pre-hero path for a formation-less unit (`docs/heroes/legacy-leaders.md` §5).
      *
      * The destroyed guard is this side's counterpart of [HeroCampaign.recordCombat]'s own — a unit
      * that just ceased to exist must not be promoted. `generateLeaderWithChance` never checked, so

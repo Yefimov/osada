@@ -1,6 +1,6 @@
 package org.osada.ui.briefing
 
-import kotlinx.browser.localStorage
+import org.osada.storage.localStorage
 import org.osada.ui.briefing.BriefingIntroTracker.reset
 
 /**

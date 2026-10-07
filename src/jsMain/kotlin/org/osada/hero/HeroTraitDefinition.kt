@@ -32,12 +32,12 @@ data class HeroTraitDefinition(
  * The catalogue itself. Every [HeroTraitDefinition.legacyTrait] used here is either already reachable through the
  * class-signature/personal-trait paths ([HeroBackgrounds], [ProceduralHeroGenerator]) — offered
  * again here at a higher evidence bar for a formation that did not start with it — or one of the
- * traits `docs/leaders.md` §8 flags as "defined but unobtainable... nonetheless honoured in combat
+ * traits `docs/heroes/legacy-leaders.md` §8 flags as "defined but unobtainable... nonetheless honoured in combat
  * code" (Resilience, Overwhelming Attack, Skilled Ground Attack, Skilled Reconnaissance, Street
  * Fighter, Recon Movement). This is exactly the way the design brief's §8.6 prefers: a real,
  * already-implemented rule effect rather than a new numeric bonus invented for the occasion.
  *
- * **Correction, `tools/og-import/DEFERRED.md` §1.6:** Skilled Ground Attack, Skilled
+ * **Correction, `docs/heroes/README.md` §2:** Skilled Ground Attack, Skilled
  * Reconnaissance and Recon Movement were still missing from this list despite this file's own
  * comment claiming otherwise — `AttackCalculation`/`MovementRules` already honoured the first two,
  * but no catalogue entry, class-signature list or background ever granted any of the three, so a

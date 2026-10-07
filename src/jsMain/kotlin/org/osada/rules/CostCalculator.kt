@@ -102,6 +102,8 @@ object CostCalculator {
      * the ratio `OVERSTRENGTH_PENALTY` gives them. `GreenReplacements` deliberately does NOT come
      * through here: `green_cost` and `elite_cost` are both percentages of the SAME standard cost,
      * so charging one on top of the other would compound them.
+     *
+     * An aircraft repaired inside an [Airbase]'s hangar pays its discounted price ([Airbase.repairCost]).
      */
     fun reinforceCostPerStrength(
         unit: GameUnit,
@@ -109,7 +111,7 @@ object CostCalculator {
     ): Int {
         val penalty = if (overStrength) OVERSTRENGTH_PENALTY else 1.0
         val standard = kotlin.math.round(calculateUnitCostPerStrength(unit) * penalty).toInt()
-        return influenced(unit, EliteReplacements.priced(standard))
+        return Airbase.repairCost(unit, influenced(unit, EliteReplacements.priced(standard)))
     }
 
     /** Prestige refunded when disbanding/selling [unit] at its current strength. */

@@ -29,7 +29,7 @@ import kotlin.test.assertTrue
  * [anAuxiliaryFormationWithNoCoreRecordStillCarriesItsAuthoredSlot]: most of the units that carry an
  * authored slot never join a campaign roster, and the purchased system has nowhere to put one.
  *
- * The two questions `docs/og-import-rules-backlog.md` §7 said had to be settled before deploying —
+ * The two questions `docs/og/import-rules-backlog.md` §7 said had to be settled before deploying —
  * duplicates, and the two-slot cap — are [aDuplicateSlotCountsOnce] and
  * [theAuthorsFittingFillsTheCapAheadOfAPurchase].
  */
@@ -77,8 +77,8 @@ class AuthoredAttachmentsTest {
     )
 
     /** Recon (+2 spot), Anti-Tank (+3), Bridging disabled — the LXF shape, minus the parts unused
-     *  here. Slot 6 is deliberately absent: it is a real `equip.cfg` id this engine does not
-     *  implement, and the filter that drops it is what this fixture tests. */
+     *  here. Slot 6 is deliberately absent: it is a real `equip.cfg` id this fixture's efile does
+     *  not define, and the filter that drops it is what this fixture tests. */
     private fun config() =
         EfileConfig.AttachmentConfig(
             armyCost = true,
@@ -144,7 +144,7 @@ class AuthoredAttachmentsTest {
      */
     @Test
     fun aSlotTheEfileDoesNotDefineIsDropped() {
-        // 6 is `equip.cfg`'s Forward Observer: a real OG slot with no mechanic in this engine.
+        // 6 is `equip.cfg`'s Forward Observer: a real OG slot this fixture's efile does not define.
         val fitted = unit(6, Attachments.SLOT_RECON)
         assertEquals(listOf(Attachments.SLOT_RECON), Attachments.fittedSlots(fitted).map { it.first })
     }

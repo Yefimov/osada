@@ -12,6 +12,7 @@ import org.osada.model.GameUnit
 import org.osada.model.UnitDescriptions
 import org.osada.model.abilityCatalogKeys
 import org.osada.monthNamesShort
+import org.osada.rules.Airbase
 import org.osada.unitClassNames
 
 /** Unit narrative description when loaded and non-blank, else null — shared by the equipment
@@ -40,6 +41,11 @@ internal fun equipmentDescriptionOrNull(eq: EquipmentData): String? = UnitDescri
 internal fun equipmentMechanicsNotes(eq: EquipmentData): List<String> =
     buildList {
         val capabilities = org.osada.rules.UnitCapabilities
+        // First, because it is what the unit is FOR, and the one thing an efile named "Airfield"
+        // hides: this is the crew-and-workshop unit, not the airfield hex.
+        if (Airbase.isAirbase(eq)) {
+            add(I18n.t("equipment.mechanics.airbase", mapOf("percent" to Airbase.REPAIR_COST_PERCENT)))
+        }
         if (capabilities.grantsCombatSupport(eq)) add(I18n.t("equipment.mechanics.headquarters"))
         if (capabilities.hasPhasedMovement(eq)) add(I18n.t("equipment.mechanics.recon_movement"))
         if (capabilities.canOverrun(eq)) add(I18n.t("equipment.mechanics.tank_overrun"))

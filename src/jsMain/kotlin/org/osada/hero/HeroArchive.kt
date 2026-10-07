@@ -1,7 +1,7 @@
 package org.osada.hero
 
 /**
- * The profile-level hero archive (`docs/design/hero-desk-and-profile-archive.md` §3).
+ * The profile-level hero archive (`docs/heroes/hero-desk-and-archive.md` §3).
  *
  * ## Why the roster travels as its own serialized block
  *

@@ -378,6 +378,18 @@ object GameStateSerializer {
     }
 }
 
+/** What engineers built on [hex], on the optional-key rule of [serializeHexEngineering]. */
+private fun serializeSapperWorks(
+    obj: Json,
+    hex: Hex,
+) {
+    // The airfield's ORIGIN, for OG's `Cannot use dirt airfields`. It outlives the job that set
+    // it, so a reload must not turn a sapper's strip back into a permanent field.
+    if (hex.sapperBuilt) obj.asDynamic().sapperBuilt = 1
+    // What else engineers built here, so a reload still draws it over the painted map.
+    if (hex.sapperWorks != 0) obj.asDynamic().sapperWorks = hex.sapperWorks
+}
+
 /**
  * OG 9.3's engineering state, split out of [serializeHex] to keep that function inside
  * detekt's complexity budget once the station flag joined it (2026-08-27).
@@ -424,10 +436,7 @@ private fun serializeHexEngineering(
     // The cut rail line, on the same rule: it is the only record of the track Repair would
     // relay, and it outlives the demolition or the barrage that cut it (`Hex.blownRail`).
     if (hex.blownRail != 0) obj.asDynamic().blownRail = hex.blownRail
-    // The airfield's ORIGIN, for OG's `Cannot use dirt airfields`. Stored on the same optional-
-    // key rule as the two records above, and for the same reason: it outlives the job that set
-    // it, so a reload must not turn a sapper's strip back into a permanent field.
-    if (hex.sapperBuilt) obj.asDynamic().sapperBuilt = 1
+    serializeSapperWorks(obj, hex)
     // A railroad station is authored map data, but engineers can also build one, so the save
     // has to carry it: reloading must not demolish a station the player paid 18 prestige for.
     if (hex.station) obj.asDynamic().station = 1
@@ -492,6 +501,10 @@ private fun serializeAuthoredAiOrders(
     // because a core formation carries them forward with it (`rules/Attachments`).
     if (unit.authoredAttachmentIds.isNotEmpty()) {
         obj.asDynamic().authoredAttachments = unit.authoredAttachmentIds.toTypedArray()
+    }
+    // Bought in a standalone scenario (a campaign's purchases live on the formation instead).
+    if (unit.purchasedAttachmentIds.isNotEmpty()) {
+        obj.asDynamic().boughtAttachments = unit.purchasedAttachmentIds.toTypedArray()
     }
     if (unit.attachmentsForbidden) obj.asDynamic().noAttachments = true
 }

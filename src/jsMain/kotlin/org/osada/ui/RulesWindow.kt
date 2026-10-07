@@ -226,7 +226,7 @@ internal object RulesWindow {
      * Clears the gap panel.
      *
      * It used to render the Open General Fidelity profile's list of systems that profile did not
-     * reproduce. That profile was retired on 2026-08-28 (`docs/og-fidelity-plan.md` §AC): Author's
+     * reproduce. That profile was retired on 2026-08-28: Author's
      * Vision now honours each scenario's own authored switches, so it IS what Open General runs,
      * and a player who wants a specific rule builds a custom ruleset instead of buying a bundle.
      *

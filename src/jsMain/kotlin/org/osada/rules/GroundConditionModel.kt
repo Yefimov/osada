@@ -6,8 +6,7 @@ import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 
 /**
- * How the ground dries, freezes and thaws under a run of weather
- * (`tools/og-import/DEFERRED.md` §7.46).
+ * How the ground dries, freezes and thaws under a run of weather.
  *
  * Open General's own wording:
  *

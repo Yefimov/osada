@@ -10,7 +10,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Structured author credits (`docs/player-comfort-roadmap.md`, "Authorship metadata contract").
+ * Structured author credits (`docs/design/player-comfort-roadmap.md`, "Authorship metadata contract").
  *
  * The rules that matter: a credit is a row of its own with a localized label and untranslated
  * names, content with no credit renders nothing at all, and a malformed sidecar degrades instead of

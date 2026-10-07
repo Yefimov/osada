@@ -27,7 +27,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
- * Leader transfers between formations (DEFERRED.md §1.10): the "way back" for a commander
+ * Leader transfers between formations (`docs/heroes/README.md` §2): the "way back" for a commander
  * `HeroCampaign.applyCasualty` detaches on a light wound/evacuation, closing the state that used to
  * leave "Wounded" and "Reserve" terminal in practice.
  */

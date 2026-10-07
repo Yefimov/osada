@@ -23,7 +23,7 @@ import org.osada.UnitClass
  *
  * `Leaders.unitClassLeaders` still exists and still feeds the campaign hero generator
  * (`hero/ProceduralHeroGenerator`), which is a separate, settled design
- * (`docs/hero-leader-implementation-phases.md`); this object does not touch it.
+ * (`docs/heroes/README.md` §2); this object does not touch it.
  */
 object OgLeaderPools {
     /**
@@ -66,7 +66,7 @@ object OgLeaderPools {
      * Traits whose rule can only ever fire for a LAND formation: they read terrain movement cost,
      * entrenchment, city fighting, flag capture, land concealment, the ground zone of control or
      * ground support fire. Offering one to a ship or an aircraft would put a promise in the unit
-     * card that no rule keeps — the defect `docs/og-fidelity-plan.md` A.4 swept out.
+     * card that no rule keeps (`docs/heroes/legacy-leaders.md` §8).
      */
     private val LAND_ONLY =
         setOf(

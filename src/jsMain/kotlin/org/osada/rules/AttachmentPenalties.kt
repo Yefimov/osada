@@ -28,7 +28,7 @@ import org.osada.model.GameUnit
  * column, so every one of those penalties was silently dropped -- a shipped campaign whose
  * attachments were all upside. `EFILE_LXF` writes the column explicitly (and overrides slot 7 to
  * ammo), `ATOMIC`/`BASEKORP` have `penalty = 0` throughout, so those three are unaffected either
- * way. See DEFERRED.md §1.19.
+ * way. See `docs/design/attachments.md`.
  */
 internal const val PENALTY_MOVEMENT = 1
 internal const val PENALTY_INITIATIVE = 2

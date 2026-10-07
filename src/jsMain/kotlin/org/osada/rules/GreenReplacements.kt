@@ -8,8 +8,8 @@ import org.osada.rules.ruleset.RuleKey
 /**
  * Open General's **green replacements** — the cheap intake that costs a formation its veterancy.
  *
- * `og-fidelity-plan.md` §Y.3 called this *"the largest unbuilt OG mechanic left"*, and it was never
- * blocked on evidence: `OPENTXT_SAMPLE/equip.cfg` documents all six keys in full.
+ * Once the largest unbuilt OG mechanic, and never blocked on evidence: `OPENTXT_SAMPLE/equip.cfg` documents all six
+ * keys in full.
  *
  * > *"green — Set 1 to enable green replacements."*
  * > *"green_cost — cost percent for green replacements, relative to standard cost (0..100).
@@ -73,9 +73,12 @@ object GreenReplacements {
      * base. [EliteReplacements] carries the pair.
      */
     fun costPerStrength(unit: GameUnit): Int =
-        CostCalculator.influenced(
+        Airbase.repairCost(
             unit,
-            (CostCalculator.calculateUnitCostPerStrength(unit) * costPercent() / PERCENT).coerceAtLeast(1),
+            CostCalculator.influenced(
+                unit,
+                (CostCalculator.calculateUnitCostPerStrength(unit) * costPercent() / PERCENT).coerceAtLeast(1),
+            ),
         )
 
     /** `green_exp` — what fraction of the formation's own experience the intake arrives with. */

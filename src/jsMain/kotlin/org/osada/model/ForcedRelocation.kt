@@ -30,7 +30,7 @@ class ForcedMove(
 
 /**
  * Moves [unit] one hex to [to] because combat forced it -- a retreat or an evasion -- as an ATOMIC
- * relocation rather than an ordinary move (`docs/design/combat-movement-heroes-weather-audit.md` §5).
+ * relocation rather than an ordinary move (`tools/og-import/OG_REGISTER.md` §2.3).
  *
  * Both used to go through `GameMap.moveUnit`, which treated the unit as if it had been ordered there:
  * an `Overwatch` commander (the attacker's own, often) could spring an ambush on the retreating unit

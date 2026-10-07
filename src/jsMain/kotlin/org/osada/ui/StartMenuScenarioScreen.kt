@@ -1,11 +1,11 @@
 package org.osada.ui
 
-import kotlinx.browser.localStorage
 import org.osada.i18n.I18n
 import org.osada.model.Equipment
 import org.osada.model.getCountryName
 import org.osada.model.getCountryNameByEqp
 import org.osada.scenario.ScenarioTextLocalization
+import org.osada.storage.localStorage
 import org.osada.ui.StartMenuScenarioScreen.humanCountryOf
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLOptionElement

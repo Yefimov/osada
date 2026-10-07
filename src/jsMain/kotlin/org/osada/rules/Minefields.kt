@@ -15,7 +15,7 @@ import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 
 /**
- * Land minefields (OG manual 9.9, `docs/og-fidelity-plan.md` C.1).
+ * Land minefields (OG manual 9.9).
  *
  * A minefield is a **characteristic of a hex, not a unit**: the scenario author places some, units
  * with OG's `Drop mines` ability lay more during play, and units able to clear them take them away
@@ -24,10 +24,10 @@ import org.osada.rules.ruleset.RuleKey
  *
  * **Entirely gated on the `minefields` ruleset key, which is OFF by default.** That is a product
  * decision, not caution: undetected mines damage a formation mid-move with no visible cause, which
- * is exactly the failure `DEFERRED.md` §1.1 forbids (*"Movement damage with no visible cause reads
- * as a bug"*). A player who has not asked for the mechanic never meets it, and one who has gets the
- * two halves that make it fair — a **detected** field is drawn, costs the rest of the move and does
- * no damage; only an **undetected** field ambushes, and it reveals itself in the same instant.
+ * is exactly the failure `docs/design/action-affordances-and-objectives.md` §1.1 forbids
+ * (*"Movement damage with no visible cause reads as a bug"*). A player who has not asked for the mechanic never meets
+ * it, and one who has gets the two halves that make it fair — a **detected** field is drawn, costs the rest of the move
+ * and does no damage; only an **undetected** field ambushes, and it reveals itself in the same instant.
  *
  * ### Where the three abilities come from
  *
@@ -49,8 +49,8 @@ internal object Minefields {
     /** The most an undetected field can take off a formation. **Quoted, not inferred**: OG's own
      *  minefield rules say entering an undetected field can cost *"up to three strength points,
      *  depending on experience and Engineer status"*. Was a flat inferred 2 until 2026-08-28, when
-     *  the author's Features page turned out to name both the ceiling and the two modifiers
-     *  (`docs/og-fidelity-plan.md` §Z.3). */
+     *  the author's Features page turned out to name both the ceiling and the two modifiers.
+     */
     const val MAX_UNDETECTED_MINE_DAMAGE = 3
 
     /** The floor. A mine that goes off always costs something -- OG's sentence is "up to three",
@@ -67,7 +67,7 @@ internal object Minefields {
      * and [MAX_UNDETECTED_MINE_DAMAGE].
      *
      * OG's ceiling and its two modifiers are quoted; **the arithmetic between them is an
-     * `INFERENCE`** and is the open question `docs/og-open-questions.md` Q3.1 asks. One point off
+     * `INFERENCE`** (open question Q6.1 in `tools/og-import/OG_REGISTER.md` §5). One point off
      * for a veteran, one off for a formation that knows how to clear mines, floored at one: a green
      * line unit takes the documented maximum, a veteran engineer takes the minimum.
      *
@@ -77,7 +77,7 @@ internal object Minefields {
      * Grading by experience and Engineer status is how OG's "up to" becomes a spread without a die.
      *
      * Class-agnostic, so a ship striking a naval mine is charged by the same rule -- which is the
-     * whole of the "naval mine damage" gap `docs/og-fidelity-plan.md` §Y.3 recorded.
+     * whole of the "naval mine damage" gap as far as OSADA can close it without a published formula.
      */
     fun strikeDamage(unit: GameUnit): Int {
         var damage = MAX_UNDETECTED_MINE_DAMAGE

@@ -7,7 +7,7 @@ import org.osada.model.MoveReactionKind
  *
  * One owner for the banner ([InterceptionBanner]) and the HUD log ([AnimationOrchestrator]), so the
  * same event cannot be named "intercepted" in one surface and "fired on" in the other — the drift
- * `DEFERRED.md` §4.6 records for combat predicates, applied to wording.
+ * already fixed once for combat predicates, applied to wording.
  */
 internal object MoveReactionText {
     fun titleKey(kind: MoveReactionKind): String =
