@@ -71,6 +71,7 @@ internal object GameText {
                 SupplySource.AIRFIELD_CARRIER.name -> "unit_info.supply_context.airfield_carrier"
                 SupplySource.NAVAL.name -> "unit_info.supply_context.naval"
                 SupplySource.NONE.name -> "unit_info.supply_context.none"
+                SupplySource.DEPOT.name -> "unit_info.supply_context.depot"
                 SupplyContextRules.CITY_SUPPLY_TOKEN -> "unit_info.supply_context.city"
                 SupplySource.GROUND.name -> "unit_info.supply_context.field"
                 else -> return ""
@@ -88,6 +89,7 @@ internal object GameText {
             SupplySource.AIRFIELD_CARRIER -> "unit_info.supply_context.airfield_carrier"
             SupplySource.NAVAL -> "unit_info.supply_context.naval"
             SupplySource.NONE -> "unit_info.supply_context.none"
+            SupplySource.DEPOT -> "unit_info.supply_context.depot"
             SupplySource.GROUND ->
                 if (context.terrain == TerrainType.CITY.value) {
                     "unit_info.supply_context.city"

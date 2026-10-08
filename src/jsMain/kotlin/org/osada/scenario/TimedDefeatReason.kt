@@ -17,7 +17,7 @@ internal object TimedDefeatReason {
         scenario: Scenario,
         side: Int,
     ): String {
-        val counts = if (side == 0) scenario.victoryHoldCounts else scenario.victoryHoldCountsSide1
+        val counts = scenario.holdCountsFor(side)
         val tacticalTier = 2
         val remaining =
             scenario.map.sidesVictoryHexes

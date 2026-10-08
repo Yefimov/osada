@@ -7,6 +7,7 @@ import org.osada.model.Player
 import org.osada.model.isInitialDeploymentWindow
 import org.osada.multiplayer.client.OsadaMultiplayer
 import org.osada.rules.ActionAvailability
+import org.osada.rules.CautiousMove
 import org.osada.rules.UnitActionAvailability
 import org.osada.rules.UnitActionContext
 import org.osada.rules.UnitActionId
@@ -151,7 +152,10 @@ internal class UnitContextButtons(
         val view = UnitActionPresenter.view(availability, unit, map, asleep)
         val action = availability.action
         val button = addTag(row, "div")
-        button.className = "osada-action" + extraClass(action, availability.enabled, asleep)
+        val active =
+            (action == UnitActionId.SLEEP && asleep) ||
+                (action == UnitActionId.CAUTIOUS_MOVE && CautiousMove.isOn(map, unit))
+        button.className = "osada-action" + extraClass(action, availability.enabled, active)
         button.setAttribute("data-action", action.id)
         button.setAttribute("data-action-variant", UnitActionPresenter.variantKey(action, unit, asleep))
         // The rich anchored panel replaces the native one-line title entirely (§4).
@@ -188,12 +192,13 @@ internal class UnitContextButtons(
     private fun extraClass(
         action: UnitActionId,
         enabled: Boolean,
-        asleep: Boolean,
+        active: Boolean,
     ): String {
         val parts = mutableListOf<String>()
         // Undo is the single rescue action -- styled distinctly (brass border, spec).
         if (action == UnitActionId.UNDO) parts += "osada-action--undo"
-        if (action == UnitActionId.SLEEP && asleep) parts += "osada-action--active"
+        // A toggle that is on: Sleep while asleep, Cautious while the spotted-only range is drawn.
+        if (active) parts += "osada-action--active"
         if (!enabled) parts += "osada-action--disabled"
         return if (parts.isEmpty()) "" else " " + parts.joinToString(" ")
     }

@@ -238,6 +238,7 @@ object GameStateSerializer {
         // A pontoon still being laid opens next turn (`rules/PontoonBridges`); same optional-key rule.
         if (unit.bridgeLaying) obj.asDynamic().bridgeLaying = true
         if (unit.shotsThisTurn != 0) obj.asDynamic().shotsThisTurn = unit.shotsThisTurn
+        serializeReactionBudgets(obj, unit)
         if (unit.halfShotPending) obj.asDynamic().halfShotPending = true
         if (unit.lastingHits != 0) obj.asDynamic().lastingHits = unit.lastingHits
         if (unit.isTemporaryBorrowed) obj.asDynamic().temporaryBorrowed = true
@@ -539,6 +540,24 @@ private fun serializeAuthoredPurchaseLimits(
     if (player.transportPoolsAuthored) obj.asDynamic().transportPoolsAuthored = true
     if (player.purchaseGrowthSpent != 0) obj.asDynamic().purchaseGrowthSpent = player.purchaseGrowthSpent
     if (player.replacementCredits != 0) obj.asDynamic().replacementCredits = player.replacementCredits
+}
+
+/**
+ * Turn-scoped reaction budgets (`docs/README.md` C2, 2026-10-08). They used to be left out on the
+ * grounds that they never outlive a turn, but a mid-turn save, co-op checkpoint or recovery
+ * snapshot is exactly that turn: omitting them handed a reloaded AA unit a second interception.
+ * Optional keys on the byte-stability rule; an absent key is an unspent budget, which is what
+ * every older save meant.
+ */
+private fun serializeReactionBudgets(
+    obj: Json,
+    unit: GameUnit,
+) {
+    if (unit.hasInterceptedThisTurn) obj.asDynamic().hasInterceptedThisTurn = true
+    if (unit.hasInterceptedMovingAirThisTurn) obj.asDynamic().hasInterceptedMovingAirThisTurn = true
+    if (unit.hasAmbushedThisTurn) obj.asDynamic().hasAmbushedThisTurn = true
+    if (unit.hasSupportedThisTurn) obj.asDynamic().hasSupportedThisTurn = true
+    if (unit.depotPaidThisTurn) obj.asDynamic().depotPaidThisTurn = true
 }
 
 /**

@@ -4,8 +4,6 @@ import org.osada.model.ATTR_EX_MASK_SUPPLY_UNIT
 import org.osada.model.EfileConfig
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
-import org.osada.rules.ruleset.ActiveRuleset
-import org.osada.rules.ruleset.RuleKey
 
 /**
  * OG's **Depot supply** — `supply_ex`, and the `Supply Unit` equipment special that marks a mobile
@@ -37,16 +35,13 @@ import org.osada.rules.ruleset.RuleKey
  * resupply from an adjacent Depot after moving or firing"* was a BUG, so moving and firing must not
  * disqualify.
  *
- * ### What is inert, and why the rule exists anyway
+ * ### When it applies
  *
- * **No shipped efile sets `supply_ex`, and 0 of 56,970 shipped records carry `Supply Unit`.** Both
- * were measured over the merged roster and every shipped efile. The mechanic therefore cannot alter a single
- * shipped scenario — [enabled] is false everywhere today — and it needs no ruleset key, because the
- * efile key and the equipment bit are already its two gates.
- *
- * It is built because it stopped being blocked on evidence: the Depot, once filed as a mechanic
- * nobody understood, was documented all along (`tools/og-import/OG_ABILITY_AUDIT.md` §7.5 and the
- * author's own Features page).
+ * **Always, since ruleset schema 22 (owner, 2026-10-08).** OG's normal supply includes Depots, so
+ * a formation beside a friendly Depot gets its full refill whatever the profile. No shipped efile
+ * sets `supply_ex` and 0 of 56,970 shipped records carry `Supply Unit`, so in shipped content this
+ * means exactly the eight authored KAISER depots (mobile `Zárt Kocsi` wagons) and nothing else;
+ * the restricted modes ([enabled]) still need an efile that asks for them.
  *
  * ### Both of OG's two ways to BE a Depot are now read
  *
@@ -59,11 +54,7 @@ import org.osada.rules.ruleset.RuleKey
  * reads both, and the prediction that entry made held exactly: *"this is the object that gains a
  * second source, not a second mechanic"*. Nothing below this line changed.
  *
- * **It also changes what "inert" means here.** `Supply Unit` is carried by 0 of 56,970 shipped
- * equipment records, so before this the rule could not fire on any shipped content whatever the
- * ruleset said. Eight deployed scenarios designate a Depot, so the mechanic now has content —
- * still behind `supply_ex`, which no shipped efile sets, so what it waits on is an efile rather
- * than evidence.
+ * Eight deployed scenarios designate a Depot this way; `Supply Unit` is carried by no shipped record.
  */
 object DepotSupply {
     /** `1` — units may resupply from an adjacent Depot. */
@@ -81,27 +72,46 @@ object DepotSupply {
     /** OG's cost under [MODE_DEPOT_AMMO]: one ammo for the whole turn's work. */
     const val DEPOT_AMMO_COST = 1
 
-    /** The efile's `supply_ex`, or 0 when the player's ruleset has the mechanic switched off.
-     *  Two gates, and the key is the outer one: it says "run OG's supply modes", the efile says
-     *  which. */
-    private fun mode(): Int =
-        if (!ActiveRuleset.flag(RuleKey.DEPOT_SUPPLY, false)) 0 else EfileConfig.intKey("supply_ex", 0)
+    /** The efile's `supply_ex`; absent is 0, OG's normal supply. No ruleset switch since schema 22
+     *  (owner, 2026-10-08): Depots are part of normal supply and always work. */
+    private fun mode(): Int = EfileConfig.intKey("supply_ex", 0)
 
-    /** Whether the supply rules are changed at all. False for all ten shipped efiles, and false
-     *  for every ruleset that leaves [RuleKey.DEPOT_SUPPLY] off. */
-    fun enabled(): Boolean = mode() != 0
+    /**
+     * Whether standard supply is REPLACED by the restricted sources: bits 1 and 2 *"Disable
+     * standard supply rules"* on the author's current Features page. Modes 4 and 8 alone keep the
+     * standard rules (*"4 standard rules plus Depots spending 1 ammo"*). Until 2026-10-08 any
+     * nonzero mode restricted supply.
+     */
+    fun enabled(): Boolean = mode() and (MODE_DEPOTS or MODE_CITIES) != 0
 
-    /** Whether Depots participate. *"Adding 4 or 8 implies Depots are enabled."* */
-    private fun depotsEnabled(): Boolean = mode() and (MODE_DEPOTS or MODE_DEPOT_AMMO or MODE_DEPOT_FROM_DEPOT) != 0
+    /**
+     * Whether Depots participate.
+     *
+     * **Absent or zero `supply_ex` is OG's normal supply, and normal supply includes Depots** --
+     * the Features page lists *"Land and naval units can resupply at the end of the turn if
+     * adjacent to a Depot"* among the normal rules (`tools/og-import/OG_ABILITY_AUDIT.md` §7.6).
+     * Before 2026-10-08 a zero mode disabled them, which left all eight authored KAISER depots
+     * inert even with the old `depot_supply` key on.
+     *
+     * The one way to lose them is bit 2 without bit 1: *"When $supply_ex is set to 2 ... Depots
+     * cannot supply adjacent units"*, and *"6 (2+4) would be taken as 2 by engine, because Depots
+     * would be disabled"*. 10 and 14 follow the same rule. The page's "12 (1+2+4+8)" row is a typo
+     * (that sum is 15); the bits are read independently and no 12-specific meaning is invented.
+     */
+    private fun depotsEnabled(): Boolean {
+        val m = mode()
+        return m and MODE_DEPOTS != 0 || m and MODE_CITIES == 0
+    }
 
     /** Whether cities and ports participate (`2`). */
     fun citiesSupply(): Boolean = mode() and MODE_CITIES != 0
 
-    /** Whether a Depot must spend ammunition this turn to supply anyone (`4`). */
-    fun depotSpendsAmmo(): Boolean = mode() and MODE_DEPOT_AMMO != 0
+    /** Whether a Depot must spend ammunition this turn to supply anyone (`4`). Meaningless, and
+     *  so false, when Depots are disabled: *"adding 4 (to require ammo) is meaningless"*. */
+    fun depotSpendsAmmo(): Boolean = depotsEnabled() && mode() and MODE_DEPOT_AMMO != 0
 
     /** Whether a Depot may be supplied by another Depot (`8`). */
-    private fun depotMaySupplyDepot(): Boolean = mode() and MODE_DEPOT_FROM_DEPOT != 0
+    private fun depotMaySupplyDepot(): Boolean = depotsEnabled() && mode() and MODE_DEPOT_FROM_DEPOT != 0
 
     /**
      * Whether [unit] is a Depot — a mobile one, from `Supply Unit`.
@@ -165,15 +175,16 @@ object DepotSupply {
         val isFriendlyDepot = !depot.destroyed && depot.player?.side == side && isDepot(depot)
         // A Depot supplying another Depot must be idle and unspent -- OG names all three
         // conditions, and they apply to the SUPPLIER, not to the recipient.
-        val spent = depot.hasMoved || depot.hasFired || depot.hasResupplied
+        val spent = depot.hasMoved || depot.hasFired || depot.hasResupplied || depot.depotPaidThisTurn
         val idleEnough = !recipientIsDepot || !spent
-        // "So if no ammo, cannot resupply units in that turn."
-        val canPay = !depotSpendsAmmo() || depot.getAmmo() >= DEPOT_AMMO_COST
+        // "So if no ammo, cannot resupply units in that turn." A depot that already PAID this turn
+        // keeps serving at zero: the cost is one ammo for the turn, not a balance it must hold.
+        val canPay = !depotSpendsAmmo() || depot.depotPaidThisTurn || depot.getAmmo() >= DEPOT_AMMO_COST
         return isFriendlyDepot && idleEnough && canPay
     }
 
     /**
-     * Whether [unit] may resupply at all under a non-default `supply_ex`.
+     * Whether [unit] may resupply at all under a restricting `supply_ex` (bit 1 or 2).
      *
      * *"Any other value restricts units to resupply only from Depots and/or Cities/Ports."* This is
      * the RESTRICTING half, and it is the reason the whole object is gated on [enabled]: with the
@@ -195,18 +206,18 @@ object DepotSupply {
      * Charges the Depot serving [unit] its ammunition, once per turn, under mode `4`.
      *
      * *"Notice it is not 1 ammo per unit, just 1 ammo to resupply any number of units in that
-     * turn."* [GameUnit.hasResupplied] on the DEPOT is the once-per-turn latch — the depot is not
-     * itself resupplying, so the flag is free for this, and it is already cleared at the turn
-     * boundary by `unitEndTurn`.
+     * turn."* [GameUnit.depotPaidThisTurn] is the once-per-turn latch. It used to be the depot's
+     * own `hasResupplied`, which also barred the depot from its own refill, engineering and
+     * mine-clearing; the dedicated flag is saved and cleared by `unitEndTurn`.
      */
     fun chargeSupplier(
         map: GameMap,
         unit: GameUnit,
     ) {
         val depot = if (depotSpendsAmmo()) supplierFor(map, unit) else null
-        if (depot != null && !depot.hasResupplied) {
+        if (depot != null && !depot.depotPaidThisTurn) {
             depot.ammo = (depot.ammo - DEPOT_AMMO_COST).coerceAtLeast(0)
-            depot.hasResupplied = true
+            depot.depotPaidThisTurn = true
         }
     }
 }

@@ -1,6 +1,7 @@
 package org.osada.ui
 
 import org.osada.i18n.I18n
+import org.osada.i18n.Language
 
 /**
  * [StartMenuBuilder]'s main-menu button column (Continue/New Campaign/Single Scenario/Load
@@ -71,9 +72,22 @@ internal object StartMenuMainButtons {
         buildManualButton()
 
         byId("smLogoText")?.textContent = I18n.t("menu.main.tagline")
+        refreshInfoLinks()
         // Display version only — decoupled from the engine VERSION constant, which is baked
         // into the localStorage save keys and must not change (it would orphan existing saves).
         byId("smCredits")?.innerHTML = "v0.67 alpha"
+    }
+
+    /**
+     * The static About / Privacy links beside GitHub in `index.html`: their text, and the privacy page
+     * in the player's language. The About page is English only.
+     */
+    fun refreshInfoLinks() {
+        byId("smAbout")?.textContent = I18n.t("menu.main.about")
+        byId("smPrivacy")?.apply {
+            textContent = I18n.t("menu.main.privacy")
+            setAttribute("href", if (I18n.language == Language.RUSSIAN) "privacy.ru.html" else "privacy.html")
+        }
     }
 
     private fun buildLanguageSwitch() {

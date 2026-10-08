@@ -20,6 +20,7 @@ import org.osada.model.executeAttack
 import org.osada.model.moveUnit
 import org.osada.model.surpriseTarget
 import org.osada.multiplayer.client.OsadaMultiplayer
+import org.osada.rules.AirborneLanding
 import org.osada.rules.ExtendedVictory
 import org.osada.rules.GameRules
 import org.osada.rules.getDirection
@@ -298,6 +299,7 @@ internal class AnimationOrchestrator(
         // A commander lost on the move itself (a minefield, an AA gun) is announced now, as a
         // combat casualty is announced after its combat.
         HeroCasualtyPresenter.present(HeroCampaign.drainCasualties())
+        reportAirborneLanding(ui, unit, result)
         val pos =
             unit.getPos() ?: run {
                 ui.game.waitUIAnimation = false
@@ -412,6 +414,38 @@ private fun reportCapture(
         if (totalPrestige > 0) I18n.t("trigger.reward.prestige", mapOf("amount" to totalPrestige)) else ""
     val line = I18n.t("hud.log.captured", mapOf("unit" to unit.unitData(true).name, "place" to place))
     HudLog.addAt(pos.row, pos.col, line + reward)
+}
+
+/**
+ * OG's airborne misdrop (`rules/AirborneLanding`): a drop that did not land where it was ordered is
+ * always explained, because the unit ended somewhere the player did not choose -- or is gone. A
+ * drop on target says nothing. Called before the position lookup, since a lost unit has none.
+ */
+private fun reportAirborneLanding(
+    ui: UI,
+    unit: GameUnit,
+    result: MovementResults,
+) {
+    val outcome = result.airborneLanding ?: return
+    val key =
+        when (outcome.kind) {
+            AirborneLanding.Kind.ON_TARGET -> return
+            AirborneLanding.Kind.SCATTERED -> "combat.misdrop.scattered"
+            AirborneLanding.Kind.HIDDEN_ENEMY -> "combat.misdrop.enemy"
+            AirborneLanding.Kind.DRIFTED -> "combat.misdrop.drifted"
+            AirborneLanding.Kind.LOST -> "combat.misdrop.lost"
+        }
+    val values =
+        mapOf("unit" to unit.unitData(true).name, "losses" to outcome.losses, "chance" to outcome.chancePercent)
+    val text = I18n.t(key, values)
+    val segment = HudLog.Segment(text, ownLoss = outcome.losses > 0 || outcome.kind == AirborneLanding.Kind.LOST)
+    val landing = outcome.landing
+    if (landing == null) {
+        HudLog.add(segment)
+    } else {
+        ui.showAlert(landing.row, landing.col, I18n.t("combat.misdrop.alert"), true)
+        HudLog.addAt(landing.row, landing.col, segment)
+    }
 }
 
 /**

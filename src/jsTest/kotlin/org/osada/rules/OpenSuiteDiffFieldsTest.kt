@@ -117,7 +117,6 @@ class OpenSuiteDiffFieldsTest : OgRulesTestHarness() {
      */
     @Test
     fun aScenarioDesignatedDepotIsADepotWithoutAnyEquipmentSupport() {
-        ruleset(RuleKey.DEPOT_SUPPLY to 1)
         val map = world()
         val designated = place(map, truckEqid, 2, 2, 0).apply { isScenarioDepot = true }
         val ordinary = place(map, truckEqid, 2, 3, 0)
@@ -131,7 +130,6 @@ class OpenSuiteDiffFieldsTest : OgRulesTestHarness() {
     /** A destroyed formation supplies nobody, designated or not. */
     @Test
     fun aDestroyedDepotIsNotADepot() {
-        ruleset(RuleKey.DEPOT_SUPPLY to 1)
         val map = world()
         val depot = place(map, truckEqid, 2, 2, 0).apply { isScenarioDepot = true }
         depot.destroyed = true

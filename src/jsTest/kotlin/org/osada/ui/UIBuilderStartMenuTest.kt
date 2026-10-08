@@ -409,8 +409,9 @@ class UIBuilderStartMenuTest {
                 }.flatten()
         assertTrue(ids.contains("profileBackupExport"))
         assertTrue(ids.contains("profileBackupImport"))
-        assertTrue(!ids.contains("disksave"))
-        assertTrue(!ids.contains("diskload"))
+        // The current battle alone (not a campaign run, not the profile) saves/loads as a file.
+        assertTrue(ids.contains("disksave"))
+        assertTrue(ids.contains("diskload"))
         assertTrue(byId("campaignRunExport") == null)
         assertTrue(byId("campaignRunImport") == null)
         assertTrue(!ids.contains("cloudsave"))

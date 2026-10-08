@@ -21,7 +21,6 @@ class Scenario(
     val file: String?,
 ) {
     companion object {
-        private const val HOLD_OUTCOME_TIERS = 3
         private const val BRILLIANT_TIER = 0
         private const val VICTORY_TIER = 1
         private const val TACTICAL_TIER = 2
@@ -316,6 +315,22 @@ class Scenario(
      */
     var coresExemptFromPurchaseCap: Boolean? = null
 
+    /**
+     * OG's **"skip first player turn"** (`opt_skip_first_turn`, `@1016` bit 5) — **17 deployed
+     * scenarios**, deployed 2026-10-08 with its reader, `Game.skipOpeningTurnIfAuthored`.
+     *
+     * The second player plays turn 1; the first player's first turn is turn 2, and the skipped turn
+     * COUNTS against the victory schedule (`tools/og-import/OG_REGISTER.md` §5 Q7.1, observed in the
+     * only save of such a scenario, which starts at `Turn:2`). Not a preparation round.
+     */
+    var skipFirstTurn: Boolean? = null
+
+    /**
+     * OG's **"random misdropping of airborne units"** (`opt_airborne_misdrop`, `@1016` bit 0) —
+     * deployed 2026-10-08 with its reader, `rules/AirborneLanding`.
+     */
+    var airborneMisdrop: Boolean? = null
+
     var unitsWithdrawn: MutableList<Int> = mutableListOf(0, 0)
 
     var unitsKilled: MutableList<Int> = mutableListOf(0, 0)
@@ -460,9 +475,9 @@ class Scenario(
         // OG stores a hold requirement PER SIDE and the two routinely differ -- `bn9s00` asks 4/4/4
         // of one side and 3/2/1 of the other. Reading one triple for both was an artefact of
         // sourcing them from briefing prose, which has only one set of numbers in it.
-        val counts = if (side == 0) victoryHoldCounts else victoryHoldCountsSide1
+        val counts = holdCountsFor(side)
         val result =
-            if (counts.size < HOLD_OUTCOME_TIERS) {
+            if (!gradedByHolding(side)) {
                 "lose"
             } else {
                 val held = objectivesHeldBy(map, side)

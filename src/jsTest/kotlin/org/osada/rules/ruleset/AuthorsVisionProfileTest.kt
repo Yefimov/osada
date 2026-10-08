@@ -106,13 +106,10 @@ class AuthorsVisionProfileTest {
         val resolved = authorsVision()
 
         // Nothing in the content asks for these, so Author's Vision has nobody to defer to.
-        // `DEPOT_SUPPLY` belongs here rather than above precisely because its gate -- `supply_ex` --
-        // is set by NO shipped efile.
         listOf(
             RuleKey.COUNTERBATTERY,
             RuleKey.MINEFIELDS,
             RuleKey.NAVAL_CRITICAL_HITS,
-            RuleKey.DEPOT_SUPPLY,
         ).forEach { rule ->
             assertEquals(0, resolved.effective(rule), "${rule.key} has no per-scenario switch")
             assertEquals(RuleProvenance.OSADA_DEFAULT, resolved.rule(rule).provenance)

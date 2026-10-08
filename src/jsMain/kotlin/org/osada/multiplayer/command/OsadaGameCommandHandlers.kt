@@ -287,7 +287,12 @@ class OsadaGameCommandApplier(
         // range, which only a UI selection fills -- so a move ordered by anyone but whoever happened
         // to have this very unit selected on the authority's screen resolved to "no path" and did
         // nothing, while still being reported as accepted.
+        // The order's own route policy, not whatever the authority's screen has toggled: a cautious
+        // order is routed through spotted hexes only, exactly as the client drew it.
+        val authorityCautious = map.cautiousMoveUnitId
+        map.cautiousMoveUnitId = if (command.cautious) unit.id else null
         map.setMoveRange(unit)
+        map.cautiousMoveUnitId = authorityCautious
         val result = map.moveUnit(unit, command.to.y, command.to.x)
         restoreAuthoritySelection(map, unit)
         if (result.isVictorySide >= 0) game.handleMoveVictory(result.isVictorySide)

@@ -7,6 +7,7 @@ import org.osada.addAttritionLoss
 import org.osada.addResupply
 import org.osada.rules.AirOperations
 import org.osada.rules.CarrierHangars
+import org.osada.rules.DepotSupply
 import org.osada.rules.GameRules
 import org.osada.rules.Minefields
 import org.osada.rules.PontoonBridges
@@ -79,6 +80,10 @@ class GameMap {
     internal var hangarLaunch: HangarLaunch? = null
     internal val unitImages: MutableSet<Int> = mutableSetOf()
     internal val currentMoveRange: MutableList<Cell> = mutableListOf()
+
+    /** The one formation whose move range is restricted to spotted hexes (`rules/CautiousMove`), or
+     *  null. UI selection state: never serialized. */
+    var cautiousMoveUnitId: Int? = null
     internal val currentAttackRange: MutableList<Cell> = mutableListOf()
 
     /** Hexes the Barrage targeting mode is currently offering (OG 9.2, `model/BarrageOperations`).
@@ -191,6 +196,17 @@ class GameMap {
         // its cargo and a save from before the railway was a container both come back right.
         currentPlayer?.let { RailTransport.recountPool(this, it) }
         if (currentPlayer?.id == 0) beginNewRound()
+        beginPlayerTurn()
+    }
+
+    /**
+     * Prepares the turn of the player [currentPlayer] now names: everything the hand-over owes the
+     * INCOMING player after the train recount and any round wrap, without ending anybody's turn.
+     * [endTurn] runs it after every hand-over, and
+     * `Game.skipOpeningTurnIfAuthored` runs it once for OG's `skip_first_turn`, where the second
+     * player opens the battle and the first player has no turn to end.
+     */
+    internal fun beginPlayerTurn() {
         // A pontoon laid last turn opens now, before the incoming player (or the AI's planner)
         // reads any move range. After the round wrap, whose unmount sweep can decide it.
         lastBridgesOpened = currentPlayer?.let { PontoonBridges.completeLaying(this, it.id) }.orEmpty()
@@ -232,6 +248,10 @@ class GameMap {
             val needsAmmoOrFuel = supply.ammo > 0 || supply.fuel > 0
             val needsTransportSupply = supply.transportAmmo > 0 || supply.transportFuel > 0
             if (needsAmmoOrFuel || needsTransportSupply) {
+                // OG's normal rules refill a unit beside a Depot at the end of the turn; under
+                // `supply_ex` mode 4 that Depot pays its one ammo here as it would for a manual
+                // resupply, or the automatic path would be a free way round the cost.
+                DepotSupply.chargeSupplier(this, unit)
                 unit.resupply(supply)
                 val context = SupplyContextRules.getSupplyContext(this, unit)
                 CombatLog.addResupply(unit, SupplyContextRules.logToken(context), context.adjacentEnemies)

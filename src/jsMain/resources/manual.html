@@ -1747,13 +1747,12 @@
                     shown on the unit card.</p>
             </div>
             <div class="switch">
-                <span class="callout-title" data-mkey="supply.depot.switch.title">Ruleset-dependent</span>
-                <p data-mkey="supply.depot.switch.p"><strong>Depot supply</strong> (<code>depot_supply</code>, off by
-                    default) replaces resupply-anywhere with Open General's depot model: formations resupply only
-                    beside a supply unit or in a city or port, and a depot supplying others may have to spend
-                    ammunition to do it. <strong>No shipped campaign uses it</strong> — no equipment file asks for the
-                    model and no equipment record is marked as a depot — so the switch is inert on the content that
-                    comes with the game. It is here for content that defines them.</p>
+                <span class="callout-title" data-mkey="supply.depot.switch.title">Depots</span>
+                <p data-mkey="supply.depot.switch.p"><strong>Depot supply</strong> is always on. A formation
+                    beside a friendly supply wagon (a scenario-designated depot) resupplies at the full rate:
+                    neither terrain nor adjacent enemies reduce it, it may do so after moving or firing, and it
+                    is topped up automatically at the end of the turn. An equipment file can additionally
+                    restrict supply to depots and/or cities, or make depots spend ammunition.</p>
             </div>
 
             <h3 data-mkey="supply.attach.h">Attachments</h3>
@@ -2240,7 +2239,6 @@
 <tr><th scope="row">Green replacements</th><td><code>green_replacements</code></td><td data-mkey="rs.k.gr">Off, and only where the equipment file prices them</td></tr>
 <tr><th scope="row">Carrier deployment</th><td><code>carrier_deploy</code></td><td data-mkey="rs.k.cd">Off</td></tr>
 <tr><th scope="row">Carrier hangars</th><td><code>carrier_hangars</code></td><td data-mkey="rs.k.ch">Off</td></tr>
-<tr><th scope="row">Depot supply</th><td><code>depot_supply</code></td><td data-mkey="rs.k.ds">Off — and inert in every shipped campaign</td></tr>
 <tr><th scope="row">Equipment toggles</th><td><code>equipment_toggles</code></td><td data-mkey="rs.k.et">Off</td></tr>
                     </tbody>
                 </table>
@@ -2295,6 +2293,7 @@
                 <li data-command="reinforce"><kbd>R</kbd> &mdash; Reinforce</li>
                 <li data-command="overstrength"><kbd>O</kbd> &mdash; Overstrength</li>
                 <li data-command="undo"><kbd>U / Ctrl+Z</kbd> &mdash; Undo move</li>
+                <li data-command="cautious"><kbd>C</kbd> &mdash; Cautious move: route only through spotted hexes</li>
                 <li data-command="next_unit"><kbd>N</kbd> &mdash; Next unit</li>
                 <li data-command="prev_unit"><kbd>P</kbd> &mdash; Previous unit</li>
             </ul>

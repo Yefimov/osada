@@ -47,6 +47,28 @@ internal object EntrenchmentDefence {
     }
 
     /**
+     * Fast Entrench's entry effect: OG's attachment page says it *"Increase[s] entrench to
+     * TerrainBaseEntrench when entering an hex"*. Every move zeroes entrenchment
+     * (`GameUnit.move`), so without this the attachment only helped from the next turn's lifecycle
+     * snap, and a unit that had just moved defended at 0 (`docs/og/mechanics-coverage.md` A2).
+     *
+     * The amount is [terrainBaseline] -- the same floor the turn lifecycle snaps to, attachment bonus
+     * included -- because OG's text gives the timing, not separate arithmetic. Never lowers a level
+     * already held (a forced relocation keeps its entrenchment). No-op for a unit that cannot dig in.
+     */
+    fun onEntry(
+        unit: GameUnit,
+        hex: Hex,
+    ) {
+        val fitted = Attachments.has(unit, Attachments.SLOT_FAST_ENTRENCH)
+        val floor = if (fitted && UnitPredicates.canEntrench(unit)) terrainBaseline(unit, hex) else 0
+        if (floor > unit.entrenchment) {
+            unit.entrenchment = floor
+            unit.entrenchTicks = 0
+        }
+    }
+
+    /**
      * The defence [defender]'s entrenchment adds against [attacker] -- bypassed by Infiltration
      * Tactics (unless the defender has Ferocious Defense) and by whatever
      * [CombatResolver.isEntrenchmentIntact] names, and double-counted for a vehicle attacking

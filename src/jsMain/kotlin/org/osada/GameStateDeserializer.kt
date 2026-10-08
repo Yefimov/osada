@@ -57,6 +57,12 @@ object GameStateDeserializer {
         unit.hasResupplied = data.hasResupplied as? Boolean ?: false
         unit.hasFired = data.hasFired as? Boolean ?: false
         unit.hasMoved = data.hasMoved as? Boolean ?: false
+        // Reaction budgets: absent in saves before 2026-10-08, which meant "unspent".
+        unit.hasInterceptedThisTurn = data.hasInterceptedThisTurn as? Boolean ?: false
+        unit.hasInterceptedMovingAirThisTurn = data.hasInterceptedMovingAirThisTurn as? Boolean ?: false
+        unit.hasAmbushedThisTurn = data.hasAmbushedThisTurn as? Boolean ?: false
+        unit.hasSupportedThisTurn = data.hasSupportedThisTurn as? Boolean ?: false
+        unit.depotPaidThisTurn = data.depotPaidThisTurn as? Boolean ?: false
     }
 
     private fun applyUnitCombatStats(

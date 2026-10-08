@@ -75,7 +75,7 @@ class CommandCatalogTest {
 
     @Test
     fun everyUnitCommandMapsToAnActionChipTheStripCanRender() {
-        val chipActions = setOf("mount", "embark", "resupply", "reinforce", "overstrength", "undo")
+        val chipActions = setOf("mount", "embark", "resupply", "reinforce", "overstrength", "undo", "cautious")
 
         assertEquals(chipActions, CommandCatalog.unitActionFor.values.toSet())
         CommandCatalog.unitActionFor.keys.forEach { id ->

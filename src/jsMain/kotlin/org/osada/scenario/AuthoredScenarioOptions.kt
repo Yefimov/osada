@@ -114,6 +114,10 @@ internal object AuthoredScenarioOptions {
                 { it.coresExemptFromPurchaseCap },
                 { s, v -> s.coresExemptFromPurchaseCap = v },
             ),
+            // Deployed 2026-10-08 with its reader, `Game.skipOpeningTurnIfAuthored`, 17 scenarios.
+            AuthoredSwitch("skipfirstturn", { it.skipFirstTurn }, { s, v -> s.skipFirstTurn = v }),
+            // Deployed 2026-10-08 with its reader, `rules/AirborneLanding`.
+            AuthoredSwitch("misdrop", { it.airborneMisdrop }, { s, v -> s.airborneMisdrop = v }),
         )
 
     /**

@@ -321,7 +321,7 @@ internal object ProfileBackup {
             else -> null
         }
 
-    private fun canImport(): Boolean {
+    internal fun canImport(): Boolean {
         val game = Game.current
         return !OsadaMultiplayer.active &&
             game?.waitUIAnimation != true &&

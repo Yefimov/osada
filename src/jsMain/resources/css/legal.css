@@ -1,0 +1,72 @@
+/* Privacy Policy and Terms of Service pages (privacy.html, terms.html). Standalone: no game CSS. */
+:root {
+    color-scheme: dark;
+    --legal-bg: #15130f;
+    --legal-text: #e4ddcc;
+    --legal-muted: #a79f8d;
+    --legal-accent: #c9a45c;
+    --legal-rule: #3a3428;
+}
+
+body {
+    margin: 0;
+    background: var(--legal-bg);
+    color: var(--legal-text);
+    font: 16px/1.6 Georgia, "Times New Roman", serif;
+}
+
+main {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 2rem 16px 4rem;
+}
+
+h1 {
+    margin: 0.5rem 0 0.25rem;
+    font-size: 2rem;
+    color: var(--legal-accent);
+}
+
+h2 {
+    margin: 2rem 0 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--legal-rule);
+    font-size: 1.2rem;
+}
+
+a {
+    color: var(--legal-accent);
+}
+
+code {
+    font-size: 0.9em;
+}
+
+ul {
+    padding-left: 1.4rem;
+}
+
+li {
+    margin: 0.35rem 0;
+}
+
+.meta,
+.back {
+    color: var(--legal-muted);
+    font-size: 0.9rem;
+}
+
+h3 {
+    margin: 1.4rem 0 0.4rem;
+    font-size: 1.05rem;
+}
+
+.play {
+    display: inline-block;
+    margin: 0.5rem 0;
+    padding: 0.6rem 1.1rem;
+    border: 1px solid var(--legal-accent);
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+}

@@ -1,11 +1,17 @@
 package org.osada.ui
 
+import org.osada.GameHolder
+import org.osada.diskSavePayload
 import org.osada.i18n.I18n
 import org.osada.multiplayer.client.OsadaMultiplayer
 import org.osada.storage.BrowserStorage
 import org.w3c.dom.HTMLElement
+import kotlin.js.Date
 
-/** A single backup/export and import surface, including legacy save files. */
+/**
+ * The Save / Load window: the current battle alone as a file (save/load scenario), then the
+ * whole-profile backup export/import. Loading a battle file replaces only the game in play.
+ */
 internal object GameStateMenuBuilder {
     fun buildGameStateMenu() {
         val root = byId("smState") ?: return
@@ -14,6 +20,7 @@ internal object GameStateMenuBuilder {
         header.className = "osadaScreenHeader osada-sl-header"
         val body = addTag(root, "div")
         body.className = "osada-sl-body"
+        buildScenarioRow(body)
         val export = backupButton(body, "profileBackupExport")
         export.asButton(onActivate = {
             if (!OsadaMultiplayer.active) ProfileBackup.exportToFile()
@@ -59,6 +66,78 @@ internal object GameStateMenuBuilder {
         refreshLocalization()
     }
 
+    /** Save/load of the battle in play only: no other campaign run or profile data is touched. */
+    private fun buildScenarioRow(body: HTMLElement) {
+        backupButton(body, "disksave").asButton(onActivate = { gameStateButton("disksave") })
+        val load = backupButton(body, "diskload")
+        val picker = addTag(body, "input")
+        picker.id = "scenarioLoadFile"
+        picker.setAttribute("type", "file")
+        picker.setAttribute("accept", ".json")
+        picker.style.display = "none"
+        load.asButton(onActivate = { gameStateButton("diskload") })
+        picker.addEventListener("change", {
+            val files = picker.asDynamic().files
+            if ((files?.length as? Int ?: 0) > 0) loadScenarioFile(files[0])
+            picker.asDynamic().value = ""
+        })
+    }
+
+    private fun scenarioSaveAvailable(): Boolean = !OsadaMultiplayer.active && GameHolder.instance?.gameStarted == true
+
+    /** [ProfileBackup.canImport] also refuses online sessions, animations and computer turns. */
+    private fun saveScenarioFile() {
+        val game = GameHolder.instance?.takeIf { scenarioSaveAvailable() }
+        val payload = if (game != null && ProfileBackup.canImport()) diskSavePayload(game) else null
+        when {
+            game == null -> Unit
+            payload == null -> setStatus(I18n.t("save_load.backup.busy"))
+            payload.isEmpty() -> setStatus(I18n.t("save_load.backup.failed"))
+            else -> {
+                val fileName = scenarioFileName(game)
+                downloadJson(fileName, JSON.parse<dynamic>(payload))
+                setStatus("${I18n.t("save_load.last_saved.label")} $fileName")
+            }
+        }
+    }
+
+    private fun scenarioFileName(game: org.osada.Game): String {
+        val now = Date()
+        return I18n.t(
+            "save_load.filename",
+            mapOf(
+                "mode" to
+                    I18n.t(if (game.campaign != null) "save_load.filename.campaign" else "save_load.filename.scenario"),
+                "name" to (game.scenario?.name ?: ""),
+                "turn" to (game.scenario?.map?.turn ?: 0),
+                "date" to now.toDateString(),
+                "time" to now.toLocaleTimeString(),
+            ),
+        ) + ".json"
+    }
+
+    private fun loadScenarioFile(file: dynamic) {
+        val state = GameHolder.instance?.state
+        if (state == null || !ProfileBackup.canImport()) {
+            setStatus(I18n.t("save_load.backup.busy"))
+            return
+        }
+        state.restoreFromFile(
+            file,
+            onSuccess = {
+                setStatus("")
+                makeHidden("smState")
+                makeHidden("smMain")
+                gameRef()?.ui?.startMenuButton("continuegame")
+            },
+            onError = { setStatus(I18n.t("save_load.error.invalid")) },
+        )
+    }
+
+    private fun setStatus(text: String) {
+        byId("diskloaderror")?.textContent = text
+    }
+
     private fun backupButton(
         body: HTMLElement,
         id: String,
@@ -73,6 +152,17 @@ internal object GameStateMenuBuilder {
 
     fun applySaveLoadContext() {
         byId("smStateHeader")?.textContent = I18n.t("save_load.title")
+        val canSave = scenarioSaveAvailable()
+        byId("disksave")?.apply {
+            classList.toggle("osada-sl-btn--disabled", !canSave)
+            setAttribute("aria-disabled", (!canSave).toString())
+            querySelector(".osada-sl-btn__sub")?.textContent =
+                I18n.t(if (canSave) "save_load.save.subtitle" else "save_load.save.unavailable")
+        }
+        byId("diskload")?.apply {
+            classList.toggle("osada-sl-btn--disabled", OsadaMultiplayer.active)
+            setAttribute("aria-disabled", OsadaMultiplayer.active.toString())
+        }
         listOf("profileBackupExport", "profileBackupImport").forEach { id ->
             byId(id)?.apply {
                 classList.toggle("osada-sl-btn--disabled", OsadaMultiplayer.active)
@@ -90,7 +180,13 @@ internal object GameStateMenuBuilder {
     }
 
     fun refreshLocalization() {
-        val buttons = listOf("profileBackupExport" to "profile_export", "profileBackupImport" to "profile_import")
+        val buttons =
+            listOf(
+                "disksave" to "save",
+                "diskload" to "load",
+                "profileBackupExport" to "profile_export",
+                "profileBackupImport" to "profile_import",
+            )
         buttons.forEach { (id, key) ->
             byId(id)?.apply {
                 title = I18n.t("save_load.$key.help")
@@ -105,11 +201,11 @@ internal object GameStateMenuBuilder {
         applySaveLoadContext()
     }
 
-    /** Preserve the old command entry points without offering a second file format in the UI. */
+    /** "disksave"/"diskload": the current battle alone, as a file. */
     fun gameStateButton(id: String) {
         when (id) {
-            "disksave" -> ProfileBackup.exportToFile()
-            "diskload" -> byId("profileBackupImportFile")?.asDynamic()?.click()
+            "disksave" -> saveScenarioFile()
+            "diskload" -> if (!OsadaMultiplayer.active) byId("scenarioLoadFile")?.asDynamic()?.click()
         }
     }
 }

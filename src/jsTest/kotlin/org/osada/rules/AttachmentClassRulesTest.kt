@@ -56,13 +56,13 @@ class AttachmentClassRulesTest {
     }
 
     /** An attachment that would change nothing for the formation is not sold: Bunker Buster to an
-     *  engineer (it IS the Ignore-entrench ability), Air Defense to a unit with no air attack, Fuel
-     *  Pods to one with no fuel, Support to one with no ammunition. */
+     *  engineer (it IS the Ignore-entrench ability), Fuel Pods to one with no fuel, Support to one
+     *  with no ammunition. */
     @Test
     fun anAttachmentThatAddsNothingIsNotOffered() {
         assertFalse(allows(Attachments.SLOT_BUNKER_BUSTER) { attr = 4 }, "an engineer already ignores entrenchment")
         assertTrue(allows(Attachments.SLOT_BUNKER_BUSTER) { attr = 0 })
-        assertFalse(allows(Attachments.SLOT_AIR_DEFENSE) { airatk = 0 }, "no air attack to add to")
+        assertTrue(allows(Attachments.SLOT_AIR_DEFENSE) { airatk = 0 }, "it adds air defence and an air attack")
         assertFalse(allows(Attachments.SLOT_FUEL_PODS) { fuel = 0 }, "a foot unit carries no fuel")
         assertFalse(allows(Attachments.SLOT_SUPPORT_AMMO) { ammo = 0 })
         assertTrue(allows(Attachments.SLOT_FAST_ENTRENCH) {}, "infantry digs in")

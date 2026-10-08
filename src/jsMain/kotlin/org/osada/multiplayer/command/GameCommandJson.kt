@@ -13,6 +13,7 @@ object GameCommandJson {
                     to = coordinate(value.to),
                     path = coordinates(value.path),
                     actorPlayerId = actor,
+                    cautious = value.cautious == true,
                 )
 
             AttackUnit::class.simpleName ->

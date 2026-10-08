@@ -144,4 +144,10 @@ internal object ActionIcons {
     const val UNDO: String =
         """<svg viewBox="0 0 24 24" aria-hidden="true">""" +
             """<path d="M9.5 3.5 2.5 10l7 6.5v-4.2c4.9 0 8.6 1.5 11.2 6 .3-6.6-3.5-11.3-11.2-11.7z"/></svg>"""
+
+    /** An open eye: move only where you can see (`rules/CautiousMove`). */
+    const val CAUTIOUS: String =
+        """<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 5C6.5 5 2.6 9""" +
+            """ 1 12c1.6 3 5.5 7 11 7s9.4-4 11-7c-1.6-3-5.5-7-11-7zm0 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0""" +
+            """ 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>"""
 }

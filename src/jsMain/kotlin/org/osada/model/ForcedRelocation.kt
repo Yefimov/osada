@@ -1,5 +1,6 @@
 package org.osada.model
 
+import org.osada.rules.EntrenchmentDefence
 import org.osada.rules.GameRules
 import org.osada.rules.Minefields
 import org.osada.rules.PontoonBridges
@@ -64,6 +65,7 @@ internal fun GameMap.relocateForced(
     GameRules.setSpotRange(this, unit, false)
     fromHex.delUnit(unit)
     toHex.setUnit(unit)
+    EntrenchmentDefence.onEntry(unit, toHex)
     GameRules.setZOCRange(this, unit, true)
     GameRules.setSpotRange(this, unit, true)
     rebuildSpottingForSightBlocker(unit)

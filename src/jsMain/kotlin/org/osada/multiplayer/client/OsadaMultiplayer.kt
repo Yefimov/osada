@@ -4,6 +4,7 @@ package org.osada.multiplayer.client
 
 import kotlinx.browser.window
 import org.osada.Game
+import org.osada.GameHolder
 import org.osada.PlayerType
 import org.osada.i18n.I18n
 import org.osada.model.GameUnit
@@ -174,6 +175,13 @@ object OsadaMultiplayer : RoomLinkListener {
         )
     }
 
+    /** The formation the local player has set to cautious move (`rules/CautiousMove`), if any. */
+    private fun cautiousUnitId(): Int? =
+        GameHolder.instance
+            ?.scenario
+            ?.map
+            ?.cautiousMoveUnitId
+
     @Suppress("ReturnCount")
     fun submitMove(
         unit: GameUnit,
@@ -189,6 +197,7 @@ object OsadaMultiplayer : RoomLinkListener {
                 to = HexCoordinate(col, row),
                 path = listOf(HexCoordinate(position.col, position.row), HexCoordinate(col, row)),
                 actorPlayerId = unit.owner,
+                cautious = cautiousUnitId() == unit.id,
             )
         return submit(command)
     }

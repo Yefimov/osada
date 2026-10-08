@@ -3,17 +3,18 @@ package org.osada.model
 import org.osada.GameHolder
 import org.osada.PlayerType
 import org.osada.hero.HeroCampaign
+import org.osada.rules.EntrenchmentDefence
 import org.osada.rules.ExtendedVictory
 import org.osada.rules.GameRules
 import org.osada.rules.PontoonBridges
 import org.osada.rules.TriggerHexes
-import org.osada.rules.TypedVictoryHexes
 import org.osada.rules.UnitCapabilities
 import org.osada.rules.canCapture
 import org.osada.rules.getDirection
 import org.osada.rules.getShortestPath
 import org.osada.rules.setSpotRange
 import org.osada.rules.setZOCRange
+import org.osada.scenario.captureEndsBattleNow
 
 /**
  * Executes unit movement along a path and manages the single-move undo stack.
@@ -38,12 +39,18 @@ internal class MoveExecutor(
         val snapshot = undoSnapshot(unit)
         val mounted = autoMountForMove(unit, row, col)
         val setup = setupMove(unit, row, col)
-        if (setup == null) {
-            if (mounted) revertAutoMount(unit)
+        // A paradrop may come down elsewhere or not at all (`rules/AirborneLanding`); null when
+        // there is no move to make, either because no path exists or because the drop was lost.
+        val landing =
+            setup?.let {
+                commitUndoState(unit, snapshot)
+                paradropLanding(unit, it, Cell(row, col), result)
+            }
+        if (landing == null) {
+            if (setup == null && mounted) revertAutoMount(unit)
             return result
         }
-        commitUndoState(unit, snapshot)
-        val totalCost = traversePath(unit, setup, result)
+        val totalCost = traversePath(unit, landing, result)
         // AA interception can destroy the plane mid-path (`docs/design/efile-driven-rules.md` §3.4):
         // it is already correctly positioned at the intercepting cell (applyAAInterception moved
         // it there before applying damage), so the normal destroyed-unit sweep finds and removes
@@ -54,7 +61,7 @@ internal class MoveExecutor(
             gameMap.updateUnitList()
         } else {
             result.passedCells.lastOrNull()?.let { last ->
-                applyMove(unit, setup, row, col, last, totalCost, result)
+                applyMove(unit, landing, last.row, last.col, last, totalCost, result)
             }
         }
         return result
@@ -180,11 +187,7 @@ internal class MoveExecutor(
             val capture = gameMap.captureHex(toHex, unit)
             result.isCapture = capture.isCapture
             result.capturePrestige = capture.prestigeGain as? Int ?: 0
-            val scenario = GameHolder.instance?.scenario?.takeIf { it.map === gameMap }
-            val typedWin =
-                scenario != null &&
-                    TypedVictoryHexes.completedTier(scenario, gameMap, setup.side) != null
-            if (capture.isWin || typedWin) result.isVictorySide = setup.side
+            if (gameMap.captureEndsBattleNow(setup.side, capture.isWin == true)) result.isVictorySide = setup.side
         }
 
         val totalCost = if (totalCostIn < 0) 0 else totalCostIn
@@ -201,6 +204,7 @@ internal class MoveExecutor(
         GameRules.setSpotRange(gameMap, unit, false)
         setup.fromHex.delUnit(unit)
         toHex.setUnit(unit)
+        EntrenchmentDefence.onEntry(unit, toHex)
         unit.facing = GameRules.getDirection(from.row, from.col, last.row, last.col) ?: unit.facing
         GameRules.setZOCRange(gameMap, unit, true)
         val newlySpotted = GameRules.setSpotRange(gameMap, unit, true)
@@ -237,6 +241,7 @@ internal class MoveExecutor(
                 result.wasIntercepted,
                 revealedIntelligence(result),
                 result.firedTrigger,
+                result.airborneLanding != null,
             )
         if (finality == null) {
             gameMap.undoState.unit = unit
@@ -276,6 +281,7 @@ internal class MoveExecutor(
         wasIntercepted: Boolean,
         hitMinefield: Boolean,
         firedTrigger: Boolean,
+        rolledDrop: Boolean,
     ): UndoInvalidation? =
         when {
             wasIntercepted -> UndoInvalidation.INTERCEPTED
@@ -286,6 +292,8 @@ internal class MoveExecutor(
             firedTrigger -> UndoInvalidation.IRREVERSIBLE_ACTION
             // Walking into a minefield revealed it. Undo would hand that intelligence back for free.
             hitMinefield -> UndoInvalidation.NEW_INTELLIGENCE
+            // A paradrop that rolled (`rules/AirborneLanding`): undo would re-roll it.
+            rolledDrop -> UndoInvalidation.IRREVERSIBLE_ACTION
             unit.isSurprised -> UndoInvalidation.SURPRISED
             newlySpotted != 0 -> UndoInvalidation.NEW_INTELLIGENCE
             else -> null

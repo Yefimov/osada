@@ -38,6 +38,7 @@ import org.osada.multiplayer.command.ReinforceUnit
 import org.osada.multiplayer.command.ResupplyUnit
 import org.osada.multiplayer.command.UndeployUnit
 import org.osada.multiplayer.command.UnmountUnit
+import org.osada.rules.CautiousMove
 import org.osada.rules.Engineering
 import org.osada.rules.EngineeringWork
 import org.osada.rules.GreenReplacements
@@ -143,6 +144,7 @@ internal class UnitContextMenu(
             in ENGINEERING_ACTION_IDS -> performEngineering(action, map, unit, pos)
             "undo" -> map.undoLastMove()
             "sleep" -> ui.toggleUnitSleep(unit)
+            "cautious" -> CautiousMove.toggle(map, unit)
         }
     }
 
@@ -173,7 +175,7 @@ internal class UnitContextMenu(
             if (parts.isEmpty()) {
                 I18n.t("unit_info.action.resupply.blocked")
             } else {
-                gainAlert(map, unit, parts)
+                gainAlert(map, unit, parts, reinforcement = false)
             }
         ui.showAlert(pos.row, pos.col, message, true)
     }
@@ -198,7 +200,7 @@ internal class UnitContextMenu(
                     if (overStrength) "unit_info.action.overstrength.blocked" else "unit_info.action.reinforce.blocked",
                 )
             } else {
-                gainAlert(map, unit, parts)
+                gainAlert(map, unit, parts, reinforcement = true)
             }
         ui.showAlert(pos.row, pos.col, message, true)
     }
@@ -268,8 +270,9 @@ internal class UnitContextMenu(
         map: GameMap,
         unit: GameUnit,
         parts: List<String>,
+        reinforcement: Boolean,
     ): String {
-        val context = SupplyContextRules.getSupplyContext(map, unit)
+        val context = SupplyContextRules.getSupplyContext(map, unit, reinforcement)
         return I18n.t(
             "unit_info.action.gain.summary",
             mapOf(

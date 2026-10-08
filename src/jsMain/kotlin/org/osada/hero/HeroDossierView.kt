@@ -212,7 +212,8 @@ object HeroDisplay {
             LeaderType.AGGRESSIVE_ATTACK, LeaderType.OVERWHELMING_ATTACK, LeaderType.FIRST_STRIKE,
             -> I18n.t("hero.trait.activation.attacking")
 
-            LeaderType.TANK_KILLER -> I18n.t("hero.trait.activation.armored_targets")
+            LeaderType.TANK_KILLER, LeaderType.ARMOURED_HUNTER,
+            -> I18n.t("hero.trait.activation.armored_targets")
             LeaderType.STREET_FIGHTER -> I18n.t("hero.trait.activation.urban")
             LeaderType.INFILTRATION_TACTICS, LeaderType.FOREST_CAMOUFLAGE,
             -> I18n.t("hero.trait.activation.forest")

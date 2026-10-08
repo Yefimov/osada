@@ -107,9 +107,9 @@ object RulesetResolver {
      * discarded every one of those imported bits and made the profile's own name untrue.
      *
      * The rules with no per-scenario content gate — `counterbattery`, `minefields`,
-     * `naval_critical_hits`, `depot_supply` — are deliberately NOT here: nothing in the content
-     * asks for them, so Author's Vision has nobody to defer to and OSADA's default stands.
-     * (`depot_supply`'s gate is `supply_ex`, which **no shipped efile sets**.)
+     * `naval_critical_hits` — are deliberately NOT here: nothing in the content asks for them, so
+     * Author's Vision has nobody to defer to and OSADA's default stands. (`depot_supply` was in
+     * this list until schema 22 made Depot supply unconditional.)
      *
      * ### `CAMPAIGN_AUTO_REFIT` joined on 2026-09-24
      *

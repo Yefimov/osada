@@ -17,6 +17,9 @@ data class MoveUnit(
     val to: HexCoordinate,
     val path: List<HexCoordinate>,
     override val actorPlayerId: Int,
+    /** OG's cautious move (`rules/CautiousMove`): the host must route through spotted hexes only,
+     *  as the client did. Optional on the wire -- written only when true, absent means false. */
+    val cautious: Boolean = false,
 ) : GameCommand
 
 data class AttackUnit(
@@ -304,6 +307,7 @@ fun GameCommand.toPayloadJson(): String {
             payload["from"] = from.toJson()
             payload["to"] = to.toJson()
             payload["path"] = path.map { it.toJson() }.toTypedArray()
+            if (cautious) payload["cautious"] = true
         }
 
         is AttackUnit -> {

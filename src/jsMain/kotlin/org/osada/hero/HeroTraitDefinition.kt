@@ -112,12 +112,26 @@ internal object HeroTraitCatalog {
                 legacyTrait = LeaderType.INFILTRATION_TACTICS,
                 requiredEvidence = mapOf(EvidenceCategory.FOREST_OPERATIONS to 30),
             ),
+            // The id stays `armor_hunter` so saved offers and histories still resolve. Owner,
+            // 2026-10-08: renamed, and it grants its own trait (+1 initiative against armour) instead
+            // of TANK_KILLER, whose only rule reads ANTI_TANK and so did nothing for a tank.
             HeroTraitDefinition(
                 id = "armor_hunter",
-                title = "Armor Hunter",
+                title = "Armoured Hunter",
+                categoryId = EvidenceCategory.ARMORED_COMBAT,
+                legacyTrait = LeaderType.ARMOURED_HUNTER,
+                compatibleUnitClasses = setOf(UnitClass.TANK.value),
+                requiredEvidence = mapOf(EvidenceCategory.ARMORED_COMBAT to 30),
+            ),
+            // OG's Tank Killer is an ANTI TANK class skill (*"No AT initiative penalty for movement
+            // into combat"*), which is where its rule (`AttackCalculation.applyRangeDefenseModifier`)
+            // already works. Earned by the same armoured kills (owner, 2026-10-08).
+            HeroTraitDefinition(
+                id = "tank_killer",
+                title = "Tank Killer",
                 categoryId = EvidenceCategory.ARMORED_COMBAT,
                 legacyTrait = LeaderType.TANK_KILLER,
-                compatibleUnitClasses = setOf(UnitClass.TANK.value),
+                compatibleUnitClasses = setOf(UnitClass.ANTI_TANK.value),
                 requiredEvidence = mapOf(EvidenceCategory.ARMORED_COMBAT to 30),
             ),
             HeroTraitDefinition(

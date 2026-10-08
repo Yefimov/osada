@@ -153,9 +153,9 @@ internal object UnitActionPresenter {
                 availability.action == UnitActionId.REINFORCE ||
                 availability.action == UnitActionId.OVERSTRENGTH
         if (!usesSupply) return emptyList()
-        val lines = supplyFactorLines(SupplyContextRules.getSupplyContext(map, unit)).toMutableList()
         // The discount is already in the quoted price; this line says where it came from.
         val repairs = availability.action != UnitActionId.RESUPPLY
+        val lines = supplyFactorLines(SupplyContextRules.getSupplyContext(map, unit, repairs)).toMutableList()
         if (repairs && Airbase.servicing(unit, map) != null) {
             val note = I18n.t("unit_info.supply_factor.airbase", mapOf("percent" to Airbase.REPAIR_COST_PERCENT))
             lines += Line(GOOD, note)
@@ -168,6 +168,7 @@ internal object UnitActionPresenter {
         when (context.source) {
             SupplySource.AIRFIELD_CARRIER -> lines += Line(DIM, I18n.t("unit_info.supply_factor.airfield"))
             SupplySource.NAVAL -> lines += Line(DIM, I18n.t("unit_info.supply_factor.naval"))
+            SupplySource.DEPOT -> lines += Line(GOOD, I18n.t("unit_info.supply_factor.depot"))
             SupplySource.NONE -> return lines
             SupplySource.GROUND -> lines += groundFactorLines(context)
         }

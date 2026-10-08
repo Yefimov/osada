@@ -97,6 +97,9 @@ class AuthoredScenarioOptionsSaveTest {
                 "paradropocean",
                 // 2026-09-01
                 "coresoffcap",
+                // 2026-10-08
+                "skipfirstturn",
+                "misdrop",
             ),
             AuthoredScenarioOptions.SWITCHES.map { it.attribute },
         )

@@ -358,6 +358,9 @@ class Game {
         } else {
             handleStandaloneScenarioLoaded(fromRestore)
         }
+        // After the branch above has set prestige and the core, so an AI that opens the battle
+        // plans with both (`skipOpeningTurnIfAuthored`).
+        if (!fromRestore) skipOpeningTurnIfAuthored()
         state?.save()
 
         ensureUiCreated()

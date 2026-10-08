@@ -35,6 +35,7 @@ internal object UnitStatAttachmentMarks {
             Triple("uSpot", Attachments.bonus(unit, Attachments.SLOT_RECON), "attachments.stat.spot"),
             Triple("uAHard", Attachments.bonus(unit, Attachments.SLOT_ANTI_TANK), "attachments.stat.hardattack"),
             Triple("uAAir", Attachments.bonus(unit, Attachments.SLOT_AIR_DEFENSE), "attachments.stat.airdefence"),
+            Triple("uDAir", Attachments.bonus(unit, Attachments.SLOT_AIR_DEFENSE), "attachments.stat.airdefence"),
             Triple(
                 "uMovement",
                 Attachments.bonus(unit, Attachments.SLOT_FAST_SPEED) + Attachments.movementPenalty(unit),

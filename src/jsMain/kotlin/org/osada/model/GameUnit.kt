@@ -267,22 +267,23 @@ class GameUnit(
      *  `g2a_intercept_mode` bit 1 ("disables air-defense after interception") -- checked by
      *  [org.osada.rules.CombatResolver]'s support-fire eligibility so the same unit cannot both
      *  intercept and then air-defend a friendly unit in the same turn. Reset every turn in
-     *  [unitEndTurn]. Deliberately not serialised -- it never survives past the turn it is set. */
+     *  [unitEndTurn]. Serialized as an optional key (2026-10-08): a mid-turn save or co-op
+     *  checkpoint must not hand the unit a fresh budget (`docs/README.md` C2). */
     var hasInterceptedThisTurn: Boolean = false
 
     /**
      * Set when this AA unit has intercepted a MOVING aircraft this turn. OG: *"AD/Flaks units that
      * have already intercepted in the turn cannot intercept again"* -- a budget of its own, unlike
      * [hasInterceptedThisTurn], which is only `g2a_intercept_mode`'s air-defence restriction and is
-     * not set at all under the default mode. Reset every round in [unitEndTurn]; turn-scoped and not
-     * serialized, like its neighbours. OG's FlaK Support leader lifts it
-     * (`LeaderSupportFire.interceptsRepeatedly`).
+     * not set at all under the default mode. Reset every round in [unitEndTurn]; turn-scoped, and
+     * serialized as an optional key like its neighbours so a reload cannot restore a spent budget.
+     * OG's FlaK Support leader lifts it (`LeaderSupportFire.interceptsRepeatedly`).
      */
     var hasInterceptedMovingAirThisTurn: Boolean = false
 
     /** Set when this formation's `Overwatch` or Camouflage Expert commander has sprung its ambush
-     *  this turn -- *"the first enemy unit"* (`rules/MoveAmbush`). Turn-scoped and not serialized,
-     *  like [hasInterceptedThisTurn]. */
+     *  this turn -- *"the first enemy unit"* (`rules/MoveAmbush`). Turn-scoped and serialized as an
+     *  optional key, like [hasInterceptedThisTurn]. */
     var hasAmbushedThisTurn: Boolean = false
 
     /**
@@ -293,12 +294,21 @@ class GameUnit(
      * often as it is called on, which is what OSADA has always done and what OG's §6.24 describes
      * for an ordinary battery.
      *
-     * **Turn-scoped and NOT serialized**, exactly like [hasInterceptedThisTurn] beside it: both are
-     * cleared by `GameUnit.unitEndTurn`, and a save taken mid-turn restores a formation that has
-     * not yet spent its support. That is a known and deliberate limitation of both flags rather
-     * than an oversight of this one.
+     * **Turn-scoped**, cleared by `GameUnit.unitEndTurn`. Until 2026-10-08 it was not serialized,
+     * so a mid-turn save restored a formation that had not yet spent its support; it is now an
+     * optional save key like [hasInterceptedThisTurn] (`docs/README.md` C2).
      */
     var hasSupportedThisTurn: Boolean = false
+
+    /**
+     * Whether this Depot has paid `supply_ex` mode 4's one ammunition this turn (`rules/DepotSupply`).
+     *
+     * A latch of its own rather than [hasResupplied]: supplying neighbours must not read as the
+     * depot having resupplied ITSELF, which blocks its own engineering, mine-clearing and refill.
+     * Once paid, the depot serves any number of recipients that turn even at zero ammunition.
+     * Turn-scoped, cleared by `unitEndTurn`, optional save key.
+     */
+    var depotPaidThisTurn: Boolean = false
 
     /**
      * Whether this formation has been SABOTAGED — OG's `Saboteur` (`rules/Sabotage`, 2026-08-27).
@@ -483,6 +493,7 @@ class GameUnit(
         hasFired = other.hasFired
         hasOverstrength = other.hasOverstrength
         hasResupplied = other.hasResupplied
+        copyTurnBudgets(other)
         isMounted = other.isMounted
         isSurprised = other.isSurprised
         isDeployed = other.isDeployed
@@ -531,4 +542,14 @@ class GameUnit(
             transport = Transport(other.transport!!.eqid).apply { copy(other.transport!!) }
         }
     }
+}
+
+/** The turn-scoped reaction budgets [GameUnit.copy] carries. At file level, not a member, to keep
+ *  [GameUnit] inside detekt's function budget. */
+private fun GameUnit.copyTurnBudgets(other: GameUnit) {
+    hasInterceptedThisTurn = other.hasInterceptedThisTurn
+    hasInterceptedMovingAirThisTurn = other.hasInterceptedMovingAirThisTurn
+    hasAmbushedThisTurn = other.hasAmbushedThisTurn
+    hasSupportedThisTurn = other.hasSupportedThisTurn
+    depotPaidThisTurn = other.depotPaidThisTurn
 }

@@ -106,6 +106,8 @@ scripts/verify/*
 !scripts/verify/music-player.mjs
 !scripts/verify/og-fidelity-regression-probe.mjs
 !scripts/verify/verify.mjs
+!scripts/verify/check-scenario-grid.mjs
+!scripts/verify/scenario-grid-baseline.json
 !scripts/verify/package.json
 !scripts/verify/package-lock.json
 # Prepared music tracks are large and stay local (Opus + MP3 fallback per track)

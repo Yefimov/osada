@@ -176,6 +176,18 @@ tasks.register<Exec>("verifyAuthorCredits") {
     commandLine("python", "scripts/check_author_credits.py")
 }
 
+/*
+ * Authored placement gate (docs/README.md C1): overwritten unit records and gameplay hexes outside
+ * the loaded grid. Legacy findings live in scenario-grid-baseline.json until they are repaired.
+ */
+tasks.register<Exec>("verifyScenarioGrid") {
+    group = "verification"
+    description = "Rejects new unit-layer collisions and out-of-grid gameplay hexes in scenario XML"
+
+    workingDir = rootDir
+    commandLine("node", "scripts/verify/check-scenario-grid.mjs")
+}
+
 tasks.register<Exec>("verifyObjectiveVisibility") {
     group = "verification"
     description = "Locks the hidden/visible victory-objective audit the objectives rail relies on"
@@ -390,6 +402,7 @@ tasks.named("check") {
         "verifyTranslations",
         "verifyKeyboardManual",
         "verifyObjectiveVisibility",
+        "verifyScenarioGrid",
         "verifyAuthorCredits",
         "verifyRulesetKeys",
         "verifyTrackedSources",

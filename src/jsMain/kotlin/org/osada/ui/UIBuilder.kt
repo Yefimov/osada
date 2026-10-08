@@ -65,6 +65,7 @@ object UIBuilder {
             "cover_enter" to ActionIcons.ENTER_COVER,
             "cover" to ActionIcons.COVER,
             "sleep" to "t",
+            "cautious" to ActionIcons.CAUTIOUS,
         )
 
     /**

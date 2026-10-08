@@ -397,10 +397,12 @@ internal object AttackCalculation {
         // OG's Battlefield Intelligence adds 1 to the ATTACKER's initiative ([LeaderInitiative]).
         val attackerBase =
             context.attackerData.initiative + Attachments.initiativePenalty(attacker) +
-                InitiativeModel.experienceBonus(attacker) + LeaderInitiative.attackerBonus(attacker)
+                InitiativeModel.experienceBonus(attacker) + LeaderInitiative.attackerBonus(attacker) +
+                LeaderInitiative.armouredHunterBonus(attacker, context.defenderTarget)
         val defenderBase =
             context.defenderData.initiative + Attachments.initiativePenalty(defender) +
-                InitiativeModel.experienceBonus(defender)
+                InitiativeModel.experienceBonus(defender) +
+                LeaderInitiative.armouredHunterBonus(defender, context.attackerTarget)
         // OG 6.23 halves an empty unit's initiative, behind `dry_unit_penalties`; a no-op with the
         // key off. Applied after the terrain cap, on the initiative the unit would actually have had.
         val attackerInitiative = UnitConditionPenalties.dryInitiative(attacker, minOf(attackerBase, cap))

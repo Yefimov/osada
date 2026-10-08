@@ -265,7 +265,8 @@ internal object Attachments {
     }
 
     /**
-     * `cost = minCost + (unitCostPerStrengthPoint x unitBaseStrength x factorPct) / 100`
+     * `cost = minCost + (unitCostPerStrengthPoint x unitBaseStrength x factorPct) / 100`, with
+     * [GameUnit.basicStrength] as the base strength (it was a fixed 10 until 2026-10-08)
      * (`EFILE_GCE/equip.cfg`'s own comment, `DOC-ONLY`). `minCost`/`factorPct` come from the
      * slot's own columns when the efile WROTE them, else the efile's global `attach_mincost`/
      * `attach_factor` when set, else the documented defaults 30/25. An explicit 0 at either level
@@ -285,7 +286,11 @@ internal object Attachments {
             val minCost = slot.minCost ?: config.minCostDefault ?: DEFAULT_MIN_COST
             val factorPct = slot.factCost ?: config.factorDefaultPct ?: DEFAULT_FACTOR_PCT
             val perStrength = CostCalculator.calculateUnitCostPerStrength(unit)
-            minCost + (perStrength * CombatResolver.FULL_STRENGTH.toInt() * factorPct) / PERCENT
+            // The unit's BASE strength, never its current one: a damaged or overstrength formation
+            // pays what its authored size says. Owner's decision 2026-10-08: OSADA's base is the
+            // scenario value (`GameUnit.basicStrength`, `@23`; 10 when unauthored), although OG's
+            // comment names a "unit base strength" its `refit_base` keeps apart from it.
+            minCost + (perStrength * unit.basicStrength * factorPct) / PERCENT
         }
     }
 }

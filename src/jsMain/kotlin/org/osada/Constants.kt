@@ -361,6 +361,11 @@ enum class LeaderType(
     // 35). Numbered past PM's range so no save-visible value moves.
     EXTENDED_FRONT(34),
     FLAK_SUPPORT(35),
+
+    // OSADA's own (owner, 2026-10-08): the Heroic tank promotion "Armoured Hunter" -- +1 initiative
+    // against armoured (hard) targets. Not an OG leader, so no legacy pool or class signature
+    // grants it; numbered past OG's range for the same save-stability reason.
+    ARMOURED_HUNTER(36),
 }
 
 enum class EndGameType {

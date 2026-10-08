@@ -6,7 +6,6 @@ import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
 import org.osada.model.airAttackNeedsAStillAttacker
-import org.osada.model.canInitiateAttackOnUnitType
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 
@@ -108,7 +107,10 @@ internal object AttackEligibility {
         defender: GameUnit,
     ): Boolean =
         hasLeftItsPosition(attacker) &&
-            Equipment.airAttackNeedsAStillAttacker(attacker.getEqid(), defender.getEqid())
+            (
+                Equipment.airAttackNeedsAStillAttacker(attacker.getEqid(), defender.getEqid()) ||
+                    AirDefenceAttachmentGrant.grants(attacker, defender)
+            )
 
     private fun hasLeftItsPosition(unit: GameUnit): Boolean =
         unit.hasMoved || unit.moveLeft < unit.unitData(useReal = true).movpoints
@@ -142,7 +144,7 @@ internal object AttackEligibility {
                 !(asActiveAttack && !ExtendedLos.hasLineOfFire(attacker, defender)) &&
                 !ExtendedNaval.blocksAttack(attacker, defender) &&
                 UnitPredicates.isEnemy(attacker, defender) &&
-                Equipment.canInitiateAttackOnUnitType(attacker.getEqid(), defender.getEqid())
+                AirDefenceAttachmentGrant.typeMatrixAllows(attacker, defender)
         return eligible && canFire(attacker, defender)
     }
 
@@ -152,7 +154,7 @@ internal object AttackEligibility {
     ): Boolean {
         val unitsUsable = !attacker.destroyed && attacker.getAmmo() > 0 && !defender.destroyed
         if (!unitsUsable) return false
-        val canTargetAir = !UnitPredicates.isAir(defender) || attacker.unitData().airatk > 0
+        val canTargetAir = !UnitPredicates.isAir(defender) || AirDefenceAttachmentGrant.effectiveAirAttack(attacker) > 0
         val canTargetGround =
             UnitPredicates.isAir(defender) ||
                 hasNonAirAttack(attacker) ||
@@ -209,7 +211,7 @@ internal object AttackEligibility {
             airGroundedByWeather(attacker) -> "attacker is an air unit grounded by weather"
             attacker.getAmmo() <= 0 -> "attacker is out of ammo"
             targetTypeBlockReason(attacker, defender) != null -> targetTypeBlockReason(attacker, defender)
-            !Equipment.canInitiateAttackOnUnitType(attacker.getEqid(), defender.getEqid()) ->
+            !AirDefenceAttachmentGrant.typeMatrixAllows(attacker, defender) ->
                 "target-type matrix (attacker attr=${attacker.unitData().attr}, target=${defender.unitData().target})"
 
             blockedByMovedAirGrant(attacker, defender) ->
@@ -237,7 +239,7 @@ internal object AttackEligibility {
         defender: GameUnit,
     ): String? =
         when {
-            UnitPredicates.isAir(defender) && attacker.unitData().airatk <= 0 ->
+            UnitPredicates.isAir(defender) && AirDefenceAttachmentGrant.effectiveAirAttack(attacker) <= 0 ->
                 "attacker cannot target air (airatk=${attacker.unitData().airatk})"
 
             !UnitPredicates.isAir(defender) && !hasNonAirAttack(attacker) ->

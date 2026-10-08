@@ -7,6 +7,7 @@ import org.osada.movTable
 import org.osada.rules.GameRules
 import org.osada.rules.SpottingModel
 import org.osada.rules.setSpotRange
+import org.osada.scenario.captureEndsBattleFor
 
 /**
  * Recomputes every hex's spotting counters from the units currently on the map.
@@ -137,6 +138,10 @@ fun GameMap.setHex(
 // An empty list is a win only for a side the scenario sent to capture something
 // ([GameMap.captureGoalSides]). A defender's list is empty from turn 1, so without that check
 // retaking the only flag it had lost was an instant victory.
+//
+// Nor is it a win for a side graded by objectives held at the turn limit (OG's end-of-scenario
+// holding conditions, `scenario/HoldVictoryMode.kt`): the hexes still change hands and the lists
+// still move, but the battle runs on to the limit.
 fun GameMap.updateVictorySides(
     side: Int,
     pos: Cell,
@@ -149,7 +154,8 @@ fun GameMap.updateVictorySides(
         sidesVictoryHexes[enemySide].add(pos)
     }
     val hasCaptureGoal = captureGoalSides?.contains(side) ?: true
-    return hasCaptureGoal && sidesVictoryHexes.getOrNull(side)?.isEmpty() ?: false
+    val listEmpty = sidesVictoryHexes.getOrNull(side)?.isEmpty() ?: false
+    return hasCaptureGoal && listEmpty && captureEndsBattleFor(side)
 }
 
 /**

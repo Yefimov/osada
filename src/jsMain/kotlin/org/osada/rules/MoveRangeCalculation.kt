@@ -39,6 +39,8 @@ internal object MoveRangeCalculation {
         val mountainTrained: Boolean,
         val bridging: Boolean = false,
         val stranded: Boolean = false,
+        /** OG's cautious move (`rules/CautiousMove`): unspotted hexes cannot be entered. */
+        val cautious: Boolean = false,
     )
 
     fun getMoveRange(
@@ -132,6 +134,7 @@ internal object MoveRangeCalculation {
             mountainTrained,
             bridging,
             PontoonBridges.stranded(unit, gameMap[pos.row][pos.col]),
+            CautiousMove.isOn(map, unit),
         )
     }
 
@@ -215,9 +218,12 @@ internal object MoveRangeCalculation {
                 // Only a cell actually costed from here joins the frontier. One [expandNeighbor]
                 // refused (a major river entered from anywhere but the start hex) still has cout 0,
                 // would pop as the cheapest cell, and would carry the flood across the river.
-                neighborsOf(current, byKey, settled).forEach { cell ->
-                    if (expandNeighbor(cell, current, context, unit) && cell !in frontier) frontier.add(cell)
-                }
+                // Cautious move: ground the side has not spotted is not a place this route may go.
+                neighborsOf(current, byKey, settled)
+                    .filter { !context.cautious || context.gameMap[it.row][it.col].isSpotted(context.unitSide) }
+                    .forEach { cell ->
+                        if (expandNeighbor(cell, current, context, unit) && cell !in frontier) frontier.add(cell)
+                    }
             }
         }
         return cells.filter { it.canPass || it.canMove }

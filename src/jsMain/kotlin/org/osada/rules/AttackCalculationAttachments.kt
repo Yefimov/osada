@@ -6,7 +6,7 @@ import org.osada.model.GameUnit
 
 /**
  * Attachment combat bonuses (`docs/design/attachments.md` Tier 1): AntiTank's +hard-attack and Air Defense's
- * +air-attack, applied to whichever side's attack figure [AttackCalculation.resolveCrossIndexedStats]
+ * +air-attack/+air-defence, applied to whichever side's attack figure [AttackCalculation.resolveCrossIndexedStats]
  * actually sourced from that stat. Symmetric by construction -- an attacker fighting a hard target
  * uses its own `hardatk` (so its AntiTank bonus applies to `attackerAttack`), and a defender
  * counter-firing with `hardatk` against a hard-target attacker gets the same bonus on
@@ -32,11 +32,19 @@ internal fun AttackCalculation.applyAttachmentBonuses(
     if (context.attackerTarget == UnitType.HARD.value) {
         stats.defenderAttack += Attachments.bonus(defender, Attachments.SLOT_ANTI_TANK)
     }
+    // Air Defense is "Increase AA/AD" on the author's attachment page: air attack AND air defence.
+    // Both halves follow the cross-indexing above -- against an air opponent the side fires with
+    // `airatk` and defends with `airdef`, so the bonus lands on both. Until 2026-10-08 only the
+    // attack half existed, and a unit being bombed got nothing from it.
     if (context.defenderTarget == UnitType.AIR.value) {
-        stats.attackerAttack += Attachments.bonus(attacker, Attachments.SLOT_AIR_DEFENSE)
+        val bonus = Attachments.bonus(attacker, Attachments.SLOT_AIR_DEFENSE)
+        stats.attackerAttack += bonus
+        stats.attackerDefense += bonus
     }
     if (context.attackerTarget == UnitType.AIR.value) {
-        stats.defenderAttack += Attachments.bonus(defender, Attachments.SLOT_AIR_DEFENSE)
+        val bonus = Attachments.bonus(defender, Attachments.SLOT_AIR_DEFENSE)
+        stats.defenderAttack += bonus
+        stats.defenderDefense += bonus
     }
 }
 

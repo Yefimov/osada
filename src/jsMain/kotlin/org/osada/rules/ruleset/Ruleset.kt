@@ -67,7 +67,7 @@ package org.osada.rules.ruleset
  * than universal for one reason: it SINKS ships outright, so honouring LXF's own value silently
  * would rewrite every naval battle in the campaigns built on it. Additive and defaulted off.
  *
- * 12 (2026-08-28) added [RuleKey.DEPOT_SUPPLY], `rail_transport` (retired at 20) and
+ * 12 (2026-08-28) added `depot_supply` (retired at 22), `rail_transport` (retired at 20) and
  * [RuleKey.CARRIER_DEPLOY] -- the three mechanics §AA built with no key at all, because each was
  * already gated by content that no shipped scenario carries. **That was the wrong reason to skip a
  * key**: the owner's rule is that anything the port can do belongs in the Rules window so a player
@@ -127,12 +127,18 @@ package org.osada.rules.ruleset
  * lends at least one bar (`UnitCapabilities.lentBars`). It was off in Author's Vision, so a
  * schema-<=20 game on that profile gains the floor. Stored profiles and saves may still carry the
  * key; readers ignore it.
+ *
+ * 22 (2026-10-08) retired `depot_supply` at the owner's request: *"make it by default and not a
+ * ruleset"*. OG's normal supply includes Depots, so a formation beside a friendly Depot always
+ * gets its full, penalty-free refill (`rules/DepotSupply`); an efile's `supply_ex` still chooses
+ * the restricted modes. It was off in both built-ins, so a schema-<=21 game gains the eight KAISER
+ * depots. Stored profiles and saves may still carry the key; readers ignore it.
  */
-const val RULESET_SCHEMA_VERSION = 21
+const val RULESET_SCHEMA_VERSION = 22
 
 /** Serialized keys understood historically but no longer configurable or gameplay-relevant. */
 internal val RETIRED_RULE_KEYS: Set<String> =
-    setOf("trigger_hexes", "stalin_regime", "rail_transport", "combat_support_min_bar")
+    setOf("trigger_hexes", "stalin_regime", "rail_transport", "combat_support_min_bar", "depot_supply")
 
 /**
  * One configurable rule.
@@ -461,21 +467,6 @@ enum class RuleKey(
      * chosen 2 or hard-code it into a profile that is meant to work for every efile.
      */
     NAVAL_CRITICAL_HITS("naval_critical_hits", null, 0, 1),
-
-    /**
-     * OG's Depot supply — `supply_ex`, and the `Supply Unit` equipment special that marks a mobile
-     * one. **Schema 12.**
-     *
-     * A Depot resupplies ADJACENT friendly land and naval formations on terms the field does not
-     * offer: the terrain supply factor does not apply, enemy ZOC does not reduce it, and neither
-     * party is disqualified by having moved or fired. `rules/DepotSupply` builds all four
-     * `supply_ex` modes, including the one-ammo-per-turn cost and depot-to-depot supply.
-     *
-     * **Two content gates survive this key.** No shipped efile sets `supply_ex` and no shipped
-     * record carries `Supply Unit`, so switching it on changes nothing until content authors one —
-     * which is exactly right: the key says "run the mechanic", not "invent a depot".
-     */
-    DEPOT_SUPPLY("depot_supply", null, 0, 1),
 
     /**
      * OG's `Carrier Deploy` — *"permits deployment on carriers and dirt airfields"*. **Schema 12.**
@@ -883,10 +874,9 @@ object RulesetDefaults {
             // Schema 7. Off for the same reason the schema-6 three are: OSADA does not shell
             // unseen hexes today, so off is a description of the shipped game.
             RuleKey.BARRAGE to 0,
-            // Schema 12. Off is a description of the game before 2026-08-28: OSADA had no Depot
-            // supply, no railway and no carrier deployment. Each keeps its own content gate on top,
-            // so ON is a permission rather than an injection.
-            RuleKey.DEPOT_SUPPLY to 0,
+            // Schema 12. Off is a description of the game before 2026-08-28: OSADA had no railway
+            // and no carrier deployment. Each keeps its own content gate on top, so ON is a
+            // permission rather than an injection. (Depot supply was here until schema 22.)
             RuleKey.CARRIER_DEPLOY to 0,
             RuleKey.GREEN_REPLACEMENTS to 0,
             RuleKey.CARRIER_HANGARS to 1,

@@ -30,7 +30,7 @@ import org.osada.model.isBridge
  *
  * **Nor is an attachment sold that would give this formation nothing** ([addsSomething],
  * 2026-09-27, owner's report): Bunker Buster to an engineer that already ignores entrenchment,
- * Air Defense to a formation that cannot fire at aircraft, Fast Entrench to one that cannot dig in,
+ * Fast Entrench to one that cannot dig in,
  * Fuel Pods or Support to one with no fuel or ammunition to extend. OG's own rule (B) is the same
  * idea for Bridging, and the reason is the one it gives -- the purchase would just waste prestige.
  */
@@ -116,7 +116,9 @@ internal object AttachmentClassRules {
         val data = unit.unitData(true)
         return when (slotNumber) {
             Attachments.SLOT_BUNKER_BUSTER -> !Equipment.ignoresEntrenchment(unit.eqid)
-            Attachments.SLOT_AIR_DEFENSE -> data.airatk > 0
+            // Always useful since 2026-10-08: it adds air DEFENCE as well as attack, and lets a
+            // formation with no air attack engage aircraft (`AirDefenceAttachmentGrant`).
+            Attachments.SLOT_AIR_DEFENSE -> true
             Attachments.SLOT_FAST_ENTRENCH -> entrenchRateFor(data.uclass) > 0
             Attachments.SLOT_FUEL_PODS -> data.fuel > 0
             Attachments.SLOT_SUPPORT_AMMO -> data.ammo > 0

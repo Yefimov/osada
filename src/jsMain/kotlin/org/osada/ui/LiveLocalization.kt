@@ -48,6 +48,7 @@ internal object LiveLocalization {
         }
 
         byId("smLogoText")?.textContent = I18n.t("menu.main.tagline")
+        StartMenuMainButtons.refreshInfoLinks()
         // The two entries [StartMenuMainButtons] wires DIRECTLY instead of through the
         // `startMenuButton` action router. They are not in `buttonKeys` above and each needs its
         // `aria-label` rewritten as well, because that is what `asButton` set from the label.

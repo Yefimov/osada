@@ -251,7 +251,8 @@ class AbilityGates(
     // since ruleset schema 20 -- it runs wherever a scenario grants a pool -- so the gate is open.
     val railTransport: Boolean = true,
     val carrierDeploy: Boolean = ActiveRuleset.flag(RuleKey.CARRIER_DEPLOY, false),
-    val depotSupply: Boolean = ActiveRuleset.flag(RuleKey.DEPOT_SUPPLY, false),
+    // Depot supply is unconditional since ruleset schema 22, so its badge always shows.
+    val depotSupply: Boolean = true,
     val heavyMoveFire: Boolean = ActiveRuleset.flag(RuleKey.HEAVY_MOVE_FIRE, false),
 )
 

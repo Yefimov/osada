@@ -147,13 +147,14 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
         val marcher = place(map, infantryEqid, 3, 1, 0)
         val hungry = place(map, infantryEqid, 2, 3, 0)
 
-        // Schema 12: each mechanic has a key of its own so a player can choose it. With the
-        // default ruleset both are off, which is a description of the game before §AA. The
+        // Schema 12: each mechanic had a key of its own so a player could choose it. With the
+        // default ruleset carrier deployment is off, which is a description of the game before §AA. The
         // railway was the third until schema 20 retired its key: it runs wherever a pool exists.
         assertFalse(CarrierDeploy.permits(map, fighter, 4, 4))
         assertTrue(RailTransport.canEntrain(marcher), "no ruleset key gates the railway any more")
-        assertFalse(DepotSupply.enabled())
-        assertNull(DepotSupply.supplierFor(map, hungry))
+        // Schema 22 retired `depot_supply`: Depots are part of normal supply and need no key.
+        assertTrue(DepotSupply.enabled(), "the efile's own supply_ex = 1 now applies by itself")
+        assertNotNull(DepotSupply.supplierFor(map, hungry))
     }
 
     // ---- Carrier Deploy -----------------------------------------------------------------------
@@ -394,7 +395,6 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
 
     @Test
     fun aDepotSuppliesItsNeighbourEvenAfterItHasMovedAndFired() {
-        ruleset(RuleKey.DEPOT_SUPPLY to 1)
         EfileConfig.setForTest(intKeyMap = mapOf("supply_ex" to 1))
         val map = world()
         GameHolder.instance = holderFor(map)
@@ -412,7 +412,6 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
 
     @Test
     fun aDepotIsNotSuppliedByAnotherUnlessTheEfileAddsEight() {
-        ruleset(RuleKey.DEPOT_SUPPLY to 1)
         EfileConfig.setForTest(intKeyMap = mapOf("supply_ex" to 1))
         val map = world()
         GameHolder.instance = holderFor(map)
@@ -422,14 +421,12 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
 
         assertNull(DepotSupply.supplierFor(map, otherDepot), "'except if unit is also a Depot'")
 
-        ruleset(RuleKey.DEPOT_SUPPLY to 1)
         EfileConfig.setForTest(intKeyMap = mapOf("supply_ex" to 9))
         assertNotNull(DepotSupply.supplierFor(map, otherDepot))
     }
 
     @Test
     fun aDepotThatHasActedCannotSupplyAnotherDepot() {
-        ruleset(RuleKey.DEPOT_SUPPLY to 1)
         EfileConfig.setForTest(intKeyMap = mapOf("supply_ex" to 9))
         val map = world()
         GameHolder.instance = holderFor(map)
@@ -445,7 +442,6 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
 
     @Test
     fun modeFourSpendsOneAmmoForTheWholeTurn() {
-        ruleset(RuleKey.DEPOT_SUPPLY to 1)
         EfileConfig.setForTest(intKeyMap = mapOf("supply_ex" to 5))
         val map = world()
         GameHolder.instance = holderFor(map)
@@ -463,7 +459,6 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
 
     @Test
     fun aDepotWithNoAmmoCannotSupplyUnderModeFour() {
-        ruleset(RuleKey.DEPOT_SUPPLY to 1)
         EfileConfig.setForTest(intKeyMap = mapOf("supply_ex" to 5))
         val map = world()
         GameHolder.instance = holderFor(map)
@@ -476,7 +471,6 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
 
     @Test
     fun airUnitsAreNeverAffectedByTheKey() {
-        ruleset(RuleKey.DEPOT_SUPPLY to 1)
         EfileConfig.setForTest(intKeyMap = mapOf("supply_ex" to 1))
         val map = world()
         GameHolder.instance = holderFor(map)
@@ -489,7 +483,6 @@ class LastThreeAbilitiesTest : OgRulesTestHarness() {
 
     @Test
     fun aNonDefaultModeRestrictsEverybodyElse() {
-        ruleset(RuleKey.DEPOT_SUPPLY to 1)
         EfileConfig.setForTest(intKeyMap = mapOf("supply_ex" to 1))
         val map = world()
         GameHolder.instance = holderFor(map)

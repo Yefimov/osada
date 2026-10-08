@@ -74,6 +74,7 @@ object UnitActionAvailability {
             HangarActions.hangar(context),
             HangarActions.enterCover(context),
             HangarActions.cover(context),
+            CautiousMove.availability(context),
             sleep(context),
         )
 
@@ -277,6 +278,7 @@ object UnitActionAvailability {
             UnitActionId.HANGAR -> HangarActions.hangar(context)
             UnitActionId.ENTER_COVER -> HangarActions.enterCover(context)
             UnitActionId.COVER -> HangarActions.cover(context)
+            UnitActionId.CAUTIOUS_MOVE -> CautiousMove.availability(context)
             else -> ActionAvailability.notApplicable(action)
         }
 
@@ -355,7 +357,7 @@ object UnitActionAvailability {
         addPrestigeBlock(context, perPoint, reasons)
 
         val enabled = SupplyRules.canReinforce(context.map, unit, false) && gain > 0 && reasons.isEmpty()
-        val supplyContext = SupplyContextRules.getSupplyContext(context.map, unit)
+        val supplyContext = SupplyContextRules.getSupplyContext(context.map, unit, reinforcement = true)
         val affordable = affordablePoints(context, perPoint, gain)
         // The exact resulting experience, computed from the points the player can actually afford --
         // the roadmap requires the preview to state what will happen, so it must use the same input

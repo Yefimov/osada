@@ -23,6 +23,10 @@ enum class SupplySource {
     /** Ground unit supplied from the hex it stands on. */
     GROUND,
 
+    /** Supplied by an adjacent friendly Depot (`rules/DepotSupply`): full rate, with neither the
+     *  terrain factor nor enemy pressure applied. Resupply only; reinforcement is unaffected. */
+    DEPOT,
+
     /** The unit has no map position, so nothing can be computed. */
     NONE,
 }
@@ -94,14 +98,23 @@ object SupplyContextRules {
 
     /** Player-facing explanation of the exact local modifier used by manual supply/reinforcement.
      *  Every returned term is the one the rules just used -- the UI must never recompute or
-     *  approximate them. */
+     *  approximate them.
+     *
+     *  [reinforcement] selects the strength-replacement terms: a Depot lifts the terrain and enemy
+     *  penalties for ammo/fuel only (`SupplyRules.getReinforceValue` never consults it), so a
+     *  reinforcement preview must keep showing the local factors. */
     fun getSupplyContext(
         map: GameMap,
         unit: GameUnit,
+        reinforcement: Boolean = false,
     ): SupplyContext =
         when {
             UnitPredicates.isAir(unit) -> SupplyContext(PERCENT, SupplySource.AIRFIELD_CARRIER)
             UnitPredicates.isSea(unit) -> SupplyContext(PERCENT, SupplySource.NAVAL)
+            // The same `supplierFor` question `SupplyRules.computeResupplyValue` asks, so the
+            // explanation names the source that actually produced the full refill.
+            !reinforcement && unit.getPos() != null && DepotSupply.supplierFor(map, unit) != null ->
+                SupplyContext(PERCENT, SupplySource.DEPOT)
             else -> groundSupplyContext(map, unit)
         }
 

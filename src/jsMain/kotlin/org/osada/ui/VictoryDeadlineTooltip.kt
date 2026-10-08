@@ -2,6 +2,7 @@ package org.osada.ui
 
 import org.osada.GameHolder
 import org.osada.i18n.I18n
+import org.osada.scenario.ObjectiveKind
 import org.osada.scenario.ObjectiveReport
 import org.osada.scenario.objectiveReport
 import org.w3c.dom.HTMLElement
@@ -93,9 +94,20 @@ internal object VictoryDeadlineTooltip {
             else -> deadlineLines(report)
         }
 
+    /**
+     * A hold-graded side does not win by capturing everything (`scenario/HoldVictoryMode.kt`), and
+     * says so: the turn deadlines a capture victory would have used are not shown here because they
+     * do not apply. An opponent that CAN still win at once by capture is named as well -- the same
+     * condition the rail's threat line uses, so a hidden objective is not revealed by it.
+     */
     private fun holdThresholdLines(report: ObjectiveReport): String =
         "<div class=\"osada-wtip__subtitle\">${I18n.t("hud.objective.tiers.hold.title")}</div>" +
             "<div class=\"osada-wtip__note\">${I18n.t("hud.objective.tiers.hold.help")}</div>" +
+            "<div class=\"osada-wtip__note\">${I18n.t(
+                "hud.objective.tiers.hold.no_early_end",
+                mapOf("maxTurns" to report.maxTurns),
+            )}</div>" +
+            enemyCaptureNote(report) +
             report.holdThresholds.joinToString("") { threshold ->
                 line(
                     "dim",
@@ -107,6 +119,13 @@ internal object VictoryDeadlineTooltip {
                     ),
                 )
             }
+
+    private fun enemyCaptureNote(report: ObjectiveReport): String =
+        if (report.enemyNeeds.isEmpty() || report.enemyNeeds.any { it.kind == ObjectiveKind.HIDDEN_VICTORY }) {
+            ""
+        } else {
+            "<div class=\"osada-wtip__note\">${I18n.t("hud.objective.tiers.hold.enemy_capture")}</div>"
+        }
 
     private fun deadlineLines(report: ObjectiveReport): String =
         "<div class=\"osada-wtip__subtitle\">${I18n.t("hud.objective.tiers.title")}</div>" +

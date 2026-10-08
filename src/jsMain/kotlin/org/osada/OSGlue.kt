@@ -97,7 +97,7 @@ private fun encodeURIComponent(value: String): String = js("encodeURIComponent")
  * so "Restart mission" survives the file being loaded in another browser. The autosave never carries
  * it: it would double every write for a payload that is already in this browser's storage.
  */
-private fun diskSavePayload(game: Game): String {
+internal fun diskSavePayload(game: Game): String {
     val data = game.state?.exportGameState().orEmpty()
     val checkpoint = game.missionRestartCheckpoint.exportForCurrent()
     if (data.isEmpty() || checkpoint == null) return data

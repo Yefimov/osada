@@ -95,7 +95,8 @@ data class ObjectiveReport(
     val victoryHeld: Int get() = victory.count { it.held }
     val victoryTotal: Int get() = victory.size
 
-    /** True when the turn limit, not a capture, is what will decide this scenario's grade. */
+    /** True when the turn limit, not a capture, is what will decide this scenario's grade -- and
+     *  therefore capturing every objective does not end the battle early (`HoldVictoryMode.kt`). */
     val gradedByHoldCount: Boolean get() = holdThresholds.isNotEmpty()
 
     /** Deadlines the player can still reach. A missed deadline is shown struck through rather than
@@ -134,7 +135,7 @@ fun Scenario.objectiveReport(
             }
         }
     }
-    val sideHoldCounts = if (side == 0) victoryHoldCounts else victoryHoldCountsSide1
+    val sideHoldCounts = holdCountsFor(side)
     return ObjectiveReport(
         rows = rows,
         turn = map.turn,
@@ -156,7 +157,9 @@ fun Scenario.objectiveReport(
 
 /**
  * What the opponent of [side] still needs for its capture win: its live `sidesVictoryHexes` list,
- * provided the scenario sent it to capture anything (`GameMap.captureGoalSides`).
+ * provided the scenario sent it to capture anything (`GameMap.captureGoalSides`) and that a capture
+ * can end its battle at all -- an opponent graded by holding (`HoldVictoryMode.kt`) wins nothing on
+ * the spot, so warning "you lose at once" would be false.
  *
  * The rail used to say nothing about this, so `forward0`'s single Soviet objective -- the airfield
  * the Japanese cavalry rides for -- ended the battle with no warning that it could (2026-09-24
@@ -165,7 +168,8 @@ fun Scenario.objectiveReport(
 private fun Scenario.enemyCaptureGoal(side: Int): List<ObjectiveRow> {
     val enemy = 1 - side
     val goals = map.captureGoalSides
-    if (side !in 0..1 || (goals != null && enemy !in goals)) return emptyList()
+    val enemyCanCapture = (goals == null || enemy in goals) && captureEndsBattle(enemy)
+    if (side !in 0..1 || !enemyCanCapture) return emptyList()
     return map.sidesVictoryHexes.getOrNull(enemy).orEmpty().mapNotNull { cell ->
         map.map?.getOrNull(cell.row)?.getOrNull(cell.col)?.let { hex ->
             ObjectiveRow(kindOf(hex) ?: ObjectiveKind.HIDDEN_VICTORY, hex.name, cell.row, cell.col, held = true)

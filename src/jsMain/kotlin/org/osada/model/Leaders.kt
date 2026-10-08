@@ -214,6 +214,8 @@ object Leaders {
             Pair("Extended Front", "The unit gives support fire to adjacent friendly units.")
         description[LeaderType.FLAK_SUPPORT] =
             Pair("Flak Support", "The unit gives support fire, and may intercept aircraft more than once a turn.")
+        description[LeaderType.ARMOURED_HUNTER] =
+            Pair("Armoured Hunter", "+1 initiative in combat against armoured targets.")
     }
 
     /**

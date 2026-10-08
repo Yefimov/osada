@@ -88,6 +88,9 @@ enum class UnitActionId(
     /** Opens a fortification's garrison: who is inside, and the order to come out (`ui/HangarDialog`). */
     COVER("cover"),
     SLEEP("sleep"),
+
+    /** OG's cautious move: route only through spotted hexes (`rules/CautiousMove`, 2026-10-08). */
+    CAUTIOUS_MOVE("cautious"),
 }
 
 /** Why an applicable action is unavailable right now. Ordered most-immediate-first by the caller. */
@@ -300,6 +303,12 @@ enum class ActionEffectKind {
 
     /** Skips the unit in ready-unit navigation, still counted by the end-turn warning. */
     SLEEP_SKIP,
+
+    /** The move range and route will use spotted hexes only (`rules/CautiousMove`). */
+    CAUTIOUS_ROUTE,
+
+    /** Back to the ordinary move range. */
+    NORMAL_ROUTE,
 
     /** Returns the unit to ready-unit navigation. */
     WAKE_RESTORE,

@@ -31,7 +31,8 @@ internal object ScenarioHexParser {
     ) {
         val row = el.getAttribute("row")?.toIntOrNull()
         val col = el.getAttribute("col")?.toIntOrNull()
-        val inBounds = row != null && col != null && row < scenario.map.rows && col < scenario.map.cols
+        val inBounds =
+            row != null && col != null && row >= 0 && col >= 0 && row < scenario.map.rows && col < scenario.map.cols
         if (!inBounds) return
         val hex = scenario.map.map!![row][col]
         applyHexAttributes(el, hex, scenario)

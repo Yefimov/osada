@@ -12,8 +12,9 @@ object RulesetCompatibility {
      *  on, which is a x10 economy this build would not be running. Schema 20 retired
      *  `rail_transport` the other way round: an older peer on OSADA Default has no railway, and
      *  this build always runs one. Schema 21 retired `combat_support_min_bar` the same way: an
-     *  older peer may have it off, and this build always lends the bar. */
-    private const val MIN_MULTIPLAYER_SCHEMA = 21
+     *  older peer may have it off, and this build always lends the bar. Schema 22 retired
+     *  `depot_supply` the same way: this build always lets a Depot supply its neighbours. */
+    private const val MIN_MULTIPLAYER_SCHEMA = 22
 
     /** Why a join was refused. */
     enum class Refusal {

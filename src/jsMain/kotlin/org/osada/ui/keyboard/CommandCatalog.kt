@@ -56,9 +56,9 @@ data class GameCommand(
  *
  * Deliberately absent, and not oversights:
  * - no Disband/Delete/Restart-Turn/quick-load binding -- destructive or save-scumming (§3);
- * - no separate `C` Combat Log: OSADA has exactly one `#combatLog` window and it is the Turn
+ * - no separate Combat Log key: OSADA has exactly one `#combatLog` window and it is the Turn
  *   Report, already bound to `T`. Binding two keys to one window would advertise a second panel
- *   that does not exist;
+ *   that does not exist. `C` is Cautious move (2026-10-08);
  * - no `Alt+E` End Turn and no Space fast-forward until their confirmation/animation semantics are
  *   designed (§3).
  */
@@ -69,6 +69,7 @@ object CommandCatalog {
     const val REINFORCE = "reinforce"
     const val OVERSTRENGTH = "overstrength"
     const val UNDO = "undo"
+    const val CAUTIOUS = "cautious"
     const val NEXT_UNIT = "next_unit"
     const val PREV_UNIT = "prev_unit"
 
@@ -106,6 +107,7 @@ object CommandCatalog {
                 CommandGroup.UNIT,
                 listOf(ShortcutBinding("U", code = "KeyU"), ShortcutBinding("Ctrl+Z", code = "KeyZ", ctrl = true)),
             ),
+            GameCommand(CAUTIOUS, CommandGroup.UNIT, listOf(ShortcutBinding("C", code = "KeyC"))),
             GameCommand(NEXT_UNIT, CommandGroup.UNIT, listOf(ShortcutBinding("N", code = "KeyN"))),
             GameCommand(PREV_UNIT, CommandGroup.UNIT, listOf(ShortcutBinding("P", code = "KeyP"))),
         )
@@ -173,6 +175,7 @@ object CommandCatalog {
             REINFORCE to "reinforce",
             OVERSTRENGTH to "overstrength",
             UNDO to "undo",
+            CAUTIOUS to "cautious",
         )
 
     fun byId(id: String): GameCommand? = commands.firstOrNull { it.id == id }

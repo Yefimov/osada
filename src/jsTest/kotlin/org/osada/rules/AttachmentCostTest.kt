@@ -57,6 +57,28 @@ class AttachmentCostTest {
         return assertNotNull(Attachments.cost(GameUnit(eqid), Attachments.SLOT_RECON))
     }
 
+    /** Base strength prices the attachment; current strength never discounts it (audit A4). */
+    @Test
+    fun theScenarioBaseStrengthPricesItAndCurrentStrengthDoesNot() {
+        val json =
+            "{\"attachments\":{\"on\":true,\"costPresence\":true,\"slots\":{\"1\":{\"name\":\"Recon\"," +
+                "\"disabled\":false,\"bonus\":1,\"penalty\":0,${costs(0, 25)}\"penaltyType\":0}}}}"
+        EfileConfig.setForTest(attachmentConfigValue = assertNotNull(EfileConfig.parseAttachments(json)))
+        val price = { base: Int, current: Int ->
+            val unit =
+                GameUnit(eqid).apply {
+                    basicStrength = base
+                    strength = current
+                }
+            Attachments.cost(unit, Attachments.SLOT_RECON)
+        }
+
+        assertEquals(30, price(5, 5), "24 x 5 x 25 / 100")
+        assertEquals(60, price(10, 3), "a damaged unit pays its full base")
+        assertEquals(90, price(15, 15))
+        assertEquals(60, price(10, 13), "overstrength does not raise it")
+    }
+
     @Test
     fun explicitZeroMinimumAndFactorIsFree() {
         assertEquals(0, reconCost(costs(0, 0)))

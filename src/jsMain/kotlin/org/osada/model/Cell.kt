@@ -94,6 +94,11 @@ class MovementResults {
      *  a minefield into a free map of itself. */
     var hitMinefield: Boolean = false
 
+    /** OG's airborne misdrop roll for this drop (`rules/AirborneLanding`), or null when the drop did
+     *  not roll. Non-null makes the move final and drives the HUD notice. */
+    @JsExport.Ignore
+    var airborneLanding: org.osada.rules.AirborneLanding.Outcome? = null
+
     /** Strength lost to an UNDETECTED minefield on this move; 0 when the field was already known
      *  (a detected field costs movement, never strength). Reported to the HUD so movement damage is
      *  never unexplained (`docs/design/action-affordances-and-objectives.md` §1.1). */

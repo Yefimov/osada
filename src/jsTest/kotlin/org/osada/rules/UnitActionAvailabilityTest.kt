@@ -323,6 +323,7 @@ class UnitActionAvailabilityTest {
                 UnitActionId.HANGAR,
                 UnitActionId.ENTER_COVER,
                 UnitActionId.COVER,
+                UnitActionId.CAUTIOUS_MOVE,
                 UnitActionId.SLEEP,
             ),
             UnitActionAvailability.all(context(world, unit)).map { it.action },
