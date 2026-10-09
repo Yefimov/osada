@@ -24,6 +24,7 @@ internal class MainMenuButtonHandler(
             "air" -> onAirButton(map)
             "hex" -> onHexButton()
             "arty" -> onArtilleryButton(map)
+            "firerange" -> FireRangeOverlay.toggle(ui)
             "zoom" -> {
                 ui.toggleStrategicZoom()
                 ui.render.render()

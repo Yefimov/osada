@@ -1217,6 +1217,16 @@
                 <dt data-mkey="field.tools.grid.dt">Hex grid — <kbd>H</kbd></dt>
                 <dd data-mkey="field.tools.grid.dd">Draws the hex outlines, which makes counting range and
                     adjacency exact instead of approximate.</dd>
+                <dt data-mkey="field.tools.firerange.dt">Range of fire — <kbd>G</kbd></dt>
+                <dd data-mkey="field.tools.firerange.dd">The sidebar's <em>Range</em> button outlines, in upright brass
+                    hatching, every hex within weapon range of the selected formation — or, with nothing selected,
+                    of the enemy whose card you opened, while you can still see it. It is distance only: line of
+                    sight, the target's layer, weather and ammunition can still refuse a shot inside it.</dd>
+                <dt data-mkey="field.tools.hidenumbers.dt">Hide numbers</dt>
+                <dd data-mkey="field.tools.hidenumbers.dd">A Gameplay setting for the older, less transparent feel:
+                    counters lose their strength figure, the attack forecast loses its casualty estimate and the
+                    enemy card its strength. Your own card still shows your strength, and attacking works exactly
+                    as before.</dd>
                 <dt data-mkey="field.tools.inspector.dt">Unit inspector — <kbd>I</kbd></dt>
                 <dd data-mkey="field.tools.inspector.dd">Pins the selected formation's full statistics so they stay
                     on screen while you look at something else.</dd>
@@ -1431,8 +1441,9 @@
             <p data-mkey="combat.entrench.p3">Every attack, successful or not, knocks one level off. Repeated attacks
                 in the same turn can push a defender below the terrain's own base, which is why a bombardment by
                 aircraft and artillery before the ground assault works. Engineers — other than bridging engineers —
-                and anything carrying the <strong>Bunker Buster</strong> attachment ignore entrenchment entirely, as
-                do the Infiltration Tactics and Street Fighter traits in cities, rough terrain and ports.
+                ignore entrenchment entirely, as do the Infiltration Tactics and Street Fighter traits in cities,
+                rough terrain and ports. The <strong>Bunker Buster</strong> attachment does so only against bunkers
+                and formations on fortification hexes, which also cannot raise a rugged defence against it.
                 <strong>Ferocious Defense</strong> makes a defender's entrenchment impossible to ignore.</p>
 
             <h3 data-mkey="combat.close.h">Close combat</h3>
@@ -1678,10 +1689,9 @@
             <p data-mkey="supply.dilute.p1">Ordinary replacements arrive untrained. A formation's experience becomes
                 the strength-weighted average of its surviving veterans and its new intake — a formation at strength
                 3 with 400 experience, rebuilt to 10, comes out with 120.</p>
-            <p data-mkey="supply.dilute.p2">This is on by default and it is a real strategic constraint: there is no
-                way to heal a damaged veteran without spending some of what made it veteran. The alternative is to
-                pull it out of the line and let it fight at reduced strength. The reinforcement preview states the
-                new experience before you buy.</p>
+            <p data-mkey="supply.dilute.p2">This applies when the veterans / recruits choice below is switched off.
+                Then there is no way to heal a damaged veteran without spending some of what made it veteran. The
+                reinforcement preview states the new experience before you buy.</p>
             <div class="switch">
                 <span class="callout-title" data-mkey="supply.dilute.switch.title">Ruleset-dependent</span>
                 <p data-mkey="supply.dilute.switch.p"><strong>Replacements dilute experience</strong>
@@ -1690,14 +1700,14 @@
             </div>
             <div class="switch">
                 <span class="callout-title" data-mkey="supply.green.switch.title">Ruleset-dependent</span>
-                <p data-mkey="supply.green.switch.p"><strong>Green replacements</strong>
-                    (<code>green_replacements</code>, off by default) adds Open General's second, cheaper intake
-                    beside the normal one. Greens cost a fraction of the standard price — a quarter of it where the
-                    equipment file does not say otherwise — and they arrive with no training at all, so they dilute
-                    experience harder than ordinary replacements do. Ordinary replacements are what Open General calls
-                    <em>elite</em>: the equipment file prices those too, and a campaign may make them dearer or
-                    cheaper than the base cost. The rule needs the campaign's equipment file to price greens at all,
-                    so switching it on does nothing for content that never defined them.</p>
+                <p data-mkey="supply.green.switch.p"><strong>Veterans or recruits</strong>
+                    (<code>green_replacements</code>, on by default) turns the Reinforce button into a choice, as in
+                    Open General. <em>Veterans</em> (Open General's <em>elite</em> replacements) keep the formation's
+                    experience. <em>Recruits</em> (<em>green</em> replacements) cost a fraction of the price and
+                    arrive untrained, so they dilute experience. The equipment file sets both prices; where it sets
+                    none, Open General's defaults apply: veterans at the standard price, recruits at a quarter of it.
+                    Switched off, there is a single Reinforce at the standard price, governed by the dilution rule
+                    above.</p>
             </div>
 
             <h3 data-mkey="supply.prestige.h">Prestige</h3>
@@ -1953,7 +1963,7 @@
                     <tr><th scope="row">Skilled Interceptor</th><td data-mkey="cmd.cat.si">May intercept several
                         enemy fighters in the defensive phase.</td></tr>
                     <tr><th scope="row">Skilled Reconnaissance</th><td data-mkey="cmd.cat.sr">Spotting range
-                        increased by 1.</td></tr>
+                        increased by 2.</td></tr>
                     <tr><th scope="row">Street Fighter</th><td data-mkey="cmd.cat.sf">Ignores an enemy's city
                         entrenchment when resolving combat.</td></tr>
                     <tr><th scope="row">Superior Maneuver</th><td data-mkey="cmd.cat.sm">Bypasses enemy zones of
@@ -2236,7 +2246,7 @@
 <tr><th scope="row">Extended naval rules</th><td><code>extended_naval</code></td><td data-mkey="rs.k.en">As each scenario decides</td></tr>
 <tr><th scope="row">Naval critical hits</th><td><code>naval_critical_hits</code></td><td data-mkey="rs.k.nch">Off</td></tr>
 <tr><th scope="row">Shell craters</th><td><code>craters</code></td><td data-mkey="rs.k.cr">Off</td></tr>
-<tr><th scope="row">Green replacements</th><td><code>green_replacements</code></td><td data-mkey="rs.k.gr">Off, and only where the equipment file prices them</td></tr>
+<tr><th scope="row">Veterans or recruits</th><td><code>green_replacements</code></td><td data-mkey="rs.k.gr">On; the equipment file's <code>green</code> under Author's Vision</td></tr>
 <tr><th scope="row">Carrier deployment</th><td><code>carrier_deploy</code></td><td data-mkey="rs.k.cd">Off</td></tr>
 <tr><th scope="row">Carrier hangars</th><td><code>carrier_hangars</code></td><td data-mkey="rs.k.ch">Off</td></tr>
 <tr><th scope="row">Equipment toggles</th><td><code>equipment_toggles</code></td><td data-mkey="rs.k.et">Off</td></tr>
@@ -2308,6 +2318,7 @@
                 <li data-command="air_mode"><kbd>A</kbd> &mdash; Air Mode</li>
                 <li data-command="hex_grid"><kbd>H</kbd> &mdash; Hex grid</li>
                 <li data-command="artillery_range"><kbd>F</kbd> &mdash; Artillery range</li>
+                <li data-command="fire_range"><kbd>G</kbd> &mdash; Range of fire of the selected unit</li>
                 <li data-command="map_labels"><kbd>L</kbd> &mdash; Optional objective labels</li>
                 <li data-command="strategic_map"><kbd>Z</kbd> &mdash; Strategic map</li>
                 <li data-command="zoom_in"><kbd>+ / =</kbd> &mdash; Zoom in</li>

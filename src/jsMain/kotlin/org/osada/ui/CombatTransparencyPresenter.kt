@@ -129,7 +129,12 @@ internal object CombatTransparencyPresenter {
             I18n.t(
                 "combat.enemy.stat",
                 mapOf(
-                    "strength" to unit.strength,
+                    "strength" to
+                        HiddenNumbers.strengthFor(
+                            unit,
+                            org.osada.GameHolder.instance
+                                ?.spotSide,
+                        ),
                     "experience" to unit.experience,
                     "entrenchment" to unit.entrenchment,
                     "ground" to data.grounddef,

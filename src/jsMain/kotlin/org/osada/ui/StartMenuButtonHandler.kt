@@ -95,7 +95,16 @@ internal class StartMenuButtonHandler(
 
     private fun onRestartMissionButton() {
         val checkpoint = ui.game.missionRestartCheckpoint
-        if (!checkpoint.isAvailable()) return
+        if (!checkpoint.isAvailable()) {
+            // Shown as unavailable rather than hidden (`applyRestartButtonState`): explain why.
+            if (ui.game.gameStarted) {
+                UIBuilder.message(
+                    I18n.t("menu.main.restart_mission.label"),
+                    I18n.t("menu.main.restart_mission.unavailable.body"),
+                )
+            }
+            return
+        }
         // The game's own anchored confirmation card, not the browser's native window.confirm:
         // every other destructive/replacing action in the app already asks this way.
         ConfirmCard.open(

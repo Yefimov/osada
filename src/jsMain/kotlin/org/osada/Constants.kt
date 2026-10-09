@@ -366,6 +366,15 @@ enum class LeaderType(
     // against armoured (hard) targets. Not an OG leader, so no legacy pool or class signature
     // grants it; numbered past OG's range for the same save-stability reason.
     ARMOURED_HUNTER(36),
+
+    // OG's naval class attributes (current leader table, luis-guzman.com/OpenGen_Leaders.html), added
+    // 2026-10-09. Until then every warship got Marksman. Each grants existing traits through
+    // [org.osada.model.OgLeaderPools.signatureGrants] plus, for the first two, its own +1.
+    EXPERT_SEA_WOLF(37),
+    DEEP_SEA_HUNTER(38),
+    EXPERT_SEA_BASE(39),
+    BLOCKADE_VESSEL(40),
+    SCREENING_VESSEL(41),
 }
 
 enum class EndGameType {
@@ -563,6 +572,21 @@ class UiSettings {
      * [hexGrid], so it is persisted with the rest of the settings and survives a reload.
      */
     var artilleryRange: Boolean = false
+
+    /**
+     * The sidebar's Range toggle: outline how far the SELECTED formation (or an inspected visible
+     * enemy) can shoot (`ui/FireRangeOverlay`, OG's "range of fire for selected unit"). A view
+     * toggle like [artilleryRange], persisted with the settings; independent of it.
+     */
+    var fireRange: Boolean = false
+
+    /**
+     * OG's "Hide unit strength & combat estimated" (`docs/design/og-parity-followups.md` §3): no
+     * strength figure on map counters, no casualty estimate at the cursor or in the forecast, no
+     * enemy strength on the enemy card. A view preference only -- combat, the touch Attack
+     * confirmation, and supply/fuel/ammo warnings are untouched, and nothing is sent to a peer.
+     */
+    var hideNumbers: Boolean = false
     var showGridTerrain: Boolean = false
     var muteUnitSounds: Boolean = false
 
@@ -671,6 +695,7 @@ class UiSettings {
             "confirmEndTurn" -> confirmEndTurn
             "stalinRegime" -> stalinRegime
             "reducedEffects" -> reducedEffects
+            "hideNumbers" -> hideNumbers
             else -> false
         }
 
@@ -695,6 +720,7 @@ class UiSettings {
             "confirmEndTurn" -> confirmEndTurn = value
             "stalinRegime" -> stalinRegime = value
             "reducedEffects" -> reducedEffects = value
+            "hideNumbers" -> hideNumbers = value
         }
     }
 
@@ -716,6 +742,8 @@ class UiSettings {
         o.uiSmallSize = uiSmallSize
         o.hexGrid = hexGrid
         o.artilleryRange = artilleryRange
+        o.fireRange = fireRange
+        o.hideNumbers = hideNumbers
         o.showGridTerrain = showGridTerrain
         o.muteUnitSounds = muteUnitSounds
         o.deployMode = deployMode

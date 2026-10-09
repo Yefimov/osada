@@ -6,6 +6,7 @@ import org.osada.Game
 import org.osada.GameHolder
 import org.osada.GameStateSerializer
 import org.osada.LeaderType
+import org.osada.MissionRestartCheckpoint
 import org.osada.OPERATION_URANUS_SAVE_JSON
 import org.osada.SavePhaseValidation
 import org.osada.UnitClass
@@ -42,6 +43,7 @@ import org.osada.save.ProfileBundle
 import org.osada.save.ResumeTarget
 import org.osada.save.SaveResult
 import org.osada.save.SaveResultKind
+import org.osada.storage.BrowserStorage
 import kotlin.js.json
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -106,6 +108,43 @@ class ProfileBackupTest {
         assertEquals(second.current.payload, store.readCurrent("test-b.json")?.payload)
         assertEquals(first.current.payload, localStorage.getItem("${ProfileBackupCodec.checkpointPrefix}:test-a.json"))
         assertEquals(second.current.payload, localStorage.getItem("${ProfileBackupCodec.checkpointPrefix}:test-b.json"))
+    }
+
+    @Test
+    fun anOpeningOnlyThisPageHoldsStillTravelsInTheBackup() {
+        val first = run("test-a.json")
+        assertTrue(store.replaceProfile(ProfileBundle(listOf(first), 0.0, "test")).isSuccess)
+        // The browser refuses the checkpoint (full or fenced store): only the page keeps it.
+        BrowserStorage.suspendWrites()
+        try {
+            GameHolder.instance!!.missionRestartCheckpoint.adopt(first.current.payload)
+        } finally {
+            BrowserStorage.simulateDeniedForTests(false)
+        }
+        assertNull(localStorage.getItem("${ProfileBackupCodec.checkpointPrefix}:test-a.json"))
+        val exported = ProfileBackup.prepareExport()
+        assertEquals(first.current.payload, exported.missionStarts["test-a.json"] as? String)
+        localStorage.clear()
+        val plan = ProfileBackupCodec.decode(JSON.parse<dynamic>(JSON.stringify(exported)))
+        assertTrue(ProfileBackup.apply(plan).isSuccess)
+        assertEquals(first.current.payload, localStorage.getItem("${ProfileBackupCodec.checkpointPrefix}:test-a.json"))
+    }
+
+    @Test
+    fun aRunSavedDuringItsBriefingKeepsThatMarkerThroughABackup() {
+        val raw = JSON.parse<dynamic>(run("test-a.json").current.payload)
+        raw[MissionRestartCheckpoint.OPENING_PENDING_KEY] = true
+        val pending = ProfileBackupCodec.runFromSave(JSON.stringify(raw), 123456.0)
+        assertTrue(store.replaceProfile(ProfileBundle(listOf(pending), 0.0, "test")).isSuccess)
+        val plan = ProfileBackupCodec.decode(JSON.parse<dynamic>(JSON.stringify(ProfileBackup.prepareExport())))
+        localStorage.clear()
+        assertTrue(ProfileBackup.apply(plan).isSuccess)
+        val restored = JSON.parse<dynamic>(assertNotNull(store.readCurrent("test-a.json")).payload)
+        assertEquals(
+            true,
+            restored[MissionRestartCheckpoint.OPENING_PENDING_KEY],
+            "the import must still replay the briefing",
+        )
     }
 
     @Test

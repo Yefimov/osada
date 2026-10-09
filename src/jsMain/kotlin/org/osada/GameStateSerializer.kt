@@ -74,6 +74,9 @@ object GameStateSerializer {
                 Pair("randomSeed", GameRandomSource.seed().toString()),
                 Pair("randomCursor", GameRandomSource.cursor().toString()),
             )
+        // Only while the opening briefing is still up (`Game.openingPending`); absent otherwise,
+        // and absent from every save written before the key existed -- both resume normally.
+        if (game.openingPending) base[MissionRestartCheckpoint.OPENING_PENDING_KEY] = true
         return JSON.stringify(base)
     }
 

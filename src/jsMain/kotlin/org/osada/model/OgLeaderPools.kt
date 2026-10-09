@@ -105,7 +105,9 @@ object OgLeaderPools {
      *    between Marksman and Tenacious, and Marksman's range would reach further than a bunker's
      *    gun was ever authored to;
      *  * **Level bomber** → Skilled Assault, the corpus's only value and the other bomber's;
-     *  * **Carrier** and the other warships → Marksman, the manual's *"Ships"* line;
+     *  * the warships → OG's current leader table, which supersedes the manual's single *"Ships"*
+     *    line (2026-10-09): submarine Expert Sea Wolf, destroyer Deep Sea Hunter, carrier Expert Sea
+     *    Base, light cruiser Screening Vessel, the heavier ships Blockade Vessel (Marksman's range);
      *  * **the three transport classes** → none. OG only allowed a leader on a transport at design
      *    time from 24.12.10.0 (changelog: *"Enabled to assign a leader at design time for Bunkers
      *    and any Transport"*) and names no class attribute for one; an author who wants one writes
@@ -124,14 +126,33 @@ object OgLeaderPools {
             UnitClass.FIGHTER.value to LeaderType.SKILLED_INTERCEPTOR,
             UnitClass.TACTICAL_BOMBER.value to LeaderType.SKILLED_ASSAULT,
             UnitClass.LEVEL_BOMBER.value to LeaderType.SKILLED_ASSAULT,
-            UnitClass.SUBMARINE.value to LeaderType.MARKSMAN,
-            UnitClass.DESTROYER.value to LeaderType.MARKSMAN,
-            UnitClass.BATTLESHIP.value to LeaderType.MARKSMAN,
-            UnitClass.CARRIER.value to LeaderType.MARKSMAN,
-            UnitClass.BATTLE_CRUISER.value to LeaderType.MARKSMAN,
-            UnitClass.CRUISER.value to LeaderType.MARKSMAN,
-            UnitClass.LIGHT_CRUISER.value to LeaderType.MARKSMAN,
+            UnitClass.SUBMARINE.value to LeaderType.EXPERT_SEA_WOLF,
+            UnitClass.DESTROYER.value to LeaderType.DEEP_SEA_HUNTER,
+            UnitClass.BATTLESHIP.value to LeaderType.BLOCKADE_VESSEL,
+            UnitClass.CARRIER.value to LeaderType.EXPERT_SEA_BASE,
+            UnitClass.BATTLE_CRUISER.value to LeaderType.BLOCKADE_VESSEL,
+            UnitClass.CRUISER.value to LeaderType.BLOCKADE_VESSEL,
+            UnitClass.LIGHT_CRUISER.value to LeaderType.SCREENING_VESSEL,
         )
+
+    /**
+     * What each naval signature means in existing traits, per OG's table: Sea Wolf *"ignores ZOC"*
+     * (Superior Maneuver; its +1 naval defense is read directly), Deep Sea Hunter *"ignores Evasion"*
+     * (read directly, with its +1 naval attack), Sea Base *"harder to destroy (resilience)"*,
+     * Blockade Vessel *"range +1 (marksman)"*, Screening Vessel *"cannot be surprised, +1 initiative
+     * (Battlefield Intelligence)"*. Resolved in `HeroTraitResolver`, so every rule that asks for the
+     * underlying trait sees it without knowing ships exist.
+     */
+    private val SIGNATURE_GRANTS: Map<LeaderType, LeaderType> =
+        mapOf(
+            LeaderType.EXPERT_SEA_WOLF to LeaderType.SUPERIOR_MANEUVER,
+            LeaderType.EXPERT_SEA_BASE to LeaderType.RESILIENCE,
+            LeaderType.BLOCKADE_VESSEL to LeaderType.MARKSMAN,
+            LeaderType.SCREENING_VESSEL to LeaderType.BATTLEFIELD_INTELLIGENCE,
+        )
+
+    /** The existing trait a naval signature with id [held] stands for, or null. */
+    fun signatureGrants(held: Int): LeaderType? = SIGNATURE_GRANTS.entries.firstOrNull { it.key.value == held }?.value
 
     /**
      * Classes that may be AUTHORED with a leader but never earn one in combat: bunkers and every
@@ -199,9 +220,11 @@ object OgLeaderPools {
         if (uclass == UnitClass.NONE.value) return emptyList()
         val disabled = EfileConfig.listKey("noldr_randtype").toSet()
         val own = classTrait(uclass)
+        val ownGrant = own?.let { signatureGrants(it.value) }
         return RANDOM_LIST
-            .filter { (ogId, trait) -> ogId !in disabled && trait != own && appliesTo(trait, uclass) }
-            .map { it.second }
+            .filter { (ogId, trait) ->
+                ogId !in disabled && trait != own && trait != ownGrant && appliesTo(trait, uclass)
+            }.map { it.second }
             .distinct()
     }
 

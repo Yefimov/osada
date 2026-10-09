@@ -697,7 +697,7 @@ class AttachmentsTest {
     }
 
     @Test
-    fun bunkerBusterBypassesTheDefendersEntrenchment() {
+    fun bunkerBusterBypassesEntrenchmentOnlyOfABunker() {
         EfileConfig.setForTest(attachmentConfigValue = withTier2Slots(lxfShapedConfig()))
         HeroCampaign.roster().putFormation(formation("F-A"))
         val attacker = coreUnit("F-A")
@@ -708,9 +708,15 @@ class AttachmentsTest {
             "entrenchment applies normally before the attacker buys Bunker Buster",
         )
         assertTrue(HeroCampaign.purchaseAttachment(attacker, Attachments.SLOT_BUNKER_BUSTER))
-        assertFalse(
+        // OG: "Ignores effective defense of bunkers and bonus of fortification terrain" -- not a
+        // universal Ignore-trench (narrowed 2026-10-09, `rules/BunkerBuster`).
+        assertTrue(
             CombatResolver.isEntrenchmentIntact(attacker, defender, TerrainType.CLEAR.value),
-            "Bunker Buster bypasses entrenchment exactly like the Ignore-trench attr bit",
+            "an ordinary formation in the open keeps its entrenchment",
+        )
+        assertFalse(
+            CombatResolver.isEntrenchmentIntact(attacker, defender, TerrainType.FORTIFICATION.value),
+            "a formation on a fortification hex loses it",
         )
     }
 }

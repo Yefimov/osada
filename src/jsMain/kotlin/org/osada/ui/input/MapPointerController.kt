@@ -19,6 +19,9 @@ internal class MapPointerController(
     private val input: MapInputController,
 ) {
     private val reducer = MapGestureReducer()
+
+    /** Shift on the latest pointer move, for the Shift route preview ([org.osada.ui.RoutePreview]). */
+    private var hoverShift = false
     private var element: dynamic = null
     private var longPressTimer = 0
 
@@ -47,6 +50,7 @@ internal class MapPointerController(
 
     private fun onDown(event: dynamic) {
         if (musicOwnsInput) return
+        shiftHeld = event.shiftKey == true
         val sample = sampleOf(event)
         val game = byId("game")?.asDynamic()
         // Claimed here rather than opportunistically later: the map owns every touch that starts
@@ -67,12 +71,15 @@ internal class MapPointerController(
 
     private fun onMove(event: dynamic) {
         if (musicOwnsInput) return
+        hoverShift = event.shiftKey == true
         val sample = sampleOf(event)
         run(reducer.reduce(GestureInput.Move(sample)), sample)
     }
 
     private fun onUp(event: dynamic) {
         if (musicOwnsInput) return
+        // Read at release, the moment a click activates: Shift pressed mid-click still counts.
+        shiftHeld = event.shiftKey == true
         val sample = sampleOf(event)
         releasePointerCapture(element, sample.pointerId)
         run(reducer.reduce(GestureInput.Up(sample)), sample)
@@ -129,7 +136,7 @@ internal class MapPointerController(
                     sample?.pointerType != PointerSample.POINTER_TYPE_MOUSE,
                 )
 
-            is GestureEffect.Hover -> input.onHover(effect.clientX, effect.clientY)
+            is GestureEffect.Hover -> input.onHover(effect.clientX, effect.clientY, hoverShift)
         }
     }
 
@@ -195,3 +202,11 @@ private fun vibrate() {
 }
 
 private const val LONG_PRESS_VIBRATION_MS = 10
+
+/**
+ * Whether Shift was held on the pointer event that produced the current map activation. The pure
+ * gesture reducer deliberately knows no modifiers, so the one consumer -- OG's Shift+select for a
+ * cautious move ([org.osada.rules.CautiousMove]) -- reads it here. Always false on touch.
+ */
+internal var shiftHeld: Boolean = false
+    private set

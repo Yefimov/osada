@@ -39,6 +39,8 @@ internal object LiveLocalization {
                 "tutorial" to "menu.main.tutorial",
             )
         buttonKeys.forEach { (id, prefix) -> refreshMenuButton(id, prefix) }
+        // Its subtitle depends on whether this battle has an opening to return to.
+        StartMenuBuilder.applyRestartButtonState()
         refreshMenuButton(
             "saveload",
             if (GameHolder.instance?.gameStarted == true) "menu.main.save_load" else "menu.main.load_game",

@@ -37,6 +37,8 @@ object UIBuilder {
             "embark" to "2",
             "resupply" to "!",
             "reinforce" to "#",
+            // The cheap sibling in the Reinforce menu (2026-10-09) had no glyph and showed a blank.
+            "green_reinforce" to "#",
             "overstrength" to "J",
             "lay_mines" to ActionIcons.LAY_MINES,
             // OG marks a barrage-capable record with `=` in its unit info screen (`tips1.txt`), but in

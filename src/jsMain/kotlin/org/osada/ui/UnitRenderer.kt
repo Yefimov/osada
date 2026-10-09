@@ -79,7 +79,9 @@ internal class UnitRenderer(
 
         val boxX = x + rc.hexSlantWidth / 2.0
         val boxY = y + 2.0 * rc.v - (rc.unitFontSize + 4.0)
-        val boxW = if (unit.strength < 10) 12.0 else 19.0
+        // Hidden numbers keep the plaque (side colour, core border, moved shade) at one width:
+        // a wider plaque alone would still read "ten or more".
+        val boxW = if (unit.strength < 10 || !HiddenNumbers.showCounterStrength) 12.0 else 19.0
         val boxH = rc.unitFontSize + 4.0
         val textOff = if (unit.strength < 10) 2.0 else 1.0
 
@@ -151,6 +153,7 @@ internal class UnitRenderer(
         }
         ctx.fillRect(boxX, boxY - 1.0, boxW, boxH)
 
+        if (!HiddenNumbers.showCounterStrength) return
         ctx.fillStyle = strengthTextStyle(unit)
         ctx.fillText("${unit.strength}", boxX + textOff, boxY + STRENGTH_TEXT_Y_OFFSET)
     }

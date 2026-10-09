@@ -266,6 +266,12 @@ internal object BottomZoneBuilder {
         val lossesEl = byId("fcLosses")
         lossesEl?.let {
             clearTag(it)
+            if (!HiddenNumbers.showCombatEstimate) {
+                val hidden = addTag(it, "span")
+                hidden.className = "osada-fc-vs"
+                hidden.textContent = I18n.t("combat.forecast.hidden")
+                return@let
+            }
             val a = addTag(it, "span")
             a.className = "osada-fc-loss" + if (attackerOwn) " osada-fc-loss--own" else " osada-fc-loss--enemy"
             a.textContent = "−${result.losses}"
@@ -279,7 +285,10 @@ internal object BottomZoneBuilder {
         byId("fcStrengths")?.textContent =
             I18n.t(
                 "combat.forecast.strengths",
-                mapOf("attacker" to attacker.strength, "defender" to defender.strength),
+                mapOf(
+                    "attacker" to HiddenNumbers.strengthFor(attacker, ownSide),
+                    "defender" to HiddenNumbers.strengthFor(defender, ownSide),
+                ),
             )
 
         renderEnemyCard(defender)
@@ -496,12 +505,20 @@ internal object BottomZoneBuilder {
         // unit.flag (like the player card's #uFlag), NOT data.country: the equipment record's
         // country is a catalogue index (0 = shared/generic) that maps to "Unknown" here.
         byId("ecSub")?.textContent = enemyCardSubtitle(unit)
+        val viewerSide = GameHolder.instance?.spotSide
+        val strengthHidden = HiddenNumbers.strengthFor(unit, viewerSide) == HiddenNumbers.PLACEHOLDER
+        // The bar is the same figure drawn as a length, so it goes with the number.
+        byId("ecStrRow")?.style?.visibility = if (strengthHidden) "hidden" else ""
         byId("ecStrBarFill")?.style?.width =
             "${(unit.strength / FULL_STRENGTH * PERCENT_SCALE).coerceIn(0.0, PERCENT_SCALE)}%"
         byId("ecStat")?.textContent =
             I18n.t(
                 "combat.enemy.summary",
-                mapOf("strength" to unit.strength, "ground" to data.grounddef, "air" to data.airdef),
+                mapOf(
+                    "strength" to HiddenNumbers.strengthFor(unit, viewerSide),
+                    "ground" to data.grounddef,
+                    "air" to data.airdef,
+                ),
             )
 
         val gunRange = if (data.gunrange == 0) 1 else data.gunrange
@@ -546,6 +563,14 @@ internal object BottomZoneBuilder {
         cancelHoverPersistTimer()
         renderEnemyCard(unit)
         setState("enemyAlone")
+        // The Range toggle's second subject: the enemy inspected with nothing own selected.
+        FireRangeOverlay.inspectedEnemyId = unit.id
+        if (uiSettings.fireRange) {
+            GameHolder.instance
+                ?.ui
+                ?.render
+                ?.render()
+        }
     }
 
     // ---- State machine ----
@@ -579,6 +604,18 @@ internal object BottomZoneBuilder {
             !MobileLayoutController.cssOwnsMapViewport &&
             !TargetPreviewController.isConfirmRequired()
 
+    /** The enemy card has gone, so the Range toggle stops drawing that enemy's envelope. */
+    private fun forgetInspectedEnemy() {
+        if (FireRangeOverlay.inspectedEnemyId == null) return
+        FireRangeOverlay.inspectedEnemyId = null
+        if (uiSettings.fireRange) {
+            GameHolder.instance
+                ?.ui
+                ?.render
+                ?.render()
+        }
+    }
+
     fun setState(mode: String) {
         val bz = byId("osada-bottomzone") ?: return
         // A FOLDED player card owns no slot either. With `bz--visible` set and #unit-info at
@@ -596,6 +633,7 @@ internal object BottomZoneBuilder {
                 else -> mode
             }
         bz.classList.remove("bz--visible", "bz--hover", "bz--enemy-only")
+        if (mode != "enemyAlone" && mode != "hover") forgetInspectedEnemy()
         when (effective) {
             "hidden" -> { // leave all state classes off; CSS hides when none are present
             }

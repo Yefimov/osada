@@ -47,6 +47,7 @@ internal object CommandExecutor {
             CommandCatalog.AIR_MODE to "air",
             CommandCatalog.HEX_GRID to "hex",
             CommandCatalog.ARTILLERY_RANGE to "arty",
+            CommandCatalog.FIRE_RANGE to "firerange",
             CommandCatalog.STRATEGIC_MAP to "zoom",
             CommandCatalog.EQUIPMENT to "buy",
             CommandCatalog.INSPECTOR to "inspectunit",

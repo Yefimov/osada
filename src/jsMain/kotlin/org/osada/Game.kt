@@ -73,6 +73,20 @@ class Game {
     internal var awardPrototype: Boolean = false
     internal var nextScenarioData: dynamic = null
 
+    /**
+     * The battle has loaded but its opening (briefing, choices, `start` events) has not handed
+     * control to the player yet. Saved with the battle (`MissionRestartCheckpoint.OPENING_PENDING_KEY`),
+     * because the first autosave is written BEFORE the briefing opens: a reload during the briefing
+     * used to restore that autosave as a battle already in progress -- no briefing, its choices
+     * never applied, and no Restart Mission checkpoint ever taken for the mission (2026-10-08).
+     * Cleared by `UI.releaseToBattle` when the checkpoint is taken.
+     */
+    internal var openingPending: Boolean = false
+
+    /** A restored battle whose opening was interrupted: its briefing replays in full, dialogue
+     *  included, even though the intro tracker already marked it seen when it first opened. */
+    internal var openingReplay: Boolean = false
+
     /** Raw optional briefing data and visibility flag for the scenario currently being loaded. */
     internal var pendingScenarioBriefing: dynamic = null
     private var pendingScenarioBriefingEnabled: Boolean = true
@@ -243,9 +257,10 @@ class Game {
         campaign?.let { state?.saveCampaign() }
         state?.save()
         // setupGameState() is the disk/import restore path. A battle already in progress must
-        // resume immediately instead of replaying its campaign briefing.
-        pendingScenarioBriefing = null
-        pendingScenarioBriefingEnabled = false
+        // resume immediately instead of replaying its campaign briefing -- unless the save was
+        // written before its opening finished: then the opening runs again, and is checkpointed
+        // when the player begins ([openingPending]).
+        holdForOpening(fromRestore = true)
         ui?.setNewScenario()
     }
 
@@ -261,6 +276,8 @@ class Game {
             }
             return newScenario(defaultScenario, null)
         }
+        openingPending = false
+        openingReplay = false
         // A checkpoint belongs to exactly one operation. Clear it before loading another one;
         // restoreFromString does not pass through here, so restarting keeps its immutable source.
         missionRestartCheckpoint.clear()
@@ -349,9 +366,8 @@ class Game {
         gameStarted = true
         gameEnded = false
         // A restored battle resumes immediately; a newly loaded battle is unblocked only after
-        // the player closes its briefing.
-        uiMessageClicked = fromRestore
-        pendingScenarioBriefingEnabled = !fromRestore
+        // the player closes its briefing. So is a restored one whose briefing was interrupted.
+        holdForOpening(fromRestore)
 
         if (campaign != null) {
             handleCampaignScenarioLoaded(fromRestore)
@@ -383,6 +399,27 @@ class Game {
         // ...and with no formations or heroes carried over from a previous run.
         HeroCampaign.reset()
         campaign = Campaign(id, difficulty) { onCampaignLoadFinished() }
+    }
+
+    /**
+     * A new battle is held behind its opening. A restored battle either resumes (no briefing) or,
+     * when its save says the opening never finished, gets that opening back: the scenario's briefing
+     * data again, shown in full. Effects of briefing choices are committed only in memory until the
+     * opening ends, and the restored save predates them, so replaying cannot apply a choice twice.
+     */
+    private fun holdForOpening(fromRestore: Boolean) {
+        val networked = org.osada.multiplayer.client.OsadaMultiplayer.active
+        if (!fromRestore) openingPending = !networked
+        openingReplay = fromRestore && openingPending && !networked
+        uiMessageClicked = fromRestore && !openingPending
+        pendingScenarioBriefingEnabled = !fromRestore || openingPending
+        if (!fromRestore) return
+        pendingScenarioBriefing =
+            if (openingReplay && campaign != null) {
+                resolveScenarioBriefing(campaign?.getCurrentScenario(), scenario?.file ?: "")
+            } else {
+                null
+            }
     }
 
     /** Return and consume briefing data for the battle that has just finished loading. */

@@ -33,6 +33,12 @@ internal object SidebarBuilder {
         arty?.let { toggleButton(it, uiSettings.artilleryRange) }
         arty?.onclick = { _: org.w3c.dom.events.MouseEvent -> GameHolder.instance?.ui?.mainMenuButton("arty") }
 
+        val fireRange = byId("firerange")
+        fireRange?.let { toggleButton(it, uiSettings.fireRange) }
+        fireRange?.onclick = { _: org.w3c.dom.events.MouseEvent ->
+            GameHolder.instance?.ui?.mainMenuButton("firerange")
+        }
+
         refreshLocalization()
 
         val sidebar = byId("osada-sidebar")
@@ -58,6 +64,10 @@ internal object SidebarBuilder {
         byId("arty")?.apply {
             textContent = I18n.t("hud.sidebar.artillery.label")
             title = I18n.t("hud.sidebar.artillery.help")
+        }
+        byId("firerange")?.apply {
+            textContent = I18n.t("hud.sidebar.fire_range.label")
+            title = I18n.t("hud.sidebar.fire_range.help")
         }
         byId("osadaSideToggle")?.title = I18n.t("hud.sidebar.collapse.help")
         byId("osadaDrawerClose")?.apply {

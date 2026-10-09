@@ -70,7 +70,11 @@ class ReplacementExperienceTest {
                 name = "Replacement test",
                 source = RulesetSource.CUSTOM,
                 schemaVersion = RULESET_SCHEMA_VERSION,
-                effective = RulesetDefaults.OSADA + (RuleKey.REPLACEMENT_EXPERIENCE to value),
+                // The house rule is what runs with the veterans / recruits choice OFF (on by default
+                // since 2026-10-09, when the ordinary replacement is the experience-keeping one).
+                effective =
+                    RulesetDefaults.OSADA + (RuleKey.REPLACEMENT_EXPERIENCE to value) +
+                        (RuleKey.GREEN_REPLACEMENTS to 0),
             ),
         )
     }

@@ -33,13 +33,15 @@ internal class UnitContextButtons(
         unit: GameUnit,
         map: GameMap,
         currentPlayer: Player,
-    ): Int = render(unit, map, currentPlayer, false, 0)
+    ): Int = render(unit, map, currentPlayer, null, 0)
 
+    /** [submenu] is the open sub-menu's chip id ([UnitActionPages.BUILD] or
+     *  [UnitActionPages.REINFORCE]), or null for the main strip. */
     private fun render(
         unit: GameUnit,
         map: GameMap,
         currentPlayer: Player,
-        construction: Boolean,
+        submenu: String?,
         page: Int,
     ): Int {
         UnitActionTooltip.hide()
@@ -55,17 +57,18 @@ internal class UnitContextButtons(
         val applicable =
             UnitActionAvailability.all(context).filter { it.applicable && (!deploying || it.enabled) }
         val actions = applicable.associateBy { it.action.id }
-        val building = actions.keys.filter { it in UnitActionPages.construction }
-        val inBuildMenu = construction && building.isNotEmpty()
+        val members = UnitActionPages.members(submenu, actions.keys)
+        val inMenu = members.isNotEmpty()
         val pages = UnitActionPages.pages(UnitActionPages.main(actions.keys.toList()))
         val pageIndex = page.coerceIn(pages.indices)
-        val visible = if (inBuildMenu) building + UnitActionPages.BACK else pages[pageIndex]
+        val visible = if (inMenu) members + UnitActionPages.BACK else pages[pageIndex]
         // Keyboard commands reveal their page before using the same chip handler as a click.
         // The callback belongs to this DOM row, so clearing the selection discards it too.
         row.asDynamic().revealAction = { actionId: String ->
             if (actionId in actions) {
-                val targetPage = pages.indexOfFirst { actionId in it }.coerceAtLeast(0)
-                render(unit, map, currentPlayer, actionId in building, targetPage)
+                val menu = UnitActionPages.menuOf(actionId, actions.keys)
+                val targetPage = pages.indexOfFirst { (menu ?: actionId) in it }.coerceAtLeast(0)
+                render(unit, map, currentPlayer, menu, targetPage)
             }
         }
         visible.forEach { id ->
@@ -73,23 +76,37 @@ internal class UnitContextButtons(
             if (availability != null) {
                 addButton(row, availability, unit, map, context.asleep)
             } else {
-                addNavigation(row, id) {
-                    val nextPage =
-                        when (id) {
-                            UnitActionPages.MORE -> pageIndex + 1
-                            UnitActionPages.BACK -> if (inBuildMenu) pageIndex else pageIndex - 1
-                            else -> pageIndex
-                        }
-                    render(unit, map, currentPlayer, id == UnitActionPages.BUILD, nextPage)
-                    val focusAction = if (id == UnitActionPages.BUILD) UnitActionPages.BACK else UnitActionPages.BUILD
-                    val host = byId("unit-context")
-                    val focus =
-                        host?.querySelector("[data-action='$focusAction']") ?: host?.querySelector("[tabindex='0']")
-                    (focus as? HTMLElement)?.focus()
-                }
+                addNavigation(row, id) { navigate(unit, map, currentPlayer, id, submenu, inMenu, pageIndex) }
             }
         }
         return visible.size
+    }
+
+    /** A Build / Reinforce / More / Back chip was pressed: redraw the strip on the page or sub-menu
+     *  it leads to and keep the keyboard focus somewhere sensible. */
+    @Suppress("LongParameterList")
+    private fun navigate(
+        unit: GameUnit,
+        map: GameMap,
+        currentPlayer: Player,
+        id: String,
+        submenu: String?,
+        inMenu: Boolean,
+        pageIndex: Int,
+    ) {
+        val nextPage =
+            when (id) {
+                UnitActionPages.MORE -> pageIndex + 1
+                UnitActionPages.BACK -> if (inMenu) pageIndex else pageIndex - 1
+                else -> pageIndex
+            }
+        val opening = id.takeIf { UnitActionPages.isMenu(it) }
+        render(unit, map, currentPlayer, opening, nextPage)
+        // Opening a menu focuses its Back; leaving one focuses the chip that opened it.
+        val focusAction = if (opening != null) UnitActionPages.BACK else submenu ?: UnitActionPages.BUILD
+        val host = byId("unit-context")
+        val focus = host?.querySelector("[data-action='$focusAction']") ?: host?.querySelector("[tabindex='0']")
+        (focus as? HTMLElement)?.focus()
     }
 
     private fun addNavigation(
@@ -109,6 +126,7 @@ internal class UnitContextButtons(
         glyph.innerHTML =
             when (id) {
                 UnitActionPages.BUILD -> ActionIcons.REPAIR
+                UnitActionPages.REINFORCE -> UIBuilder.unitContextButtons.getValue("reinforce")
                 UnitActionPages.BACK -> ActionIcons.UNDO
                 else -> "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M8 3l9 9-9 9-2-2 7-7-7-7z\"/></svg>"
             }

@@ -25,6 +25,12 @@ import org.osada.rules.SupplyRules
 import org.osada.rules.UnitActionAvailability
 import org.osada.rules.UnitActionContext
 import org.osada.rules.UnitActionId
+import org.osada.rules.ruleset.ActiveRuleset
+import org.osada.rules.ruleset.RULESET_SCHEMA_VERSION
+import org.osada.rules.ruleset.RuleKey
+import org.osada.rules.ruleset.RulesetDefaults
+import org.osada.rules.ruleset.RulesetResolver
+import org.osada.rules.ruleset.RulesetSource
 import org.osada.scenario.Scenario
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -44,6 +50,7 @@ class UnitActionPresenterTest {
     @AfterTest
     fun cleanup() {
         TerrainEx.resetForTest()
+        ActiveRuleset.clear()
         GameHolder.instance = null
     }
 
@@ -253,6 +260,17 @@ class UnitActionPresenterTest {
         unit.strength = 3
         unit.experience = 400
         map.map!![1][1].terrain = TerrainType.CLEAR.value
+        // The single diluting Reinforce is what runs with the veterans / recruits choice off; with it
+        // on (the default since 2026-10-09) the ordinary replacement keeps its experience.
+        ActiveRuleset.set(
+            RulesetResolver.fromEffective(
+                id = "custom-1",
+                name = "Dilution test",
+                source = RulesetSource.CUSTOM,
+                schemaVersion = RULESET_SCHEMA_VERSION,
+                effective = RulesetDefaults.OSADA + (RuleKey.GREEN_REPLACEMENTS to 0),
+            ),
+        )
 
         val availability =
             UnitActionAvailability.forAction(

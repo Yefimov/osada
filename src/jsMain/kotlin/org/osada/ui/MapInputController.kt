@@ -74,6 +74,7 @@ internal class MapInputController(
         kind: MapActivationKind,
         touch: Boolean,
     ) {
+        RoutePreviewController.clear()
         // An armed ping marks the tapped hex for the whole room, on anyone's turn, and does nothing else.
         if (MinimapPings.armed) {
             val pinged = cellAt(clientX, clientY)
@@ -111,8 +112,10 @@ internal class MapInputController(
     fun onHover(
         clientX: Double,
         clientY: Double,
+        shiftKey: Boolean = false,
     ) {
         val cell = cellAt(clientX, clientY) ?: return
+        RoutePreviewController.onHover(cell, shiftKey)
         if (ui.game.scenario
                 ?.map
                 ?.currentUnit != null &&

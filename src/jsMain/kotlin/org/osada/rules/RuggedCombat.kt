@@ -121,8 +121,8 @@ internal object RuggedCombat {
     }
 
     /** OG's list of attackers that do not meet a rugged defence -- the same three it names for
-     *  ignoring entrenchment -- unless the defender carries `Ferocious Defense`. Bunker Buster is
-     *  OSADA's attachment for the `Ignore entrench` bit (`CombatResolver.isEntrenchmentIntact`). */
+     *  ignoring entrenchment -- unless the defender carries `Ferocious Defense`. Bunker Buster
+     *  counts only against a bunker (`rules/BunkerBuster`). */
     private fun avoidsRuggedDefence(
         attacker: GameUnit,
         defender: GameUnit,
@@ -132,7 +132,7 @@ internal object RuggedCombat {
         val cityOrPort =
             context.dTerrain == TerrainType.CITY.value || context.dTerrain == TerrainType.PORT.value
         return Equipment.ignoresEntrenchment(attacker.eqid) ||
-            Attachments.has(attacker, Attachments.SLOT_BUNKER_BUSTER) ||
+            BunkerBuster.busts(attacker, defender, context.dTerrain) ||
             Leaders.unitHasLeader(attacker, LeaderType.INFILTRATION_TACTICS) ||
             (cityOrPort && Leaders.unitHasLeader(attacker, LeaderType.STREET_FIGHTER))
     }

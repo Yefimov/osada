@@ -287,10 +287,15 @@ class UnitActionAvailabilityTest {
                 // Withdraw leads the strip, but is only ever applicable during the opening
                 // deployment -- a formation off the tray list resolves as not-applicable here.
                 UnitActionId.WITHDRAW,
+                // Cautious move rides at the front (2026-10-09): at the tail it fell onto the
+                // "More" page for most formations and the feature could not be found.
+                UnitActionId.CAUTIOUS_MOVE,
                 UnitActionId.MOUNT,
                 UnitActionId.EMBARK,
                 UnitActionId.RESUPPLY,
                 UnitActionId.REINFORCE,
+                // Its cheap sibling, folded with it into one Reinforce menu on the strip (2026-10-09).
+                UnitActionId.GREEN_REINFORCE,
                 // Undo rides right after Reinforce, not at the tail -- it is the strip's one rescue
                 // action and must stay reachable rather than risk scrolling out of view.
                 UnitActionId.UNDO,
@@ -323,7 +328,6 @@ class UnitActionAvailabilityTest {
                 UnitActionId.HANGAR,
                 UnitActionId.ENTER_COVER,
                 UnitActionId.COVER,
-                UnitActionId.CAUTIOUS_MOVE,
                 UnitActionId.SLEEP,
             ),
             UnitActionAvailability.all(context(world, unit)).map { it.action },

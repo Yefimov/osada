@@ -53,6 +53,7 @@ internal object StartMenuSettingsBuilder {
             "noFOW",
             "showHiddenVictoryHexes",
             "showDetailInfoToolTips",
+            "hideNumbers",
         )
 
     /** Title of the section the top sliders belong to. They are built by [buildTopSliders] rather
@@ -85,6 +86,8 @@ internal object StartMenuSettingsBuilder {
                     "quickAnimation" to "settings.gameplay.quick_animation.label",
                     "showDetailInfoToolTips" to "settings.gameplay.optional_objectives.label",
                     "confirmEndTurn" to "settings.gameplay.confirm_end_turn.label",
+                    // OG's "hide unit strength & combat estimated" (`ui/HiddenNumbers`).
+                    "hideNumbers" to "settings.gameplay.hide_numbers.label",
                 ),
             ),
             SettingSection(
@@ -129,6 +132,7 @@ internal object StartMenuSettingsBuilder {
             "quickAnimation" to "settings.gameplay.quick_animation.help",
             "showDetailInfoToolTips" to "settings.gameplay.optional_objectives.help",
             "confirmEndTurn" to "settings.gameplay.confirm_end_turn.help",
+            "hideNumbers" to "settings.gameplay.hide_numbers.help",
             "stalinRegime" to "settings.gameplay.stalin_regime.help",
             "reducedEffects" to "settings.mobile.reduced_effects.help",
             "muteUnitSounds" to "settings.sound.mute_unit_sounds.help",

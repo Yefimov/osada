@@ -139,14 +139,16 @@ class EliteReplacementsTest : OgRulesTestHarness() {
         assertTrue(greenExperience < eliteExperience, "and the cheap one costs veterancy")
     }
 
-    /** The house rule survives everywhere the efile offers no second action -- 9 of the 10 shipped
-     *  efiles, and every campaign running on them. */
+    /** Since 2026-10-09 the choice exists under every efile while the key is on; the house rule
+     *  (ordinary replacements dilute) is what a ruleset with the key OFF runs. */
     @Test
-    fun theHouseRuleStillDilutesWhenTheEfileAuthorsNoGreenAlternative() {
+    fun theHouseRuleDilutesWhenTheChoiceIsSwitchedOff() {
         ruleset(RuleKey.GREEN_REPLACEMENTS to 1)
         efile("green", 0)
-        efile("elite_cost", 133)
+        assertTrue(EliteReplacements.preservesExperience(), "the choice exists under any efile")
 
+        ruleset(RuleKey.GREEN_REPLACEMENTS to 0)
+        efile("elite_cost", 133)
         assertFalse(EliteReplacements.preservesExperience())
         assertTrue(ReplacementExperience.dilutes(), "no green action means the ordinary one is still OSADA's")
         assertEquals(120, ReplacementExperience.afterReplacement(400, 3, 7))

@@ -100,9 +100,10 @@ class LastFourMechanicsTest : OgRulesTestHarness() {
         efile("green", 1)
         assertFalse(GreenReplacements.enabled(), "the player's key is off")
 
+        // Since 2026-10-09 the efile's `green` only feeds Author's Vision; the key alone decides.
         ruleset(RuleKey.GREEN_REPLACEMENTS to 1)
         efile("green", 0)
-        assertFalse(GreenReplacements.enabled(), "the efile does not define them")
+        assertTrue(GreenReplacements.enabled(), "an efile without greens gets them under the key")
 
         efile("green", 1)
         assertTrue(GreenReplacements.enabled())

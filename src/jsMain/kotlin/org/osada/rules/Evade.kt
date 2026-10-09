@@ -1,9 +1,11 @@
 package org.osada.rules
 
+import org.osada.LeaderType
 import org.osada.UnitClass
 import org.osada.model.ATTR2_MASK_EVADE
 import org.osada.model.EfileConfig
 import org.osada.model.GameUnit
+import org.osada.model.Leaders
 import org.osada.model.listKey
 
 /**
@@ -215,6 +217,8 @@ internal object Evade {
                 defender.sabotaged ||
                 !hasRetreatHex ||
                 surprisedOrRugged ||
+                // OG's destroyer signature, Deep Sea Hunter: *"ignores Evasion Skill"*.
+                Leaders.unitHasLeader(attacker, LeaderType.DEEP_SEA_HUNTER) ||
                 !permittedBySpecial(attacker, defender, distance)
         if (refused) return 0
         val zoc = EfileConfig.intKey("zoc_evade", 0) * (adjacentEnemies - 1).coerceAtLeast(0)

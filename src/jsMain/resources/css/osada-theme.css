@@ -2659,6 +2659,15 @@ hr {
     color: rgba(217, 178, 90, .7);
 }
 
+/* Restart Mission in a battle that has no opening checkpoint: kept in place with its reason
+ * (`StartMenuBuilder.applyRestartButtonState`) but plainly not an action. */
+.smMainButton.osada-menu-btn--unavailable,
+.smMainButton.osada-menu-btn--unavailable:hover {
+    opacity: .55;
+    cursor: help;
+    box-shadow: none;
+}
+
 .osada-menu-btn--muted:hover .osada-menu-btn__label {
     color: var(--osada-brass);
 }
@@ -4941,6 +4950,13 @@ hr {
     background: rgba(214, 64, 52, .24);
     border-color: rgba(214, 64, 52, .85);
     color: #f6d6cf;
+}
+
+/* Range of fire: the overlay's own brass, filled like the other map-painting toggles. */
+#firerange.osada-sb-toggle[selected] {
+    background: rgba(224, 184, 87, .22);
+    border-color: rgba(224, 184, 87, .85);
+    color: #f4e3c6;
 }
 
 .osada-sb-toggles-spacer {

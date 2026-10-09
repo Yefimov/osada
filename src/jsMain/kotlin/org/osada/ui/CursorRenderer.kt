@@ -130,12 +130,21 @@ internal class CursorRenderer(
         val losses = results.losses
         val kills = results.kills
 
+        if (!HiddenNumbers.showCombatEstimate) return finishAttackCursor(asDataUrl, w, h)
         bb.strokeText("$losses", rc.flagIconWidth / 2.0 - CURSOR_TEXT_X_OFFSET + 1.0, rc.flagIconHeight + 1.0)
         bb.fillText("$losses", rc.flagIconWidth / 2.0 - CURSOR_TEXT_X_OFFSET, rc.flagIconHeight)
         bb.strokeText("$kills", w - rc.flagIconWidth / 2.0 - CURSOR_TEXT_X_OFFSET + 1.0, rc.flagIconHeight + 1.0)
         bb.fillText("$kills", w - rc.flagIconWidth / 2.0 - CURSOR_TEXT_X_OFFSET, rc.flagIconHeight)
+        return finishAttackCursor(asDataUrl, w, h)
+    }
 
-        return if (asDataUrl) {
+    /** The back-buffer as [generateAttackCursor] returns it: a data URL or a detached canvas. */
+    private fun finishAttackCursor(
+        asDataUrl: Boolean,
+        w: Int,
+        h: Int,
+    ): dynamic =
+        if (asDataUrl) {
             rc.backBuffer.toDataURL() as String
         } else {
             val c = document.createElement("canvas").asDynamic()
@@ -144,7 +153,6 @@ internal class CursorRenderer(
             c.getContext("2d").drawImage(rc.backBuffer, 0.0, 0.0)
             c
         }
-    }
 
     /** Draws attacker (left) and defender (right) flag icons into the back-buffer. */
     private fun drawCombatantFlags(

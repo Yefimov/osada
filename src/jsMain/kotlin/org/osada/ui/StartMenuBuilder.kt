@@ -220,10 +220,26 @@ internal object StartMenuBuilder {
     }
 
     /** Restart is an in-game action backed by the immutable opening checkpoint. It is absent on
-     *  the pre-game menu, for old saves without a checkpoint, and in multiplayer. */
+     *  the pre-game menu and in multiplayer. In a solo battle without a checkpoint it stays in its
+     *  place, marked unavailable with the reason: a button that simply vanished read as a bug and
+     *  told the player nothing (2026-10-08 "Forward Comrade" report). */
     internal fun applyRestartButtonState() {
-        val available = GameHolder.instance?.missionRestartCheckpoint?.isAvailable() == true
-        byId("restartmission")?.style?.display = if (available) "" else "none"
+        val game = GameHolder.instance
+        val available = game?.missionRestartCheckpoint?.isAvailable() == true
+        val missing =
+            !available &&
+                game != null &&
+                game.gameStarted &&
+                !game.gameEnded &&
+                !org.osada.multiplayer.client.OsadaMultiplayer.active
+        val button = byId("restartmission") ?: return
+        button.style.display = if (available || missing) "" else "none"
+        button.classList.toggle("osada-menu-btn--unavailable", missing)
+        button.setAttribute("aria-disabled", missing.toString())
+        val subtitle =
+            I18n.t(if (missing) "menu.main.restart_mission.unavailable" else "menu.main.restart_mission.subtitle")
+        button.title = subtitle
+        (button.query(".osada-menu-btn__sub") as? HTMLElement)?.textContent = subtitle
     }
 
     /**

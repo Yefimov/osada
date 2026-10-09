@@ -207,6 +207,7 @@ internal object UnitActionPresenter {
                     ),
                 )
         }
+        regionalSupplyLine(context)?.let { (tone, text) -> lines += Line(tone, text) }
         lines += Line(DIM, I18n.t("unit_info.supply_factor.total", mapOf("value" to context.efficiencyPercent)))
         return lines
     }
@@ -253,3 +254,19 @@ internal object UnitActionPresenter {
     private fun formatDivisor(divisor: Double): String =
         if (divisor == divisor.toInt().toDouble()) divisor.toInt().toString() else divisor.toString()
 }
+
+/** Regional supply's term for the supply explanation, as (tone, text): the share the route back to
+ *  a city, port or station lets through, or that no source is in reach and only the emergency floor
+ *  arrives. Null when the rule does not apply. Top-level to keep [UnitActionPresenter] in budget. */
+private fun regionalSupplyLine(context: SupplyContext): Pair<String, String>? {
+    val percent = context.regionalPercent ?: return null
+    return when {
+        context.regionalRouteCost == null ->
+            "bad" to I18n.t("unit_info.supply_factor.regional_cut", mapOf("value" to percent))
+        percent < REGIONAL_FULL_PERCENT ->
+            "bad" to I18n.t("unit_info.supply_factor.regional_far", mapOf("value" to percent))
+        else -> "dim" to I18n.t("unit_info.supply_factor.regional_ok")
+    }
+}
+
+private const val REGIONAL_FULL_PERCENT = 100

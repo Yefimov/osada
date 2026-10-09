@@ -206,7 +206,7 @@ object Leaders {
         description[LeaderType.SKILLED_GROUND_ATTACK] =
             Pair("Skilled Ground Attack", "An air unit attacking a ground unit gets +4 attack.")
         description[LeaderType.SKILLED_RECONNAISSANCE] =
-            Pair("Skilled Reconnaissance", "The unit spotting range is increased by one hex.")
+            Pair("Skilled Reconnaissance", "The unit spotting range is increased by two hexes.")
         description[LeaderType.STREET_FIGHTER] = Pair("Street Fighter", "The unit ignores enemy city entrenchment.")
         description[LeaderType.SUPERIOR_MANEUVER] =
             Pair("Superior Maneuver", "The unit may bypass enemy zones of control.")
@@ -216,6 +216,19 @@ object Leaders {
             Pair("Flak Support", "The unit gives support fire, and may intercept aircraft more than once a turn.")
         description[LeaderType.ARMOURED_HUNTER] =
             Pair("Armoured Hunter", "+1 initiative in combat against armoured targets.")
+        description[LeaderType.EXPERT_SEA_WOLF] =
+            Pair("Expert Sea Wolf", "The submarine ignores enemy zones of control and gets +1 defense against ships.")
+        description[LeaderType.DEEP_SEA_HUNTER] =
+            Pair(
+                "Deep Sea Hunter",
+                "Targets cannot evade the destroyer's attacks, and it gets +1 attack against ships.",
+            )
+        description[LeaderType.EXPERT_SEA_BASE] =
+            Pair("Expert Sea Base", "The carrier suffers 1 to 3 fewer casualties when attacked (Resilience).")
+        description[LeaderType.BLOCKADE_VESSEL] =
+            Pair("Blockade Vessel", "The ship's attack range is increased by one hex (Marksman).")
+        description[LeaderType.SCREENING_VESSEL] =
+            Pair("Screening Vessel", "The ship cannot be surprised and gets +1 initiative (Battlefield Intelligence).")
     }
 
     /**
@@ -265,7 +278,8 @@ object Leaders {
             !UnitCapabilities.canProduceLeader(unit.unitData(true)) ||
                 AuxiliaryLeaders.refuses(unit) ||
                 OgLeaderPools.classDisabledByEfile(uclass)
-        val pool = if (refused) emptyList() else OgLeaderPools.randomPool(uclass)
+        // OG's per-unit and army skips (`OgLeaderAward`, 2026-10-09) on top of the class pool.
+        val pool = if (refused) emptyList() else OgLeaderAward.pool(unit)
         return if (pool.isEmpty()) -1 else pool[GameRandomSource.nextInt(pool.size)].value
     }
 

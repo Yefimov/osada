@@ -31,7 +31,7 @@ internal fun updateMapLocationMessage(
     if (unitVisible) {
         val data = unit.unitData()
         sb.append(" (${data.name}")
-        if (unit.strength > 0) sb.append(" ${unit.strength}")
+        if (unit.strength > 0) sb.append(" ${HiddenNumbers.strengthFor(unit, currentSide)}")
         sb.append(")")
     }
     sb

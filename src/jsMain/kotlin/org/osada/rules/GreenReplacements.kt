@@ -52,9 +52,12 @@ object GreenReplacements {
 
     private const val PERCENT = 100
 
-    /** Whether the cheap replacement action exists at all — the player's key AND the efile's. */
-    fun enabled(): Boolean =
-        ActiveRuleset.flag(RuleKey.GREEN_REPLACEMENTS, false) && EfileConfig.intKey("green", 0) != 0
+    /**
+     * Whether the cheap replacement action exists at all. Since 2026-10-09 the ruleset key alone
+     * decides: the efile's `green` is that key's Author's Vision value, no longer a second gate, so
+     * the choice exists under every efile (owner's decision, `RuleKey.GREEN_REPLACEMENTS`).
+     */
+    fun enabled(): Boolean = ActiveRuleset.flag(RuleKey.GREEN_REPLACEMENTS, true)
 
     /** `green_cost`, with OG's own default for 0. */
     fun costPercent(): Int = EfileConfig.intKey("green_cost", 0).takeIf { it > 0 } ?: DEFAULT_COST_PERCENT

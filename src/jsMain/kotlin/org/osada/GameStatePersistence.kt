@@ -429,6 +429,10 @@ class GameStatePersistence(
             val parsed = JSON.parse<dynamic>(data)
             if (isLoadableSave(parsed)) {
                 game.cleanup()
+                // Saved while the opening briefing was still up: `Game.setupGameState` replays it.
+                game.openingPending =
+                    parsed[MissionRestartCheckpoint.OPENING_PENDING_KEY] == true &&
+                    !org.osada.multiplayer.client.OsadaMultiplayer.active
                 // A disk save carries its battle's opening state (`OSGlue.diskSavePayload`).
                 game.missionRestartCheckpoint.adopt(parsed[MissionRestartCheckpoint.EMBED_KEY])
                 // The rules this battle ran under are restored BEFORE the model is rebuilt: unit

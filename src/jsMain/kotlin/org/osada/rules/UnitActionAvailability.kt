@@ -52,10 +52,18 @@ object UnitActionAvailability {
             // First, because while it is applicable at all it is the one thing a just-placed
             // formation is most likely being clicked for.
             withdraw(context),
+            // Second, and not at the end where it was built: the strip shows six chips a page, so
+            // last place put it on the "More" page for most formations and nobody found it. It is
+            // only applicable before the unit moves -- exactly when the route is being chosen -- so
+            // it never holds a slot for the rest of the turn (owner's request, 2026-10-09).
+            CautiousMove.availability(context),
             mount(context),
             embark(context),
             resupply(context),
             reinforce(context),
+            // Beside its sibling: the strip folds the two into one Reinforce menu (2026-10-09). It
+            // was missing from this list altogether, so the green action never reached the strip.
+            greenReinforce(context),
             undo(context),
             overstrength(context),
             layMines(context),
@@ -74,7 +82,6 @@ object UnitActionAvailability {
             HangarActions.hangar(context),
             HangarActions.enterCover(context),
             HangarActions.cover(context),
-            CautiousMove.availability(context),
             sleep(context),
         )
 

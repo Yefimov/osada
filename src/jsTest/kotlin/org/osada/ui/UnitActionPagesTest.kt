@@ -30,4 +30,16 @@ class UnitActionPagesTest {
         }
         assertEquals(6, UnitActionPages.construction.size + 1)
     }
+
+    @Test
+    fun theTwoReplacementsFoldIntoOneReinforceMenuOnlyWhenBothAreOffered() {
+        val both = listOf("resupply", "reinforce", "green_reinforce", "sleep")
+        assertEquals(listOf("resupply", UnitActionPages.REINFORCE, "sleep"), UnitActionPages.main(both))
+        assertEquals(listOf("reinforce", "green_reinforce"), UnitActionPages.members(UnitActionPages.REINFORCE, both))
+        assertEquals(UnitActionPages.REINFORCE, UnitActionPages.menuOf("green_reinforce", both))
+
+        val single = listOf("resupply", "reinforce", "sleep")
+        assertEquals(single, UnitActionPages.main(single), "one way to reinforce stays a plain chip")
+        assertTrue(UnitActionPages.members(UnitActionPages.REINFORCE, single).isEmpty())
+    }
 }

@@ -47,6 +47,10 @@ data class SupplyContext(
     val groundCondition: Int = GroundCondition.DRY.value,
     val adjacentEnemies: Int = 0,
     val adjacentEnemyDivisor: Double = 1.0,
+    /** Regional supply's share ([RegionalSupply]), or null when that rule does not apply here. */
+    val regionalPercent: Int? = null,
+    /** The route cost behind [regionalPercent]; null with the rule on means no source in reach. */
+    val regionalRouteCost: Int? = null,
 )
 
 /**
@@ -115,20 +119,26 @@ object SupplyContextRules {
             // explanation names the source that actually produced the full refill.
             !reinforcement && unit.getPos() != null && DepotSupply.supplierFor(map, unit) != null ->
                 SupplyContext(PERCENT, SupplySource.DEPOT)
-            else -> groundSupplyContext(map, unit)
+            else -> groundSupplyContext(map, unit, regional = !reinforcement && RegionalSupply.enabled())
         }
 
     private fun groundSupplyContext(
         map: GameMap,
         unit: GameUnit,
+        regional: Boolean,
     ): SupplyContext {
         val pos = unit.getPos() ?: return SupplyContext(0, SupplySource.NONE)
         val hex = unit.getHex()
         val adjacentEnemies = countAdjacentEnemies(map, unit, pos)
         val breakdown = terrainBreakdown(hex)
         val divisor = adjacentEnemyDivisor(adjacentEnemies)
+        val local = (breakdown.totalPercent / divisor).roundToInt()
+        // Resupply only: replacements keep their local terms (`RegionalSupply`'s scope).
+        val access = if (regional) RegionalSupply.access(map, unit) else null
         return SupplyContext(
-            efficiencyPercent = (breakdown.totalPercent / divisor).roundToInt(),
+            efficiencyPercent = access?.let { minOf(local, it.percent) } ?: local,
+            regionalPercent = access?.percent,
+            regionalRouteCost = access?.routeCost,
             source = SupplySource.GROUND,
             terrain = hex?.terrain ?: TerrainType.CLEAR.value,
             terrainFactor = breakdown,

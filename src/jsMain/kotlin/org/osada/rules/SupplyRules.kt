@@ -18,6 +18,7 @@ import kotlin.math.roundToInt
 object SupplyRules {
     private const val EXPERIENCE_STRENGTH_DIVISOR = 100
     private const val OVERSTRENGTH_MIN_EXPERIENCE = 100
+    private const val PERCENT_DOUBLE = 100.0
 
     /**
      * True when [unit]'s type/terrain make it eligible for a supply action at all.
@@ -100,8 +101,17 @@ object SupplyRules {
             } else {
                 // Depot supply ignores the terrain supply factor AND enemy ZOC pressure: NOKORP
                 // names both as restrictions that apply to `supply_ex` mode 2, not to a Depot.
+                val localMod = SupplyContextRules.supplyPenaltyModifier(hex, adjacentEnemies)
+                // Regional supply caps the local factor by the route back to a source; the lower of
+                // the two applies, so they never multiply (`rules/RegionalSupply`). A depot is the
+                // last mile and keeps its full refill.
                 val terrainMod =
-                    if (fromDepot) 1.0 else SupplyContextRules.supplyPenaltyModifier(hex, adjacentEnemies)
+                    when {
+                        fromDepot -> 1.0
+                        RegionalSupply.enabled() ->
+                            minOf(localMod, RegionalSupply.access(map, unit).percent / PERCENT_DOUBLE)
+                        else -> localMod
+                    }
                 // JS rounds (not truncates) and clamps only ammo/fuel to a minimum of 1;
                 // the transport values are rounded as-is (0 stays 0 for a transportless unit).
                 val ammo = kotlin.math.max(1.0, ammoNeeded * terrainMod)

@@ -212,7 +212,8 @@ object MovementRules {
         // the direction that gives the formation its neighbours back.
         if (range == 0 && GameHolder.instance?.scenario?.trueSpottingZero != true) range = 1
         if (Leaders.unitHasLeader(unit, LeaderType.ELITE_RECON_VETERAN)) range += 2
-        if (Leaders.unitHasLeader(unit, LeaderType.SKILLED_RECONNAISSANCE)) range += 1
+        // OG's current leader table: *"Spotting increased by 2"* (was +1 here until 2026-10-09).
+        if (Leaders.unitHasLeader(unit, LeaderType.SKILLED_RECONNAISSANCE)) range += 2
         range += Attachments.bonus(unit, Attachments.SLOT_RECON)
         return WeatherCombatRules.spotRange(unit, range)
     }

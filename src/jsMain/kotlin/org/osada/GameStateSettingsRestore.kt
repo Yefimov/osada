@@ -13,6 +13,8 @@ internal fun applyDisplaySettings(data: dynamic) {
     // Air mode and the Artillery overlay are exclusive (`ui/setMapLayerMode`); a save written
     // before that rule may carry both, and Air mode -- the one that changes what clicks do -- wins.
     uiSettings.artilleryRange = (data.artilleryRange as? Boolean ?: false) && !uiSettings.airMode
+    // Both default off: a settings blob written before they existed restores the old view.
+    uiSettings.fireRange = data.fireRange as? Boolean ?: false
     uiSettings.showGridTerrain = data.showGridTerrain as? Boolean ?: false
     // Restored straight, not through `setDeployMode`: this is rebuilding saved state, not a
     // transition the player made, and it runs before there is a scenario to name a side from.
@@ -71,6 +73,7 @@ internal fun applyMiscSettings(data: dynamic) {
     uiSettings.showHiddenVictoryHexes = data.showHiddenVictoryHexes as? Boolean ?: false
     uiSettings.confirmEndTurn = data.confirmEndTurn as? Boolean ?: true
     uiSettings.stalinRegime = data.stalinRegime as? Boolean ?: false
+    uiSettings.hideNumbers = data.hideNumbers as? Boolean ?: false
     applyMobileSettings(data)
 }
 

@@ -75,7 +75,7 @@ internal object StartMenuMainButtons {
         refreshInfoLinks()
         // Display version only — decoupled from the engine VERSION constant, which is baked
         // into the localStorage save keys and must not change (it would orphan existing saves).
-        byId("smCredits")?.innerHTML = "v0.67 alpha"
+        byId("smCredits")?.innerHTML = "v0.675 alpha"
     }
 
     /**

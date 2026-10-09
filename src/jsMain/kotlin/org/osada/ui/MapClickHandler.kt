@@ -10,6 +10,7 @@ import org.osada.model.delCurrentUnit
 import org.osada.model.isInDeployZone
 import org.osada.model.isOutOfZoneDeployTarget
 import org.osada.rules.AttackEligibility
+import org.osada.rules.CautiousMove
 import org.osada.rules.GameRules
 import org.osada.rules.isAir
 import org.osada.uiSettings
@@ -214,6 +215,9 @@ internal class MapClickHandler(
         eqUserSel?.userunit = ownUnit.id
         eqUserSel?.deployunit = -1
         ui.updateEquipmentWindow(ownUnit.unitData(true).uclass)
+        // OG manual §6.13: "If you press Shift and then select a unit, the unit will move only by
+        // spotted hexes." Set before selecting, so the first range drawn is already the cautious one.
+        if (org.osada.ui.input.shiftHeld && CautiousMove.appliesTo(ownUnit)) map.cautiousMoveUnitId = ownUnit.id
         return ui.uiUnitSelect(ownUnit)
     }
 

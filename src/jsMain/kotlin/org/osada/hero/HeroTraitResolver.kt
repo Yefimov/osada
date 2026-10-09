@@ -3,6 +3,7 @@ package org.osada.hero
 import org.osada.LeaderType
 import org.osada.model.GameUnit
 import org.osada.model.Leaders
+import org.osada.model.OgLeaderPools
 import org.osada.multiplayer.coop.CoopRuntime
 
 /**
@@ -95,6 +96,10 @@ internal object HeroTraitResolver {
         leader: LeaderType,
     ): Boolean {
         if (unit.leader == -1) return false
-        return unit.leader == leader.value || leader.value == Leaders.getUnitClassLeader(unit)
+        val classLeader = Leaders.getUnitClassLeader(unit)
+        // A naval signature also carries the existing trait it is defined by (`OgLeaderPools`).
+        return unit.leader == leader.value ||
+            leader.value == classLeader ||
+            OgLeaderPools.signatureGrants(classLeader) == leader
     }
 }

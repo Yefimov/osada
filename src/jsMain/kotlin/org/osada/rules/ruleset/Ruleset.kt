@@ -133,8 +133,14 @@ package org.osada.rules.ruleset
  * gets its full, penalty-free refill (`rules/DepotSupply`); an efile's `supply_ex` still chooses
  * the restricted modes. It was off in both built-ins, so a schema-<=21 game gains the eight KAISER
  * depots. Stored profiles and saves may still carry the key; readers ignore it.
+ *
+ * 23 (2026-10-09) added [RuleKey.REGIONAL_SUPPLY], OSADA's third non-OG rule: ground resupply is
+ * limited by the route back to a friendly city, port or station (`rules/RegionalSupply`). Off in
+ * both built-ins, so a schema-<=22 profile is byte-identical in play. The same day changed
+ * [RuleKey.GREEN_REPLACEMENTS]' default to on without a schema change, as `carrier_hangars` did:
+ * a save keeps the value it resolved.
  */
-const val RULESET_SCHEMA_VERSION = 22
+const val RULESET_SCHEMA_VERSION = 23
 
 /** Serialized keys understood historically but no longer configurable or gameplay-relevant. */
 internal val RETIRED_RULE_KEYS: Set<String> =
@@ -491,8 +497,15 @@ enum class RuleKey(
      * `green = 1`, and turning the key on for an efile that does not cannot invent the action.
      * Additive and defaulted off — a cheaper way to rebuild a formation is a real change to a
      * campaign's economy, and the player should choose it.
+     *
+     * **2026-10-09, owner's decision: on everywhere.** The efile's `green` is now this key's
+     * Author's Vision source rather than a second gate: `eqp-gce`'s `green = 1` turns it on (it did
+     * not, which is how the Ejército Popular campaign ran without the choice), and an efile that
+     * says nothing falls back to OSADA's default, which is now ON. Where the efile prices nothing,
+     * OG's own documented defaults apply (`green_cost` 25%, `elite_cost` 100%). With the key on the
+     * Reinforce chip opens a choice between the two (`ui/UnitActionPages`).
      */
-    GREEN_REPLACEMENTS("green_replacements", null, 0, 1),
+    GREEN_REPLACEMENTS("green_replacements", "green", 0, 1),
 
     /**
      * OG's **carrier hangars** — aircraft carried inside a ship rather than parked on it.
@@ -568,6 +581,15 @@ enum class RuleKey(
      * to dig and worthless where you have. Call site: `rules/Craters`.
      */
     CRATERS("craters", null, 0, 1),
+
+    /**
+     * **Regional supply** -- OSADA's own logistics rule, not Open General's (owner's request,
+     * 2026-10-09; design `docs/design/regional-supply.md`). **Schema 23.** Ground resupply is
+     * capped by how hard the route back to the nearest friendly city, port or station is: roads
+     * carry it, swamps and mountains choke it, known enemies make the hexes around them dear and
+     * a ring of them closes the way. Off by default: it re-tunes every campaign's supply.
+     */
+    REGIONAL_SUPPLY("regional_supply", null, 0, 1),
 
     /**
      * **Cutting railway lines — OSADA's rule, not an Open General one.** 0 = off, 1 = on. Schema 17.
@@ -878,7 +900,9 @@ object RulesetDefaults {
             // and no carrier deployment. Each keeps its own content gate on top, so ON is a
             // permission rather than an injection. (Depot supply was here until schema 22.)
             RuleKey.CARRIER_DEPLOY to 0,
-            RuleKey.GREEN_REPLACEMENTS to 0,
+            // On since 2026-10-09 (owner): the veterans / recruits choice everywhere, not only under
+            // the one efile that authors `green`. A save keeps the value it resolved.
+            RuleKey.GREEN_REPLACEMENTS to 1,
             RuleKey.CARRIER_HANGARS to 1,
             // Schema 11. `eqp-lxf` sets `critical_hit = 2`, so this is the one key whose OFF is a
             // divergence from a shipped efile's own instruction -- taken deliberately, because the
@@ -886,6 +910,8 @@ object RulesetDefaults {
             RuleKey.NAVAL_CRITICAL_HITS to 0,
             // OSADA's own rule (schema 8), off until a player asks for it.
             RuleKey.CRATERS to 0,
+            // Schema 23, OSADA's third own rule: off until a player asks for it.
+            RuleKey.REGIONAL_SUPPLY to 0,
             // The second one (schema 17), on the same terms: OSADA could not cut track at all
             // before it, so off is a description of the shipped game rather than a choice.
             RuleKey.RAIL_DEMOLITION to 0,

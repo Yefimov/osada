@@ -176,6 +176,9 @@ internal class MapRenderer(
                     uiSettings.artilleryRange -> ArtilleryRangeOverlay.compute(q, GameHolder.instance?.spotSide ?: 0)
                     else -> null
                 },
+            // One unit's disc, so cheap -- but still only while the Range toggle is on.
+            fireRange =
+                if (uiSettings.fireRange) FireRangeOverlay.compute(q, GameHolder.instance?.spotSide ?: 0) else null,
         )
     }
 
@@ -266,4 +269,7 @@ internal class RenderFrame(
     val deployUnit: GameUnit? = null,
     /** Artillery envelopes for the sidebar's Artillery toggle, or null while it is off. */
     val artilleryCoverage: ArtilleryRangeOverlay.Coverage? = null,
+    /** The selected formation's firing envelope for the Range toggle ([FireRangeOverlay]), as
+     *  `row * cols + col` keys, or null while it is off. */
+    val fireRange: Set<Int>? = null,
 )

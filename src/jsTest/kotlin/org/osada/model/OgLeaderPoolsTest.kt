@@ -95,7 +95,7 @@ class OgLeaderPoolsTest {
     @Test
     fun theManualsClassAttributesAreDerived() {
         assertEquals(LeaderType.FLAK_SUPPORT, OgLeaderPools.classTrait(UnitClass.FLAK.value))
-        assertEquals(LeaderType.MARKSMAN, OgLeaderPools.classTrait(UnitClass.DESTROYER.value))
+        assertEquals(LeaderType.DEEP_SEA_HUNTER, OgLeaderPools.classTrait(UnitClass.DESTROYER.value))
         assertEquals(LeaderType.TENACIOUS_DEFENSE, OgLeaderPools.classTrait(UnitClass.INFANTRY.value))
         assertNull(OgLeaderPools.classTrait(UnitClass.GROUND_TRANSPORT.value))
     }

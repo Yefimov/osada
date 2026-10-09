@@ -30,10 +30,15 @@ internal class ArtilleryRangeRenderer(
         /** Enemy guns: black, per the request -- and the one ink on this map that no other overlay
          *  claims, so it cannot be mistaken for a selection or a threat ring. */
         private const val ENEMY_COLOR = "rgba(8, 8, 10, 0.55)"
+
+        /** The Range toggle's single-unit envelope ([FireRangeOverlay]): the HUD's brass, in
+         *  UPRIGHT strokes, so it reads apart from both diagonal artillery hatches it may overlap. */
+        private const val FIRE_RANGE_COLOR = "rgba(224, 184, 87, 0.7)"
     }
 
     private var ownStyle: dynamic = null
     private var enemyStyle: dynamic = null
+    private var fireRangeStyle: dynamic = null
 
     /** Hatches ([row], [col]) if either side's guns cover it. [x]/[y] are the hex's screen anchor. */
     fun drawCell(
@@ -43,6 +48,9 @@ internal class ArtilleryRangeRenderer(
         x: Double,
         y: Double,
     ) {
+        frame.fireRange?.let { envelope ->
+            if (row * frame.cols + col in envelope) rc.drawHex(rc.hexesCtx, x, y, fireStyle())
+        }
         val coverage = frame.artilleryCoverage ?: return
         val key = coverage.key(row, col, frame.cols)
         if (key in coverage.own) {
@@ -67,6 +75,30 @@ internal class ArtilleryRangeRenderer(
                 "lineJoin" to "miter",
             )
         if (own) ownStyle = built else enemyStyle = built
+        return built
+    }
+
+    private fun fireStyle(): dynamic {
+        val cached = fireRangeStyle
+        if (cached != null) return cached
+        val tile = document.createElement("canvas") as HTMLCanvasElement
+        tile.width = TILE.toInt()
+        tile.height = TILE.toInt()
+        val ctx = tile.getContext("2d").asDynamic()
+        ctx.strokeStyle = FIRE_RANGE_COLOR
+        ctx.lineWidth = STROKE_WIDTH
+        ctx.beginPath()
+        ctx.moveTo(TILE / 2.0, 0.0)
+        ctx.lineTo(TILE / 2.0, TILE)
+        ctx.stroke()
+        val built =
+            json(
+                "fillColor" to rc.hexesCtx.createPattern(tile, "repeat"),
+                "lineColor" to null,
+                "lineWidth" to 0,
+                "lineJoin" to "miter",
+            )
+        fireRangeStyle = built
         return built
     }
 

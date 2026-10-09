@@ -250,6 +250,7 @@ internal object AttackCalculation {
         ) {
             stats.attackerAttack += SKILLED_GROUND_ATTACK_BONUS
         }
+        NavalSignatures.apply(stats, attacker, defender, context)
     }
 
     /** Artillery innate defense, city defense, and the river/stream-without-a-road assault

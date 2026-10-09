@@ -4,6 +4,7 @@ import org.osada.CombatLog
 import org.osada.Game
 import org.osada.UnitClass
 import org.osada.announceTurnMessage
+import org.osada.completeOpening
 import org.osada.evaluateScenarioEvents
 import org.osada.i18n.GameText
 import org.osada.i18n.I18n
@@ -98,6 +99,8 @@ class UI(
         // campaign transitions). It owns Escape as well: a second independent listener would fire
         // on the same press, which is how Escape once closed a window underneath a modal.
         CommandRouter.install(this)
+        RoutePreviewController.install(this)
+        game.missionRestartCheckpoint.onFailure = { reason -> MissionCheckpointNotice.show(reason) }
     }
 
     /**
@@ -234,7 +237,7 @@ class UI(
             game.evaluateScenarioEvents()
             org.osada.multiplayer.client.OsadaMultiplayer
                 .onCoopOpeningFinished()
-            game.missionRestartCheckpoint.capture()
+            game.completeOpening()
             game.uiMessageClicked = true
             // Turn 1's `.tmsg` line, after the briefing rather than underneath it.
             game.announceTurnMessage()
@@ -288,7 +291,10 @@ class UI(
             )
         val campaignFile = campaign.file
         val scenarioFile = game.scenario?.file ?: ""
+        // Not for an interrupted opening: "seen" was recorded when its briefing first opened, yet its
+        // choices were never committed, so the dialogue must be offered again (`Game.openingReplay`).
         if (!org.osada.multiplayer.client.OsadaMultiplayer.active &&
+            !game.openingReplay &&
             BriefingIntroTracker.isSeen(campaignFile, scenarioFile)
         ) {
             // Retry fast-path: keep the briefing reachable via the reopen button, but skip
