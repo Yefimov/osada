@@ -2,6 +2,7 @@ package org.osada.rules
 
 import org.osada.GameHolder
 import org.osada.MovMethod
+import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.UnitType
 import org.osada.model.EfileConfig
@@ -31,6 +32,7 @@ class HangarTest : OgRulesTestHarness() {
     private val airbaseEqid = 465
     private val planeEqid = 997
     private val bunkerEqid = 998
+    private val shipEqid = 996
 
     @BeforeTest
     fun setup() {
@@ -148,6 +150,81 @@ class HangarTest : OgRulesTestHarness() {
         val infantry = place(map, infantryEqid, 3, 4, 0)
 
         assertFalse(UnitActionAvailability.forAction(UnitActionId.ENTER_COVER, context(map, infantry)).applicable)
+    }
+
+    /**
+     * An authored passenger (`aboard="1"`, `bn5s04`'s commando in a submarine) must be able to
+     * leave. The chip comes up on any non-fortification container with somebody inside, and only
+     * then: an empty ship still offers nothing.
+     */
+    @Test
+    fun aShipWithAnAuthoredPassengerOpensItsHangar() {
+        EfileConfig.setForTest(mapOf("ground_carrier" to 11))
+        Equipment.putEquipment(
+            shipEqid,
+            EquipmentData().apply {
+                eqid = shipEqid
+                name = "Submarine"
+                uclass = UnitClass.SUBMARINE.value
+                movmethod = MovMethod.NAVAL.value
+                hangarCap = 1
+            },
+        )
+        val map = liveWorld()
+        val ship = place(map, shipEqid, 3, 3, 0)
+        assertFalse(UnitActionAvailability.forAction(UnitActionId.HANGAR, context(map, ship)).applicable)
+
+        val commando =
+            org.osada.model
+                .GameUnit(infantryEqid)
+                .apply {
+                    owner = friendly.id
+                    isDeployed = true
+                    containedIn = ship
+                }
+        ship.hangar.add(commando)
+
+        assertTrue(UnitActionAvailability.forAction(UnitActionId.HANGAR, context(map, ship)).applicable)
+        assertTrue(CarrierHangars.launchCells(map, commando, ship).isNotEmpty(), "it never landed")
+    }
+
+    /** Owner's ruling 2026-10-10: a land passenger leaving a ship steps onto land, never ocean. */
+    @Test
+    fun aLandPassengerNeverStepsOutOntoOcean() {
+        EfileConfig.setForTest(mapOf("ground_carrier" to 11))
+        Equipment.putEquipment(
+            shipEqid,
+            EquipmentData().apply {
+                eqid = shipEqid
+                name = "Submarine"
+                uclass = UnitClass.SUBMARINE.value
+                movmethod = MovMethod.NAVAL.value
+                hangarCap = 1
+            },
+        )
+        val map = liveWorld()
+        val grid = map.map!!
+        val ship = place(map, shipEqid, 3, 3, 0)
+        val around = HexGeometry.getAdjacent(3, 3)
+        (around.drop(1).map { it.row to it.col } + (3 to 3)).forEach { (r, c) ->
+            grid[r][c].terrain =
+                TerrainType.OCEAN.value
+        }
+        val commando =
+            org.osada.model
+                .GameUnit(infantryEqid)
+                .apply {
+                    owner = friendly.id
+                    isDeployed = true
+                    containedIn = ship
+                }
+        ship.hangar.add(commando)
+
+        val shore = grid[around[0].row][around[0].col]
+        assertEquals(listOf(shore), CarrierHangars.launchCells(map, commando, ship))
+        val sea = grid[around[1].row][around[1].col]
+        assertFalse(CarrierHangars.launch(map, commando, ship, sea), "the ocean hex is refused")
+        assertTrue(CarrierHangars.launch(map, commando, ship, shore))
     }
 
     @Test

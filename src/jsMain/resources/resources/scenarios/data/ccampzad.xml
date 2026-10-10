@@ -307,7 +307,12 @@
   <hex row="15" col="19">
     <unit id="21134" owner="1" flag="21" face="0" exp="454" str="9" bstr="4"/>
   </hex>
-  <hex row="15" col="29" road="41"/>
+  <hex row="15" col="29" road="41">
+    <unit id="21134" owner="1" flag="21" face="0" transport="21803" exp="322" str="8" ldr="1" bstr="5" srcrow="16" srccol="30"/>
+  </hex>
+  <hex row="15" col="30">
+    <unit id="21134" owner="1" flag="21" face="0" transport="21803" exp="454" str="7" bstr="5" srcrow="16" srccol="30"/>
+  </hex>
   <hex row="15" col="31" road="17" rail="187"/>
   <hex row="15" col="37" road="34"/>
   <hex row="15" col="38" road="34"/>
@@ -329,8 +334,6 @@
   <hex row="16" col="27" road="130"/>
   <hex row="16" col="28" road="34"/>
   <hex row="16" col="30" terrain="1" road="152" name="Zadworze" owner="1" flag="20" victory="1">
-    <unit id="21134" owner="1" flag="21" face="0" transport="21803" exp="454" str="7" bstr="5"/>
-    <unit id="21134" owner="1" flag="21" face="0" transport="21803" exp="322" str="8" ldr="1" bstr="5"/>
     <unit id="21757" owner="1" flag="21" face="0" transport="21803" exp="554" str="7" bstr="4"/>
   </hex>
   <hex row="16" col="31" road="153" rail="187"/>

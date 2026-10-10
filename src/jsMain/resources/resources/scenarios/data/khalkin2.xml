@@ -287,7 +287,9 @@
     <unit id="39702" owner="0" flag="90" face="0" transport="40192" exp="150" bstr="1"/>
   </hex>
   <hex row="12" col="12" terrain="16" road="9"/>
-  <hex row="12" col="13" terrain="5" road="144"/>
+  <hex row="12" col="13" terrain="5" road="144">
+    <unit id="4171" owner="1" flag="6" face="0" exp="250" bstr="1" srcrow="13" srccol="14"/>
+  </hex>
   <hex row="12" col="15" terrain="16"/>
   <hex row="12" col="16" terrain="16" road="136"/>
   <hex row="12" col="17" terrain="16" road="144"/>
@@ -320,7 +322,6 @@
   <hex row="13" col="12" terrain="16"/>
   <hex row="13" col="13" terrain="5" road="9"/>
   <hex row="13" col="14" terrain="11" owner="1" flag="5" victory="1">
-    <unit id="4171" owner="1" flag="6" face="0" exp="250" bstr="1"/>
     <unit id="4135" owner="1" flag="6" face="0" exp="250" bstr="1"/>
   </hex>
   <hex row="13" col="16" terrain="10"/>

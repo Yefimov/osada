@@ -842,7 +842,6 @@
   <hex row="15" col="19" road="162"/>
   <hex row="15" col="20" road="40"/>
   <hex row="15" col="21" terrain="1" road="2" name="Stronghold" owner="1" flag="7" victory="1">
-    <unit id="9453" owner="1" flag="8" face="0" exp="200" str="7" bstr="1" anchored="1"/>
     <unit id="748" owner="1" flag="8" face="0" exp="300" str="8" bstr="1"/>
   </hex>
   <hex row="15" col="22" road="40"/>
@@ -892,7 +891,9 @@
   <hex row="16" col="18" road="18"/>
   <hex row="16" col="19" terrain="16"/>
   <hex row="16" col="20" terrain="16"/>
-  <hex row="16" col="21" terrain="16"/>
+  <hex row="16" col="21" terrain="16">
+    <unit id="9453" owner="1" flag="8" face="0" exp="200" str="7" bstr="1" anchored="1" srcrow="15" srccol="21"/>
+  </hex>
   <hex row="16" col="22" terrain="16"/>
   <hex row="16" col="23" terrain="16"/>
   <hex row="16" col="24" terrain="16"/>

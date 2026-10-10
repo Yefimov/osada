@@ -46,15 +46,21 @@ const GAMEPLAY_ATTRIBUTES = [
 
 const args = new Set(process.argv.slice(2));
 
-function loadMovementMethods() {
+/** Movement method and hangar capacity of every equipment record. */
+function loadEquipment() {
   const movement = new Map();
+  const hangarCaps = new Map();
   for (const file of fs.readdirSync(equipmentDir)) {
     if (!file.startsWith("equipment-country-")) continue;
     const json = JSON.parse(fs.readFileSync(path.join(equipmentDir, file), "utf8"));
-    const index = json.parsehints.indexOf("movmethod");
-    for (const [eqid, record] of Object.entries(json.units)) movement.set(Number(eqid), record[index]);
+    const movIndex = json.parsehints.indexOf("movmethod");
+    const hangarIndex = json.parsehints.indexOf("hangarcap");
+    for (const [eqid, record] of Object.entries(json.units)) {
+      movement.set(Number(eqid), record[movIndex]);
+      hangarCaps.set(Number(eqid), Number(record[hangarIndex]) || 0);
+    }
   }
-  return movement;
+  return { movement, hangarCaps };
 }
 
 /** Width and height of a PNG or JPEG, read from the header (a `.png` can be a JPEG). */
@@ -84,7 +90,7 @@ function attributes(tag) {
   return result;
 }
 
-function checkScenario(file, movement) {
+function checkScenario(file, { movement, hangarCaps }) {
   const xml = fs.readFileSync(path.join(dataDir, file), "utf8");
   const findings = [];
   const mapTag = xml.match(/<map\s[^>]*>/);
@@ -113,10 +119,24 @@ function checkScenario(file, movement) {
       findings.push(`${file} r${row}c${col}: outside the ${rows}x${cols} grid (${what})`);
     }
     const layers = { surface: [], air: [] };
+    let container = null;
+    let aboard = 0;
     for (const unit of units) {
+      // `aboard="1"` starts the unit inside the surface unit listed before it on this hex
+      // (`ScenarioHexParser.stowAboard`). It takes no slot while that container has hangar room;
+      // past the room the runtime falls back to the slot, so it counts as a collision again.
+      if (unit.aboard === "1" && container && container.owner === unit.owner && aboard < (hangarCaps.get(Number(container.id)) ?? 0)) {
+        aboard++;
+        continue;
+      }
       const carrier = Number(unit.carrier) || 0;
       const eqid = carrier > 0 ? carrier : Number(unit.id);
-      layers[movement.get(eqid) === AIR_MOVEMENT ? "air" : "surface"].push(unit.id);
+      const layer = movement.get(eqid) === AIR_MOVEMENT ? "air" : "surface";
+      if (layer === "surface") {
+        container = unit;
+        aboard = 0;
+      }
+      layers[layer].push(unit.id);
     }
     for (const [layer, ids] of Object.entries(layers)) {
       if (ids.length > 1) {
@@ -127,12 +147,12 @@ function checkScenario(file, movement) {
   return findings;
 }
 
-const movement = loadMovementMethods();
+const equipment = loadEquipment();
 const findings = fs
   .readdirSync(dataDir)
   .filter((file) => file.endsWith(".xml"))
   .sort()
-  .flatMap((file) => checkScenario(file, movement));
+  .flatMap((file) => checkScenario(file, equipment));
 
 if (args.has("--write-baseline")) {
   fs.writeFileSync(baselinePath, `${JSON.stringify(findings, null, 2)}\n`);

@@ -116,10 +116,10 @@
     <unit id="42270" owner="0" flag="104" face="0" exp="173" str="5" bstr="3" ammo="5"/>
   </hex>
   <hex row="3" col="17" terrain="1" road="130" name="Chelyabinsk"/>
-  <hex row="3" col="18" terrain="1" road="168" name="Chelyabinsk"/>
+  <hex row="3" col="18" terrain="1" road="168" name="Chelyabinsk">
+    <unit id="42333" owner="0" flag="104" face="0" exp="163" str="5" bstr="2" srcrow="3" srccol="19"/>
+  </hex>
   <hex row="3" col="19" terrain="11" road="144" name="Chelyabinsk Prison" owner="0" flag="103" victory="0" deploy="0">
-    <unit id="42333" owner="0" flag="104" face="0" exp="163" str="5" bstr="2"/>
-    <unit id="42249" owner="0" flag="104" face="0" transport="835" exp="73" str="3" bstr="2" ammo="6"/>
     <unit id="835" owner="0" flag="104" face="0" exp="28" str="8" bstr="5"/>
   </hex>
   <hex row="3" col="21" terrain="8"/>
@@ -149,7 +149,9 @@
   <hex row="4" col="14" terrain="1" road="146" name="Chelyabinsk"/>
   <hex row="4" col="15" terrain="1" name="Chelyabinsk"/>
   <hex row="4" col="16" terrain="1" name="Chelyabinsk"/>
-  <hex row="4" col="19" road="17"/>
+  <hex row="4" col="19" road="17">
+    <unit id="42249" owner="0" flag="104" face="0" transport="835" exp="73" str="3" bstr="2" ammo="6" srcrow="3" srccol="19"/>
+  </hex>
   <hex row="4" col="20" terrain="8"/>
   <hex row="4" col="21" terrain="8"/>
   <hex row="4" col="23" terrain="3"/>

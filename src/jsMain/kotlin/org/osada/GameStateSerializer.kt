@@ -3,6 +3,7 @@ package org.osada
 import org.osada.campaign.CampaignNarrative
 import org.osada.hero.HeroCampaign
 import org.osada.model.ALL_VICTORY_TIERS
+import org.osada.model.Equipment
 import org.osada.model.FrontFactionSlot
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
@@ -375,11 +376,30 @@ object GameStateSerializer {
         if (unit.isTemporaryBorrowed) obj.asDynamic().temporaryBorrowed = true
         if (unit.isPurchased) obj.asDynamic().purchased = true
         if (unit.stalinRegimeBoosted) obj.asDynamic().stalinRegimeBoosted = true
+        serializeSpentSupply(obj, unit)
         // The scenario Depot designation. Optional key on the byte-stability rule: 8 of 502
         // scenarios author one, so every other save is unchanged.
         serializeScenarioUnitProperties(obj, unit)
         return obj
     }
+}
+
+/**
+ * A reserve formation's fuel and ammunition, written only when they differ from what a freshly
+ * built unit of its equipment holds -- the value `CoreUnitListOperations.buildRestoredUnit` starts
+ * from. Without them a reload refilled every partly spent reserve formation: a campaign carries
+ * them into the next battle as they ended the last, and a save or co-op recovery mid-battle came
+ * back full (found by the co-op campaign rejoin probe, 2026-10-10). Optional keys, so a save
+ * whose reserve is full keeps its exact shape.
+ */
+private fun serializeSpentSupply(
+    obj: Json,
+    unit: GameUnit,
+) {
+    val fresh = Equipment.equipment[unit.eqid]
+    val scale = if (unit.stalinRegimeBoosted) GameUnit.STALIN_REGIME_MULTIPLIER else 1
+    if (unit.fuel != (fresh?.fuel ?: 0) * scale) obj.asDynamic().fuel = unit.fuel
+    if (unit.ammo != (fresh?.ammo ?: 0) * scale) obj.asDynamic().ammo = unit.ammo
 }
 
 /** What engineers built on [hex], on the optional-key rule of [serializeHexEngineering]. */

@@ -198,11 +198,7 @@ internal class CoreUnitListOperations(
         // smaller save shape. Restore the scenario-instance flags here too: in particular, an OG
         // Must-Survive unit may be the one formation carried through an entire campaign.
         unit.applySerializedScenarioProperties(savedUnit)
-        if (unit.stalinRegimeBoosted) {
-            unit.moveLeft *= GameUnit.STALIN_REGIME_MULTIPLIER
-            unit.ammo *= GameUnit.STALIN_REGIME_MULTIPLIER
-            unit.fuel *= GameUnit.STALIN_REGIME_MULTIPLIER
-        }
+        restoreSupply(savedUnit, unit)
         // Carried, never re-minted: this is the scenario transition the formation id exists to
         // survive. A pre-hero save has no key here and gets one on addCoreUnit below.
         unit.formationId = savedUnit.formationId as? String
@@ -268,4 +264,23 @@ internal class CoreUnitListOperations(
                 it.formationId = null
             }
     }
+}
+
+/**
+ * A fresh unit is full: scale it to Stalin Regime if the save says so, then take what the
+ * formation actually had left, already at its saved scale. The full unit shape
+ * (`players[].coreUnits`) always carries both values; the campaign roster only when they differ
+ * from a fresh unit (`GameStateSerializer`'s `serializeSpentSupply`). Absent means full.
+ */
+private fun restoreSupply(
+    savedUnit: dynamic,
+    unit: GameUnit,
+) {
+    if (unit.stalinRegimeBoosted) {
+        unit.moveLeft *= GameUnit.STALIN_REGIME_MULTIPLIER
+        unit.ammo *= GameUnit.STALIN_REGIME_MULTIPLIER
+        unit.fuel *= GameUnit.STALIN_REGIME_MULTIPLIER
+    }
+    (savedUnit.fuel as? Int)?.let { unit.fuel = it }
+    (savedUnit.ammo as? Int)?.let { unit.ammo = it }
 }

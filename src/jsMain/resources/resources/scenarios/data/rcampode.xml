@@ -1586,8 +1586,10 @@
   <hex row="32" col="12" terrain="5"/>
   <hex row="32" col="13" terrain="5" road="33"/>
   <hex row="32" col="18" terrain="15"/>
+  <hex row="32" col="20">
+    <unit id="35951" owner="0" flag="62" face="0" exp="15" str="14" bstr="7" srcrow="32" srccol="21"/>
+  </hex>
   <hex row="32" col="21" terrain="2" road="40" owner="0" flag="61">
-    <unit id="35951" owner="0" flag="62" face="0" exp="15" str="14" bstr="7"/>
     <unit id="99" owner="0" flag="62" face="0" exp="121" str="9" bstr="5"/>
   </hex>
   <hex row="32" col="23" terrain="1" road="33" name="Velikodolinskoye"/>

@@ -32,8 +32,13 @@ internal object HangarActions {
     fun hangar(context: UnitActionContext): ActionAvailability {
         val container = context.unit
         val capacity = CarrierHangars.capacity(container)
-        // Carriers and airbases only: nothing on the map can put a garrison into a bunker.
-        val holds = CarrierHangars.holdsAircraft(container)
+        // Carriers and airbases, which aircraft can land in during play -- and any other container
+        // that already holds someone, which only authored data can bring about (`aboard="1"`,
+        // `bn5s04`'s commando in a submarine): without the window that passenger could never leave.
+        // A fortification answers through its own Cover chip instead.
+        val holds =
+            CarrierHangars.holdsAircraft(container) ||
+                (container.hangar.isNotEmpty() && !HangarStowage.isCover(container))
         if (!offered() || capacity <= 0 || !holds) return ActionAvailability.notApplicable(UnitActionId.HANGAR)
         // Always openable on the owner's own turn, empty or not: the window is also where the
         // player learns what the hangar is for.

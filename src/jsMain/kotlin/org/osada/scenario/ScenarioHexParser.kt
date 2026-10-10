@@ -1,6 +1,7 @@
 package org.osada.scenario
 
 import org.osada.model.GameMap
+import org.osada.model.GameUnit
 import org.osada.model.Hex
 import org.osada.model.getPlayers
 import org.osada.model.setHex
@@ -150,9 +151,39 @@ internal object ScenarioHexParser {
         for (j in 0 until el.childNodes.length) {
             val unitNode = el.childNodes.item(j) as? Element
             if (unitNode == null || unitNode.nodeName != "unit") continue
-            ScenarioUnitParser.parse(unitNode, scenario)?.let { hex.setUnit(it) }
+            ScenarioUnitParser.parse(unitNode, scenario)?.let { unit ->
+                if (unitNode.getAttribute("aboard") != "1" || !stowAboard(unit, hex.unit)) hex.setUnit(unit)
+            }
         }
     }
+
+    /**
+     * An authored passenger (`aboard="1"`): [unit] starts INSIDE the surface unit listed before it on
+     * the same hex, as OG places a garrison in a container (`rules/CarrierHangars`). `bn5s04`'s
+     * British commando begins in the submarine waiting off the coast: OG's source puts both on one
+     * ocean hex, and the efile's `ground_carrier` lets land units board a ship at sea
+     * (docs/README.md C1, 2026-10-10).
+     *
+     * Like a reserve aircraft stowed at deployment, it never "landed", so it may leave on the first
+     * turn. A container that is not this side's or has no room keeps the old placement -- the hex
+     * slot -- rather than losing the unit.
+     */
+    private fun stowAboard(
+        unit: GameUnit,
+        container: GameUnit?,
+    ): Boolean {
+        if (container == null || !takesPassenger(container, unit)) return false
+        unit.isDeployed = true
+        unit.landedTurn = -1
+        unit.containedIn = container
+        container.hangar.add(unit)
+        return true
+    }
+
+    private fun takesPassenger(
+        container: GameUnit,
+        unit: GameUnit,
+    ): Boolean = container.owner == unit.owner && container.hangar.size < container.unitData(true).hangarCap
 }
 
 /**

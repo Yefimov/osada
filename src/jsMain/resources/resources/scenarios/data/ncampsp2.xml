@@ -840,7 +840,9 @@
   <hex row="16" col="29" terrain="3"/>
   <hex row="16" col="30" road="9"/>
   <hex row="16" col="31" road="152"/>
-  <hex row="16" col="33" terrain="1" road="32" name="Kangnung"/>
+  <hex row="16" col="33" terrain="1" road="32" name="Kangnung">
+    <unit id="20031" owner="1" flag="19" face="0" exp="457" str="7" bstr="5" anchored="1" srcrow="17" srccol="32"/>
+  </hex>
   <hex row="16" col="34" terrain="9"/>
   <hex row="16" col="35" terrain="9"/>
   <hex row="16" col="36" terrain="9"/>
@@ -875,7 +877,6 @@
   <hex row="17" col="28" terrain="3"/>
   <hex row="17" col="31" road="49"/>
   <hex row="17" col="32" terrain="1" road="138" name="Kangnung" owner="1" flag="9">
-    <unit id="20031" owner="1" flag="19" face="0" exp="457" str="7" bstr="5" anchored="1"/>
     <unit id="704" owner="1" flag="19" face="0" exp="557" str="8" bstr="5"/>
   </hex>
   <hex row="17" col="33" road="136"/>

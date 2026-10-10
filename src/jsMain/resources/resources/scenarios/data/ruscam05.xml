@@ -11,11 +11,11 @@
     </at>
   </reinforce>
   <hex row="0" col="0">
-    <unit id="10882" owner="1" flag="8" face="4" exp="270"/>
-    <unit id="10766" owner="1" flag="8" face="4" exp="270"/>
     <unit id="10723" owner="1" flag="8" face="4" exp="270"/>
   </hex>
-  <hex row="0" col="1" terrain="3"/>
+  <hex row="0" col="1" terrain="3">
+    <unit id="10766" owner="1" flag="8" face="4" exp="270" srcrow="0" srccol="0"/>
+  </hex>
   <hex row="0" col="3" terrain="16"/>
   <hex row="0" col="7" terrain="1" road="35" name="Akulifchi"/>
   <hex row="0" col="11" terrain="10" name="River Desna Tributary"/>
@@ -33,7 +33,9 @@
   <hex row="0" col="37" terrain="16"/>
   <hex row="0" col="39" terrain="16"/>
   <hex row="0" col="41" terrain="16"/>
-  <hex row="1" col="0" terrain="3"/>
+  <hex row="1" col="0" terrain="3">
+    <unit id="10882" owner="1" flag="8" face="4" exp="270" srcrow="0" srccol="0"/>
+  </hex>
   <hex row="1" col="1" terrain="3"/>
   <hex row="1" col="2" terrain="3"/>
   <hex row="1" col="3" terrain="3"/>

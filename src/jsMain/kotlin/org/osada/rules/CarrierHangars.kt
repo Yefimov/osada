@@ -13,6 +13,7 @@ import org.osada.model.isWorking
 import org.osada.model.reinforceUnit
 import org.osada.model.resupply
 import org.osada.model.unitEndTurn
+import org.osada.movTable
 import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 
@@ -107,6 +108,9 @@ object CarrierHangars {
 
     /** *"8 allow land units to enter naval-class carriers out of port"*. */
     private const val LAND_AT_SEA = 8
+
+    /** `movTable` sentinel for "this movement method may never enter"; 254 is merely costly. */
+    private const val IMPASSABLE_TERRAIN_COST = 255
 
     private fun mode(): Int = if (!active()) 0 else EfileConfig.intKey("ground_carrier", 0)
 
@@ -259,7 +263,9 @@ object CarrierHangars {
      * **Where a ground passenger may step out to is an INFERENCE**, and a named one: nothing
      * published says. The rule enforced here is the weakest one that cannot be wrong — the
      * destination is the container's own hex or one adjacent to it, and the slot it would take is
-     * free. Anything narrower (terrain, ZOC, movement cost) would be invented.
+     * free. The one terrain gate is the owner's (2026-10-10): a ground passenger never steps onto
+     * terrain its movement method cannot enter at all, such as ocean (see [closedTo]). Anything
+     * narrower (ZOC, movement cost) would be invented.
      */
     fun launch(
         map: GameMap,
@@ -272,7 +278,7 @@ object CarrierHangars {
             hex != null &&
                 canLaunch(map, passenger, container) &&
                 withinReachOf(container, hex) &&
-                !slotTaken(hex, passenger)
+                !closedTo(hex, passenger)
         if (!permitted || hex == null) return false
         container.hangar.remove(passenger)
         passenger.containedIn = null
@@ -292,7 +298,7 @@ object CarrierHangars {
 
     /**
      * Every hex [passenger] may leave [container] onto right now: the container's own hex or one
-     * beside it, with the passenger's slot free. Empty when it may not leave at all.
+     * beside it, with the passenger's slot free and its terrain enterable. Empty when it may not leave at all.
      */
     fun launchCells(
         map: GameMap,
@@ -304,14 +310,23 @@ object CarrierHangars {
         if (pos == null || grid == null || !canLaunch(map, passenger, container)) return emptyList()
         return (listOf(pos) + HexGeometry.getAdjacent(pos.row, pos.col))
             .mapNotNull { grid.getOrNull(it.row)?.getOrNull(it.col) }
-            .filter { !slotTaken(it, passenger) }
+            .filter { !closedTo(it, passenger) }
     }
 
-    /** Whether the slot [passenger] would occupy on [hex] is already filled. */
-    private fun slotTaken(
+    /**
+     * Whether [passenger] cannot step out onto [hex]: the slot it would occupy is already filled,
+     * or, for a ground passenger, its movement method may never enter the terrain (`movTable`
+     * 255). Owner's ruling 2026-10-10: a land unit leaving a ship must not be put on ocean, where
+     * it could only drown; an amphibious method (254 on ocean) still may.
+     */
+    private fun closedTo(
         hex: Hex,
         passenger: GameUnit,
-    ): Boolean = if (UnitPredicates.isAir(passenger)) hex.airunit != null else hex.unit != null
+    ): Boolean {
+        if (UnitPredicates.isAir(passenger)) return hex.airunit != null
+        val cost = movTable.getOrNull(passenger.unitData().movmethod)?.getOrNull(hex.terrain)
+        return hex.unit != null || cost == IMPASSABLE_TERRAIN_COST
+    }
 
     /** The container's own hex, or one beside it — see [launch]'s named inference. */
     private fun withinReachOf(

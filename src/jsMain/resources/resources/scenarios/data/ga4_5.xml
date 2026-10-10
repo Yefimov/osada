@@ -443,6 +443,9 @@
   <hex row="9" col="28" terrain="9" name="Lake Ladoga"/>
   <hex row="9" col="29" terrain="9" name="Lake Ladoga"/>
   <hex row="9" col="30" terrain="9" name="Lake Ladoga"/>
+  <hex row="9" col="36">
+    <unit id="7991" owner="1" flag="8" face="0" exp="79" str="8" bstr="1" anchored="1" srcrow="10" srccol="36"/>
+  </hex>
   <hex row="9" col="37" terrain="2" name="Nazija Airfield"/>
   <hex row="9" col="39" road="40"/>
   <hex row="9" col="40">
@@ -474,7 +477,6 @@
     <unit id="7991" owner="1" flag="8" face="0" exp="100" bstr="4"/>
   </hex>
   <hex row="10" col="36" terrain="2" name="Nazija Airfield" owner="1" flag="7" victory="1">
-    <unit id="7991" owner="1" flag="8" face="0" exp="79" str="8" bstr="1" anchored="1"/>
     <unit id="11" owner="1" flag="8" face="0" exp="100" str="7" bstr="1"/>
   </hex>
   <hex row="10" col="37" road="130"/>
@@ -613,7 +615,6 @@
   <hex row="15" col="20" terrain="3"/>
   <hex row="15" col="22" road="18"/>
   <hex row="15" col="23" terrain="1" name="Poselok 5" owner="1" flag="7" victory="1">
-    <unit id="8151" owner="1" flag="8" face="0" str="5" bstr="1" anchored="1"/>
     <unit id="644" owner="1" flag="8" face="0" exp="200" str="7" bstr="1"/>
   </hex>
   <hex row="15" col="25">
@@ -645,7 +646,9 @@
     <unit id="52495" owner="1" flag="304" face="0" str="5" bstr="1"/>
   </hex>
   <hex row="16" col="22" road="9"/>
-  <hex row="16" col="23" road="144"/>
+  <hex row="16" col="23" road="144">
+    <unit id="8151" owner="1" flag="8" face="0" str="5" bstr="1" anchored="1" srcrow="15" srccol="23"/>
+  </hex>
   <hex row="16" col="24" terrain="1" name="Poselok 5"/>
   <hex row="16" col="25" terrain="3"/>
   <hex row="16" col="26" terrain="3"/>

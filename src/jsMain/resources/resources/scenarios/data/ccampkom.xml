@@ -97,7 +97,12 @@
   <hex row="5" col="8" road="136"/>
   <hex row="5" col="9" road="130"/>
   <hex row="5" col="10" road="168"/>
-  <hex row="5" col="11" road="136"/>
+  <hex row="5" col="11" road="136">
+    <unit id="21134" owner="1" flag="21" face="0" exp="354" str="7" bstr="5" srcrow="6" srccol="12"/>
+  </hex>
+  <hex row="5" col="12">
+    <unit id="21134" owner="1" flag="21" face="0" exp="354" str="7" bstr="5" srcrow="6" srccol="12"/>
+  </hex>
   <hex row="5" col="13" road="33"/>
   <hex row="5" col="19" terrain="3"/>
   <hex row="5" col="20" terrain="3"/>
@@ -106,9 +111,7 @@
   <hex row="5" col="24" terrain="3"/>
   <hex row="6" col="2" road="17"/>
   <hex row="6" col="12" terrain="1" road="154" name="Miaczyn" owner="1" flag="20" victory="1">
-    <unit id="21134" owner="1" flag="21" face="0" exp="354" str="7" bstr="5"/>
     <unit id="21803" owner="1" flag="21" face="0" exp="455" str="8" bstr="5"/>
-    <unit id="21134" owner="1" flag="21" face="0" exp="354" str="7" bstr="5"/>
   </hex>
   <hex row="6" col="13" road="136"/>
   <hex row="6" col="15" terrain="3"/>

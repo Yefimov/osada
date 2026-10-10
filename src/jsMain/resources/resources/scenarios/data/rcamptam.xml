@@ -761,6 +761,9 @@
   <hex row="16" col="22" terrain="9" name="Kerch Strait"/>
   <hex row="16" col="23" terrain="9" name="Kerch Strait"/>
   <hex row="16" col="24" terrain="9" name="Kerch Strait"/>
+  <hex row="16" col="25">
+    <unit id="528" owner="1" flag="8" face="0" exp="574" str="8" bstr="5" srcrow="17" srccol="25"/>
+  </hex>
   <hex row="16" col="26" terrain="9" name="Kerch Strait"/>
   <hex row="16" col="28" terrain="3"/>
   <hex row="16" col="29" terrain="3"/>
@@ -800,7 +803,6 @@
   <hex row="17" col="22" terrain="9" name="Kerch Strait"/>
   <hex row="17" col="23" terrain="3"/>
   <hex row="17" col="25">
-    <unit id="528" owner="1" flag="8" face="0" exp="574" str="8" bstr="5"/>
     <unit id="528" owner="1" flag="8" face="0" exp="521" str="8" bstr="5"/>
   </hex>
   <hex row="17" col="26" terrain="3"/>
@@ -847,7 +849,9 @@
   <hex row="18" col="22" terrain="3"/>
   <hex row="18" col="23" terrain="3"/>
   <hex row="18" col="24" terrain="3"/>
-  <hex row="18" col="25" terrain="3"/>
+  <hex row="18" col="25" terrain="3">
+    <unit id="528" owner="1" flag="8" face="0" exp="595" str="8" bstr="5" srcrow="19" srccol="25"/>
+  </hex>
   <hex row="18" col="26" terrain="3"/>
   <hex row="18" col="27" terrain="3"/>
   <hex row="18" col="28" terrain="3"/>
@@ -894,7 +898,6 @@
   <hex row="19" col="23" terrain="3"/>
   <hex row="19" col="24" terrain="3"/>
   <hex row="19" col="25" terrain="3" road="34">
-    <unit id="528" owner="1" flag="8" face="0" exp="595" str="8" bstr="5"/>
     <unit id="528" owner="1" flag="8" face="0" exp="583" str="8" bstr="5"/>
   </hex>
   <hex row="19" col="26" terrain="3" road="40"/>

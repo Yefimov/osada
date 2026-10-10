@@ -989,9 +989,10 @@
     <unit id="1071" owner="1" flag="304" face="0" exp="266" str="7" bstr="1"/>
   </hex>
   <hex row="17" col="26" terrain="6" name="HILL"/>
-  <hex row="17" col="27" road="40"/>
+  <hex row="17" col="27" road="40">
+    <unit id="52433" owner="1" flag="304" face="0" exp="225" str="7" bstr="1" anchored="1" srcrow="17" srccol="28"/>
+  </hex>
   <hex row="17" col="28" terrain="1" name="Frankfurt" owner="1" flag="7" victory="1">
-    <unit id="52433" owner="1" flag="304" face="0" exp="225" str="7" bstr="1" anchored="1"/>
     <unit id="717" owner="1" flag="304" face="0" exp="300" str="9" bstr="1"/>
   </hex>
   <hex row="17" col="29" terrain="1" road="16" name="Frankfurt">

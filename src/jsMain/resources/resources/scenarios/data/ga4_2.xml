@@ -800,7 +800,9 @@
   <hex row="14" col="16" terrain="16"/>
   <hex row="14" col="17" terrain="1" name="Yelnya"/>
   <hex row="14" col="18" terrain="1" name="Yelnya"/>
-  <hex row="14" col="19" terrain="1" name="Yelnya"/>
+  <hex row="14" col="19" terrain="1" name="Yelnya">
+    <unit id="9455" owner="1" flag="8" face="0" str="6" bstr="1" anchored="1" srcrow="15" srccol="19"/>
+  </hex>
   <hex row="14" col="20" terrain="1" name="Yelnya" owner="1" flag="7"/>
   <hex row="14" col="21" terrain="1" name="Yelnya"/>
   <hex row="14" col="22" terrain="10" name="Desna River"/>
@@ -850,7 +852,6 @@
     <unit id="7991" owner="1" flag="8" face="0" exp="50" str="8" bstr="4"/>
   </hex>
   <hex row="15" col="19" terrain="1" name="Yelnya" owner="1" flag="7" victory="1">
-    <unit id="9455" owner="1" flag="8" face="0" str="6" bstr="1" anchored="1"/>
     <unit id="812" owner="1" flag="8" face="0" exp="200" str="8" bstr="1"/>
   </hex>
   <hex row="15" col="20" terrain="1" name="Yelnya"/>

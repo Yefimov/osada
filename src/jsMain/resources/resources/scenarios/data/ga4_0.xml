@@ -490,7 +490,9 @@
   <hex row="11" col="18" terrain="16"/>
   <hex row="11" col="27" terrain="16"/>
   <hex row="11" col="28" terrain="5"/>
-  <hex row="11" col="29" terrain="5"/>
+  <hex row="11" col="29" terrain="5">
+    <unit id="4464" owner="1" flag="6" face="0" exp="25" str="6" bstr="1" anchored="1" srcrow="12" srccol="30"/>
+  </hex>
   <hex row="11" col="31" terrain="16"/>
   <hex row="11" col="32" terrain="15" name="Lake Uzur-Nur"/>
   <hex row="11" col="33" terrain="15" name="Lake Uzur-Nur"/>
@@ -530,7 +532,6 @@
   <hex row="12" col="27" terrain="16"/>
   <hex row="12" col="28" terrain="5"/>
   <hex row="12" col="30" terrain="1" name="Nomonhan" owner="1" flag="5" victory="1">
-    <unit id="4464" owner="1" flag="6" face="0" exp="25" str="6" bstr="1" anchored="1"/>
     <unit id="748" owner="1" flag="6" face="0" str="7" bstr="1"/>
   </hex>
   <hex row="12" col="31" terrain="16">

@@ -39,6 +39,12 @@
       <unit id="20031" owner="1" flag="19" face="0" exp="367" str="8" bstr="5"/>
     </at>
   </reinforce>
+  <hex row="24" col="15">
+    <unit id="22565" owner="0" flag="22" face="0" exp="378" str="6" bstr="4" srcrow="25" srccol="15"/>
+  </hex>
+  <hex row="25" col="14">
+    <unit id="22565" owner="0" flag="22" face="0" exp="286" str="6" bstr="5" srcrow="26" srccol="14"/>
+  </hex>
   <hex row="26" col="6" mines="1"/>
   <hex row="27" col="7" mines="1"/>
   <hex row="27" col="11" mines="1"/>
@@ -721,7 +727,6 @@
     <unit id="14087" owner="1" flag="10" face="0" exp="429" str="8" bstr="5"/>
   </hex>
   <hex row="25" col="15" terrain="16" name="Hill 468" owner="0" flag="25" victory="0">
-    <unit id="22565" owner="0" flag="22" face="0" exp="378" str="6" bstr="4"/>
     <unit id="22565" owner="0" flag="22" face="0" exp="364" str="6" bstr="5"/>
   </hex>
   <hex row="25" col="17" road="33"/>
@@ -749,13 +754,11 @@
   <hex row="26" col="8" road="18"/>
   <hex row="26" col="9" terrain="1" name="Kunch&#x27;on"/>
   <hex row="26" col="14" terrain="16" name="Hill 468">
-    <unit id="22565" owner="0" flag="22" face="0" exp="286" str="6" bstr="5"/>
     <unit id="22565" owner="0" flag="22" face="0" exp="354" str="6" bstr="5"/>
   </hex>
   <hex row="26" col="16" road="18"/>
   <hex row="26" col="17" terrain="3"/>
   <hex row="26" col="18" terrain="16" name="Hill 337" owner="0" flag="25" victory="0">
-    <unit id="22565" owner="0" flag="22" face="0" exp="250" str="5" bstr="5"/>
     <unit id="22565" owner="0" flag="22" face="0" exp="383" str="6" bstr="5"/>
   </hex>
   <hex row="26" col="19" terrain="3"/>
@@ -777,7 +780,9 @@
   <hex row="27" col="8" terrain="1" road="9" name="Kunch&#x27;on"/>
   <hex row="27" col="9" road="144"/>
   <hex row="27" col="16" road="17"/>
-  <hex row="27" col="18" terrain="3"/>
+  <hex row="27" col="18" terrain="3">
+    <unit id="22565" owner="0" flag="22" face="0" exp="250" str="5" bstr="5" srcrow="26" srccol="18"/>
+  </hex>
   <hex row="27" col="19" road="34"/>
   <hex row="27" col="20" road="33">
     <unit id="22565" owner="0" flag="22" face="0" exp="342" str="6" bstr="5"/>

@@ -194,7 +194,9 @@
   <hex row="3" col="29" terrain="1" road="131" name="Calarasi"/>
   <hex row="3" col="30" terrain="1" road="161" name="Calarasi"/>
   <hex row="3" col="39" terrain="1" road="27" name="Fetesti"/>
-  <hex row="3" col="40" terrain="1" road="177" name="Fetesti"/>
+  <hex row="3" col="40" terrain="1" road="177" name="Fetesti">
+    <unit id="528" owner="1" flag="8" face="0" exp="888" str="8" bstr="5" srcrow="4" srccol="40"/>
+  </hex>
   <hex row="3" col="42" terrain="4"/>
   <hex row="4" col="1" terrain="10" name="Arges River"/>
   <hex row="4" col="3" terrain="3"/>
@@ -232,7 +234,6 @@
   </hex>
   <hex row="4" col="39" terrain="1" road="11" name="Fetesti"/>
   <hex row="4" col="40" terrain="1" road="185" name="Fetesti" owner="1" flag="7" victory="1">
-    <unit id="528" owner="1" flag="8" face="0" exp="888" str="8" bstr="5"/>
     <unit id="528" owner="1" flag="8" face="0" exp="888" str="9" bstr="5"/>
   </hex>
   <hex row="4" col="41" terrain="1" road="168" name="Fetesti"/>

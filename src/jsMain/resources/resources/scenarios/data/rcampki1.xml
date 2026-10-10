@@ -1017,7 +1017,9 @@
   <hex row="26" col="31" terrain="5" road="136"/>
   <hex row="26" col="32" terrain="5"/>
   <hex row="26" col="34" road="144"/>
-  <hex row="26" col="35" terrain="1" name="Kishinev"/>
+  <hex row="26" col="35" terrain="1" name="Kishinev">
+    <unit id="528" owner="0" flag="62" face="0" exp="36" srcrow="27" srccol="35"/>
+  </hex>
   <hex row="26" col="36" terrain="15"/>
   <hex row="26" col="37" road="17"/>
   <hex row="26" col="38" terrain="15" name="Ichel River"/>
@@ -1061,7 +1063,6 @@
   <hex row="27" col="33" road="136"/>
   <hex row="27" col="34" road="9"/>
   <hex row="27" col="35" terrain="1" road="144" name="Kishinev" owner="0" flag="61" victory="0">
-    <unit id="528" owner="0" flag="62" face="0" exp="36"/>
     <unit id="528" owner="0" flag="62" face="0" exp="88"/>
   </hex>
   <hex row="27" col="36" terrain="15"/>

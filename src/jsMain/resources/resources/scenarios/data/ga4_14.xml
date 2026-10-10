@@ -641,7 +641,9 @@
   <hex row="10" col="15" terrain="1" name="Osowiec">
     <unit id="9887" owner="1" flag="8" face="0" str="6" bstr="1"/>
   </hex>
-  <hex row="10" col="16" terrain="1" name="Osowiec"/>
+  <hex row="10" col="16" terrain="1" name="Osowiec">
+    <unit id="9453" owner="1" flag="8" face="0" exp="245" str="8" bstr="1" anchored="1" srcrow="11" srccol="16"/>
+  </hex>
   <hex row="10" col="17" terrain="1" name="Osowiec" rail="1"/>
   <hex row="10" col="18" terrain="10" name="Biebrza River"/>
   <hex row="10" col="19" terrain="10" name="Biebrza River" rail="40"/>
@@ -688,7 +690,6 @@
   <hex row="11" col="14" terrain="1" name="Osowiec"/>
   <hex row="11" col="15" terrain="1" name="Osowiec"/>
   <hex row="11" col="16" terrain="1" name="Osowiec" owner="1" flag="7" victory="1">
-    <unit id="9453" owner="1" flag="8" face="0" exp="245" str="8" bstr="1" anchored="1"/>
     <unit id="1148" owner="1" flag="8" face="0" exp="122" str="6" bstr="1"/>
   </hex>
   <hex row="11" col="17" terrain="1" name="Osowiec">

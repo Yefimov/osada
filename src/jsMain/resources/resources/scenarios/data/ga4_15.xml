@@ -945,7 +945,9 @@
   <hex row="17" col="25" terrain="1" name="Arnswalde" owner="1" flag="303">
     <unit id="52209" owner="1" flag="304" face="0" exp="400" str="7" bstr="1" anchored="1"/>
   </hex>
-  <hex row="17" col="26" terrain="1" road="17" name="Arnswalde"/>
+  <hex row="17" col="26" terrain="1" road="17" name="Arnswalde">
+    <unit id="8151" owner="1" flag="8" face="0" exp="300" str="7" bstr="1" anchored="1" srcrow="18" srccol="26"/>
+  </hex>
   <hex row="17" col="27" road="40"/>
   <hex row="17" col="28" terrain="15" name="STREAM"/>
   <hex row="17" col="29" terrain="10" road="34" name="STREAM"/>
@@ -995,7 +997,6 @@
   <hex row="18" col="24" rail="130"/>
   <hex row="18" col="25" rail="17"/>
   <hex row="18" col="26" terrain="1" name="Arnswalde" owner="1" flag="303" victory="1" rail="16">
-    <unit id="8151" owner="1" flag="8" face="0" exp="300" str="7" bstr="1" anchored="1"/>
     <unit id="644" owner="1" flag="8" face="0" exp="400" str="8" bstr="1" ammo="0"/>
   </hex>
   <hex row="18" col="27" terrain="16"/>

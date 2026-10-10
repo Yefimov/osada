@@ -1401,7 +1401,9 @@
   <hex row="32" col="33" terrain="6"/>
   <hex row="32" col="34" terrain="3"/>
   <hex row="32" col="35" terrain="6"/>
-  <hex row="32" col="36" terrain="3" road="136"/>
+  <hex row="32" col="36" terrain="3" road="136">
+    <unit id="528" owner="1" flag="8" face="0" exp="257" str="8" bstr="5" srcrow="33" srccol="36"/>
+  </hex>
   <hex row="32" col="37" road="162"/>
   <hex row="32" col="38" terrain="10" road="34" name="Kuban River"/>
   <hex row="32" col="39" terrain="9" name="Kuban River"/>
@@ -1449,7 +1451,6 @@
   <hex row="33" col="34" terrain="6"/>
   <hex row="33" col="35" terrain="6" road="18"/>
   <hex row="33" col="36" terrain="11" road="34" name="Fortified Pass" owner="1" flag="7">
-    <unit id="528" owner="1" flag="8" face="0" exp="257" str="8" bstr="5"/>
     <unit id="528" owner="1" flag="8" face="0" exp="387" str="8" bstr="5"/>
   </hex>
   <hex row="33" col="37" terrain="6"/>

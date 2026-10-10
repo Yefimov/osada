@@ -854,7 +854,9 @@
   <hex row="14" col="20" road="9"/>
   <hex row="14" col="21" road="136"/>
   <hex row="14" col="22" terrain="3"/>
-  <hex row="14" col="23" terrain="16"/>
+  <hex row="14" col="23" terrain="16">
+    <unit id="9453" owner="1" flag="8" face="0" exp="200" str="9" bstr="1" anchored="1" srcrow="15" srccol="24"/>
+  </hex>
   <hex row="14" col="24" terrain="10" name="Mogilev"/>
   <hex row="14" col="25" terrain="10" road="34" name="Dniepr River"/>
   <hex row="14" col="26" road="170"/>
@@ -910,7 +912,6 @@
     <unit id="9892" owner="1" flag="8" face="0" exp="200" str="6" bstr="1"/>
   </hex>
   <hex row="15" col="24" terrain="1" road="10" name="Mogilev" owner="1" flag="7" victory="1">
-    <unit id="9453" owner="1" flag="8" face="0" exp="200" str="9" bstr="1" anchored="1"/>
     <unit id="883" owner="1" flag="8" face="0" exp="275" str="8" bstr="1"/>
   </hex>
   <hex row="15" col="25" road="136">

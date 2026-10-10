@@ -997,9 +997,10 @@
   <hex row="16" col="26" terrain="16"/>
   <hex row="16" col="27" terrain="16"/>
   <hex row="16" col="28" terrain="16"/>
-  <hex row="16" col="29" road="34"/>
+  <hex row="16" col="29" road="34">
+    <unit id="8151" owner="1" flag="8" face="0" exp="100" str="6" bstr="2" anchored="1" srcrow="16" srccol="30"/>
+  </hex>
   <hex row="16" col="30" terrain="1" road="34" name="Kamenets-Podolsk" owner="1" flag="7" victory="1">
-    <unit id="8151" owner="1" flag="8" face="0" exp="100" str="6" bstr="2" anchored="1"/>
     <unit id="9969" owner="1" flag="8" face="0" exp="50" str="5" bstr="1" anchored="1"/>
   </hex>
   <hex row="16" col="31" name="Railroad" rail="17"/>
