@@ -3,10 +3,8 @@ package org.osada.model
 import org.osada.GameHolder
 import org.osada.PlayerSide
 import org.osada.getCampaignPlayer
-import org.osada.hero.HeroCampaign
 import org.osada.rules.CarrierHangars
 import org.osada.rules.GameRules
-import org.osada.rules.PurchaseCap
 import org.osada.rules.setSpotRange
 import org.osada.rules.setZOCRange
 
@@ -102,27 +100,18 @@ fun GameMap.updateUnitList() {
                 // it was masking.
                 rebuildSpottingForSightBlocker(unit)
             }
-            // `nodossier` means exactly what its name says: explicitly omit this unit. The old
-            // inverted check recorded only omitted units, leaving normal campaign losses at zero.
-            if (recordsInCampaignDossier(GameHolder.instance?.campaign != null, unit.nodossier)) {
-                GameHolder.instance?.getCampaignPlayer()?.addDestroyedUnitToDossier(unit)
-            }
-            // The commander's fate, for every loss this sweep sees -- not only the ones a combat
-            // exchange processed while the unit was still alive (`HeroCampaign.recordCombat`). A
-            // minefield, an AA gun, counterbattery fire or a forced retreat onto mines used to leave
-            // the commander ACTIVE on a formation that no longer existed. Idempotent: a casualty
-            // already resolved has detached its commander, so a second call finds nobody.
-            // `nodossier` removals are not losses -- a disbanded unit, a scenario event's conversion,
-            // a non-campaign unit cleared off a deployment hex -- and never roll a casualty.
-            if (!unit.nodossier) HeroCampaign.recordCasualty(unit, turn)
+            recordLoss(unit)
             // A carrier takes its hangar down with it -- an aircraft cannot outlive the ship it
-            // was contained in (`rules/CarrierHangars`).
+            // was contained in (`rules/CarrierHangars`). Its passengers are never in `units`, so
+            // this sweep would not otherwise see them: each is booked as a loss of its own first
+            // (dossier, commander, replacement credit, kill count). A container removed without
+            // being lost (`nodossier`: disbanded, converted) takes its passengers out the same way.
+            unit.hangar.forEach { passenger ->
+                passenger.destroyed = true
+                if (unit.nodossier) passenger.nodossier = true
+                recordLoss(passenger)
+            }
             CarrierHangars.sinkWith(unit)
-            // OG's purchase cap mints a REPLACEMENT CREDIT here, for the same reason `creditKill`
-            // counts here: this is the one sweep every loss passes through, whatever caused it
-            // (`rules/PurchaseCap`).
-            PurchaseCap.creditReplacement(unit)
-            creditKill(unit)
             iter.remove()
         }
     }
@@ -154,19 +143,4 @@ fun GameMap.getUnitNeighbor(
             (index - 1 + sameSideUnits.size) % sameSideUnits.size
         }
     return sameSideUnits[newIndex]
-}
-
-/**
- * OG's *"kill N enemy units"* victory condition (`@1021` bit 4, 55 corpus scenarios).
- *
- * Counted in [updateUnitList] because that is the one sweep every death passes through, whatever
- * killed it -- combat, a minefield, surrender, running out of fuel. The credit goes to the OTHER
- * side, so a self-inflicted loss (kamikaze, disband) credits nobody.
- */
-private fun creditKill(unit: GameUnit) {
-    val victimSide = unit.player?.side ?: return
-    val scenario = GameHolder.instance?.scenario ?: return
-    scenario.unitsKilled.indices
-        .filter { it != victimSide }
-        .forEach { scenario.unitsKilled[it] = scenario.unitsKilled[it] + 1 }
 }

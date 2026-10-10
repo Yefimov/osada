@@ -1,5 +1,6 @@
 package org.osada.ui
 
+import org.osada.UnitClass
 import org.osada.i18n.I18n
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
@@ -7,7 +8,7 @@ import org.osada.rules.CarrierHangars
 import org.osada.rules.SupplyRules
 import org.w3c.dom.HTMLElement
 
-/** Texts that read differently for a fortification's garrison than for a hangar. */
+/** Texts that read differently for a fortification's garrison or a vessel's passengers than for a hangar. */
 private val GARRISON_KEYS =
     setOf(
         "title",
@@ -23,11 +24,20 @@ private val GARRISON_KEYS =
         "blocked.no_room",
     )
 
-/** The text key for [key] in [container]'s window: `garrison.*` for a fortification, else `hangar.*`. */
+/**
+ * The text key for [key] in [container]'s window: `hangar.*` where aircraft are kept, `garrison.*`
+ * for a fortification, and `aboard.*` for anything else that carries formations -- a ship or
+ * submarine with an authored passenger (`bn5s04`), which used to read as a fortification's garrison.
+ */
 internal fun hangarKey(
     container: GameUnit,
     key: String,
-): String = if (key in GARRISON_KEYS && !CarrierHangars.holdsAircraft(container)) "garrison.$key" else "hangar.$key"
+): String =
+    when {
+        key !in GARRISON_KEYS || CarrierHangars.holdsAircraft(container) -> "hangar.$key"
+        container.unitData(true).uclass == UnitClass.FORTIFICATION.value -> "garrison.$key"
+        else -> "aboard.$key"
+    }
 
 /**
  * The places of [HangarDialog]: one card per formation aboard and a dashed card per free place, so

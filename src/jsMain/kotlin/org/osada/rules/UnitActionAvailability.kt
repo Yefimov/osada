@@ -82,6 +82,7 @@ object UnitActionAvailability {
             HangarActions.hangar(context),
             HangarActions.enterCover(context),
             HangarActions.cover(context),
+            HangarActions.aboard(context),
             sleep(context),
         )
 
@@ -285,6 +286,7 @@ object UnitActionAvailability {
             UnitActionId.HANGAR -> HangarActions.hangar(context)
             UnitActionId.ENTER_COVER -> HangarActions.enterCover(context)
             UnitActionId.COVER -> HangarActions.cover(context)
+            UnitActionId.ABOARD -> HangarActions.aboard(context)
             UnitActionId.CAUTIOUS_MOVE -> CautiousMove.availability(context)
             else -> ActionAvailability.notApplicable(action)
         }

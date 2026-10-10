@@ -87,6 +87,10 @@ enum class UnitActionId(
 
     /** Opens a fortification's garrison: who is inside, and the order to come out (`ui/HangarDialog`). */
     COVER("cover"),
+
+    /** Opens a vessel's passengers -- anything but a hangar or a fortification that carries a
+     *  formation, which only authored data can bring about (`aboard="1"`, 2026-10-10). */
+    ABOARD("aboard"),
     SLEEP("sleep"),
 
     /** OG's cautious move: route only through spotted hexes (`rules/CautiousMove`, 2026-10-08). */

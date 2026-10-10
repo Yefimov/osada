@@ -4,7 +4,7 @@
   "scenario": "nvc00.xml",
   "startprestige": 0,
   "aiprestige": 100,
-  "intro": "Binh Gia and the coastal approaches — 28 December 1964<br><br>Comrade Commander, the fighting around Binh Gia is drawing South Vietnamese forces into the countryside east of Saigon. Local knowledge and surprise give our troops an opening before the government can concentrate its reserves.<br><br>In this scenario, strike the marked positions at Long Hai and Vung Tau. The purpose is to break the local defensive network and force the enemy to respond on ground of our choosing.<br><br>Keep the assault groups close enough to support one another and watch the roads behind the first objectives. A successful raid can quickly become an encirclement if the government troops arrive while our force is scattered across the coast.",
+  "intro": "Binh Gia and the coastal approaches — 28 December 1964<br><br>Fighting around Binh Gia is drawing South Vietnamese troops into the countryside east of Saigon. Before they can concentrate, our coastal detachments have a chance to strike the positions at Long Hai and Vung Tau.<br><br>Take those bases and break the defensive network around them. Local forces know the approach routes, but government reserves can return along the roads behind us. Make the enemy answer our attack without leaving the detachments cut off on the coast.",
   "outcome": {
    "briliant": {
     "goto": 1,
@@ -52,7 +52,7 @@
   "scenario": "nvc01.xml",
   "startprestige": 0,
   "aiprestige": 100,
-  "intro": "Escape from Vung Tau — 29 December 1964<br><br>The raid has brought a response. South Vietnamese troops are moving to clear the coastal area, and our units must regain the jungle routes before the enemy closes them.<br><br>Bring at least five units out through the marked escape hexes. Cover the withdrawal with a rearguard and keep the slowest troops moving before the main roads are blocked. The crash site in this scenario may draw additional enemy attention; do not let it distract you from saving the force.<br><br>An alternative is to hold two victory objectives until the turn limit for a Brilliant Victory. Holding only one does not meet that threshold. Decide whether you have the strength to defend the positions or should concentrate on evacuation.",
+  "intro": "Escape from Vung Tau — 29 December 1964<br><br>The raid on the coast has brought a response. South Vietnamese troops are moving to seal the roads around Vung Tau, and our detachments must reach the jungle routes before the cordon closes.<br><br>Lead the withdrawal through the designated exits, with a rearguard covering the slowest groups. If the roads are blocked, hold the remaining bases together until the pressure eases. Do not let the fighting around the crash site draw the force away from its route out.",
   "outcome": {
    "briliant": {
     "goto": 2,
@@ -100,7 +100,7 @@
   "scenario": "nvc02.xml",
   "startprestige": 0,
   "aiprestige": 100,
-  "intro": "Plei Me — 19 October 1965<br><br>The Special Forces camp at Plei Me supports government control of the Central Highlands and threatens the routes our troops use near Pleiku. Its local garrison has outside support close enough to make a prolonged attack dangerous.<br><br>Split the effort carefully: one group blocks the road and secures the northern objectives while the other attacks the camp. The defenders include locally recruited troops and American advisers; expect a relief effort and aircraft once the battle is under way.<br><br>Hold three victory objectives at the turn limit for a Brilliant Victory, two for a Victory, or one for a Tactical Victory. Taking the camp alone is not the whole operation. Keep the blocking force supplied and able to resist the relief column.",
+  "intro": "Plei Me — 19 October 1965<br><br>The camp at Plei Me watches the routes through the Central Highlands. Its locally recruited garrison and American advisers can call on aircraft and relief troops from the Pleiku area.<br><br>Attack the camp while a blocking force secures the northern road. Hold the positions you take against the relief column. The operation will fail if the two attacking groups are separated and the road to the garrison remains open.",
   "outcome": {
    "briliant": {
     "goto": 3,
@@ -148,7 +148,7 @@
   "scenario": "nvc03.xml",
   "startprestige": 0,
   "aiprestige": 100,
-  "intro": "Ia Drang — 14 November 1965<br><br>American helicopter-borne troops are establishing landing zones near our routes through the Central Highlands. Their mobility lets them appear beyond a normal front line, but each landing still depends on a patch of ground that can be held and supplied.<br><br>Clear the marked landing zones, including X-Ray and Albany, and take the other objectives. Local forces support the attack, while American artillery and aircraft can reach troops caught in the open.<br><br>Use the jungle to assemble the assault groups, keep them connected and watch for new landings behind them. The purpose is to deny the enemy secure bases from which to search the border country, not to gather the whole force under his supporting fire.",
+  "intro": "Ia Drang — 14 November 1965<br><br>American helicopter-borne troops are establishing landing zones near our routes through the Central Highlands. Their aircraft can bring reinforcements beyond a conventional front line, but the men on the ground still need clearings they can hold.<br><br>Drive them from X-Ray, Albany and the surrounding positions. Local detachments will support the attack. Use the jungle to approach the clearings; American artillery and aircraft can strike any assault group left in the open.",
   "outcome": {
    "briliant": {
     "goto": 4,
@@ -196,7 +196,7 @@
   "scenario": "nvc04.xml",
   "startprestige": 0,
   "aiprestige": 100,
-  "intro": "Cu Chi: preserve the local force — 4 January 1966<br><br>An enemy clearing operation is approaching the Cu Chi area. Our local units know the villages and supply routes; losing them would damage the organisation long after this battle is over.<br><br>Cover a withdrawal towards War Zone C and evacuate eight units through the marked exits. Move the local detachments early, use the stronger formations as a rearguard and avoid being pinned against the remaining roads.<br><br>The map also offers a Brilliant Victory for holding one objective to the turn limit. Preserving the local units is the narrative priority, but this version has no separate automatic defeat condition for losing a particular local unit. Choose between the defensive opportunity and the evacuation without leaving half the force committed to each.",
+  "intro": "Cu Chi: preserve the local force — 4 January 1966<br><br>An enemy clearing operation is closing on Cu Chi. The local detachments know the villages and supply routes on which our work here depends. We need those people alive when the enemy columns have passed.<br><br>Cover their withdrawal towards War Zone C. Send the local groups ahead and use the stronger formations to hold the routes behind them. A defensible base can give us time, but do not let the defence of it trap the force we are trying to save.",
   "outcome": {
    "briliant": {
     "goto": 5,
@@ -244,7 +244,7 @@
   "scenario": "nvc05.xml",
   "startprestige": 0,
   "aiprestige": 100,
-  "intro": "Tuy Hoa — 18 July 1967<br><br>South Korean troops are preparing to clear our positions around Tuy Hoa. Their operation threatens the bases and routes from which local forces can return to the coastal districts.<br><br>Defend the marked objectives and use the terrain to keep the enemy from separating your detachments. Pull exposed units back towards a position they can hold together before the approaches are blocked; this scenario has no unit-evacuation quota.<br><br>At the turn limit, four objectives earn a Brilliant Victory, three a Victory and two a Tactical Victory. PAVN formations are available to strengthen your force as resources allow. Put that strength where it can support the local defenders rather than leaving it on an isolated stretch of the line.",
+  "intro": "Tuy Hoa — 18 July 1967<br><br>South Korean troops are preparing to clear our positions around Tuy Hoa. The bases here give our local forces access to the coastal districts; losing them would leave those detachments without a secure route inland.<br><br>Hold the bases and draw exposed troops back into positions they can defend together. PAVN formations are available to strengthen the line. Keep the roads between the defenders open as the enemy advances.",
   "outcome": {
    "briliant": {
     "goto": 6,
@@ -292,7 +292,7 @@
   "scenario": "nvc05b.xml",
   "startprestige": 0,
   "aiprestige": 100,
-  "intro": "Kontum outposts — 3 November 1967<br><br>Government outposts in Kontum province overlook the routes that connect our border bases with the interior. An enemy offensive is expected, and those camps would give it places to assemble and resupply.<br><br>Attack the marked positions around Dak Pek, Dak Seang, Dak To and Kontum. Isolate the outposts before assaulting them, and keep a force ready to meet troops arriving to relieve a garrison.<br><br>Hold five objectives at the turn limit for a Brilliant Victory, four for a Victory, or three for a Tactical Victory. A camp captured and abandoned does not secure the route. Bring enough infantry forward to hold each position while the next attack is prepared.",
+  "intro": "Kontum outposts — 3 November 1967<br><br>Government outposts around Dak Pek, Dak Seang, Dak To and Kontum overlook the routes between our border bases and the interior. An enemy offensive is expected, and these camps would give it places to assemble and resupply.<br><br>Take the outposts and hold them. Cover the relief routes while the assault groups close on each camp; otherwise fresh troops can arrive as quickly as we drive the garrison back.",
   "outcome": {
    "briliant": {
     "goto": 7,
@@ -340,7 +340,7 @@
   "scenario": "nvc06.xml",
   "startprestige": 0,
   "aiprestige": 100,
-  "intro": "Khe Sanh — 15 January 1968<br><br>The American combat base at Khe Sanh lies near Route 9 and the Laotian border. Its airstrip and hill positions allow the defenders to watch the approaches to an important part of our supply network.<br><br>Clear the marked hills, attack the combat base and its airstrip, and take Lang Vei and the remaining objectives. Reinforcements are approaching, but the enemy can use artillery and air power even when his ground routes are threatened.<br><br>Bring support weapons into position before exposing the assault groups. The base is a fortified military outpost, not a provincial capital, and reaching its perimeter will only begin the hardest part of the fighting.",
+  "intro": "Khe Sanh — 15 January 1968<br><br>The American base at Khe Sanh watches Route 9 near the Laotian border. Its airstrip and hill positions overlook the approaches to our supply network, and aircraft can sustain the garrison even if the ground routes are cut.<br><br>Take the surrounding hills, Lang Vei and the combat base with its airstrip. Reinforcements are coming to support the attack. Bring the guns into position before exposing the assault troops: the defenders' artillery can still reach well beyond their perimeter.",
   "outcome": {
    "briliant": {
     "goto": 8,
@@ -388,7 +388,7 @@
   "scenario": "nvc07.xml",
   "startprestige": 0,
   "aiprestige": 100,
-  "intro": "Tet offensive: Hue and Da Nang — 31 January 1968<br><br>The Tet offensive seeks to bring the war into the cities and disrupt the South Vietnamese command system. Surprise may give the first attacking groups an opening, but government and American forces can respond quickly once the alarm is raised.<br><br>One part of your force attacks Hue, where the ARVN First Division headquarters and the American advisory compound are key centres of resistance. The other attacks the Da Nang area. Use the supporting rocket batteries to assist the assaults and keep routes open between captured positions.<br><br>Hold five marked objectives at the turn limit for a Brilliant Victory, four for a Victory, or two for a Tactical Victory. Entering a city is not the same as holding it against the counterattack.",
+  "intro": "Tet offensive: Hue and Da Nang — 31 January 1968<br><br>The Tet offensive is bringing the war into the cities. Our attacking groups have a brief chance to disrupt the South Vietnamese command before government and American reserves can respond.<br><br>Strike Hue and the Da Nang area. At Hue, the ARVN First Division headquarters and the American advisory compound are important centres of resistance. The rocket batteries will support the assaults; once inside the cities, hold the captured positions against the counterattack.",
   "outcome": {
    "briliant": {
     "goto": 9,
@@ -436,7 +436,7 @@
   "scenario": "nvc08.xml",
   "startprestige": 0,
   "aiprestige": 100,
-  "intro": "Laos counteroffensive — 12 February 1971<br><br>South Vietnamese forces have entered Laos along Route 9, supported by American aircraft and helicopters. Their aim is to disrupt the supply system linking the northern bases with the war in the south.<br><br>Drive them out of the Xe Pon valley. Capture the marked firebases and landing sites, secure Tchepone and Route 9, and deny the enemy safe positions from which to continue the operation.<br><br>Our forces now have heavier weapons, but enemy air support remains dangerous. Use the jungle and hills to approach the isolated bases, then concentrate before attacking. Prevent the defenders from rescuing one threatened position while our assault groups are scattered around several others.",
+  "intro": "Laos counteroffensive — 12 February 1971<br><br>South Vietnamese forces have entered Laos along Route 9 with American air support. Their landing sites and firebases threaten the supply routes that connect our northern bases with the fighting in the south.<br><br>Drive them from the Xe Pon valley and recover Tchepone and Route 9. Take the isolated bases before helicopters can reinforce them or lift the defenders out. Our heavier weapons give the assault groups more support, but aircraft still make the open approaches dangerous.",
   "outcome": {
    "briliant": {
     "goto": 10,
@@ -484,7 +484,7 @@
   "scenario": "nvc09.xml",
   "startprestige": 0,
   "aiprestige": 100,
-  "intro": "Kontum — 15 May 1972<br><br>The offensive has returned to the Central Highlands. South Vietnamese forces now carry the main burden of ground defence, with American advisers and powerful American air support still helping them.<br><br>Break the chain of marked firebases and take Kontum. Regional units support the advance, and anti-aircraft positions can help cover the attack, but they do not make a massed column safe from air strikes.<br><br>Use artillery against the strongpoints, keep the approaches under observation and move the assault troops from cover to cover. Kontum anchors the government position in this sector; taking its outer bases without reaching the city leaves that position incomplete.",
+  "intro": "Kontum — 15 May 1972<br><br>The offensive has returned to the Central Highlands. South Vietnamese forces hold Kontum behind a chain of firebases, with American advisers and aircraft supporting the defence.<br><br>Break the outer positions and take the city. Regional units will join the advance, and our anti-aircraft weapons can cover parts of the approach. The defenders will try to hold the assault groups under air attack before they reach the streets.",
   "outcome": {
    "briliant": {
     "goto": 11,
@@ -532,7 +532,7 @@
   "scenario": "nvc10.xml",
   "startprestige": 0,
   "aiprestige": 0,
-  "intro": "Saigon — 24 April 1975<br><br>The South Vietnamese position is collapsing after the loss of the northern provinces and the Central Highlands. Surviving ARVN formations are falling back on the approaches to Saigon while the government tries to hold its remaining centres of command.<br><br>Capture the marked objectives around the capital, including Bien Hoa and the Saigon sectors, and clear the remaining resistance on the routes towards the coast. Concentrate the main effort so the defenders cannot defeat isolated columns at the outer strongpoints.<br><br>This is the final campaign operation. Take the capital and its communications centres before the defence can be reorganised. A Tactical Victory does not complete this campaign successfully; keep the displayed victory deadlines in view while bringing the infantry and guns forward.",
+  "intro": "Saigon — 24 April 1975<br><br>The South Vietnamese armies have lost the northern provinces and the Central Highlands. Surviving formations are falling back towards Saigon, where the government is trying to put together another defence.<br><br>Take Bien Hoa and the capital's command and communications centres, then clear the routes towards the coast. The converging columns must reach the city before the defenders can organise a new line. A slow advance will give them time we cannot afford.<br><br>Campaign note: a Tactical Victory ends the campaign unsuccessfully; meet a higher victory deadline.",
   "outcome": {
    "briliant": {
     "goto": 254,

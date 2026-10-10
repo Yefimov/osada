@@ -44,15 +44,18 @@ class AI(
 
         purchaseAndDeployPhase()
 
-        val allUnits = map.getUnits()
         reservedCells.clear()
         enemyCells.clear()
         ownVictoryHexes = map.sidesVictoryHexes.getOrElse(player.side) { mutableListOf() }
         enemyVictoryHexes = map.sidesVictoryHexes.getOrElse(1 - player.side) { mutableListOf() }
         enemyStates.clear()
-        evalState = AIEvaluationState(map, player, reservedCells, enemyCells, enemyStates, ownVictoryHexes)
+        // Hangars before the queue: a worn aircraft goes in for the round, and whatever may leave
+        // comes out and is planned like any other formation (`AIHangars`).
+        AIHangars.landWorn(map, player)
+        AIHangars.launchReady(map, player, enemyVictoryHexes + ownVictoryHexes)
 
-        val unitQueue = buildUnitQueue(allUnits)
+        evalState = AIEvaluationState(map, player, reservedCells, enemyCells, enemyStates, ownVictoryHexes)
+        val unitQueue = buildUnitQueue(map.getUnits())
         while (unitQueue.isNotEmpty()) {
             val current = unitQueue[0]
             considerReinforce(current)
@@ -101,6 +104,8 @@ class AI(
                 if (!unit.isDeployed) map.deployPlayerUnit(player, index, cell.row, cell.col)
             }
         }
+        // A side whose only airfield is a carrier: what found no hex goes into a hangar.
+        AIHangars.stowUndeployedAircraft(map, player)
         GameHolder.instance?.ui?.handleReinforcementDeployment()
     }
 

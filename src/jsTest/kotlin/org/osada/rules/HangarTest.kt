@@ -5,6 +5,7 @@ import org.osada.MovMethod
 import org.osada.TerrainType
 import org.osada.UnitClass
 import org.osada.UnitType
+import org.osada.ai.AIHangars
 import org.osada.model.EfileConfig
 import org.osada.model.Equipment
 import org.osada.model.EquipmentData
@@ -13,6 +14,7 @@ import org.osada.model.collectPersistentCampaignUnits
 import org.osada.model.landInHangar
 import org.osada.model.launchFromHangar
 import org.osada.model.restoreCoreUnitList
+import org.osada.model.updateUnitList
 import org.osada.rules.ruleset.RuleKey
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -119,6 +121,123 @@ class HangarTest : OgRulesTestHarness() {
         assertFalse(UnitActionAvailability.forAction(UnitActionId.HANGAR, context(map, bunker)).applicable)
     }
 
+    // ---- The AI uses hangars too (2026-10-10) ------------------------------------------------------
+
+    /** A worn aircraft beside a friendly airbase lands; a fresh one stays out to fight. */
+    @Test
+    fun theAiLandsAWornAircraftAndKeepsAFreshOneOut() {
+        val map = liveWorld()
+        val airbase = place(map, airbaseEqid, 3, 3, 0)
+        val worn = place(map, planeEqid, 3, 4, 0).apply { strength = 3 }
+        val fresh = place(map, planeEqid, 2, 3, 0).apply { strength = 10 }
+
+        AIHangars.landWorn(map, friendly)
+
+        assertEquals(airbase, worn.containedIn)
+        assertNull(fresh.containedIn)
+    }
+
+    /** What may leave comes out before the planner runs: an aircraft into the container's air slot. */
+    @Test
+    fun theAiLaunchesAReadyAircraftFromItsContainersHex() {
+        val map = liveWorld()
+        val airbase = place(map, airbaseEqid, 3, 3, 0)
+        val plane = place(map, planeEqid, 3, 4, 0)
+        assertTrue(map.landInHangar(plane, airbase))
+
+        AIHangars.launchReady(map, friendly, emptyList())
+        assertEquals(airbase, plane.containedIn, "not on the turn it landed")
+
+        map.turn += 1
+        AIHangars.launchReady(map, friendly, emptyList())
+        assertNull(plane.containedIn)
+        assertEquals(plane, airbase.getHex()?.airunit)
+        assertTrue(plane in map.units)
+    }
+
+    /** A ground passenger steps out on the side of the objective, never onto the ocean. */
+    @Test
+    fun theAiDisembarksAGroundPassengerTowardsTheObjective() {
+        EfileConfig.setForTest(mapOf("ground_carrier" to 11))
+        Equipment.putEquipment(
+            shipEqid,
+            EquipmentData().apply {
+                eqid = shipEqid
+                name = "Submarine"
+                uclass = UnitClass.SUBMARINE.value
+                movmethod = MovMethod.NAVAL.value
+                hangarCap = 1
+            },
+        )
+        val map = liveWorld()
+        val ship = place(map, shipEqid, 3, 3, 0)
+        map.map!![3][3].terrain = TerrainType.OCEAN.value
+        val commando =
+            org.osada.model
+                .GameUnit(infantryEqid)
+                .apply {
+                    owner = friendly.id
+                    player = friendly
+                    isDeployed = true
+                    containedIn = ship
+                }
+        ship.hangar.add(commando)
+
+        AIHangars.launchReady(map, friendly, listOf(org.osada.model.Cell(3, 7)))
+
+        val at = assertNotNull(commando.getPos())
+        val best = HexGeometry.getAdjacent(3, 3).minOf { HexGeometry.distance(it.row, it.col, 3, 7) }
+        assertEquals(best, HexGeometry.distance(at.row, at.col, 3, 7))
+    }
+
+    /** A reserve aircraft that found no deploy hex goes into a friendly hangar with room. */
+    @Test
+    fun theAiStowsAnUndeployedAircraftInAHangar() {
+        val map = liveWorld()
+        val airbase = place(map, airbaseEqid, 3, 3, 0)
+        val reserve = org.osada.model.GameUnit(planeEqid)
+        friendly.addCoreUnit(reserve)
+
+        AIHangars.stowUndeployedAircraft(map, friendly)
+
+        assertEquals(airbase, reserve.containedIn)
+        assertTrue(reserve.isDeployed)
+    }
+
+    /** A passenger lost with its container is a loss of its own: the death sweep never sees it in
+     *  `units`, so it used to vanish without counting toward the enemy's kill objective. */
+    @Test
+    fun aPassengerLostWithItsContainerCountsAsAKill() {
+        val map = liveWorld()
+        val airbase = place(map, airbaseEqid, 3, 3, 0)
+        val plane = place(map, planeEqid, 3, 4, 0)
+        assertTrue(map.landInHangar(plane, airbase))
+        val scenario = GameHolder.instance!!.scenario!!
+
+        airbase.destroyed = true
+        map.updateUnitList()
+
+        assertTrue(plane.destroyed)
+        assertTrue(airbase.hangar.isEmpty())
+        assertEquals(2, scenario.unitsKilled.sum(), "the airbase and the aircraft inside it")
+    }
+
+    /** A disbanded container is not a loss, and neither are the formations it takes with it. */
+    @Test
+    fun aDisbandedContainersPassengersAreNotKills() {
+        val map = liveWorld()
+        val airbase = place(map, airbaseEqid, 3, 3, 0)
+        val plane = place(map, planeEqid, 3, 4, 0)
+        assertTrue(map.landInHangar(plane, airbase))
+
+        airbase.destroyed = true
+        airbase.nodossier = true
+        map.updateUnitList()
+
+        assertTrue(plane.destroyed)
+        assertTrue(plane.nodossier, "inherits the container's not-a-loss removal")
+    }
+
     /** A land formation takes cover in a friendly fortification where the efile admits land units,
      *  and comes out onto a free hex beside it -- never onto the fortification's own hex. */
     @Test
@@ -154,8 +273,8 @@ class HangarTest : OgRulesTestHarness() {
 
     /**
      * An authored passenger (`aboard="1"`, `bn5s04`'s commando in a submarine) must be able to
-     * leave. The chip comes up on any non-fortification container with somebody inside, and only
-     * then: an empty ship still offers nothing.
+     * leave. The Aboard chip comes up on a vessel with somebody inside, and only then: an empty
+     * ship still offers nothing, and a submarine is never offered as a Hangar.
      */
     @Test
     fun aShipWithAnAuthoredPassengerOpensItsHangar() {
@@ -172,7 +291,7 @@ class HangarTest : OgRulesTestHarness() {
         )
         val map = liveWorld()
         val ship = place(map, shipEqid, 3, 3, 0)
-        assertFalse(UnitActionAvailability.forAction(UnitActionId.HANGAR, context(map, ship)).applicable)
+        assertFalse(UnitActionAvailability.forAction(UnitActionId.ABOARD, context(map, ship)).applicable)
 
         val commando =
             org.osada.model
@@ -184,7 +303,9 @@ class HangarTest : OgRulesTestHarness() {
                 }
         ship.hangar.add(commando)
 
-        assertTrue(UnitActionAvailability.forAction(UnitActionId.HANGAR, context(map, ship)).applicable)
+        assertTrue(UnitActionAvailability.forAction(UnitActionId.ABOARD, context(map, ship)).applicable)
+        assertFalse(UnitActionAvailability.forAction(UnitActionId.HANGAR, context(map, ship)).applicable)
+        assertEquals("aboard.title", org.osada.ui.hangarKey(ship, "title"))
         assertTrue(CarrierHangars.launchCells(map, commando, ship).isNotEmpty(), "it never landed")
     }
 

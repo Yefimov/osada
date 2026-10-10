@@ -17,7 +17,7 @@ import org.osada.uiSettings
  * [HangarDialog]. Beside [UnitContextMenu] and [MapClickHandler] rather than inside them, because
  * both are at their function budget -- the same reason `MapClickBarrage.kt` exists.
  */
-internal val HANGAR_ACTION_IDS = setOf("hangar_land", "hangar", "cover_enter", "cover")
+internal val HANGAR_ACTION_IDS = setOf("hangar_land", "hangar", "cover_enter", "cover", "aboard")
 
 internal fun UnitContextMenu.performHangarAction(
     action: String,
@@ -25,7 +25,7 @@ internal fun UnitContextMenu.performHangarAction(
     unit: GameUnit,
     pos: Cell,
 ) {
-    if (action == "hangar" || action == "cover") {
+    if (action == "hangar" || action == "cover" || action == "aboard") {
         HangarDialog.open(ui, map, unit)
         return
     }

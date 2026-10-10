@@ -5,7 +5,7 @@
   "startprestige": 1000,
   "aiprestige": 0,
   "playerprestige": 1000,
-  "intro": "00. FALCIU 1 (22 June 1941)<br><br>Dear Comrade. Today fascist forces from Germany have attacked our borders, from the Baltic to the Ukraine. To make things worse, Rumania has declared war upon us. The situation looks grim but we are prepared. Our Red Army is the biggest army in the world and we have more tanks and aircraft than any other country. Victory will be ours.<br><br>Your unit is part of the 150th Rifle Division located in Bessarabia, former part of Rumania. It is likely that the Rumanians will start an offensive here soon. To prevent this and conquer suitable defensive positions to start our own offensive from, you must cross the Prut River at Falciu, capture the bridge and form a bridgehead. Reinforcements will be brought in whenever possible. Beware of the Rumanians who will fight feriously because it is their own soil they will be fighting on. You must succeed. Good luck, Comrade!<br><br>NOTE: You do not start with core units. You have to buy them.",
+  "intro": "Falciu — 22 June 1941<br><br>Germany has attacked along the frontier, and Romania has joined the war. Here in Bessarabia, the 150th Rifle Division faces the Prut while the Romanian forces prepare their own advance.<br><br>Form your command from the troops available for requisition, cross at Falciu and take the bridge. Establish a bridgehead from which we can meet the expected offensive. Reinforcements will be sent when they can be spared.",
   "outcome": {
    "briliant": {
     "goto": 1,
@@ -54,7 +54,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 900,
-  "intro": "01. FALCIU 2 (7 July 1941)<br><br>The war is not going as we had hoped for. North of the Pripjat Marshes the front has collapsed. However south of it, we have our front intact but are slowly being pushed back. <br><br>For weeks the Rumanians have preparing their offensive. They will first elimenate our bridgehead over the Prut River at Falciu. Comrade, you have orders not to step back and hold your lines at all costs! If possible we will arrange reinforcements. However the burden of the Rumanian counterattack will fall upon your troops. Good luck, Comrade!",
+  "intro": "01. FALCIU 2 (7 July 1941)<br><br>The Romanian offensive is gathering across the Prut. Our bridgehead at Falciu threatens its flank, and the enemy is preparing to clear us from the far bank before advancing into Bessarabia.<br><br>Hold the bridgehead and its crossing. Reinforcements will be sent if they can be spared, but the first attacks will fall on the troops already here. Keep the supply passage open while the forward positions absorb the blow.",
   "outcome": {
    "briliant": {
     "goto": 2,
@@ -103,7 +103,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 800,
-  "intro": "02. KISHENEV (14 July 1941)<br><br>Comrade! The Germans have broken through our lines and are advancing with high speed. However, to their south, the Rumanians have still not managed a breakthrough thanks to your men. However if you do not retreat immediately you will be cut off and this would be a disaster! <br><br>You have orders to pull back to Odessa at once. First make it to Kishenev which contains the only road leading out of Bessarabia still in our hands. Be quick because the Rumanian and German fascists are on our heals! Good luck, comrade!",
+  "intro": "02. KISHENEV (14 July 1941)<br><br>The German breakthrough north of us has made the Prut position untenable. Your troops have held the Romanians, but remaining here would leave the division cut off from the road east.<br><br>Withdraw through Kishenev towards Odessa. Kishenev controls the last road out of Bessarabia still in our hands; secure it before the pursuing columns reach the junction. Keep the division together through the retreat.",
   "outcome": {
    "briliant": {
     "goto": 3,
@@ -152,7 +152,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 1300,
-  "intro": "03. ODESSA 1941 (13 August 1941)<br><br>Comrade, the situation is getting worse and worse. The Fascists are near Leningrad  and Smolensk in the north and Kiev in the south. Here, near the Black Sea coast, the Rumanian fascists with help of their German allies have advanced to the port of  Odessa which is an important base for our Black Sea Fleet. However we are encircled and cut off from land supplylines because the Germans are driving further and leaving the Rumanians to behind to capture Odessa. We will hold it as long as possible. Any supplies and reinforcements will be brought be sea from the Crimea. <br><br>NOTE: You can only lose this scenario. Goal is to play the full 20 turns and keeping your core alive. Then the scenario will end and you will continue to the next scenario!<br><br>HINT: There is nothing to win, so do not hesitate to retreat to better defensive positions. Be sure to cover your forces with artillery and keep the artillery resupplied. They are vital for the survival of your units.",
+  "intro": "Odessa — 13 August 1941<br><br>Romanian forces have reached Odessa while the German advance has cut our land routes east. The port is still supplied by the Black Sea Fleet, but everything the garrison needs must now come by sea from the Crimea.<br><br>Hold the approaches and keep your formations alive while the fleet sustains the defence. Fall back into stronger positions when necessary, with the guns covering the movement. Headquarters needs time and an army that can be brought out when the order comes.<br><br>Campaign note: survive the full 20 turns. The scripted defeat then continues the campaign; there is no winning grade here.",
   "outcome": {
    "briliant": {
     "goto": 255,
@@ -201,7 +201,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 1500,
-  "intro": "04. PEREKOP (25 September 1941)<br><br>Comrade, although Odessa is still in our hands, the enemy rushes further east. At Kiev we have suffered enormous defeats with the losses of hundreds of thousands of soldiers. But we will continue to resist the invaders nonetheless!<br><br>The German fascists now turned their eyes on the Crimean peninsula with the mighty fortress of Sevastopol on it. The Crimea is only connected to the mainland, the Ukraine, with the Perekop peninsula. 24 Hours ago the enemy has surprisingly attacked and almost gained full control of the Perekop peninsula. We must retake Perekop before the fascists are able to pour their reserves into battle and break through. Good luck, comrade.",
+  "intro": "04. PEREKOP (25 September 1941)<br><br>Odessa is still holding, but German forces have reached the narrow entrance to the Crimea. Their attack has nearly carried the Perekop isthmus, and reserves can follow through any gap left open there.<br><br>Counterattack and recover the Perekop positions before the enemy can widen the passage. The roads beyond lead into the peninsula and towards Sevastopol. Stop the advance while its strength is still confined to this narrow front.",
   "outcome": {
    "briliant": {
     "goto": 5,
@@ -250,7 +250,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 1750,
-  "intro": "05. ROSTOV 1941 (25 November 1941)<br><br>Our situation has reached a new depth. In the north the fascists have reached Leningrad and they are advancing on Moskva on the central front. In the south the fascists have captured Odessa, broken through into the Crimea, and days ago Rostov. Rostov is the gate to the Caucasus and its oilfields. We cannot allow the enemy to hold this position. An immediate counterattack has been ordered!<br><br>The Germans have taken Rostov with a number of motorized and armoured formations with lightening speed. However in the urban area of Rostov they have a huge disadvantage. Even more, the fascists advance has created a salient into our lines and this offers the possibility of encircling the fascists at Rostov. The winter has arrived and the plains are covered with snow. This is the time to attack again and drive them back west! Good luck, comrade.",
+  "intro": "05. ROSTOV 1941 (25 November 1941)<br><br>Rostov has fallen to German mobile formations. The city is the gateway to the Caucasus, but the speed of the enemy advance has left a salient projecting into our line. Winter has reached the steppe, and headquarters has ordered a counterattack.<br><br>Retake Rostov and threaten the roads behind its garrison. Force the German armour to defend the city while our neighbouring formations press its flanks. The crossing must be back in our hands before the enemy can use it to carry the offensive south.",
   "outcome": {
    "briliant": {
     "goto": 8,
@@ -299,7 +299,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 2000,
-  "intro": "06. KERCH (26 December 1941)<br><br>On the central front, near Moskva, we have pushed the fasicsts armies almost hundred kilometers back, away from our capitol. Rostov is once again in Soviet hands. Sevastopol on the Crimea remains under our control but the remaining part of the Crimean peninsula is occupied by the Rumanian and German fascists. The enemy is attacking Sevastopol for days and without support it will fall. We must make sure this will not happen. Therefore we will invade the eastern Crimea at both Kerch and at Feodosiya. <br><br>You will lead our forces at the Kerch operation. From the Taman peninsula you will land at various places around the town of Kerch, on the far east end of the Kerch peninsula, part of the Crimean peninsula. The German forces are stretched to defend the coasts but they should be ready to counterattack once you have landed. So be quick, land your forces and attack!",
+  "intro": "06. KERCH (26 December 1941)<br><br>Sevastopol is still holding, but the rest of the Crimea is in German and Romanian hands. A landing at the eastern end of the peninsula will threaten the rear of the forces attacking the fortress.<br><br>Bring your troops across from Taman and land around Kerch. Take the town and join the separate landing groups before the coastal defenders can gather for a counterattack. The army needs a foothold large enough to receive the guns and supplies coming behind you.",
   "outcome": {
    "briliant": {
     "goto": 9,
@@ -348,7 +348,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 2000,
-  "intro": "07. FEODOSIYA (29 December 1941)<br><br>On the central front, near Moskva, we have pushed the fasicsts armies almost hundred kilometers back, away from our capitol. Rostov is once again in Soviet hands. Sevastopol on the Crimea remains under our control but the remaining part of the Crimean peninsula is occupied by the Rumanian and German fascists. The enemy is attacking Sevastopol for days and without support it will fall. We must make sure this will not happen. Therefore we will invade the eastern Crimea at both Kerch and at Feodosiya. <br><br>You will lead our forces at the Feodosiya operation. From the Taman peninsula you will land at various places around the town of Feodosiya, which lies on the connection of the Kerch peninsula with the larger Crimean peninsula. The German forces are stretched to defend the coasts but they should be ready to counterattack once you have landed. So be quick, land your forces and attack!",
+  "intro": "07. FEODOSIYA (29 December 1941)<br><br>The landing at Kerch is one part of our attempt to draw pressure away from Sevastopol. Your force will come ashore farther west, at Feodosiya, threatening the connection between the Kerch peninsula and the rest of the Crimea.<br><br>Take Feodosiya and secure the landing approaches. The German coastal troops are spread out, but they can concentrate quickly once our direction is clear. Open the port and bring the landing groups together before that response arrives.",
   "outcome": {
    "briliant": {
     "goto": 9,
@@ -398,7 +398,7 @@
   "aiprestige": 0,
   "prestigecap": 1750,
   "noscore": true,
-  "intro": "08. CRIMEA CHOICE SCENARIO (15 December 1941)<br><br>This is not a regular scenario but a so called 'player choice scenario'. <br><br>For the next scenario, two scenarios can be played. You can choose which one it will be: Kerch of Feodosiya. Both are similar scenarios, both having an amphibious invasion and followed by ground fighting. No matter what your choice will be, after you played the chosen scenario, you will play all scenarios. Your choice won't affect the further continuation of the campaign, nor the scenarios you will play.<br><br>So make a choice. Take a regular \"Victory\" by taking the first hex to play Kerch. Take a \"Tactical Victory\" by taking the second hex to play Feodosiya.",
+  "intro": "The Crimean landings — 15 December 1941<br><br>Sevastopol is under pressure. Landings in the eastern Crimea will threaten the enemy's rear and draw forces away from the siege. Your command can join the attack at Kerch or the landing farther west at Feodosiya.<br><br>Take the first selection position for Kerch, or the second for Feodosiya. The army's subsequent orders will bring both routes back into the same campaign.",
   "outcome": {
    "briliant": {
     "goto": 255,
@@ -447,7 +447,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 2000,
-  "intro": "09. SEVASTOPOL 1942 (6 June 1942)<br><br>Comrade, despite our initial successes in our Winter offensive, it has failed to defeat the fascist invaders. With the start of spring they have regained their iniative and at the moment are preparing a final assault on the fortress city of Sevastopol which is being cut off from our lines since last year. The Black Sea Fleet will transport your forces to Sevastopol where you will reinforce the defenses. The fascist attack is expected to start as we speak!<br><br>The garrison of Sevastopol has months of artillery and air bombardments survived, and repulsed already two fascist attacks to capture the port. Our forces are exhausted and not many reinforcements can be send. Supplies are hard to deliver. You must hold out for at least 15 days. Then Stavka will decide what to do next. Good luck, comrade.<br><br>NOTE: You can only lose this scenario. Goal is to play the full 15 turns and keeping your core alive. Then the scenario will end and you will continue to the next scenario!<br><br>NOTE: There is nothing to win, so do not hesitate to retreat to better defensive positions. Be sure to cover your forces with artillery and keep the artillery resupplied. They are vital for the survival of your units.",
+  "intro": "Sevastopol — 6 June 1942<br><br>The next assault on Sevastopol is beginning. Months of bombardment and repeated attacks have worn down the garrison, and supplies are increasingly difficult to bring across the Black Sea. The fleet is carrying your troops in to reinforce the defence.<br><br>Hold for fifteen days while headquarters decides the next step. Keep the approaches covered, shorten exposed parts of the line when necessary and preserve the formations that can still fight. We have few replacements to send into the fortress.<br><br>Campaign note: survive the full 15 turns. The scripted defeat then continues the campaign; there is no winning grade here.",
   "outcome": {
    "briliant": {
     "goto": 255,
@@ -496,7 +496,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 2500,
-  "intro": "10. NOVOROSSIYSK 1 (20 September 1942)<br><br>The fascist has started his summer offensive. We expected the fascists to strike against Moskva, our capitol, but they have attacked in the south. Within weeks they had reached the Don River and Stalingrad on the Volga River. Even more south, Rostov has once again switched hands, the oilfields of Maikop have fallen, and German and Rumanian forces poured into the steppes south of Rostov, leading to the Causasus mountains with the valuable oil. A week ago the enemy has taken the Black Sea port of Novorossiyk and if we fail to stop the enemy at the coastal road, other ports will soon be under enemy control as well. <br><br>Your forces must stop the enemy advance down south on the coastal road. Although the recapture of Novorriysk is beyond our limits, you are ordered to contain the German attack and retake several positions in the hills. Good luck, comrade.",
+  "intro": "10. NOVOROSSIYSK 1 (20 September 1942)<br><br>The German summer offensive has reached the Caucasus. Rostov and the Maikop oilfields are lost, and the enemy has entered Novorossiysk. The coastal road beyond it leads towards the ports still supplying our forces along the Black Sea.<br><br>Stop the southward advance and recover the hill positions covering the road. We cannot yet retake the whole port. Hold the line that prevents the enemy from carrying its success farther down the coast.",
   "outcome": {
    "briliant": {
     "goto": 11,
@@ -545,7 +545,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 2500,
-  "intro": "11. SUCHUMI (28 September 1942)<br><br>THe enemy's advance on the coastal road has been halted and that saves many Black Sea ports still in our hands free from an attack on one side. However the German advance has penetrated deep into the southern steppes and has reached the foot of the Caucasus mountain range. There units, mainly mountain trained troops, are trying to cross the Caucasus mountains and attack the Black Sea ports from behind. The fascists stand on less than 25 kilometers of Suchumi. You must make sure the fascist sees no chance in capturing Suchumi.<br><br>We have been unable to stop the enemy in the mountains, but we will when they go down and try to reach the coast. Your units must secure the port of Suchumi, the coastal road which is our single supplyline to the front near Novorissiysk, and secure essential positions. Good luck, comrade.",
+  "intro": "11. SUCHUMI (28 September 1942)<br><br>The coastal advance has been checked, but German mountain troops are coming through the Caucasus towards Suchumi. They threaten to reach the Black Sea behind the front and cut its only coastal supply road.<br><br>Hold the port and the positions covering the mountain approaches. Keep the coastal road open to the troops near Novorossiysk. The enemy must be stopped as he emerges from the passes, before his columns can spread along the shore.",
   "outcome": {
    "briliant": {
     "goto": 12,
@@ -594,7 +594,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 3100,
-  "intro": "12. ORDZHONIKIDZE 1 (1 November 1942)<br><br>Comrade, the situation at the fronts is critical. We only possess a number of single buildings in Stalingrad. And in the Caucasus Army the German First Panzer Army has  refueled its offensive over the Terek River towards Grozny, and Baku where the oilfields are. After 48 hours of continuous airbombardment, the fascists are storming at the key town of Ordzhonikidze which is a very important communications center. We must deny the enemy control of this town at all costs!<br><br>Your force will be divided into two. One group will rush to Ordzhonikidze and garrison the city against the Germans. A second group will take part in a smart counterstrike on the German flank in order to destroy the attacking Germans from behind, or at least make them retreat. Good luck, comrade.<br><br>NOTE: There are two deployment areas. One on the northern part of the map and in the eastern part of the map.<br><br>NOTE: There are various SNOW hexes on the map. These have the same properties as SAND hexes in the desert. Supplying and reinforcing units on those hexes will never be a 100%.",
+  "intro": "12. ORDZHONIKIDZE 1 (1 November 1942)<br><br>The First Panzer Army is advancing across the Terek towards the routes serving Grozny and Baku. After a heavy bombardment, its troops are closing on Ordzhonikidze, a junction we cannot afford to lose.<br><br>Bring one group into the town from the eastern assembly area while the force to the north strikes the German flank. The garrison must hold while that counterattack develops. Snow complicates supply off the roads; keep the ammunition columns within reach of the guns.",
   "outcome": {
    "briliant": {
     "goto": 13,
@@ -643,7 +643,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 3150,
-  "intro": "13. ORDZHONIKIDZE 2 (8 November 1942)<br><br>Of all sectors of the front, from Leningrad to Moscow and to Stalingrad, just here at Ordzhonikidze, we have the iniative, comrade. You have saved Ordzhonikidze from an immediately enemy invasion and cut off the supply lines for the fascist forces at Ordzhonikidze. However, as usual the enemy is persistant, we are sure the Germans have send reinforcements to restore the lines with the trapped Germans. It is likely that the encircled forces will participate in the breakout. If these forces join, then we are likely to lose Ordzhonikidze after all. You must make sure this does not happen by destroying the encircled enemy force and to drive west, away from Ordzhonikidze!<br><br>NOTE: There are various SNOW hexes on the map. These have the same properties as SAND hexes in the desert. Supplying and reinforcing units on those hexes will never be a 100%.",
+  "intro": "13. ORDZHONIKIDZE 2 (8 November 1942)<br><br>Ordzhonikidze has held, and the attack on the German flank has cut the supply route behind their forward troops. Enemy reinforcements are now coming to reopen it, while the trapped formations prepare to break out.<br><br>Keep the two forces apart, defeat the encircled group and carry the advance west. Hold the road junctions against the relief attack. The town will be threatened again if the Germans restore their connection before we clear the pocket.",
   "outcome": {
    "briliant": {
     "goto": 14,
@@ -692,7 +692,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 3300,
-  "intro": "14. MAIKOP (10 January 1943)<br><br>We have had victories these last months, comrade! We have trapped hundreds of thousands fascist near Stalingrad where our forces are still feriously resisting the enemy. And in the Caucasus the Germans are slowly retreating. We started our winter offensive to liberate the Caucasus region all the way up to Novorossiysk and Rostov, some weeks ago. Your forces have been held in reserve but will now be deployed in order to recapture Maikop and hopefully cut off enemy forces. The fascist can only retreat west, to Novorossiysk and the Taman/Kuban peninsula, or north-west to Rostov. With the capture of Maikop we can force the fascist forces to take the longer way, to Rostov, where they should be met by our own forces coming from the Don. <br><br>Your goal is to recapture Maikop and the oilfields, as well as an advance to the Kuban River. The Germans are retreating but do this skillful. And the more west you will arrive, the more tenacious the fascist defenses will become. So be careful. Good luck, comrade!<br><br>NOTE: The 'Provisional Soviet Airstrip' can only be used to resupply and and refit air units. No air units can be deployed on it.",
+  "intro": "14. MAIKOP (10 January 1943)<br><br>The encirclement at Stalingrad has changed the position in the Caucasus. German forces are withdrawing, with roads west towards Novorossiysk and Taman and another route north-west through Rostov.<br><br>Retake Maikop and its oilfields, then advance to the Kuban. Threaten the western roads so the retreating columns must turn towards the forces approaching from the Don. The provisional airstrip can service aircraft already here, but cannot receive newly deployed squadrons.",
   "outcome": {
    "briliant": {
     "goto": 15,
@@ -741,7 +741,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 4500,
-  "intro": "15. ROSTOV 1943 (2 February 1943)<br><br>We have advanced hundreds of kilometers and we once again stand at the gates of Rostov. It is vital that we capture this gate to the Caucasus as soon as possible, because still not all German units have retreated over the Don, back into the Ukraine. Although many Germans are forced back to the Taman/Kuban peninsula, enemy mobile forces are rushing towards Rostov. If you are quick enough than you can trap them before they have crossed the Don River. In any case, it is vital that we do not lose the momentum in this winter offensive. We must push the fascists invaders back, back and back. Good luck, comrade!",
+  "intro": "15. ROSTOV 1943 (2 February 1943)<br><br>We are back at the approaches to Rostov. German columns are still coming out of the Caucasus, and the Don crossings offer their mobile formations a route into Ukraine.<br><br>Take Rostov before those columns get across. Close the road from the south while the leading troops secure the river approaches. Every day the crossing remains open allows more of the enemy army to escape the trap.",
   "outcome": {
    "briliant": {
     "goto": 16,
@@ -790,7 +790,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 4600,
-  "intro": "16. NOVOROSSIYSK 2 (18 March 1943)<br><br>Comrade, althought the fascist invaders cannot do anything about the stunning successes of our winter campaign, they have regained their spirit, again, even after a second winter. In the Ukraine near Kharkov huge battles are being fought and we are not in a position to win easy. We are happy to hold down the Germans. More south, the enemy is still holding the Kuban region, of which the Taman peninsula is only a few miles away from the Kerch peninsula of the Crimea. It offers a safe route of withdrawal for the enemy. <br><br>We have been given orders to drive the enemy out of the Caucasus steppes and the captured Black Sea ports. Attacks on the entire front in the Kuban will be made, but the biggest will take place near Novorossiysk. The Black Sea Fleet has offered a flotilla of cruisers and destroyers as well as thousands of trusty Marines. These, and a part of your force, will land near a large peninula south of Novorossiysk, in order to join up with the force coming from the coast, at Novorissiysk and defeat the enemy. It is a promising plan but it can be done. After all we are pushing the enemy back, west, west, all the the way west where they came from! Good luck, comrade.",
+  "intro": "16. NOVOROSSIYSK 2 (18 March 1943)<br><br>The enemy still holds the Kuban bridgehead, with a short passage across the strait to the Crimea. Novorossiysk anchors its southern flank and keeps an important Black Sea port out of our hands.<br><br>Land with the naval infantry south of the city and join the force attacking along the coast. Cruisers and destroyers will support the landing. Unite the two attacks before the defenders can contain the beachhead and turn back to the coastal front.",
   "outcome": {
    "briliant": {
     "goto": 17,
@@ -839,7 +839,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 4600,
-  "intro": "17. KRYMSKAYA (18 April 1943)<br><br>In the Kuban steppes the enemy is stronger than expected. After a month of ferious attacks we have not breached the fascist front. We have only advanced several miles, and the enemy still holds Novorossiysk and the fortified approaches to Krymskaya.  However we must maintain pressure and eventually the German and Rumanian positions must crack. <br><br>The fascists have started a counterattack to destroy our bridgehead near Novorossiysk, that you helped to form a month ago, and although we are holding on, we are about to crack. To draw away reserves, and to break through the fascist front in the center, we will attack near Krymskaya. Be aware that the Germans have reserves and will use it. On the other hand, we will commit as much forces as we can in order to force a breakthrough. Good luck, comrade.",
+  "intro": "17. KRYMSKAYA (18 April 1943)<br><br>The Kuban defences have resisted a month of attacks. German and Romanian troops still hold Novorossiysk and the approaches to Krymskaya; now they are counterattacking our southern bridgehead.<br><br>Strike at Krymskaya to draw reserves away from that threatened foothold and break the centre of the enemy line. More of our forces are being committed, but the Germans also have reserves close enough to answer a breakthrough. Keep the attack moving beyond the first positions.",
   "outcome": {
    "briliant": {
     "goto": 18,
@@ -889,7 +889,7 @@
   "aiprestige": 0,
   "prestigecap": 6000,
   "upgradeinsh": true,
-  "intro": "18. NOVOROSSIYSK 3 (9 September 1943)<br><br>The time has come to destory the enemy on the Kuban steppes. They have been there for far too long. And finally, after months of preparations, we are in position for a full-scale attack on the fascist perimeter. Near Kursk, our units are rolling west again. We must follow and make the enemy see that the Red Army has arisen from its ashes! <br><br>Your force will attack towards Novorossiysk and beyond. Attacks will come from the bridgehead south of Novorossiysk, as well as along the coastal front. The Black Sea Fleet has once again committed Marines who are waiting to get revenge for their fallen comrades, months earlier. So attack, and let nothing stop you! The enemy is still strong and willing to resist so prepare for a ferious battle. We accept not anything less than the complete destruction of the enemy in the Novorossiysk area! Good luck, comrade.",
+  "intro": "18. NOVOROSSIYSK 3 (9 September 1943)<br><br>Preparations for the offensive against the Kuban bridgehead are complete. The troops on the coast and in our foothold south of Novorossiysk will attack together, with naval infantry from the Black Sea Fleet joining the assault.<br><br>Take Novorossiysk and open the roads beyond it. Coordinate the attacks so the garrison cannot turn its whole strength against either one. The months spent holding the southern foothold must now give the army a passage through the enemy's coastal defences.",
   "outcome": {
    "briliant": {
     "goto": 19,
@@ -938,7 +938,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 6000,
-  "intro": "19. TAMAN (25 September 1943)<br><br>Those were quite some days, comrade. Krasnodar and Novorossiysk have been liberated and the fascists cowards are fleeing towards the Taman peninsula where they should be evacuated to the Crimea. Our troops are close to exhausted but so is the enemy, and at least we are winning. The enemy will resist feriously but you should drive all the way west, until you have liberated the Kuban steppes totally!",
+  "intro": "19. TAMAN (25 September 1943)<br><br>Novorossiysk has fallen, and the retreating enemy is moving towards Taman. Across the strait lies the Crimea, where troops evacuated from this bridgehead can form another defensive line.<br><br>Drive west through the remaining positions and clear the peninsula. Our formations are tired, but the rearguards are fighting to buy passage for the columns behind them. Reach the evacuation approaches before those columns are safely across.",
   "outcome": {
    "briliant": {
     "goto": 20,
@@ -987,7 +987,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 7250,
-  "intro": "20. ODESSA 1944 (9 April 1944)<br><br>Our winter offensive has brought us on the other side of the Dnjepr River and Kiev has been liberated. Enemy resistance is still present and the fascists are hurt but not dead. Every day resistance increases. We must make optimal use of the momentum, as long as lasts. We will attack near Perekop and force ourselves into the Crimea. Your force will march along the coast and liberate Odessa. <br><br>Although the fascists have had a hard time, they are still able to resist. It is unsure if the enemy decides to defend Odessa. Nonetheless, we demand you take this port as soon as possible, and drive west, if possible up to the Rumanian border. Watch out for experienced elements of elite divisions. The past weeks these have been the prime source of resistance to our advance in the Ukraine. Good luck, comrade.",
+  "intro": "20. ODESSA 1944 (9 April 1944)<br><br>The winter offensive has carried our armies beyond the Dnieper. As another attack approaches the Crimea through Perekop, your force is to move along the coast towards Odessa.<br><br>Take the port and carry the advance west towards the Romanian frontier. It is not yet clear how long the enemy intends to defend the city. Expect experienced rearguards at the crossings and roads his retreat depends on.",
   "outcome": {
    "briliant": {
     "goto": 21,
@@ -1036,7 +1036,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 8000,
-  "intro": "21. SEVASTOPOL 1944 (7 May 1944)<br><br>A month ago we broke through fascist lines at the Perekop peninsula, the sole connection of the Crimean peninsula with the Ukrainian mainland. The enemy has retreated from all over the Crimea to Sevastopol which has been turned into a fortress once again. And this time we will be attacker - and we will gain victory!<br><br>Our forces might run of fuel and ammo before they reach Sevastopol, because of the distances traveled. Also non-motorized units are still on their way to the front. So expect them to arrive anytime. Moskva accepts no delay in taking the city, so you have orders to attack immediately. We are unsure if the enemy is trying to hold the city or to evactuate their forces. Because of the last option, you must attack quick and kill as many fascists as possible so the Crimea is once again free and liberated! Good luck, comrade.",
+  "intro": "21. SEVASTOPOL 1944 (7 May 1944)<br><br>The German and Romanian troops driven back through the Crimea have gathered at Sevastopol. The fortress we once defended is now the last major base from which they can hold the peninsula or evacuate it.<br><br>Take the city before the garrison can get away by sea. The march has stretched our supplies, and some of the infantry is still coming forward. Keep the roads clear for those formations while the leading troops force the outer defences.",
   "outcome": {
    "briliant": {
     "goto": 22,
@@ -1085,7 +1085,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 8750,
-  "intro": "22. JASSY (15 June 1944)<br><br>Since our spring offensives we have a bridgehead into Rumania over the Prut River, near Jassy.  The fascists have taken blow after blow but somehow have regained their spirit. We are convinced the enemy has concentrated a huge force to eliminate our bridgehead. We must hold it. It is an ideal starting point for the invasion of Rumania which is plannend within some months. <br><br>Our forces in the Jassy bridgehead are problaby outnumbered and lack supplies and manpower at the moment. The Germans are depending on the worn out Rumanians to have sufficient manpower. They will try to eliminate our bridgehead as long as this situation continues. You are ordered to hold the bridgehead and repel any fascist counterattack. You are permitted to withdraw to a smaller perimeter but in the end we must have a position on the other side of the Prut River! Watch out for the enemy Panther and Tiger tanks. Good luck, comrade!",
+  "intro": "22. JASSY (15 June 1944)<br><br>Our bridgehead across the Prut near Jassy gives the army a starting point for the next offensive into Romania. German and Romanian forces are gathering to destroy it while its garrison is short of men and supplies.<br><br>Hold the far bank. You may shorten the perimeter where necessary, but keep a connected position and the crossings supplying it. Watch for German armour massing against a narrow part of the line.",
   "outcome": {
    "briliant": {
     "goto": 23,
@@ -1134,7 +1134,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 8000,
-  "intro": "23. FALCIU 3 (22 August 1944)<br><br>After months of preparations, we have invaded Rumania. The biggest ally of the German cowards that invaded our country. Like our offensives in the Baltic and Byelorussia, we have made promising advances. From our bridgehead over the Prut River at Jassy and at a number of other places, we have broken fascist lines and are driving deep into their rear. If we could join two of our pincers near Falciu, at the Prut River, then we can cut of a considarable number of fascist troops. <br><br>Your force is coming from Rumanian soil, on the west side of the Prut River, down south to Falciu. Other forces will try to cross the Prut River from the area south of Kishenev. Be quick and make sure those fascists get caught. I believe you are familiar with this region, comrade. Good luck.",
+  "intro": "23. FALCIU 3 (22 August 1944)<br><br>The offensive has broken through from the Prut bridgeheads. Enemy formations are withdrawing between our advancing groups, and a junction near Falciu could close their route out.<br><br>Drive south along the western bank to meet the forces crossing from the Kishenev direction. Take Falciu and secure the crossings between the two columns. We fought to hold a bridge here in 1941; now the enemy needs it to get away.",
   "outcome": {
    "briliant": {
     "goto": 24,
@@ -1183,7 +1183,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 8000,
-  "intro": "24. BUCHAREST (30 August 1944)<br><br>Great news from some days ago: the Rumanians have surrendered to the mighty Soviet Union and are now fighting against the Germans. The German fascists are in disarray and lack leadership. Many of their forces find themselves trapped in Rumania. However there are still Rumanian fascists in the Rumanian Army that refuse to surrender and remain loyal to their fascists leaders and the Germans. Your force is closest to the Rumanian capital of Bucharest. You must rush into the city and clear it of any enemy. Moskva does not care who gets shot. Just make sure we are in possession of Bucharest as soon as possible. Watch out for still retreating Germans in the countryside. Also the Germans might plan to send reinforcements to the city by air. You will be supported by Rumanian units that have switched sides. It is a confusing time, but you must succeed.<br><br>I should warn you that you are close to the Bulgarian border. We are not in war with Bulgaria though the country is allied to Germany. You have orders not to cross the Danube and leave the Bulgarians for what they are. On later date Moskva will decide what we will do with Bulgaria.  Good luck, comrade.",
+  "intro": "24. BUCHAREST (30 August 1944)<br><br>Romania has changed sides, and Romanian formations are now fighting the Germans. German troops are withdrawing through the countryside while others try to hold positions around Bucharest. Your force is closest to the capital.<br><br>Enter Bucharest with the Romanian troops supporting you and clear the remaining enemy positions. Watch for German reinforcements arriving by air. Do not cross the Danube into Bulgaria; headquarters has given no authority for an operation there.",
   "outcome": {
    "briliant": {
     "goto": 25,
@@ -1232,7 +1232,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 8000,
-  "intro": "25. RUSE (8 September 1944)<br><br>While the front against the fascists moves west, into Yugoslavia, Hungary, Czechoslovakia and Poland, your force will used in a special mission. Bulgaria and our Soviet Union have never been in war. However the Bulgarians sided with the German fascists. Three days ago we have declared war on Bulgaria. Bulgaria still had German troops on its soil. The Bulgarian Army has been given orders not to fire on our troops. However like in the Rumanian Army there are still fascists in their lines and they will fire back. It is also possible that some units have not received the order. It is a confusing situation again. <br><br>Your force, located near Bucharest, must cross the Danube River at two of its crossings. Near Ruse and near Turlukai. After the crossing you must drive deep into Bulgaria and take control of all important positions. Be aware of fascist, resisting troops, comrade.",
+  "intro": "25. RUSE (8 September 1944)<br><br>War has been declared on Bulgaria, and our force is to cross the Danube. The Bulgarian army has been ordered not to resist, but some troops may not have received those orders and German forces remain in the country.<br><br>Secure the crossings at Ruse and Turlukai and move onto the inland junctions. Establish contact before opening fire where troops offer no resistance. Keep the columns ready to deal with armed opposition without turning every uncertain encounter into a battle.",
   "outcome": {
    "briliant": {
     "goto": 26,
@@ -1281,7 +1281,7 @@
   "startprestige": 0,
   "aiprestige": 0,
   "prestigecap": 8000,
-  "intro": "26. SOFIA (12 September 1944)<br><br>The last days, we have not encountered heavy resistance. Most of the Bulgarian Army is deployed in occupied territories in Greece and Yugoslavia. With the sign of our invasion, fascist leaders have ordered some loyal units to come back and defend the Bulgarian capital of Sofia against a Red invasion. The Red Army must help its comrades in Sofia who are supressed by fascists and take control of the city and its vicinity. Bulgarian proletarian partisans might help you during your advance. There are no signs of German fascists in the area, but watch our for some loyal crack Bulgarian fascists. Good luck, comrade.",
+  "intro": "26. SOFIA (12 September 1944)<br><br>Our advance has met little resistance, but armed forces loyal to the old government are reported on the approaches to Sofia. Partisan groups in the area can help us reach the capital and secure it.<br><br>Take Sofia and the positions covering its roads. Keep contact with the local forces as the columns advance; the situation is changing quickly, and reports about the strength and intentions of the remaining garrisons are incomplete.",
   "outcome": {
    "briliant": {
     "goto": 254,

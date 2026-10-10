@@ -1,7 +1,7 @@
 [
   {
     "id": 0,
-    "intro": "Operation Uranus — 20 November 1942<br><br>Comrade General, the Germans have committed their strength to Stalingrad. Their Romanian allies hold the long flanks, and our counteroffensive is striking those flanks before the enemy can pull his armour out of the city.<br><br>Your battle is on the Chir approaches. Break through the Romanian positions and take Sirki and the other marked objective. The crossings and roads here are the way into the Axis rear; leave the defenders time to regroup and the opening will close.<br><br>Bring the guns forward with the infantry and keep the tanks ready to exploit the breach. We need a road through the enemy line, with an army still fit to use it.",
+    "intro": "Operation Uranus — 20 November 1942<br><br>Comrade General, the Germans have committed their strength to Stalingrad. Their Romanian allies hold the long flanks, and our counteroffensive is striking those flanks before the enemy can pull his armour out of the city.<br><br>Break through on the Chir approaches and take the positions around Sirki. Their roads and crossings lead into the Axis rear. Bring the mobile formations through the breach before the German command can turn troops away from Stalingrad to close it.",
     "outcome": {
       "briliant": {
         "goto": 1,
@@ -48,7 +48,7 @@
   },
   {
     "id": 1,
-    "intro": "Operation Little Saturn — 16 December 1942<br><br>The Sixth Army is surrounded at Stalingrad, but the fighting outside the ring is far from over. On the Don, the Italian Eighth Army holds the next section of the Axis front. Breaking it will threaten the roads and airfields on which the German position in the south depends.<br><br>Your force joins the offensive against that line. Capture the four marked objectives and keep your formations close enough to support one another after the breakthrough. Italian infantry can hold prepared positions even where their anti-tank weapons are inadequate against our armour.<br><br>Use the riflemen and artillery to open the way. Then send the mobile troops through before German reserves can establish another front.",
+    "intro": "Operation Little Saturn — 16 December 1942<br><br>The Sixth Army is surrounded at Stalingrad, but the fighting outside the ring is far from over. On the Don, the Italian Eighth Army holds the next section of the Axis front. Breaking it will threaten the roads and airfields on which the German position in the south depends.<br><br>Break the Italian line and seize the junctions behind it. Their infantry has prepared positions, but the distances between them give our armour room once a breach is opened. Carry the attack through before German reserves can form a new front.",
     "outcome": {
       "briliant": {
         "goto": 2,
@@ -95,7 +95,7 @@
   },
   {
     "id": 2,
-    "intro": "The Hungarian front on the Don — 13 January 1943<br><br>Comrade General, the winter offensive is widening. The Hungarian Second Army is stretched along the Don, protecting the northern flank of the Axis forces in southern Russia. Its road and rail connections are the next targets.<br><br>Break the Hungarian line and capture the marked positions along the highway. This is more than clearing a road: a breach here threatens the routes by which the enemy can bring up reserves or withdraw towards Kharkov.<br><br>The defenders have infantry and guns in prepared positions. Concentrate on a crossing or a narrow sector, bring your support weapons across, and protect the shoulders of the penetration. An isolated tank column can be cut off even in a retreating enemy's rear.",
+    "intro": "The Hungarian front on the Don — 13 January 1943<br><br>Comrade General, the winter offensive is widening. The Hungarian Second Army is stretched along the Don, protecting the northern flank of the Axis forces in southern Russia. Its road and rail connections are the next targets.<br><br>Force the crossings and take the positions along the highway. Those roads can carry the enemy's reserves towards the fighting or his retreat towards Kharkov. Get across them while the Hungarian formations are still tied to their river positions.",
     "outcome": {
       "briliant": {
         "goto": 3,
@@ -142,7 +142,7 @@
   },
   {
     "id": 3,
-    "intro": "Towards Izyum — 2 February 1943<br><br>Stalingrad has fallen. Our armies are pressing west, and Operation Star is opening towards Kharkov. Your sector lies around Izyum, where the roads and crossings can carry the advance into the German rear.<br><br>Take the enemy-held objectives and keep the route through Izyum open behind the spearhead. The German formations facing you have been driven back, but they still possess mobile reserves. A retreat is not the same thing as a collapse.<br><br>Move the infantry and guns with the armour. Secure each crossing before committing the next column, and leave enough strength on the flanks to meet a counterstroke. Headquarters wants ground taken quickly and held by troops who can still fight.",
+    "intro": "Towards Izyum — 2 February 1943<br><br>Stalingrad has fallen. Our armies are pressing west, and Operation Star is opening towards Kharkov. Your sector lies around Izyum, where the roads and crossings can carry the advance into the German rear.<br><br>Drive through the Izyum sector and seize the roads beyond it. The Germans have been pushed back, but their mobile reserves are still dangerous. Headquarters needs the crossing kept open behind the advance so the following formations can come through.",
     "outcome": {
       "briliant": {
         "goto": 4,
@@ -189,7 +189,7 @@
   },
   {
     "id": 4,
-    "intro": "Prokhorovka — 12 July 1943<br><br>Comrade General, the German southern attack on the Kursk salient has reached the Prokhorovka sector. You are fighting with the Fifth Guards Tank Army against SS armoured formations, including Leibstandarte and Das Reich. Their guns can destroy a careless advance long before our tanks reach useful range.<br><br>Keep Prokhorovka in our hands and take the enemy position at Ivanovski. The purpose of the counterattack is to deny the Germans room to continue their breakthrough, not to exchange our entire armoured force for theirs.<br><br>Reconnoitre the approaches, suppress anti-tank positions and bring infantry into the villages. Make the enemy fight for the ground that matters, with our artillery able to support the tanks.",
+    "intro": "Prokhorovka — 12 July 1943<br><br>Comrade General, the German southern attack on the Kursk salient has reached the Prokhorovka sector. You are fighting with the Fifth Guards Tank Army against SS armoured formations, including Leibstandarte and Das Reich. Their guns can destroy a careless advance long before our tanks reach useful range.<br><br>Hold Prokhorovka and counterattack towards Ivanovski. The Germans must be denied room to extend their breakthrough. Their anti-tank guns cover the approaches; the Fifth Guards Tank Army needs infantry and artillery with it when the attack reaches the villages.",
     "outcome": {
       "briliant": {
         "goto": 5,
@@ -236,7 +236,7 @@
   },
   {
     "id": 5,
-    "intro": "Orel counteroffensive — 1 August 1943<br><br>The German attack on Kursk has spent its strength. Operation Kutuzov is now pressing into the Orel salient, the enemy's great forward position between our central fronts.<br><br>Your orders are to break through towards Karachev and take the marked objectives around Orel and Bryansk. These towns and their roads give the defenders the means to shift reserves and withdraw. Cutting those connections will do more than another costly attack on an isolated trench.<br><br>Expect strongpoints covered by heavy artillery. Bring the guns into range, let infantry clear the built-up ground and keep mobile units available for the roads beyond. Do not leave the approach to a captured junction open behind you.",
+    "intro": "Orel counteroffensive — 1 August 1943<br><br>The German attack on Kursk has spent its strength. Operation Kutuzov is now pressing into the Orel salient, the enemy's great forward position between our central fronts.<br><br>Break through towards Karachev and seize the junctions around Orel and Bryansk. These roads allow the enemy to move reserves across the salient and pull threatened formations out. Cut them before the withdrawal becomes an orderly one.",
     "outcome": {
       "briliant": {
         "goto": 6,
@@ -283,7 +283,7 @@
   },
   {
     "id": 6,
-    "intro": "Krivoi Rog — 17 October 1943<br><br>Comrade General, Konev's forces are attacking out of the Kremenchug bridgehead into the Dnieper bend. The direction is south, towards the iron-producing district around Krivoi Rog and the railways that supply the German position.<br><br>Your task is an advance, not a last stand. Capture the marked enemy objectives while protecting the ground already held by our forward troops. A successful thrust threatens the German rear and makes their river line harder to maintain.<br><br>The First Panzer Army still has the strength to counterattack. Keep a reserve near the crossings and support each forward move with artillery. The enemy must not be allowed to turn our bridgehead into a pocket.",
+    "intro": "Krivoi Rog — 17 October 1943<br><br>Comrade General, Konev's forces are attacking out of the Kremenchug bridgehead into the Dnieper bend. The direction is south, towards the iron-producing district around Krivoi Rog and the railways that supply the German position.<br><br>Push south towards Krivoi Rog and seize the positions covering the railways. Keep the Kremenchug crossings secure behind the attack: the First Panzer Army can still strike back at the narrow connection to our bridgehead.",
     "outcome": {
       "briliant": {
         "goto": 7,
@@ -330,7 +330,7 @@
   },
   {
     "id": 7,
-    "intro": "Kiev — 3 November 1943<br><br>The bombardment has opened. Our forces are striking from the bridgehead north of Kiev, seeking a way into a city that has endured more than two years of occupation.<br><br>Break the German Fourth Panzer Army's defensive line and take the marked objectives on the approaches to Kiev. The crossings behind us must remain usable while infantry, tanks and artillery move into the expanding bridgehead.<br><br>Expect resistance around villages and road junctions, followed by counterattacks against exposed flanks. Clear a route wide enough for the support columns. Reaching the city with tanks alone will not be enough to keep it.",
+    "intro": "Kiev — 3 November 1943<br><br>The bombardment has opened. Our forces are striking from the bridgehead north of Kiev, seeking a way into a city that has endured more than two years of occupation.<br><br>Break the Fourth Panzer Army's line and clear the approaches to Kiev. Keep the crossings behind the assault open for the troops and guns coming into the bridgehead. The first columns must have an army behind them when they reach the city.",
     "outcome": {
       "briliant": {
         "goto": 8,
@@ -377,7 +377,7 @@
   },
   {
     "id": 8,
-    "intro": "Zhitomir — 7 November 1943<br><br>Kiev has been liberated, and headquarters wants the advance carried west before the Germans recover. Zhitomir is a road and rail junction beyond the new bridgehead, valuable both to our pursuit and to any German counterattack.<br><br>Take Korostyshev and Zhitomir while keeping Brusilov secure behind you. Enemy armour is moving into the sector; the newly arriving Twenty-Fifth Panzer Division is among the formations being committed against the breakthrough.<br><br>Keep the advance connected. Infantry must occupy the junctions the tanks pass through, and artillery must be close enough to answer a counterstroke. The prize is a defensible extension of the Kiev bridgehead, not an unsupported dash west.",
+    "intro": "Zhitomir — 7 November 1943<br><br>Kiev has been liberated, and headquarters wants the advance carried west before the Germans recover. Zhitomir is a road and rail junction beyond the new bridgehead, valuable both to our pursuit and to any German counterattack.<br><br>Take Korostyshev and Zhitomir, with Brusilov covering the rear. Enemy armour is moving into the sector, including the newly arriving Twenty-Fifth Panzer Division. Hold the captured junctions against its counterstroke so the Kiev bridgehead can continue to expand.",
     "outcome": {
       "briliant": {
         "goto": 9,
@@ -424,7 +424,7 @@
   },
   {
     "id": 9,
-    "intro": "Towards Jassy — 13 April 1944<br><br>The winter advance has brought the Red Army into the borderlands of Romania. Ahead are Romanian defenders and German formations trying to rebuild a front around Jassy and the approaches to the Carpathians.<br><br>Attack from the Beltsy sector and capture Botosani, Jassy and Piatra Neamt. These objectives control the roads through which the enemy can support his line or pull it back. Keep Beltsy protected while the main force advances.<br><br>Do not expect the whole Romanian front to give way after the first blow. The defenders can use the rivers, hills and settlements to hold a much stronger force. Bring the artillery forward and secure the flanks of each crossing.",
+    "intro": "Towards Jassy — 13 April 1944<br><br>The winter advance has brought the Red Army into the borderlands of Romania. Ahead are Romanian defenders and German formations trying to rebuild a front around Jassy and the approaches to the Carpathians.<br><br>Advance from Beltsy towards Botosani, Jassy and Piatra Neamt. Seizing those junctions will cut across the enemy's routes of supply and withdrawal. The rivers and hills favour his defence; keep the route back to Beltsy open while the forward columns force their crossings.",
     "outcome": {
       "briliant": {
         "goto": 10,
@@ -471,7 +471,7 @@
   },
   {
     "id": 10,
-    "intro": "Operation Bagration — 22 June 1944<br><br>Three years after the invasion, our armies are preparing to break Army Group Centre. In this sector the road west runs through the German Ninth Army's positions around Bobruisk.<br><br>Capture Parichi, Bobruisk and the other marked enemy objectives while keeping our Bortniki position secure. The operation depends on opening routes through the defensive belt, then denying the Germans time to withdraw their formations through those same junctions.<br><br>The terrain channels movement onto a few usable approaches. Use infantry and engineers against the strongpoints, then move the armour through with its support close behind. The encirclement is an objective still to be achieved, not a victory already won.",
+    "intro": "Operation Bagration — 22 June 1944<br><br>Three years after the invasion, our armies are preparing to break Army Group Centre. In this sector the road west runs through the German Ninth Army's positions around Bobruisk.<br><br>Break the line through Parichi and Bobruisk while holding Bortniki behind the attack. The roads through this difficult country are the Ninth Army's way out. Reach them while our neighbouring armies are still holding the Germans to the front.",
     "outcome": {
       "briliant": {
         "goto": 11,
@@ -518,7 +518,7 @@
   },
   {
     "id": 11,
-    "intro": "Minsk — 29 June 1944<br><br>The German front in Belorussia is breaking, and retreating formations are falling back towards Minsk. Its roads and railway junctions offer them a way out of the developing encirclement.<br><br>Advance from the Borisov sector, seize Minsk's marked city objectives and airfield, and close the routes through the area. Hold Borisov behind the advance so the spearhead remains connected to its supplies.<br><br>The enemy is disorganised, but rearguards and arriving reserves can still hold a crossing or strike a scattered column. Do not confuse a gap with an empty battlefield. Bring the riflemen up to secure what the mobile troops capture.",
+    "intro": "Minsk — 29 June 1944<br><br>The German front in Belorussia is breaking, and retreating formations are falling back towards Minsk. Its roads and railway junctions offer them a way out of the developing encirclement.<br><br>Advance from Borisov and seize Minsk and its airfield. Close the roads through the city before the retreating formations reach them. Keep Borisov secure so fuel and ammunition can follow the mobile columns into the developing encirclement.",
     "outcome": {
       "briliant": {
         "goto": 12,
@@ -565,7 +565,7 @@
   },
   {
     "id": 12,
-    "intro": "Vilnius — 5 July 1944<br><br>Minsk is behind us. Chernyakhovsky's Third Belorussian Front is sending its mobile forces towards Vilnius, the next major road and rail centre on the route west.<br><br>Capture Vilnius and Dabrauljany and protect our base at Malodeczno. Taking these junctions will disrupt the German withdrawal and open the way for the following rifle formations.<br><br>Tank and cavalry columns can reach the city before the infantry, but reaching it and clearing it are different tasks. Expect a garrison to hold the built-up ground while German reserves try to reopen the roads. Keep your artillery moving and close the gaps between the forward detachments.",
+    "intro": "Vilnius — 5 July 1944<br><br>Minsk is behind us. Chernyakhovsky's Third Belorussian Front is sending its mobile forces towards Vilnius, the next major road and rail centre on the route west.<br><br>Take Vilnius and Dabrauljany, keeping Malodeczno secure behind the advance. The mobile columns may reach Vilnius before the rifle formations; contain its garrison until enough troops arrive to clear the city and hold the roads against relief attacks.",
     "outcome": {
       "briliant": {
         "goto": 13,
@@ -612,7 +612,7 @@
   },
   {
     "id": 13,
-    "intro": "The gates of Warsaw — 1 August 1944<br><br>Our advance has reached the approaches to Warsaw, but the spearheads have outrun much of their support. Around Wolomin, German armoured reserves are gathering against the exposed Soviet tank formations.<br><br>Keep Wolomin secure and take Sulejowek, with Minsk Mazowiecki covering the rear. This battle is for the eastern approaches and the survival of the forward grouping; Warsaw itself is beyond the immediate objectives on this map.<br><br>Do not spread your armour across every road. Keep a reserve, cover the junctions with anti-tank weapons and bring infantry into the threatened towns. A short, connected line is worth more than a salient the Germans can cut off.",
+    "intro": "The gates of Warsaw — 1 August 1944<br><br>Our advance has reached the approaches to Warsaw, but the spearheads have outrun much of their support. Around Wolomin, German armoured reserves are gathering against the exposed Soviet tank formations.<br><br>Hold Wolomin and take Sulejowek, with Minsk Mazowiecki covering the rear. The German armour threatens to cut off the forward grouping. Secure these eastern approaches before committing the exhausted spearheads any farther towards the Vistula.",
     "outcome": {
       "briliant": {
         "goto": 14,
@@ -659,7 +659,7 @@
   },
   {
     "id": 14,
-    "intro": "Debrecen and Nyiregyhaza — 23 October 1944<br><br>Comrade General, Pliyev's cavalry-mechanised group has pushed north, but the Germans are threatening the narrow connection behind it. Nyiregyhaza lies across the withdrawal routes from the east; losing the corridor could leave our own forward troops surrounded.<br><br>Attack through Nagykallo and secure the connection between Debrecen and Nyiregyhaza. Keep both of our existing town objectives in hand while clearing the enemy-held position between them.<br><br>You are operating with the Sixth Guards Tank Army in a battle of fast moves and sudden counterstrokes. Protect road junctions with infantry and keep armour available to reopen a threatened route. The task is to sustain the advance without sacrificing the troops already furthest forward.",
+    "intro": "Debrecen and Nyiregyhaza — 23 October 1944<br><br>Comrade General, Pliyev's cavalry-mechanised group has pushed north, but the Germans are threatening the narrow connection behind it. Nyiregyhaza lies across the withdrawal routes from the east; losing the corridor could leave our own forward troops surrounded.<br><br>Drive through Nagykallo and secure the corridor between Debrecen and Nyiregyhaza. The Sixth Guards Tank Army is fighting alongside the forward group, but the Germans can attack the narrow road between our positions. Keep it open for supplies and for any troops that must fall back.",
     "outcome": {
       "briliant": {
         "goto": 15,
@@ -706,7 +706,7 @@
   },
   {
     "id": 15,
-    "intro": "Budapest approaches — 7 November 1944<br><br>Our armies have entered Hungary, and the offensive is moving towards Budapest. German and Hungarian forces are using the towns south-east of the capital to delay the advance and protect the roads into it.<br><br>Break through the belt from Pilis and Dabas towards Ullo, Gyomro and Dunaharszti. Capture the marked objectives while keeping the Cegled and Kecskemet approaches secure. This battle opens the road to Budapest; it is not yet the final street battle for the capital.<br><br>The enemy can defend each settlement as a separate strongpoint. Keep infantry and artillery together and use the tanks where a breach can be widened. Avoid feeding the whole corps into one blocked road.",
+    "intro": "Budapest approaches — 7 November 1944<br><br>Our armies have entered Hungary, and the offensive is moving towards Budapest. German and Hungarian forces are using the towns south-east of the capital to delay the advance and protect the roads into it.<br><br>Break through from Pilis and Dabas towards Ullo, Gyomro and Dunaharszti. Keep Cegled and Kecskemet secure behind the advancing columns. Clearing this belt of towns will give the army roads on which to bring its strength against Budapest.",
     "outcome": {
       "briliant": {
         "goto": 16,
@@ -753,7 +753,7 @@
   },
   {
     "id": 16,
-    "intro": "East Prussia — 13 January 1945<br><br>The offensive into East Prussia has begun. German forces have prepared successive defensive positions behind the frontier, using towns and road junctions to protect the routes towards Konigsberg and the Baltic coast.<br><br>Drive west from the Rastenburg sector and take the marked objectives, including Allenstein, Heilsberg and Elbing. Your task is to break the communications network behind the German line and deny the defenders room to regroup.<br><br>Expect stubborn infantry resistance and armoured counterattacks against narrow penetrations. Clear the strongpoints with your guns and riflemen, and keep the roads behind the spearheads protected. The winter terrain will punish columns that lose contact with their support.",
+    "intro": "East Prussia — 13 January 1945<br><br>The offensive into East Prussia has begun. German forces have prepared successive defensive positions behind the frontier, using towns and road junctions to protect the routes towards Konigsberg and the Baltic coast.<br><br>Drive west from Rastenburg towards Allenstein, Heilsberg and Elbing. Take the road junctions behind the German positions and force the defenders to abandon their prepared lines. The winter roads must carry our supplies as well as the leading columns.",
     "outcome": {
       "briliant": {
         "goto": 17,
@@ -800,7 +800,7 @@
   },
   {
     "id": 17,
-    "intro": "Stargard — 15 February 1945<br><br>Our advance towards the Oder has left a dangerous enemy concentration in Pomerania. German armour around Stargard and Arnswalde threatens the flank of the forces preparing to move on Berlin.<br><br>Take Stargard and Arnswalde while protecting Brallenthin. Clearing these positions will remove a base for counterattacks and give the main front a safer northern flank.<br><br>The Germans still have tanks and experienced troops here. Expect a meeting engagement as well as prepared defences: a road that is open in the morning may be blocked by enemy armour before the next column arrives. Keep reconnaissance ahead and an anti-tank reserve behind the advance.",
+    "intro": "Stargard — 15 February 1945<br><br>Our advance towards the Oder has left a dangerous enemy concentration in Pomerania. German armour around Stargard and Arnswalde threatens the flank of the forces preparing to move on Berlin.<br><br>Take Stargard and Arnswalde while protecting Brallenthin. German armour can still move between these towns and strike south into the main front's flank. Clear that threat before the armies on the Oder commit themselves towards Berlin.",
     "outcome": {
       "briliant": {
         "goto": 18,
@@ -847,7 +847,7 @@
   },
   {
     "id": 18,
-    "intro": "Seelow Heights — 16 April 1945<br><br>Berlin lies beyond the heights, but the German Ninth Army still holds the approaches above the Oder plain. Our artillery has opened the operation; now the First Belorussian Front must turn bombardment into a breach.<br><br>Advance from the Kustrin sector, take Seelow and Muncheberg, and secure the remaining marked objectives, including Frankfurt. These positions control the routes through the defensive belt and towards the capital.<br><br>Bring infantry and engineers against the prepared positions before sending the tanks through. Keep the bridgehead covered and the guns close enough to support the next line. The city beyond the map is the reason for this battle; the heights are the work in front of you.",
+    "intro": "Seelow Heights — 16 April 1945<br><br>Berlin lies beyond the heights, but the German Ninth Army still holds the approaches above the Oder plain. Our artillery has opened the operation; now the First Belorussian Front must turn bombardment into a breach.<br><br>Advance from Kustrin, take Seelow and Muncheberg, and clear the southern approaches through Frankfurt. The infantry and engineers must open passages through the prepared positions for the armour. Once the heights are ours, the roads towards Berlin lie ahead.",
     "outcome": {
       "briliant": {
         "goto": 19,
@@ -894,7 +894,7 @@
   },
   {
     "id": 19,
-    "intro": "Berlin — 22 April 1945<br><br>Comrade General, the battle has reached Berlin. German soldiers, police and improvised formations are defending streets, bridges and fortified buildings while our armies close around the city.<br><br>Capture the marked city sectors and Potsdam, and keep the route back towards Muncheberg secure. No single building settles this map: the corps must clear and connect the objectives across the urban area.<br><br>Use infantry and engineers to find the firing positions, artillery to reduce them, and tanks where the streets give them room to support the assault. Keep reserves for counterattacks through ground you thought was clear. Headquarters needs the capital taken, with the men who reached it still alive to see the end.",
+    "intro": "Berlin — 22 April 1945<br><br>Comrade General, the battle has reached Berlin. German soldiers, police and improvised formations are defending streets, bridges and fortified buildings while our armies close around the city.<br><br>Take the city sectors and Potsdam, with the route through Muncheberg kept open behind you. Each captured crossing gives our assault groups a way into the next district. Bring the infantry and engineers through the barricades before exposing the tanks to the guns inside the buildings.",
     "outcome": {
       "briliant": {
         "goto": 254,

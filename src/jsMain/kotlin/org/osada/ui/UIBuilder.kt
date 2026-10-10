@@ -66,6 +66,7 @@ object UIBuilder {
             "hangar" to ActionIcons.HANGAR,
             "cover_enter" to ActionIcons.ENTER_COVER,
             "cover" to ActionIcons.COVER,
+            "aboard" to ActionIcons.HANGAR,
             "sleep" to "t",
             "cautious" to ActionIcons.CAUTIOUS,
         )
