@@ -43,7 +43,7 @@ internal class EndTurnFlow(
     fun onEndTurnClick() {
         val map = ui.game.scenario?.map
         if (map == null || map.currentPlayer?.type != PlayerType.HUMAN_LOCAL) return
-        if (ui.game.waitUIAnimation || ui.game.gameEnded) return
+        if (ui.game.waitUIAnimation || ui.game.battleSettled) return
         val n = readyUnitNavigator.fullyReadyCount()
         if (n == 0 || !uiSettings.confirmEndTurn || MobileLayoutController.isPhonePortrait) {
             performEndTurn()

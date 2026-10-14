@@ -32,8 +32,8 @@ internal fun GameMap.clearBarrageTargeting() {
 /**
  * Fires [unit]'s barrage at ([row], [col]) and closes the targeting mode.
  *
- * Returns null when the order was not legal — a stale overlay, a hex that became spotted between
- * opening the mode and clicking, a gun that has already fired. Nothing is spent in that case: the
+ * Returns null when the order was not legal — a stale overlay, a hex out of reach, a gun that has
+ * already fired. Nothing is spent in that case: the
  * refusal costs the player neither ammunition nor their shot.
  */
 internal fun GameMap.fireBarrage(

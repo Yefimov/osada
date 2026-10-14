@@ -12,6 +12,7 @@ import org.osada.model.Equipment
 import org.osada.model.EquipmentData
 import org.osada.model.GameMap
 import org.osada.model.GameUnit
+import org.osada.model.fireBarrage
 import org.osada.rules.ruleset.RuleKey
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -21,8 +22,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Open General's **Barrage** (manual §9.2) — shelling a hex nobody
- * can see.
+ * Open General's **Barrage** (manual §9.2) — shelling any hex in reach.
  *
  * The three outcomes asserted here are the three the game's own `tips1.txt` names: strength, fuel
  * and ammunition off a hidden enemy; a city, airfield, port or bridge reduced to rubble until
@@ -98,7 +98,7 @@ class BarrageTest : OgRulesTestHarness() {
         GameHolder.instance = holderFor(map)
         val gun = place(map, howitzerEqid, 2, 2, side = 0)
 
-        assertFalse(Barrage.enabled(), "off in every profile but Open General Fidelity")
+        assertFalse(Barrage.enabled(), "no ruleset resolved: the call-site default is off")
         assertFalse(Barrage.canBarrage(gun))
 
         ruleset(RuleKey.BARRAGE to 1)
@@ -116,36 +116,91 @@ class BarrageTest : OgRulesTestHarness() {
         assertFalse(Barrage.canBarrage(gun), "the fixture battery has no Bomber Size")
     }
 
+    /** Owner's decision, 2026-10-14: any hex in reach, seen or unseen, empty or occupied. */
     @Test
-    fun atOgsOwnGradeOnlyAnUnseenHexIsATarget() {
+    fun anyHexWithinGunRangeIsATarget() {
         val map = barrageWorld()
-        val gun = place(map, howitzerEqid, 2, 2, side = 0)
-        map.map!![2][4].setSpotted(0, true)
-
-        assertFalse(
-            Barrage.canTarget(map, gun, Cell(2, 4)),
-            "OG: a hex the firer can see is one it can attack properly",
-        )
-        assertTrue(Barrage.canTarget(map, gun, Cell(2, 5)), "an unspotted hex in range is the mechanic")
-        assertFalse(Barrage.canTarget(map, gun, Cell(2, 2)), "a gun does not shell its own hex")
-    }
-
-    /** Grade 2 of the same rule: the crosshair also opens over visible ground nobody is standing on,
-     *  which is what deliberate cratering and line-cutting need. */
-    @Test
-    fun aimedFireAddsVisibleEmptyHexesAndNothingElse() {
-        val map = barrageWorld(RuleKey.BARRAGE to 2)
         val gun = place(map, howitzerEqid, 2, 2, side = 0)
         map.map!![2][4].setSpotted(0, true)
         map.map!![3][4].setSpotted(0, true)
         place(map, infantryHiddenEqid, 3, 4, side = 1)
+        place(map, infantryEqid, 2, 3, side = 0)
+        place(map, infantryHiddenEqid, 4, 2, side = 1)
 
-        assertTrue(Barrage.canTarget(map, gun, Cell(2, 4)), "empty visible ground may be shelled on purpose")
-        assertFalse(
-            Barrage.canTarget(map, gun, Cell(3, 4)),
-            "a visible enemy is a target for aimed fire, not a barrage",
-        )
-        assertFalse(Barrage.canTarget(map, gun, Cell(2, 2)), "and a gun still does not shell its own hex")
+        assertTrue(Barrage.canTarget(map, gun, Cell(2, 4)), "visible empty ground")
+        assertTrue(Barrage.canTarget(map, gun, Cell(2, 5)), "unseen empty ground")
+        assertTrue(Barrage.canTarget(map, gun, Cell(3, 4)), "a visible enemy")
+        assertTrue(Barrage.canTarget(map, gun, Cell(4, 2)), "an unseen enemy")
+        assertTrue(Barrage.canTarget(map, gun, Cell(2, 3)), "a hex a friendly unit holds")
+        assertFalse(Barrage.canTarget(map, gun, Cell(2, 2)), "a gun does not shell its own hex")
+        val ring = HexGeometry.getRing(2, 2, 4, map.rows, map.cols, true).map { it.row to it.col }.toSet()
+        assertEquals(ring, Barrage.targets(map, gun).map { it.row to it.col }.toSet(), "the overlay is the whole reach")
+    }
+
+    /** A stored schema-17 grade still reads as on, and means the same thing. */
+    @Test
+    fun theOldAimedGradeTargetsExactlyWhatOnDoes() {
+        val map = barrageWorld(RuleKey.BARRAGE to 2)
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+        map.map!![3][4].setSpotted(0, true)
+        place(map, infantryHiddenEqid, 3, 4, side = 1)
+
+        assertTrue(Barrage.canTarget(map, gun, Cell(3, 4)))
+    }
+
+    @Test
+    fun ammunitionAndTheSpentShotStillGateEveryTarget() {
+        val map = barrageWorld()
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+
+        gun.ammo = 0
+        assertFalse(Barrage.canTarget(map, gun, Cell(2, 4)), "no ammunition, no barrage")
+        assertTrue(Barrage.targets(map, gun).isEmpty())
+
+        gun.ammo = 8
+        gun.hasFired = true
+        assertFalse(Barrage.canTarget(map, gun, Cell(2, 4)), "the shot is already spent")
+    }
+
+    @Test
+    fun theOrderIsRevalidatedWhenItIsFired() {
+        val map = barrageWorld()
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+        val ammoBefore = gun.getAmmo()
+
+        assertEquals(null, map.fireBarrage(gun, 7, 7), "out of reach")
+        assertEquals(ammoBefore, gun.getAmmo(), "a refused order costs nothing")
+        assertFalse(gun.hasFired)
+    }
+
+    @Test
+    fun aVisibleEnemyIsHitLikeAHiddenOne() {
+        val map = barrageWorld()
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+        val victim = place(map, infantryHiddenEqid, 2, 4, side = 1)
+        map.map!![2][4].setSpotted(0, true)
+        val strengthBefore = victim.strength
+
+        fireUntilItLands(map, gun, Cell(2, 4))
+
+        assertEquals(strengthBefore - Barrage.STRENGTH_DAMAGE, victim.strength)
+    }
+
+    @Test
+    fun aFriendlyUnitInTheTargetHexIsNeverHit() {
+        val map = barrageWorld()
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+        val friend = place(map, infantryHiddenEqid, 2, 4, side = 0)
+        friend.entrenchment = 3
+        val strengthBefore = friend.strength
+        val ammoBefore = friend.ammo
+
+        val result = fireUntilItLands(map, gun, Cell(2, 4))
+
+        assertEquals(0, result.strengthLost)
+        assertEquals(strengthBefore, friend.strength)
+        assertEquals(ammoBefore, friend.ammo)
+        assertEquals(3, friend.entrenchment)
     }
 
     @Test
@@ -269,16 +324,70 @@ class BarrageTest : OgRulesTestHarness() {
     }
 
     @Test
-    fun clearGroundIsNotTurnedIntoACrater() {
-        val map = barrageWorld()
+    fun clearGroundIsNotTurnedIntoRubble() {
+        val map = barrageWorld(RuleKey.CRATERS to 0)
         val gun = place(map, howitzerEqid, 2, 2, side = 0)
-        map.map!![2][5].terrain = TerrainType.CLEAR.value
 
         val result = fireUntilItLands(map, gun, Cell(2, 5))
 
         assertFalse(result.leftRubble, "OG destroys facilities and roads, not open ground")
         assertFalse(map.map!![2][5].rubble)
+        assertFalse(map.map!![2][5].crater, "and with the crater rule off, nothing at all")
         assertEquals(TerrainType.CLEAR.value, map.map!![2][5].terrain)
+    }
+
+    /**
+     * Perekop, 2026-10-14: `eqp-atomic` sets `blow_any_terrain`, which lets a SAPPER raze clear
+     * ground into rubble. Barrage read that set before trying to crater, so every landed shell on
+     * an ATOMIC field left invisible ruins and never a crater.
+     */
+    @Test
+    fun blowAnyTerrainDoesNotTurnShelledOpenGroundIntoRuins() {
+        EfileConfig.setForTest(intKeyMap = mapOf("blow_any_terrain" to 1))
+        val map = barrageWorld(RuleKey.CRATERS to 0)
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+        map.map!![2][4].terrain = TerrainType.SAND.value
+
+        listOf(Cell(2, 5), Cell(2, 4)).forEach { cell ->
+            val hex = map.map!![cell.row][cell.col]
+            val terrain = hex.terrain
+            val result = fireUntilItLands(map, gun, cell)
+            assertFalse(result.wreckedTerrain || result.leftRubble, "nothing fabricated on $terrain")
+            assertFalse(hex.rubble)
+            assertEquals(-1, hex.razedTerrain)
+            assertEquals(terrain, hex.terrain)
+        }
+        assertTrue(
+            TerrainType.CLEAR.value in EngineeringWork.razeableTerrain(),
+            "a sapper's demolition set is engineering's, and stays as the efile authored it",
+        )
+    }
+
+    @Test
+    fun blowAnyTerrainOpenGroundIsCrateredWhenCratersAreOn() {
+        EfileConfig.setForTest(intKeyMap = mapOf("blow_any_terrain" to 1))
+        val map = barrageWorld(RuleKey.CRATERS to 1)
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+
+        val result = fireUntilItLands(map, gun, Cell(2, 5))
+
+        assertTrue(result.leftCrater)
+        assertTrue(map.map!![2][5].crater)
+        assertFalse(map.map!![2][5].rubble)
+    }
+
+    @Test
+    fun blowAnyTerrainStillWrecksRealFacilities() {
+        EfileConfig.setForTest(intKeyMap = mapOf("blow_any_terrain" to 1))
+        val map = barrageWorld(RuleKey.CRATERS to 1)
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+        map.map!![2][5].terrain = TerrainType.AIRFIELD.value
+
+        val result = fireUntilItLands(map, gun, Cell(2, 5))
+
+        assertTrue(result.wreckedTerrain)
+        assertEquals(TerrainType.AIRFIELD.value, map.map!![2][5].razedTerrain)
+        assertFalse(map.map!![2][5].crater)
     }
 
     @Test
@@ -327,6 +436,22 @@ class BarrageTest : OgRulesTestHarness() {
         )
     }
 
+    /** The odds are what a player decides on, so the chip states them -- from the same constant
+     *  the roll uses. */
+    @Test
+    fun theBarrageChipStatesTheHitChance() {
+        val map = barrageWorld()
+        val gun = place(map, howitzerEqid, 2, 2, side = 0)
+
+        val chip = UnitActionAvailability.forAction(UnitActionId.BARRAGE, UnitActionContext(map, gun, friendly))
+
+        assertEquals(60, Barrage.HIT_CHANCE_PERCENT)
+        assertEquals(
+            Barrage.HIT_CHANCE_PERCENT,
+            chip.effects.first { it.kind == ActionEffectKind.BARRAGE_HIT_CHANCE }.amount,
+        )
+    }
+
     @Test
     fun theShotIsSpentWhetherOrNotItLands() {
         val map = barrageWorld()
@@ -340,8 +465,8 @@ class BarrageTest : OgRulesTestHarness() {
         assertFalse(Barrage.ready(gun))
     }
 
-    /** The rule at OG's own grade plus a map with nothing spotted: the state a barrage is actually
-     *  ordered from. [overrides] adds the graded or OSADA-owned keys a test is about. */
+    /** The rule on, plus a map with nothing spotted. [overrides] adds the OSADA-owned keys a test
+     *  is about. */
     private fun barrageWorld(vararg overrides: Pair<RuleKey, Int>): GameMap {
         ruleset(RuleKey.BARRAGE to 1, *overrides)
         val map = world()

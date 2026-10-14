@@ -59,6 +59,30 @@ class Game {
      *  the turn loop stands still meanwhile. [defeatAccepted] lets the accepted defeat through. */
     internal var awaitingDefeatChoice: Boolean = false
     internal var defeatAccepted: Boolean = false
+
+    /** A victory waits for the route decision its briefing never recorded (`offerOwedRouteDecision`). */
+    internal var awaitingRouteDecision: Boolean = false
+
+    /** A campaign outcome waits on the player (defeat question or owed route); the loop stands still. */
+    internal val awaitingOutcomeAnswer: Boolean get() = awaitingDefeatChoice || awaitingRouteDecision
+
+    /** The pause menu covers the battle (`ui/PauseMenu`): no AI action, scripted turn or mission
+     *  transition starts under it. A networked room is not paused by one player's menu. */
+    private val pausedByMenu: Boolean
+        get() =
+            org.osada.ui.PauseMenu
+                .isPausing() &&
+                !org.osada.multiplayer.client.OsadaMultiplayer.active
+
+    private val turnLoopHeld: Boolean get() = awaitingOutcomeAnswer || pausedByMenu
+
+    /**
+     * The battle's result is decided or being asked: no further order may be given in it. A
+     * non-final campaign result leaves `gameEnded` false while its outcome message is up (the next
+     * mission loads after OK), and neither that message nor the defeat card has a backdrop -- the
+     * map and End Turn stayed live under them.
+     */
+    internal val battleSettled: Boolean get() = gameEnded || continueCampaignFlag || awaitingOutcomeAnswer
     internal var auxiliaryScenarioUnitsFlag: Boolean = false
     internal var buildCoreUnitsFlag: Boolean = false
 
@@ -130,7 +154,7 @@ class Game {
     }
 
     fun processTurn() {
-        if (!gameStarted || gameEnded || awaitingDefeatChoice) return
+        if (!gameStarted || gameEnded || turnLoopHeld) return
         if (nextScenarioData != null && continueCampaignFlag && uiMessageClicked) {
             startPendingScenarioTransition()
         } else {

@@ -25,12 +25,12 @@ import org.osada.rules.ruleset.RuleKey
  * already gives, so it pays only where there was no time to dig — which is what a shell hole is
  * actually for.
  *
- * ### Why it is off in Open General Fidelity
+ * ### On in OSADA Default, off in Author's Vision
  *
- * No OG source grants a crater cover of any kind, and OG's own barrage takes entrenchment AWAY
- * (`Barrage.ENTRENCHMENT_DAMAGE`, the one figure OG publishes about it). A profile whose claim is
- * "these are Open General's rules" must not carry one of ours, so [RuleKey.CRATERS] is 0 there and
- * says so in its own documentation.
+ * On in OSADA Default since 2026-10-14 (owner's decision). Author's Vision keeps it off: no OG
+ * source grants a crater cover of any kind, and OG's own barrage takes entrenchment AWAY
+ * (`Barrage.ENTRENCHMENT_DAMAGE`, the one figure OG publishes about it), so a profile that follows
+ * the content must not carry one of ours (`RulesetResolver.OSADA_ONLY`).
  */
 internal object Craters {
     /**
@@ -43,15 +43,15 @@ internal object Craters {
 
     /** Ground a shell can crater: open terrain with nothing on it to destroy. Water, high ground
      *  and anything built or wooded are excluded — those either cannot hold a hole or are wrecked
-     *  instead, by `Barrage`'s own destruction path (`EngineeringWork.razeableTerrain`). */
-    private val CRATERABLE_TERRAIN =
+     *  instead, by `Barrage`'s own destruction path. `Barrage` also reads this set to keep open
+     *  ground OUT of that path, even where `blow_any_terrain` lets a sapper raze it. */
+    val OPEN_GROUND =
         setOf(
             TerrainType.CLEAR.value,
             TerrainType.SAND.value,
         )
 
-    /** Whether the rule is in force. Off in every built-in profile, including — deliberately —
-     *  Open General Fidelity. */
+    /** Whether the rule is in force: on in OSADA Default, off in Author's Vision. */
     fun enabled(): Boolean = ActiveRuleset.flag(RuleKey.CRATERS, false)
 
     /**
@@ -60,7 +60,7 @@ internal object Craters {
      * Snow is not a terrain in OSADA's table — it is a GROUND CONDITION over the same terrain
      * (`GroundCondition.FROZEN`), so a frozen clear hex is already covered by clear.
      */
-    fun crushable(hex: Hex): Boolean = enabled() && !hex.crater && hex.terrain in CRATERABLE_TERRAIN
+    fun crushable(hex: Hex): Boolean = enabled() && !hex.crater && hex.terrain in OPEN_GROUND
 
     /** Digs the hole. Returns false when the ground would not take one. */
     fun dig(hex: Hex): Boolean {

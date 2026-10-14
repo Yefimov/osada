@@ -1,5 +1,7 @@
 package org.osada.ui.briefing
 
+import org.osada.campaign.CampaignNarrative
+
 // Carrying an unanswered dialogue decision to the operational briefing.
 //
 // SKIP (and Esc) drop the player at the briefing, but a decision they skipped past travels with
@@ -25,6 +27,13 @@ internal fun ScenarioBriefingController.advanceToNextPendingChoice() {
         steps++
         val current = currentLine()
         val step = path.lastOrNull()
+        // A choice the campaign has already committed is answered, whatever this path remembers:
+        // a decision owed by a restored battle (`showOwedDecision`) walks past the earlier ones.
+        if (current != null && step != null && step.selectedChoice == null) {
+            val scenarioFile = currentSource?.scenarioFile.orEmpty()
+            val committed = CampaignNarrative.state.answerTo(scenarioFile, current.id, current.choices.map { it.id })
+            step.selectedChoice = current.choices.firstOrNull { it.id == committed }
+        }
         val stopHere = current != null && current.choices.isNotEmpty() && step?.selectedChoice == null
         val next = if (current == null || stopHere) null else resolveNext(current, step?.selectedChoice)
         if (next == null) return

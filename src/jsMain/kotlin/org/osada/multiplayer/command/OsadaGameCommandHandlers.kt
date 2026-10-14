@@ -116,7 +116,7 @@ class OsadaGameCommandValidator(
                 // than mutating anything, so a rejected attempt costs no random draw either.
                 is LayMines, is ClearMines -> unit != null && Minefields.enabled()
                 // The target is NOT re-derived here: `fireBarrage` re-checks range, ammunition and
-                // the unspotted condition itself and refuses without spending anything, which is
+                // the shot itself (`Barrage.canTarget`) and refuses without spending anything, which is
                 // the same contract `layMinefield` has. What is checked is that the hex exists.
                 is BarrageHex ->
                     unit != null &&

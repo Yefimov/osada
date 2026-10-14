@@ -12,7 +12,7 @@ import org.osada.rules.ruleset.ActiveRuleset
 import org.osada.rules.ruleset.RuleKey
 
 /**
- * Open General's **Barrage** optional rule (manual §9.2) — shelling a hex nobody can see.
+ * Open General's **Barrage** optional rule (manual §9.2) — shelling a hex without an aimed attack.
  *
  * > *"Units with the Can bombard/barrage ability sometimes can do barrage fire. For barrage fire to
  * > work it must be enabled by the designer and the unit must have the ability. When any unit can do
@@ -44,11 +44,18 @@ import org.osada.rules.ruleset.RuleKey
  *
  * ### The honesty rule this mechanic had to satisfy
  *
- * `docs/design/action-affordances-and-objectives.md` §1.1 forbids damage with no visible cause. A barrage is the exact
- * shape that rule guards against: fire into a hex nobody can see. It is admissible because the
- * player ORDERS it — the damage is theirs, not a surprise — and because every outcome is reported
- * ([BarrageResult] is what `CombatLog` and the HUD banner read). The defender's side is told
- * nothing it would not otherwise know: a hidden unit that is hit stays hidden.
+ * `docs/design/action-affordances-and-objectives.md` §1.1 forbids damage with no visible cause. A
+ * barrage into a hex nobody can see is the exact shape that rule guards against. It is admissible
+ * because the player ORDERS it — the damage is theirs, not a surprise — and because what it leaves
+ * is on the map: a crater sprite, a wrecked facility or bridge, a unit's lost strength. There is no
+ * result banner after the shot (removed 2026-10-14 at the owner's request); the firing animation is
+ * the feedback, and a refused order still says why. The defender's side is told nothing it would
+ * not otherwise know: a hidden unit that is hit stays hidden.
+ *
+ * ### Targets
+ *
+ * Since 2026-10-14 any hex in reach may be shelled, seen or not ([canTarget]). OG's manual frames
+ * the rule around unseen hexes; OSADA's owner chose to let the crosshair open everywhere in range.
  */
 internal object Barrage {
     /** OG states no numbers for barrage at all. These are `INFERENCE`, sized against the minefield
@@ -73,6 +80,10 @@ internal object Barrage {
     private const val SUCCESS_IN_TEN = 6
     private const val FULL_ROLL = 10
 
+    /** The landing chance in percent, for the text that states it (the Barrage chip and the
+     *  targeting prompt), derived so the words can never disagree with the roll. */
+    const val HIT_CHANCE_PERCENT = SUCCESS_IN_TEN * 100 / FULL_ROLL
+
     /** What one barrage did, for the log, the banner and the tests. */
     data class BarrageResult(
         val hit: Boolean,
@@ -85,19 +96,11 @@ internal object Barrage {
     )
 
     /** Whether the rule is in force: the ruleset key, and the scenario's own switch where it has
-     *  one. Off in every profile except Open General Fidelity. */
+     *  one. On in OSADA Default (since 2026-10-14) and in Author's Vision, where the scenario's
+     *  switch decides. */
     fun enabled(): Boolean =
         ActiveRuleset.flag(RuleKey.BARRAGE, false) &&
             (GameHolder.instance?.scenario?.barrageAllowed ?: true)
-
-    /** The [RuleKey.BARRAGE] value at which the crosshair also opens over hexes the firer CAN see,
-     *  provided no ground unit holds them — the rule's own third grade, not a second rule. */
-    private const val AIMED_LEVEL = 2
-
-    /** Whether aimed interdiction is allowed: shelling visible empty ground on purpose, to crater it
-     *  or to cut the line running through it. Grade 2 of the same rule, so the scenario's switch
-     *  still has to allow barrage at all. */
-    private fun aimedFire(): Boolean = enabled() && ActiveRuleset.intKey(RuleKey.BARRAGE, 0) >= AIMED_LEVEL
 
     /** Whether [unit]'s equipment carries OG's `Can bombard/barrage` — Bomber Size above zero, the
      *  `'='` mark. Reads the REAL record: the ability belongs to the gun, not to a transport. */
@@ -108,34 +111,31 @@ internal object Barrage {
         canBarrage(unit) && !unit.hasFired && !unit.destroyed && unit.getAmmo() >= AMMO_COST
 
     /**
-     * Whether [unit] may shell [cell]: on the map, within reach, and either **not spotted by its own
-     * side** — OG's *"target any unspotted hex"* — or spotted but with no ground unit in it.
+     * Whether [unit] may shell [cell]: on the map, within reach, and the unit [ready] to fire.
+     *
+     * **Any hex in reach is a target** (owner's decision, 2026-10-14) -- seen or unseen, empty or
+     * occupied. Until then the crosshair opened only over hexes the firer's SIDE could not see (OG's
+     * *"target any unspotted hex"*), plus empty visible ground at the rule's old second grade; a
+     * player found that a gun could not shell the ground in front of it, and the side-wide spotting
+     * test was not even the gun's own line of sight. A visible enemy shelled this way takes the
+     * barrage's fixed damage, not an aimed attack's, and a friendly unit in the hex is never hurt
+     * ([resolve] applies the unit outcome to enemies only), so opening occupied hexes adds no
+     * friendly fire.
      *
      * Reach depends on how the unit delivers its shells. A gun fires at 1..gunrange hexes around it;
      * an aircraft bombs the hex it is flying over, exactly as its ordinary attack does, so its only
      * target is its own hex (level bombers carry gunrange 0, which the old `range > 0` test read as
-     * "cannot barrage anywhere"). That hex is always spotted, which is why a spotted hex has to be
-     * admissible at all.
-     *
-     * A spotted hex is admitted only when it holds no ground unit, and only under the rule's second
-     * grade ([aimedFire]) or beneath an aircraft: shelling empty visible ground is how a player digs
-     * craters or cuts a line on purpose, while a VISIBLE enemy there is a target for aimed fire,
-     * which does more, and a friendly one is not a target at all.
+     * "cannot barrage anywhere").
      */
     fun canTarget(
         map: GameMap,
         unit: GameUnit,
         cell: Cell,
     ): Boolean {
-        val side = unit.player?.side
         val from = unit.getPos()
         val hex = map.map?.getOrNull(cell.row)?.getOrNull(cell.col)
-        if (side == null || from == null || hex == null) return false
-        // An aircraft's own hex is always spotted, so admitting a visible hex is the only way a
-        // level bomber can fire at all -- that part is not the graded one.
-        val ownHexBombing = UnitPredicates.isAir(unit) && from.row == cell.row && from.col == cell.col
-        val visibleTarget = hex.unit == null && (aimedFire() || ownHexBombing)
-        return ready(unit) && withinReach(unit, from, cell) && (!hex.isSpotted(side) || visibleTarget)
+        if (unit.player?.side == null || from == null || hex == null) return false
+        return ready(unit) && withinReach(unit, from, cell)
     }
 
     /** Whether [cell] is where [unit] can put shells: the hex underneath an aircraft, or 1..gunrange
@@ -206,15 +206,27 @@ internal object Barrage {
                 hex.rubble = true
                 BarrageResult(hit = true, cutRail = true, leftRubble = true)
             }
-            hex.terrain in EngineeringWork.razeableTerrain() -> wreckTerrain(hex)
-            // Nothing OG would destroy: facilities and roads are its whole list, widened only by
-            // an efile's `blow_any_terrain` (the same set `Can Blow` reads). Open ground then takes
-            // craters instead of nothing -- OSADA's own rule, off unless the player asks for it
-            // (`rules/Craters`).
+            hex.terrain in wreckableTerrain() -> wreckTerrain(hex)
+            // Open ground has nothing on it to wreck, so it takes craters or nothing -- OSADA's own
+            // rule (`rules/Craters`).
             Craters.dig(hex) -> BarrageResult(hit = true, leftCrater = true)
             else -> BarrageResult(hit = true)
         }
     }
+
+    /**
+     * What a shell can WRECK: what a demolition charge could raze ([EngineeringWork.razeableTerrain],
+     * so an efile's `blow_any_terrain` still widens it to woods, hills and the rest) minus open
+     * ground ([Craters.OPEN_GROUND]).
+     *
+     * **Open ground is taken out because wrecking it fabricates ruins** (reported 2026-10-14 on
+     * Perekop, an `eqp-atomic` battle). `blow_any_terrain` puts clear ground in the raze set so a
+     * SAPPER can blow it, and the raze of clear ground is a rubble flag over the same clear ground.
+     * Barrage read that set before it tried to crater, so every landed shell on an ATOMIC field left
+     * invisible "ruins" with a movement surcharge and never a crater. The demolition set itself is
+     * unchanged -- that is engineering's decision -- only the barrage's reading of it.
+     */
+    private fun wreckableTerrain(): Set<Int> = EngineeringWork.razeableTerrain() - Craters.OPEN_GROUND
 
     /** *"can destroy fuel and ammo as well as Strength points"*. The unit stays HIDDEN: being shelled
      *  is not being spotted, and revealing it would hand the firer intelligence it did not earn. */
@@ -255,3 +267,12 @@ internal object Barrage {
      *  SON), so one extra point is the conservative end of that. `INFERENCE`. */
     const val RUBBLE_MOVE_SURCHARGE = 1
 }
+
+/** What the Barrage chip says it does: how many hexes are in reach, the odds of landing, and that it
+ *  ends the unit's action. Beside [Barrage] rather than in it, which is at its function budget. */
+internal fun barrageChipEffects(targets: Int): List<ActionEffect> =
+    listOf(
+        ActionEffect(ActionEffectKind.OPEN_BARRAGE_TARGETING, targets),
+        ActionEffect(ActionEffectKind.BARRAGE_HIT_CHANCE, Barrage.HIT_CHANCE_PERCENT),
+        ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION),
+    )

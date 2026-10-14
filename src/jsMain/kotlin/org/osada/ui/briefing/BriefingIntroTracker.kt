@@ -22,6 +22,18 @@ internal object BriefingIntroTracker {
         return readSeen(campaignFile, scenarioFile)
     }
 
+    /**
+     * Whether the seen fast path may skip this opening. Never while [owed] is a decision the saved
+     * narrative has no answer for: this marker lives outside the save, so loading an earlier save
+     * keeps it while the choice is gone, and skipping then let `forward15`'s victory fall through
+     * to the authored route without a front ever being chosen (2026-10-14).
+     */
+    fun maySkip(
+        campaignFile: String,
+        scenarioFile: String,
+        owed: BriefingLine?,
+    ): Boolean = owed == null && isSeen(campaignFile, scenarioFile)
+
     @Suppress("TooGenericExceptionCaught")
     private fun readSeen(
         campaignFile: String,

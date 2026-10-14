@@ -15,7 +15,8 @@ import org.osada.ui.briefing.BriefingLocalization
  * The single entry point the rest of the engine uses to talk to the narrative system.
  *
  * Holds the state for the CURRENT campaign run. `Game.newCampaign` calls [reset]; the save
- * layer calls [restore] / [snapshot]; `Game.continueCampaign` calls [recordScenarioCompletion];
+ * layer calls [restore] / [snapshot]; a fresh campaign battle calls [beginVisit];
+ * `Game.continueCampaign` calls [recordScenarioCompletion];
  * the dialogue controller calls [commitChoice]; the scenario loader calls [consumePendingFor].
  *
  * Standalone scenarios never touch this object. Nothing here is consulted unless
@@ -43,8 +44,9 @@ internal object CampaignNarrative {
      * Records a definitively completed scenario: its real outcome, the route the EXISTING campaign
      * routing chose, and any optional objectives that real end-state satisfied.
      *
-     * Returns false when this scenario was already recorded — the guard that makes the
-     * move-capture and end-turn completion paths safe to both fire.
+     * Returns false when this visit of the scenario was already recorded — the guard that makes the
+     * move-capture and end-turn completion paths safe to both fire. A replay is a new visit
+     * ([beginVisit]) and records its own result.
      */
     fun recordScenarioCompletion(
         scenarioFile: String,
@@ -53,16 +55,18 @@ internal object CampaignNarrative {
         actionRules: List<ScenarioActionRule>,
         endState: ScenarioEndState?,
     ): Boolean {
+        val visit = current.visits.ordinalFor(scenarioFile, current.scenarioOutcomes)
         val recorded =
             current.recordOutcome(
                 ScenarioOutcomeRecord(
                     scenarioFile = scenarioFile,
                     outcome = outcome,
                     nextScenario = nextScenario,
+                    visit = visit,
                 ),
             )
         if (!recorded) {
-            console.log("[OSADA] scenario '$scenarioFile' already recorded; ignoring duplicate completion")
+            console.log("[OSADA] scenario '$scenarioFile' visit $visit already recorded; ignoring duplicate completion")
             return false
         }
         if (endState != null && actionRules.isNotEmpty()) {
@@ -75,6 +79,12 @@ internal object CampaignNarrative {
     }
 
     /**
+     * A campaign battle of [scenarioFile] has begun -- a FRESH load, never a restore, which keeps
+     * the visit its save pinned. Results of this battle belong to the visit returned.
+     */
+    fun beginVisit(scenarioFile: String): ScenarioVisit = current.visits.begin(scenarioFile, current.scenarioOutcomes)
+
+    /**
      * Commits a dialogue choice and applies its effects — both exactly once.
      *
      * Effects apply immediately rather than being queued: campaign dialogue is shown AFTER its
@@ -85,14 +95,20 @@ internal object CampaignNarrative {
      * Re-selecting, navigating Back and forward, reopening the briefing, or restoring a save all
      * route through here and are all no-ops after the first commit. Returns true only on the
      * committing call, so the caller can distinguish "committed" from "already committed".
+     *
+     * The answer belongs to line [lineId] of [scenarioFile]'s briefing, whose current choices are
+     * [offered] (`CampaignNarrativeState.recordChoice`): line ids repeat across missions.
      */
+    @Suppress("LongParameterList")
     fun commitChoice(
+        scenarioFile: String,
         lineId: String,
         choiceId: String,
+        offered: Collection<String>,
         effects: List<CampaignEffect>,
         player: Player?,
     ): Boolean {
-        if (!current.recordChoice(lineId, choiceId)) return false
+        if (!current.recordChoice(scenarioFile, lineId, choiceId, offered)) return false
         CampaignEffectApplier.apply(effects, player, current)
         return true
     }

@@ -29,7 +29,8 @@ import org.osada.rules.PontoonBridges
  *
  * Sheet layout: one 62x52 cell per row and per [GroundCondition] column, a hex box plus OG's
  * one-pixel margin. Each facility is drawn only while the hex still has it, so a blown bridge or a
- * razed fort shows its wreckage instead, and a repaired one gets its picture back. Everything here
+ * razed fort shows its wreckage instead ([DestroyedBridgeRenderer], [RuinsRenderer]), and a
+ * repaired one gets its picture back. Everything here
  * is derived from the hex's saved state (terrain, construction job and countdown, `sapperBuilt`,
  * `sapperWorks`), so a reload, a paused job or one abandoned half-way draws exactly what is there.
  * Terrain, so drawn under fog like craters and bridge debris.

@@ -20,7 +20,7 @@ internal fun UIBuilder.showScenarioBriefing(
     facts: ScenarioFacts,
     rawData: dynamic,
     onFinished: () -> Unit,
-) = ScenarioBriefingController.show(campaignFile, scenarioFile, facts, rawData, onFinished)
+) = ScenarioBriefingController.show(campaignFile, scenarioFile, facts, rawData, onFinished = onFinished)
 
 internal fun UIBuilder.primeScenarioBriefing(
     campaignFile: String,

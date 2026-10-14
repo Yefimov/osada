@@ -13,11 +13,13 @@ import org.osada.i18n.I18n
  * the ceremony is fine, deciding by omission is not — choices commit prestige, resupply and
  * campaign routing.
  *
- * Pass a null [line] to clear the block and re-enable BEGIN.
+ * Pass a null [line] to clear the block and re-enable BEGIN. [owed] marks a decision the saved
+ * campaign never recorded (`ScenarioBriefingController.showOwedDecision`), which says so.
  */
 internal fun renderPendingDecision(
     view: ScenarioBriefingView,
     line: BriefingLine?,
+    owed: Boolean,
     onChoice: (String) -> Unit,
 ) {
     val blocked = line != null
@@ -25,7 +27,11 @@ internal fun renderPendingDecision(
     view.beginButton.classList.toggle("osada-briefing__button--disabled", blocked)
     view.beginButton.setAttribute(
         "title",
-        if (blocked) I18n.t("briefing.decision.required.help") else "",
+        when {
+            !blocked -> ""
+            owed -> I18n.t("briefing.decision.owed.help")
+            else -> I18n.t("briefing.decision.required.help")
+        },
     )
     if (line == null) return
 
@@ -33,6 +39,7 @@ internal fun renderPendingDecision(
         "osada-briefing__order-section osada-briefing__order-section--wide osada-briefing__decision"
     val section = element("section", sectionClass)
     child(section, "h2", "osada-briefing__order-heading").textContent = I18n.t("briefing.decision.title")
+    if (owed) child(section, "p", "osada-briefing__order-text").textContent = I18n.t("briefing.decision.owed.note")
     child(section, "p", "osada-briefing__order-text").textContent = plainText(line.text)
     val options = child(section, "div", "osada-briefing__decision-options")
     line.choices.forEachIndexed { index, choice ->

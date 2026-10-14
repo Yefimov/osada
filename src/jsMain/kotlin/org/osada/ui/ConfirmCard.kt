@@ -19,6 +19,9 @@ internal object ConfirmCard {
     private var keydownHandler: EventListener? = null
     private var previouslyFocused: HTMLElement? = null
 
+    /** The open card's dismissing answer, run by its Cancel button and by every Escape path. */
+    private var cancelAction: (() -> Unit)? = null
+
     fun open(
         titleText: String,
         bodyHtml: String,
@@ -71,10 +74,8 @@ internal object ConfirmCard {
         confirmButton.textContent = confirmLabel
         confirmButton.setAttribute("tabindex", "0")
 
-        cancelButton.onclick = { _ ->
-            close()
-            onCancel()
-        }
+        cancelAction = onCancel
+        cancelButton.onclick = { _ -> cancel() }
         confirmButton.onclick = { _ ->
             close()
             onConfirm()
@@ -84,8 +85,7 @@ internal object ConfirmCard {
             EventListener { e: Event ->
                 if ((e.asDynamic().key as? String) == "Escape") {
                     e.preventDefault()
-                    close()
-                    onCancel()
+                    cancel()
                 }
             }
         keydownHandler = handler
@@ -99,7 +99,24 @@ internal object ConfirmCard {
      *  gameplay commands while the player owes this dialog an answer. */
     fun isOpen(): Boolean = byId(DIALOG_ID) != null
 
+    /**
+     * Dismisses the card WITH its answer: closes it, then runs the cancel action once. Escape must
+     * come through here. The gameplay router (`CommandRouter`) is registered first and used to call
+     * [close], which removed this card's own Escape listener mid-dispatch, so the browser skipped
+     * it: the defeat question's "accept" never ran and `awaitingDefeatChoice` froze the turn loop
+     * (found in review, 2026-10-14). A no-op when no card is open.
+     */
+    fun cancel() {
+        if (!isOpen()) return
+        val action = cancelAction
+        close()
+        action?.invoke()
+    }
+
+    /** Removes the card WITHOUT answering it. For a card whose battle is being torn down
+     *  (`Game.cleanup`), where neither answer may run against whatever is loaded next. */
     fun close() {
+        cancelAction = null
         keydownHandler?.let { document.removeEventListener("keydown", it) }
         keydownHandler = null
         byId(DIALOG_ID)?.let {

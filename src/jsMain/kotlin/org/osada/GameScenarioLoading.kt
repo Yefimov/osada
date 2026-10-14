@@ -1,5 +1,6 @@
 package org.osada
 
+import org.osada.campaign.CampaignNarrative
 import org.osada.hero.HeroCampaign
 import org.osada.hero.LeaderMigration
 import org.osada.model.acquireUnit
@@ -88,7 +89,12 @@ internal fun Game.handleCampaignScenarioLoaded(fromRestore: Boolean = false) {
     // Consume next-scenario effects queued by the previous transition, after the core roster
     // exists and before the player receives control.
     applyPendingCampaignEffects()
-    if (!fromRestore) creditCampaignStartPrestige()
+    if (!fromRestore) {
+        creditCampaignStartPrestige()
+        // A fresh battle is a new visit of its scenario; a restored one keeps the visit its save
+        // pinned, so finishing it again is still a duplicate (`campaign/ScenarioVisits`).
+        (campaign?.getCurrentScenario()?.scenario as? String)?.let { CampaignNarrative.beginVisit(it) }
+    }
     // OG's `no prototypes`: a scenario may refuse the award outright. Null (source unreadable)
     // means permitted, the same direction every other authored switch reads (§AD).
     if (awardPrototype && scenario?.prototypesAllowed != false) {

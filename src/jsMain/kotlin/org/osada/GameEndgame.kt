@@ -17,11 +17,11 @@ import org.osada.rules.CampaignPrestigeCap
 import org.osada.rules.CampaignSwitches
 import org.osada.save.SaveStatus
 import org.osada.save.SaveStatusBus
-import org.osada.scenario.CampaignRouting
+import org.osada.scenario.CampaignTransition
 import org.osada.scenario.ScenarioTextLocalization
 import org.osada.scenario.TimedDefeatReason
 import org.osada.scenario.getReinforcements
-import org.osada.scenario.peekNextScenarioRecord
+import org.osada.scenario.recordAfter
 import org.osada.scenario.removeReinforcement
 import org.osada.ui.HudLog
 import org.osada.ui.MessageDialogs
@@ -93,17 +93,19 @@ fun Game.continueCampaign(
 ) {
     console.log("[OSADA] continueCampaign", outcome)
     val player = campaignPlayer ?: return
-    if (offerRestartBeforeDefeat(outcome, reason)) return
+    // Where this result leads (`CampaignTransitions`), decided once and read by everything below:
+    // the recorded route, the queued effects, the prestige cap and the transition itself.
+    val transition = committableTransition(outcome, reason) ?: return
     // A player CHOICE (BGCchoice-style), committed earlier in this scenario's own briefing
-    // dialogue, overrides the winning outcome-branch gotos; a loss keeps its own transition
-    // (`CampaignRouting`). Taken once, here, either way, so it cannot leak into resolving some
-    // later, unrelated transition.
-    val routeOverride = CampaignRouting.effectiveRoute(outcome, CampaignNarrative.takeCommittedRoute())
+    // dialogue, has replaced the winning outcome-branch gotos in [transition]; a loss keeps its own
+    // transition (`CampaignRouting`). Consumed here either way, so it cannot leak into resolving
+    // some later, unrelated transition.
+    CampaignNarrative.takeCommittedRoute()
     // The scenario is definitively over at this single funnel, so this is the one correct place
-    // to record the REAL outcome. recordScenarioCompletion is idempotent per scenario: the
+    // to record the REAL outcome. recordScenarioCompletion is idempotent per visit: the
     // move-capture and end-turn completion paths can both reach here for the same battle.
-    recordCampaignOutcome(outcome, routeOverride)
-    val capNote = awardOutcomePrestige(player, outcome, routeOverride)
+    recordCampaignOutcome(outcome, transition)
+    val capNote = awardOutcomePrestige(player, outcome, transition)
     // OpenSuite's *"Don't score"* (`rules/CampaignSwitches`): this battle leaves the campaign score
     // where it found it. The carried player IS the score at the start of the battle, since the
     // battle's own player starts at 0 and adds it (`Player.copy(accumulateScore = true)`). A battle
@@ -146,7 +148,7 @@ fun Game.continueCampaign(
     val outcomeText = campaign!!.getOutcomeText(outcome)
     val epilogue = campaign!!.resolveEpilogue(outcome)
     val text = if (epilogue == null) outcomeText else "$outcomeText<hr>$epilogue"
-    nextScenarioData = campaign!!.loadNextScenario(outcome, routeOverride)
+    nextScenarioData = campaign!!.advance(transition)
     continueCampaignFlag = true
     if (nextScenarioData == null) {
         val finalText = if (outcome == "lose") lossReason(reason) + text else text
@@ -180,17 +182,17 @@ fun Game.continueCampaign(
  * cap withheld, or "" when it withheld nothing. The cap is measured BEFORE the award, against the
  * army still standing at the end of the battle.
  *
- * The award is the COMPLETED scenario's; the cap is the NEXT one's (OG Basic Tutorial p.3), picked
- * with the same outcome and [routeOverride] `loadNextScenario` is about to use. This runs before
- * that transition on purpose: afterwards `getOutcomePrestige` would read the next scenario's award.
+ * The award is the COMPLETED scenario's; the cap is the NEXT one's (OG Basic Tutorial p.3), the
+ * record [transition] is about to continue with. This runs before that transition on purpose:
+ * afterwards `getOutcomePrestige` would read the next scenario's award.
  */
 private fun Game.awardOutcomePrestige(
     player: Player,
     outcome: String,
-    routeOverride: Int?,
+    transition: CampaignTransition,
 ): String {
     val full = player.effectivePrestigeIncome(campaign!!.getOutcomePrestige(outcome))
-    val cap = CampaignPrestigeCap.capOf(campaign!!.peekNextScenarioRecord(outcome, routeOverride))
+    val cap = CampaignPrestigeCap.capOf(campaign!!.recordAfter(transition))
     val granted = CampaignPrestigeCap.cappedAward(full, cap, player)
     player.prestige = (player.prestige + granted).coerceAtLeast(0)
     if (granted >= full) return ""
@@ -332,6 +334,7 @@ fun Game.cleanup() {
     // opened on Willhelmshafen turn 1.
     HeroCampaign.discardPendingAnnouncements()
     MessageDialogs.clearDynamicMessages()
+    discardBattleQuestions()
     state?.clear()
     scenario?.map?.cleanup()
     scenario = null

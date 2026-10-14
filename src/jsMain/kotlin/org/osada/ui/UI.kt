@@ -4,20 +4,16 @@ import org.osada.CombatLog
 import org.osada.Game
 import org.osada.UnitClass
 import org.osada.announceTurnMessage
+import org.osada.campaign.CampaignNarrative
 import org.osada.completeOpening
 import org.osada.evaluateScenarioEvents
-import org.osada.i18n.GameText
-import org.osada.i18n.I18n
 import org.osada.model.Cell
-import org.osada.model.Equipment
 import org.osada.model.GameUnit
 import org.osada.model.getCountriesBySide
-import org.osada.model.getCountryName
 import org.osada.model.selectUnit
 import org.osada.multiplayer.client.OsadaMultiplayer
-import org.osada.scenario.objectiveReport
 import org.osada.ui.briefing.BriefingIntroTracker
-import org.osada.ui.briefing.ScenarioFacts
+import org.osada.ui.briefing.OwedBriefingDecision
 import org.osada.ui.keyboard.CommandRouter
 import org.osada.uiSettings
 
@@ -141,8 +137,10 @@ class UI(
         val map = game.scenario?.map ?: return
         val rawBriefing = game.takeScenarioBriefing()
         val showBriefing = game.takeScenarioBriefingEnabled()
-        // Prevent AI or scripted turns from running while the briefing is loading or visible.
-        game.uiMessageClicked = !showBriefing
+        // Prevent AI or scripted turns from running while the briefing is loading or visible -- and
+        // while a restored battle that owes a decision waits for its map: a victory reached in that
+        // interval would open its own prompt, which the image callback must never replace.
+        game.uiMessageClicked = !showBriefing && game.restoredResume() == RestoredResume.RESUME
         render.setNewMap(map)
         countriesOnSpotSide = map.getCountriesBySide(game.spotSide)
         UIBuilder.setEquipmentFlags(game.scenario?.eqp)
@@ -196,22 +194,10 @@ class UI(
             WeatherRenderer.start(game.scenario?.atmosferic ?: 0)
             mapReady = true
             if (!showBriefing) {
-                UIBuilder.clearScenarioBriefing()
-                game.uiMessageClicked = org.osada.multiplayer.coop.CoopRuntime.state
-                    ?.briefing
-                    ?.open != true
-                // The restore path never reaches releaseToBattle, so scenario events get their
-                // start-of-battle evaluation here instead. Already-fired events are restored as
-                // fired and are no-ops; this is what stops a save taken before an authored `start`
-                // event fired from resuming into a battle where it never happens.
-                if (org.osada.multiplayer.client.OsadaMultiplayer
-                        .isAuthority() &&
-                    org.osada.multiplayer.coop.CoopRuntime.state
-                        ?.briefing
-                        ?.open != true
-                ) {
-                    game.evaluateScenarioEvents()
-                }
+                game.settleRestoredBattle(
+                    askOwed = { showOwedDecision("briefing.return_to_battle.label") { resumeRestoredBattle() } },
+                    resume = { resumeRestoredBattle() },
+                )
             } else if (!campaignCeremony) {
                 openScenarioCeremony(rawBriefing)
             }
@@ -220,6 +206,24 @@ class UI(
                 pendingBriefingFinish = null
                 it()
             }
+        }
+    }
+
+    private fun resumeRestoredBattle() {
+        game.uiMessageClicked = org.osada.multiplayer.coop.CoopRuntime.state
+            ?.briefing
+            ?.open != true
+        // The restore path never reaches releaseToBattle, so scenario events get their
+        // start-of-battle evaluation here instead. Already-fired events are restored as
+        // fired and are no-ops; this is what stops a save taken before an authored `start`
+        // event fired from resuming into a battle where it never happens.
+        if (org.osada.multiplayer.client.OsadaMultiplayer
+                .isAuthority() &&
+            org.osada.multiplayer.coop.CoopRuntime.state
+                ?.briefing
+                ?.open != true
+        ) {
+            game.evaluateScenarioEvents()
         }
     }
 
@@ -250,16 +254,7 @@ class UI(
      *  always); standalone scenarios keep the legacy small popup, augmented only with any
      *  engine-authored extended conditions the scenario description may have omitted. */
     private fun openScenarioCeremony(rawBriefing: dynamic) {
-        val tutorial = game.scenario?.file == Game.defaultScenario
-        val title =
-            if (tutorial) I18n.t("tutorial.welcome.title") else game.scenario?.name ?: ""
-        val intro =
-            if (tutorial) I18n.t("tutorial.welcome.body") else game.scenario?.getDescription() ?: ""
-        val extendedObjectives =
-            game.scenario
-                ?.objectiveReport(game.spotSide, revealHidden = false)
-                ?.extended
-                .orEmpty()
+        val facts = game.ceremonyFacts()
         val finishOpening = { releaseToBattle() }
         val campaign = game.campaign
         if (campaign == null) {
@@ -267,35 +262,28 @@ class UI(
             // conditions must not remain invisible until the player happens to trigger one.
             UIBuilder.clearScenarioBriefing()
             UIBuilder.message(
-                title,
-                extendedObjectiveOpeningHtml(intro, extendedObjectives),
+                facts.title,
+                extendedObjectiveOpeningHtml(facts.ordersText, facts.extendedObjectives),
                 narrative = true,
                 callback = finishOpening,
             )
             return
         }
 
-        val facts =
-            ScenarioFacts(
-                title = title,
-                // Not `toDateString()`: its expanded-year form for a BC date is implementation
-                // defined, and it is not localized either.
-                dateLabel =
-                    game.scenario
-                        ?.date
-                        ?.let(GameplayLocalization::scenarioDateLabel)
-                        .orEmpty(),
-                sidesLabel = sidesLabel(),
-                ordersText = intro,
-                extendedObjectives = extendedObjectives,
-            )
         val campaignFile = campaign.file
         val scenarioFile = game.scenario?.file ?: ""
         // Not for an interrupted opening: "seen" was recorded when its briefing first opened, yet its
         // choices were never committed, so the dialogue must be offered again (`Game.openingReplay`).
+        // Nor when the saved narrative still owes one of its decisions: the marker lives outside the
+        // save, so loading an earlier save keeps it while the choice is gone (`OwedBriefingDecision`).
+        val owed =
+            OwedBriefingDecision.find(
+                rawBriefing,
+                CampaignNarrative.context(campaignFile, scenarioFile, campaign.currentScenarioIndex),
+            )
         if (!org.osada.multiplayer.client.OsadaMultiplayer.active &&
             !game.openingReplay &&
-            BriefingIntroTracker.isSeen(campaignFile, scenarioFile)
+            BriefingIntroTracker.maySkip(campaignFile, scenarioFile, owed)
         ) {
             // Retry fast-path: keep the briefing reachable via the reopen button, but skip
             // straight to gameplay — no dialogue, no briefing window.
@@ -338,27 +326,4 @@ class UI(
     // resolves to nothing at runtime (Kotlin/JS only exposes public members by real name to
     // dynamic/JS callers), the same pitfall this session already hit with showEnemyCard.
     fun updateStatusBar() = statusBarController.updateStatusBar()
-
-    // Prefer real country names ("Romania vs Soviet Union") over the generic side labels; each side's
-    // first country is its primary belligerent. Falls back to Axis/Allies when the map has no players.
-    private fun sidesLabel(): String {
-        val map = game.scenario?.map
-        val name0 = map?.getCountriesBySide(0)?.firstOrNull()?.let { Equipment.getCountryName(it) }
-        val name1 = map?.getCountriesBySide(1)?.firstOrNull()?.let { Equipment.getCountryName(it) }
-        val real = { name: String? -> !name.isNullOrBlank() && name != "Unknown" }
-        if (real(name0) && real(name1)) {
-            return I18n.t("briefing.sides", mapOf("left" to name0, "right" to name1))
-        }
-        val axis = GameText.side(0)
-        val allies = GameText.side(1)
-        val commanded = game.campaignPlayer?.getSideName()
-        return if (commanded != null) {
-            I18n.t(
-                "briefing.sides.commanded",
-                mapOf("left" to axis, "right" to allies, "commanded" to commanded),
-            )
-        } else {
-            I18n.t("briefing.sides", mapOf("left" to axis, "right" to allies))
-        }
-    }
 }

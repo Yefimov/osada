@@ -188,6 +188,18 @@ tasks.register<Exec>("verifyScenarioGrid") {
     commandLine("node", "scripts/verify/check-scenario-grid.mjs")
 }
 
+/*
+ * Campaign transition gate (docs/README.md C2c): every outcome goto and briefing route choice names a
+ * record or the 254/255 end -- the rule `scenario/CampaignTransitions` refuses to commit past.
+ */
+tasks.register<Exec>("verifyCampaignTransitions") {
+    group = "verification"
+    description = "Rejects campaign gotos and route choices that name no scenario of their campaign"
+
+    workingDir = rootDir
+    commandLine("node", "scripts/verify/check-campaign-transitions.mjs")
+}
+
 tasks.register<Exec>("verifyObjectiveVisibility") {
     group = "verification"
     description = "Locks the hidden/visible victory-objective audit the objectives rail relies on"
@@ -403,6 +415,7 @@ tasks.named("check") {
         "verifyKeyboardManual",
         "verifyObjectiveVisibility",
         "verifyScenarioGrid",
+        "verifyCampaignTransitions",
         "verifyAuthorCredits",
         "verifyRulesetKeys",
         "verifyTrackedSources",

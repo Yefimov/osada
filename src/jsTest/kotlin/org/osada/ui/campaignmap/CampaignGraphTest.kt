@@ -163,6 +163,20 @@ class CampaignGraphTest {
         assertEquals(listOf(1), stats.survivableDefeats, "a defeat that only replays is not listed")
     }
 
+    /** The engine refuses these (`CampaignTransitions`), so the map must not promise an ending for them. */
+    @Test
+    fun aTargetTheEngineRefusesIsNotDrawn() {
+        val records = listOf(record(0, "1/-1/30/256"), record(1, "254/254/254/255"))
+        val graph = CampaignGraphBuilder.build(records)
+        assertEquals(listOf(1), graph.outgoing(0).map { it.to }, "only the brilliant goto is a real transition")
+        assertNull(graph.node(CampaignGraph.finaleId(0)), "a negative or unknown target is no ending")
+        assertTrue(graph.node(0)!!.defeatGrades.isEmpty(), "nor is a loss past the list a defeat")
+        val data = CampaignMapData(0, "test.json", records)
+        assertNull(CampaignMapDetails.destination(data, records[0], OutcomeGrade.VICTORY))
+        assertNull(CampaignMapDetails.destination(data, records[0], OutcomeGrade.TACTICAL))
+        assertEquals(GradeDestination.Defeat, CampaignMapDetails.destination(data, records[1], OutcomeGrade.LOSE))
+    }
+
     @Test
     fun aLinearCampaignHasNoForks() {
         val graph = CampaignGraphBuilder.build(listOf(record(0, "1/1/1/255"), record(1, "254/254/254/255")))

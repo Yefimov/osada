@@ -110,9 +110,14 @@ internal object MessageDialogs {
         showNextDynamicMessage()
     }
 
-    /** Drops every queued and on-screen dynamic message. Called on scenario teardown: an
-     *  announcement about the battle just finished must not surface in the next one. */
+    /** Drops every queued and on-screen dynamic message, and the OK message with the callback it
+     *  held (not run). Called on scenario teardown (`Game.cleanup`) only: an announcement, or an OK
+     *  callback, of the battle just finished must not surface in -- or act on -- the next one. */
     fun clearDynamicMessages() {
+        if (isVisible("ui-message")) {
+            makeHidden("ui-message")
+            byId("uiokbut")?.onclick = null
+        }
         pendingDynamicMessages.clear()
         dynamicMessageShowing = false
         onScreenDynamicMessage = null

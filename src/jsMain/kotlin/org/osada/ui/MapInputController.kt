@@ -148,7 +148,7 @@ internal class MapInputController(
     }
 
     private fun resolvePlayableMap(): GameMap? {
-        val notPlayable = !ui.game.gameStarted || ui.game.gameEnded || ui.game.waitUIAnimation
+        val notPlayable = !ui.game.gameStarted || ui.game.battleSettled || ui.game.waitUIAnimation
         val map = ui.game.scenario?.map
         val isHumanTurn = map?.currentPlayer?.type == PlayerType.HUMAN_LOCAL
         return if (notPlayable || map == null || !isHumanTurn) null else map

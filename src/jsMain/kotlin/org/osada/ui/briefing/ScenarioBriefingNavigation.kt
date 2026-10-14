@@ -69,8 +69,14 @@ internal fun ScenarioBriefingController.choose(choiceId: String) {
     // forward, a reopened briefing or a restored save all reach here and all no-op after the
     // first commit, so consequences can never stack.
     CampaignNarrative.commitChoice(
+        scenarioFile =
+            currentSource?.scenarioFile ?: Game.current
+                ?.scenario
+                ?.file
+                .orEmpty(),
         lineId = current.id,
         choiceId = choice.id,
+        offered = current.choices.map { it.id },
         effects = choice.effects,
         player = Game.current?.getCampaignPlayer(),
     )

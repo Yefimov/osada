@@ -409,10 +409,11 @@ internal object Engineering {
      * recorded in [Hex.razedTerrain] so Repair has something exact to restore.
      */
     private fun razeFeature(hex: Hex) {
-        if (hex.terrain == TerrainType.CLEAR.value) {
-            hex.rubble = true
-            return
-        }
+        // Wreckage either way (owner, 2026-10-14): Open General School theme 5 says a destroyed
+        // facility *"costs more to move through"*, and it names barrage and demolition alike. Until
+        // then only a barrage left the rubble surcharge, so a sapper's ruin was cheaper to cross.
+        hex.rubble = true
+        if (hex.terrain == TerrainType.CLEAR.value) return
         hex.razedTerrain = hex.terrain
         hex.terrain = TerrainType.CLEAR.value
     }
@@ -440,6 +441,9 @@ internal object Engineering {
         owner: FacilityOwner,
     ) {
         hex.razedTerrain = -1
+        // The wreckage goes with the record: the works were built on cleared ground, and a rubble
+        // flag left standing would keep offering Repair on the new facility.
+        hex.rubble = false
         hex.terrain = terrain
         // OG's `Cannot use dirt airfields` needs to know that this strip was scraped here rather
         // than being part of the map, and nothing else records it: the construction fields are

@@ -7,53 +7,36 @@ package org.osada.scenario
  * (`GameMap`, `Player`): the exported class keeps its existing surface and function count, and
  * narrative-only accessors live next to the feature that needs them.
  *
- * Nothing here mutates campaign state — in particular [peekNextScenarioFile] deliberately does
+ * Nothing here mutates campaign state — in particular [recordAfter] deliberately does
  * NOT advance the campaign, so it can be called while recording an outcome, before
- * [Campaign.loadNextScenario] runs.
+ * [Campaign.advance] runs.
  */
 
+/** The scenario file [transition] continues the campaign with, or null where the campaign does not continue. */
+internal fun Campaign.fileAfter(transition: CampaignTransition): String? = recordAfter(transition)?.scenario as? String
+
 /**
- * The scenario file [outcome] would route to, without advancing the campaign.
- *
- * [routeOverride], when present, is what a committed `CampaignEffect.Route` replaces the
- * outcome's `goto` with — see `Campaign.loadNextScenario`. Passing it here too keeps this peek
- * agreeing with the transition `loadNextScenario` is about to make, so outcome effects queue for
- * the scenario the campaign is ACTUALLY going to, not the one the victory grade alone would pick.
- *
- * Returns null for the campaign-ending sentinels (254 victory / 255 defeat) — which is exactly
- * how "the campaign ends here" is recorded. Both shipping story campaigns route every `lose` to
- * 255, so a loss there yields null.
+ * The whole campaign record [transition] continues with, read without advancing the campaign, so
+ * it can be consulted while the outcome is recorded, before [Campaign.advance] runs.
  */
-fun Campaign.peekNextScenarioFile(
-    outcome: String,
-    routeOverride: Int? = null,
-): String? = peekNextScenarioRecord(outcome, routeOverride)?.scenario as? String
-
-/** The whole campaign record [peekNextScenarioFile] reads its file name from, or null at the end. */
-fun Campaign.peekNextScenarioRecord(
-    outcome: String,
-    routeOverride: Int? = null,
-): dynamic = nextScenarioRecord(getCampaignData(), currentScenarioIndex, outcome, routeOverride)
+internal fun Campaign.recordAfter(transition: CampaignTransition): dynamic =
+    CampaignTransitions.recordOf(getCampaignData(), transition)
 
 /**
- * The routing [Campaign.peekNextScenarioRecord] applies, over an explicit record list: [routeOverride]
- * when a committed choice set one, otherwise the [outcome] branch's `goto` from the record at
- * [currentIndex]; null for a `goto` past the list (the 254/255 campaign-end sentinels), exactly where
- * [Campaign.loadNextScenario] returns null. The imported `gotoplayed` pair is not read here because
- * `loadNextScenario` does not read it either -- the two must stay the same route.
+ * The record [outcome] routes to from [currentIndex] of [scenarios], with [routeOverride] the
+ * committed route choice if any ([CampaignTransitions.resolve]); null where the campaign does not
+ * continue. The imported `gotoplayed` pair is not read: the engine does not read it either.
  */
 internal fun nextScenarioRecord(
     scenarios: Array<dynamic>,
     currentIndex: Int,
     outcome: String,
     routeOverride: Int? = null,
-): dynamic {
-    // Bracket access, not `?.get(outcome)`: the outcome map is a plain JS object parsed from the
-    // campaign JSON, so a `.get(...)` method call throws "get is not a function" at runtime.
-    val outcomes: dynamic = scenarios.getOrNull(currentIndex)?.outcome
-    val goto = routeOverride ?: (if (outcomes == null) null else outcomes[outcome]?.goto as? Int)
-    return goto?.let { scenarios.getOrNull(it) }
-}
+): dynamic =
+    CampaignTransitions.recordOf(
+        scenarios,
+        CampaignTransitions.resolve(scenarios, currentIndex, outcome, routeOverride),
+    )
 
 /** Raw optional `actions` array (end-of-scenario objective rules) for the current scenario. */
 fun Campaign.getCurrentScenarioActions(): dynamic = getCampaignData().getOrNull(currentScenarioIndex)?.actions

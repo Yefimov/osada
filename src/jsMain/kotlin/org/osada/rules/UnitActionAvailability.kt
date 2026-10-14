@@ -558,12 +558,7 @@ object UnitActionAvailability {
         if (missingAmmo > 0) reasons += ActionBlock(ActionBlockReason.NOT_ENOUGH_AMMO_FOR_MINES, missingAmmo)
         val targets = Barrage.targets(context.map, unit).size
         if (targets == 0 && reasons.isEmpty()) reasons += ActionBlock(ActionBlockReason.NO_BARRAGE_TARGET)
-        val effects =
-            listOf(
-                ActionEffect(ActionEffectKind.OPEN_BARRAGE_TARGETING, targets),
-                ActionEffect(ActionEffectKind.ENDS_UNIT_ACTION),
-            )
-        return ActionAvailability(UnitActionId.BARRAGE, true, reasons.isEmpty(), reasons, effects)
+        return ActionAvailability(UnitActionId.BARRAGE, true, reasons.isEmpty(), reasons, barrageChipEffects(targets))
     }
 
     /**

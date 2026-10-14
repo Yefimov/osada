@@ -2,6 +2,7 @@ package org.osada
 
 import org.osada.i18n.I18n
 import org.osada.ui.ConfirmCard
+import org.osada.ui.HeroPromotionPresenter
 import org.osada.ui.UIBuilder
 import org.osada.ui.message
 
@@ -43,4 +44,24 @@ internal fun Game.offerRestartBeforeDefeat(
         }
     }
     return true
+}
+
+/**
+ * Forgets every question the battle being torn down still had open, WITHOUT answering it.
+ *
+ * None of these was reset by a teardown. The defeat card has no backdrop, so a player could open the
+ * menu from under it and load a save: the loaded battle inherited `awaitingDefeatChoice` (its turn
+ * loop never ran again), and the old card's buttons stayed live -- "Restart mission" or "accept
+ * defeat" acting on whatever was loaded. A pending campaign transition (`nextScenarioData`) likewise
+ * outlived a load and carried the loaded game off into the old campaign's next mission. The
+ * promotion dialog and the OK message would have applied an old battle's choice or callback.
+ */
+internal fun Game.discardBattleQuestions() {
+    awaitingDefeatChoice = false
+    defeatAccepted = false
+    awaitingRouteDecision = false
+    nextScenarioData = null
+    continueCampaignFlag = false
+    ConfirmCard.close()
+    HeroPromotionPresenter.discard()
 }

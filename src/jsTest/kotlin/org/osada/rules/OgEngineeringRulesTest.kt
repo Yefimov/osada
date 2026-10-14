@@ -98,6 +98,7 @@ class OgEngineeringRulesTest : OgRulesTestHarness() {
         assertEquals(EngineeringActionResult.DEMOLISHED, map.beginEngineering(sapper, EngineeringWork.RAZE))
         assertEquals(TerrainType.CLEAR.value, map.map!![2][2].terrain, "a demolition takes effect at once")
         assertEquals(TerrainType.CITY.value, map.map!![2][2].razedTerrain, "and records what to put back")
+        assertTrue(map.map!![2][2].rubble, "a sapper's ruin costs extra to cross, as a barrage's does")
 
         sapper.hasMoved = false
         sapper.hasFired = false
@@ -105,6 +106,7 @@ class OgEngineeringRulesTest : OgRulesTestHarness() {
         map.beginEngineering(sapper, EngineeringWork.REPAIR)
         repeat(EngineeringWork.REPAIR.turns) { Engineering.advanceTurn(map.map, 0, builderOwner()) }
         assertEquals(TerrainType.CITY.value, map.map!![2][2].terrain, "repair restores the exact terrain")
+        assertFalse(map.map!![2][2].rubble, "and clears the wreckage")
     }
 
     /** OG: the unit *"hasn't done any action"*. A sapper that walked to the river this turn waits. */

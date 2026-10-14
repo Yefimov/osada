@@ -176,17 +176,22 @@ class CampaignNarrativeTest {
 
     // ------------------------------------------------------------------ choices
 
+    private val kielOffered = listOf("kiel.free_prisoners", "kiel.secure_communications")
+
+    private fun CampaignNarrativeState.chooseAtKiel(choiceId: String) =
+        recordChoice("n_kiel.xml", "kiel-decision", choiceId, kielOffered)
+
     @Test
     fun choiceIsCommittedExactlyOnceAndCannotBeChangedByReview() {
         val state = CampaignNarrativeState()
-        assertTrue(state.recordChoice("kiel-decision", "kiel.free_prisoners"))
+        assertTrue(state.chooseAtKiel("kiel.free_prisoners"))
         // Double-click, Back-and-forward, briefing reopened, save restored: all re-enter here.
-        assertFalse(state.recordChoice("kiel-decision", "kiel.free_prisoners"))
+        assertFalse(state.chooseAtKiel("kiel.free_prisoners"))
         assertFalse(
-            state.recordChoice("kiel-decision", "kiel.secure_communications"),
+            state.chooseAtKiel("kiel.secure_communications"),
             "inspecting another branch must not change the committed choice",
         )
-        assertEquals("kiel.free_prisoners", state.choiceAt("kiel-decision"))
+        assertEquals("kiel.free_prisoners", state.answerTo("n_kiel.xml", "kiel-decision", kielOffered))
         assertTrue(state.chose("kiel.free_prisoners"))
         assertFalse(state.chose("kiel.secure_communications"))
     }
@@ -194,7 +199,7 @@ class CampaignNarrativeTest {
     @Test
     fun selectedChoiceConditionsReactToCommittedBranch() {
         val state = CampaignNarrativeState()
-        state.recordChoice("kiel-decision", "kiel.free_prisoners")
+        state.chooseAtKiel("kiel.free_prisoners")
         val condition = CampaignConditionParser.parse(parse("""{"selectedChoices":["kiel.free_prisoners"]}"""))
         assertTrue(CampaignConditionEvaluator.matches(condition, contextFor(state)))
     }
@@ -369,7 +374,7 @@ class CampaignNarrativeTest {
     fun fullNarrativeStateRoundTripsThroughASave() {
         val state = CampaignNarrativeState()
         state.recordOutcome(ScenarioOutcomeRecord("n_kiel.xml", "briliant", "n_willhelmsh.xml"))
-        state.recordChoice("kiel-decision", "kiel.free_prisoners")
+        state.chooseAtKiel("kiel.free_prisoners")
         state.setFlag("favours_political_mobilisation")
         state.actions.record("n_kiel.xml", "airfield_held_at_end")
         state.effects.markApplied("kiel.choice.prisoners.prestige")
@@ -378,7 +383,7 @@ class CampaignNarrativeTest {
         val restored = CampaignNarrativeSerializer.deserialize(CampaignNarrativeSerializer.serialize(state))
 
         assertEquals(state.scenarioOutcomes, restored.scenarioOutcomes)
-        assertEquals(state.selectedChoices, restored.selectedChoices)
+        assertEquals(state.choiceRecords, restored.choiceRecords)
         assertEquals(state.flags, restored.flags)
         assertEquals(setOf("airfield_held_at_end"), restored.actions.forScenario("n_kiel.xml"))
         assertTrue(restored.effects.isApplied("kiel.choice.prisoners.prestige"))

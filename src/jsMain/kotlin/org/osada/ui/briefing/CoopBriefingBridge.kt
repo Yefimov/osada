@@ -110,14 +110,21 @@ internal object CoopBriefingBridge {
         choiceId: String,
     ): Boolean {
         val source = source() ?: return false
-        val choice =
+        val offered =
             BriefingLocalization
                 .parse(source)
                 .lineById(lineId)
                 ?.choices
-                ?.firstOrNull { it.id == choiceId }
-                ?: return false
-        return CampaignNarrative.commitChoice(lineId, choiceId, choice.effects, Game.current?.getCampaignPlayer())
+                .orEmpty()
+        val choice = offered.firstOrNull { it.id == choiceId } ?: return false
+        return CampaignNarrative.commitChoice(
+            source.scenarioFile,
+            lineId,
+            choiceId,
+            offered.map { it.id },
+            choice.effects,
+            Game.current?.getCampaignPlayer(),
+        )
     }
 
     private fun source(): BriefingSource? {

@@ -139,8 +139,16 @@ package org.osada.rules.ruleset
  * both built-ins, so a schema-<=22 profile is byte-identical in play. The same day changed
  * [RuleKey.GREEN_REPLACEMENTS]' default to on without a schema change, as `carrier_hangars` did:
  * a save keeps the value it resolved.
+ *
+ * 24 (2026-10-14) changed the MEANING of [RuleKey.BARRAGE] and the OSADA defaults of it and
+ * [RuleKey.CRATERS], at the owner's request. Barrage may now shell any hex in reach, seen or
+ * unseen, empty or occupied, so its schema-17 grades collapse back to off/on: a stored 2 still
+ * reads as on, and the editor clamps it to 1. OSADA Default now runs barrage and craters; Author's
+ * Vision keeps craters off (`RulesetResolver.OSADA_ONLY`). A stored save keeps the values it
+ * resolved; a pre-24 block that lacks either key falls back to the old off rather than to the new
+ * default ([RulesetDefaults.forSchema]).
  */
-const val RULESET_SCHEMA_VERSION = 23
+const val RULESET_SCHEMA_VERSION = 24
 
 /** Serialized keys understood historically but no longer configurable or gameplay-relevant. */
 internal val RETIRED_RULE_KEYS: Set<String> =
@@ -410,29 +418,15 @@ enum class RuleKey(
     BUILD_AND_REPAIR("build_and_repair", null, 0, 1),
 
     /**
-     * OG 9.2: a unit with Bomber Size above zero shells a hex it cannot see. 0 = off (OSADA
-     * today), 1 = `og`, 2 = `aimed`. **Schema 7**, and the fourth of section 9's optional rules to
-     * be built; the third value is schema 17.
+     * OG 9.2: a unit with Bomber Size above zero may shell a hex. 0 = off, 1 = on. **Schema 7**;
+     * on in OSADA Default since schema 24.
      *
-     * ### Why the third value is a grade of this rule and not a rule of its own
+     * ### Any hex in reach, since schema 24
      *
-     * At 1 the crosshair only opens over hexes the firer cannot see, which is OG's own condition
-     * and a real one: a hex you can see is a hex you can attack properly, with aimed fire that does
-     * more. At 2 it also opens over any hex in reach that holds no ground unit — visible ground
-     * nobody is standing on. Nothing else changes: same guns, same ammunition, same shot, same
-     * three outcomes. It is the crosshair's condition and nothing more, which is exactly what a
-     * grade is for and what a second key would have hidden.
-     *
-     * **What 2 is for** is deliberate ground-shaping, which OG cannot express at all: cratering the
-     * open field an attack will have to cross, or cutting the railway a visible line runs along
-     * ([RAIL_DEMOLITION], [CRATERS]). With both of those off, 2 buys a player almost nothing, and
-     * that is the honest arithmetic of it rather than a flaw.
-     *
-     * **A bomber's own hex is admitted at 1 as well, and that is a fix rather than a grade.** An
-     * aircraft bombs the hex it is flying over — that hex is always spotted, and a level bomber's
-     * gun range is 0 — so the unspotted-only test meant every `'='` Strategic Bomber in the shipped
-     * data had no legal target and the chip offered a shot it could never take (reported
-     * 2026-09-20). OG marks those records barrage-capable; refusing them was never OG's rule.
+     * Schema 17 graded this rule: 1 opened the crosshair only over hexes the firer's side could
+     * not see, 2 also over visible empty ground. The owner asked on 2026-10-14 for barrage on any
+     * hex within firing range, so both grades are gone and a stored 2 reads as on. A friendly unit
+     * in the target hex is never damaged; see `Barrage.canTarget`.
      *
      * Held back from schema 6 for one reason only, which no longer holds: §L.6 filed Barrage as
      * blocked because the `Can bombard/barrage` ability was *"not among the decoded 52"* special
@@ -444,7 +438,7 @@ enum class RuleKey(
      * scenarios whose source is readable do (`Scenario.barrageAllowed`, imported with the rest of
      * the option bitfield). Call site: `rules/Barrage`.
      */
-    BARRAGE("barrage", null, 0, 2),
+    BARRAGE("barrage", null, 0, 1),
 
     /**
      * OG's `critical_hit`: a naval shot that sinks its target outright. **Schema 11.**
@@ -567,12 +561,10 @@ enum class RuleKey(
      * instead of doing nothing. They cost a movement point to enter, and they give the formation
      * standing in them a FLOOR of one entrenchment level — cover you did not have to dig.
      *
-     * **Off in Open General Fidelity, deliberately and permanently.** No OG source grants a crater
+     * **On in OSADA Default (schema 24), off in Author's Vision.** No OG source grants a crater
      * cover of any kind; OG's own barrage takes entrenchment AWAY (`Barrage.ENTRENCHMENT_DAMAGE`).
-     * A profile whose whole claim is "these are OG's rules" must not quietly carry one of ours —
-     * `docs/design/ruleset-profiles.md` §2, and §0.2's rule against unverifiable fidelity claims.
-     * It is reachable from OSADA Default and from custom rulesets, which is where an OSADA
-     * invention belongs.
+     * A profile that follows the content must not quietly carry one of ours —
+     * `docs/design/ruleset-profiles.md` §2 — so `RulesetResolver.OSADA_ONLY` keeps it off there.
      *
      * **A floor rather than a bonus, and that is the anti-farm design.** If craters ADDED
      * entrenchment, shelling your own front line would be free fortification: artillery in the rear
@@ -893,9 +885,9 @@ object RulesetDefaults {
             RuleKey.COUNTERBATTERY to 0,
             RuleKey.EXTENDED_LOS to 0,
             RuleKey.BUILD_AND_REPAIR to 0,
-            // Schema 7. Off for the same reason the schema-6 three are: OSADA does not shell
-            // unseen hexes today, so off is a description of the shipped game.
-            RuleKey.BARRAGE to 0,
+            // Schema 7; on since schema 24 (owner, 2026-10-14) so OSADA Default's craters have
+            // something to dig them. The scenario's own switch still applies on top.
+            RuleKey.BARRAGE to 1,
             // Schema 12. Off is a description of the game before 2026-08-28: OSADA had no railway
             // and no carrier deployment. Each keeps its own content gate on top, so ON is a
             // permission rather than an injection. (Depot supply was here until schema 22.)
@@ -908,8 +900,9 @@ object RulesetDefaults {
             // divergence from a shipped efile's own instruction -- taken deliberately, because the
             // rule sinks ships outright and no existing campaign was balanced with it running.
             RuleKey.NAVAL_CRITICAL_HITS to 0,
-            // OSADA's own rule (schema 8), off until a player asks for it.
-            RuleKey.CRATERS to 0,
+            // OSADA's own rule (schema 8), on since schema 24 (owner, 2026-10-14). Author's Vision
+            // does not inherit it: `RulesetResolver.OSADA_ONLY`.
+            RuleKey.CRATERS to 1,
             // Schema 23, OSADA's third own rule: off until a player asks for it.
             RuleKey.REGIONAL_SUPPLY to 0,
             // The second one (schema 17), on the same terms: OSADA could not cut track at all
@@ -931,4 +924,20 @@ object RulesetDefaults {
             // Class defaults, which is what every shipped scenario has always run on.
             RuleKey.EQUIPMENT_TOGGLES to 0,
         )
+
+    /** The schema that turned barrage and craters on in OSADA Default. */
+    private const val BARRAGE_DEFAULT_ON_SCHEMA = 24
+
+    /** Defaults that changed at [BARRAGE_DEFAULT_ON_SCHEMA]: the values a block written before it ran. */
+    private val BEFORE_SCHEMA_24: Map<RuleKey, Int> = mapOf(RuleKey.BARRAGE to 0, RuleKey.CRATERS to 0)
+
+    /**
+     * The value a stored block written at [schemaVersion] meant by leaving [rule] out. Saves carry
+     * every key, so this matters only for a block older than the key itself -- which must not gain
+     * a rule its battle never ran merely because OSADA's default changed later.
+     */
+    fun forSchema(
+        rule: RuleKey,
+        schemaVersion: Int,
+    ): Int = (if (schemaVersion < BARRAGE_DEFAULT_ON_SCHEMA) BEFORE_SCHEMA_24[rule] else null) ?: OSADA.getValue(rule)
 }

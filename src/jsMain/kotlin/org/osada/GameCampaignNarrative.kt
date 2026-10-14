@@ -5,11 +5,12 @@ import org.osada.campaign.CampaignNarrative
 import org.osada.campaign.ScenarioActionParser
 import org.osada.campaign.ScenarioEndState
 import org.osada.rules.CampaignAutoRefit
+import org.osada.scenario.CampaignTransition
+import org.osada.scenario.fileAfter
 import org.osada.scenario.firedEventIds
 import org.osada.scenario.getCurrentScenarioActions
 import org.osada.scenario.getOutcomeEffects
-import org.osada.scenario.peekNextScenarioFile
-import org.osada.scenario.peekNextScenarioRecord
+import org.osada.scenario.recordAfter
 
 /*
  * Bridges the running game to the campaign narrative system. Everything here is a no-op outside a
@@ -21,20 +22,20 @@ import org.osada.scenario.peekNextScenarioRecord
  * existing campaign routing selected and any optional objectives that live end-state satisfied.
  *
  * Called from `Game.continueCampaign`, the single point at which the engine has definitively
- * completed a scenario. Must run BEFORE `Campaign.loadNextScenario` advances the index, so the
- * "current" scenario is still the one that was played.
+ * completed a scenario. Must run BEFORE `Campaign.advance` moves the index, so the "current"
+ * scenario is still the one that was played.
  *
- * [routeOverride] is the committed `CampaignEffect.Route`, if any, that will replace the
- * outcome's `goto` — passed through so the recorded route and the queued outcome effects agree
- * with where the campaign is actually headed.
+ * [transition] is the one `continueCampaign` is about to take (a committed `CampaignEffect.Route`
+ * already folded in), so the recorded route and the queued outcome effects agree with where the
+ * campaign is actually headed.
  */
 internal fun Game.recordCampaignOutcome(
     outcome: String,
-    routeOverride: Int?,
+    transition: CampaignTransition,
 ) {
     val activeCampaign = campaign ?: return
     val scenarioFile = activeCampaign.getCurrentScenario()?.scenario as? String ?: return
-    val nextScenario = activeCampaign.peekNextScenarioFile(outcome, routeOverride)
+    val nextScenario = activeCampaign.fileAfter(transition)
     val recorded =
         CampaignNarrative.recordScenarioCompletion(
             scenarioFile = scenarioFile,
@@ -54,12 +55,12 @@ internal fun Game.recordCampaignOutcome(
     }
     // OG's between-battle refit rides the same queue, so it inherits exactly-once application and
     // survives a save made inside the next battle (`rules/CampaignAutoRefit`). Deliberately OUTSIDE
-    // the `recorded` guard: that guard is per scenario FILE for the whole run, so a mission replayed
-    // after a defeat that loops back to it (`rcampdfr`'s `rcampper`) would reach its next battle
-    // with no refit. `CampaignAutoRefit.nextEffect` is what stops a duplicate completion instead.
+    // the `recorded` guard, which before visits (2026-10-14) was per scenario FILE for the whole run:
+    // a mission replayed after a defeat that loops back to it (`rcampdfr`'s `rcampper`) reached its
+    // next battle with no refit. `CampaignAutoRefit.nextEffect` stops a duplicate completion itself.
     if (nextScenario != null &&
         CampaignAutoRefit.enabled() &&
-        CampaignAutoRefit.authoredFor(activeCampaign.peekNextScenarioRecord(outcome, routeOverride))
+        CampaignAutoRefit.authoredFor(activeCampaign.recordAfter(transition))
     ) {
         CampaignAutoRefit.nextEffect(CampaignNarrative.state.effects, scenarioFile, nextScenario)?.let {
             CampaignNarrative.queueForNextScenario(targetScenario = nextScenario, effects = listOf(it))

@@ -324,6 +324,10 @@ enum class ActionEffectKind {
      *  chip can say "no unseen hex in range" before the player enters a mode with nothing in it. */
     OPEN_BARRAGE_TARGETING,
 
+    /** How likely a barrage is to land; `amount` is the percentage (`Barrage.HIT_CHANCE_PERCENT`).
+     *  Stated because one landed shell wrecks a facility outright -- the odds are the decision. */
+    BARRAGE_HIT_CHANCE,
+
     /** Boards a train, which then moves along the track; `amount` is how many trains are free. */
     BOARD_TRAIN,
 

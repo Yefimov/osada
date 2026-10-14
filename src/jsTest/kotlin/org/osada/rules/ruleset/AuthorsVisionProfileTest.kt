@@ -75,6 +75,43 @@ class AuthorsVisionProfileTest {
         )
     }
 
+    /** Schema 24: OSADA Default runs barrage and craters; Author's Vision hands barrage to the
+     *  scenario and keeps OSADA's crater invention off. */
+    @Test
+    fun cratersAreOnInOsadaDefaultAndOffInAuthorsVision() {
+        assertEquals(1, osadaDefault().effective(RuleKey.BARRAGE))
+        assertEquals(1, osadaDefault().effective(RuleKey.CRATERS))
+        assertEquals(0, authorsVision().effective(RuleKey.CRATERS))
+        assertEquals(RuleProvenance.NOT_OPEN_GENERAL, authorsVision().rule(RuleKey.CRATERS).provenance)
+    }
+
+    @Test
+    fun aCustomProfileKeepsItsExplicitCraterChoice() {
+        val on = RulesetResolver.resolve(RulesetProfile("custom-on", "On", overrides = mapOf(RuleKey.CRATERS to 1)))
+        val silent = RulesetResolver.resolve(RulesetProfile("custom-silent", "Silent"))
+
+        assertEquals(1, on.effective(RuleKey.CRATERS))
+        assertEquals(0, silent.effective(RuleKey.CRATERS), "a silent custom profile follows Author's Vision")
+    }
+
+    @Test
+    fun aStoredBlockKeepsTheValuesItResolved() {
+        val stored =
+            RulesetResolver.fromEffective(
+                "osada-default",
+                "OSADA Default",
+                RulesetSource.OSADA_DEFAULT,
+                23,
+                mapOf(RuleKey.BARRAGE to 0, RuleKey.CRATERS to 0),
+            )
+        val older = RulesetResolver.fromEffective("x", "Old", RulesetSource.CUSTOM, 7, emptyMap())
+
+        assertEquals(0, stored.effective(RuleKey.CRATERS))
+        assertEquals(0, stored.effective(RuleKey.BARRAGE))
+        assertEquals(0, older.effective(RuleKey.CRATERS), "a pre-24 block missing the key ran without it")
+        assertEquals(0, older.effective(RuleKey.BARRAGE))
+    }
+
     @Test
     fun authorsVisionHandsEveryScenarioAuthoredRuleToTheScenario() {
         val resolved = authorsVision()
@@ -96,9 +133,13 @@ class AuthorsVisionProfileTest {
         // The whole point of the second profile: one documented baseline, identical for every
         // content. A player who picks it is asking NOT to follow the author.
         scenarioAuthored.forEach { rule ->
-            assertEquals(0, resolved.effective(rule), "${rule.key} is OSADA's baseline here")
+            val baseline = RulesetDefaults.OSADA.getValue(rule)
+            assertEquals(baseline, resolved.effective(rule), "${rule.key} is OSADA's baseline here")
             assertEquals(RuleProvenance.OSADA_DEFAULT, resolved.rule(rule).provenance)
         }
+        // Barrage is the one of them OSADA's baseline turns on (schema 24); the others stay off.
+        assertEquals(1, resolved.effective(RuleKey.BARRAGE))
+        assertEquals(0, resolved.effective(RuleKey.EXTENDED_LOS))
     }
 
     @Test

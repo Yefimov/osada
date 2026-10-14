@@ -17,6 +17,12 @@ package org.osada.scenario
 object CampaignRouting {
     const val LOSE = "lose"
 
+    /** A grade a committed route decides; the one `CampaignTransitions.validate` checks routes with. */
+    internal const val ROUTED_GRADE = "victory"
+
+    /** The four engine outcome keys (`briliant` is the load-bearing legacy spelling). */
+    internal val GRADES = listOf("briliant", ROUTED_GRADE, "tactical", LOSE)
+
     /** Whether a committed route choice decides the transition after [outcome]. */
     fun routeApplies(outcome: String): Boolean = outcome != LOSE
 

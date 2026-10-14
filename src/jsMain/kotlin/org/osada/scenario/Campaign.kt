@@ -50,6 +50,11 @@ class Campaign(
                 (request.status == 200.toShort() || request.status == 0.toShort())
             ) {
                 scenarios = JSON.parse(request.responseText)
+                // Logged, not thrown: the run stays playable up to a broken transition, which then
+                // refuses to commit (`Game.continueCampaign`).
+                CampaignTransitions.validate(scenarios).forEach {
+                    console.error("[OSADA] campaign '$file' has an invalid transition: ${it.describe()}")
+                }
                 isLoaded = true
                 CampaignContentLocalization.ensure(file, onLoad)
             } else {
@@ -60,8 +65,9 @@ class Campaign(
         request.send(null)
     }
 
+    /** A save's scenario index; one this campaign does not have (negative, or past the list) is ignored. */
     fun setScenarioById(id: Int) {
-        if (id < scenarios.size) currentScenarioIndex = id
+        if (id in scenarios.indices) currentScenarioIndex = id
     }
 
     fun setScenarioByName(name: String): Boolean {
@@ -77,21 +83,31 @@ class Campaign(
 
     fun getCurrentScenario(): dynamic = scenarios.getOrNull(currentScenarioIndex)
 
+    /** Tests only: a campaign record list without the XHR load, standing at [index]. */
+    internal fun useScenariosForTests(
+        records: Array<dynamic>,
+        index: Int,
+    ) {
+        scenarios = records
+        currentScenarioIndex = index
+    }
+
     /**
-     * [routeOverride], when present, replaces the outcome-branch `goto` entirely — it is how an
+     * [routeOverride], when present, replaces the winning outcome-branch `goto` -- it is how an
      * authored player CHOICE (as opposed to a victory grade) redirects the campaign. See
-     * `CampaignEffect.Route` and `CampaignNarrative.takeCommittedRoute`.
+     * `CampaignEffect.Route` and `CampaignNarrative.takeCommittedRoute`. Resolved by
+     * [CampaignTransitions]; null when the campaign does not continue, and then nothing moves.
      */
     fun loadNextScenario(
         outcome: String,
         routeOverride: Int? = null,
-    ): dynamic? {
-        val next = routeOverride ?: (scenarios[currentScenarioIndex].outcome[outcome].goto as Int)
-        if (next < scenarios.size) {
-            currentScenarioIndex = next
-            return scenarios[next]
-        }
-        return null
+    ): dynamic? = advance(CampaignTransitions.resolve(scenarios, currentScenarioIndex, outcome, routeOverride))
+
+    /** Moves to the scenario [transition] continues with and returns its record; null for any other transition. */
+    internal fun advance(transition: CampaignTransition): dynamic? {
+        val next = transition as? CampaignTransition.NextScenario ?: return null
+        currentScenarioIndex = next.index
+        return scenarios[next.index]
     }
 
     fun getOutcomePrestige(outcome: String): Int = scenarios[currentScenarioIndex].outcome[outcome].prestige as Int
@@ -104,20 +120,17 @@ class Campaign(
 
     fun getScenarioNameFromId(id: Int): String =
         when (id) {
-            CAMPAIGN_DEFEAT_SCENARIO_ID -> "Defeat (End Campaign)"
-            CAMPAIGN_VICTORY_SCENARIO_ID -> "Victory (End Campaign)"
+            CampaignTransitions.DEFEAT_END -> "Defeat (End Campaign)"
+            CampaignTransitions.VICTORY_END -> "Victory (End Campaign)"
             else ->
-                ScenarioLoader.getScenarioDataByFileName(scenarios[id].scenario as String)?.get(1) as? String
+                (scenarios.getOrNull(id)?.scenario as? String)
+                    ?.let { ScenarioLoader.getScenarioDataByFileName(it)?.get(1) as? String }
                     ?: "Unknown"
         }
 
     fun getCampaignData(): Array<dynamic> = scenarios
 
     companion object {
-        // Sentinel scenario ids marking a campaign-ending branch rather than a real scenario.
-        private const val CAMPAIGN_VICTORY_SCENARIO_ID = 254
-        private const val CAMPAIGN_DEFEAT_SCENARIO_ID = 255
-
         fun findCampaignByFile(file: String): Int {
             val list = js("campaignlist").unsafeCast<Array<dynamic>>()
             for (i in list.indices) {

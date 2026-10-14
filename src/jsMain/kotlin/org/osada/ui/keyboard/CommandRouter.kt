@@ -95,14 +95,21 @@ internal object CommandRouter {
      *  gameplay router exists. Matching it here first stops the fall-through branch from opening the
      *  pause menu behind a dialog that is still on screen. */
     private fun closeTopmost(ui: UI): Boolean {
+        if (!closeTopmostModal()) ui.mainMenuButtonHandler.handleGlobalEscape()
+        return true
+    }
+
+    /** Escape's first stop: the modals this router itself closes. False when none is open. */
+    internal fun closeTopmostModal(): Boolean {
         when {
             org.osada.ui.music.MusicLibraryPresenter
                 .isOpen() ->
                 org.osada.ui.music.MusicLibraryPresenter
                     .close()
             ControlsCard.isOpen() -> ControlsCard.close()
-            ConfirmCard.isOpen() -> ConfirmCard.close()
-            else -> ui.mainMenuButtonHandler.handleGlobalEscape()
+            // With its answer: the card's own Escape listener never runs once this one closed it.
+            ConfirmCard.isOpen() -> ConfirmCard.cancel()
+            else -> return false
         }
         return true
     }

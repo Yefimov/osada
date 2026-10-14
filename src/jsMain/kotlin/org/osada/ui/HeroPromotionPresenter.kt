@@ -41,9 +41,49 @@ internal object HeroPromotionPresenter {
 
     private val queue = ArrayDeque<HeroPromotionAnnouncement>()
 
+    /** The announcement on screen, so [holdForMenu] can put it back at the head of [queue]. */
+    private var onScreen: HeroPromotionAnnouncement? = null
+
+    /** The pause menu owns the screen: promotions wait, as the queued popups do. */
+    private var heldForMenu = false
+
     fun present(pending: List<HeroPromotionAnnouncement>) {
         queue.addAll(pending)
-        if (!isOpen()) showNext()
+        if (!isOpen() && !heldForMenu) showNext()
+    }
+
+    /**
+     * Takes an open promotion off the screen while the pause menu is up, and holds new ones back.
+     * It sits on `--z-msg`, above `#startmenu`, and it opens from a timer 2.5 s after the AI's turn
+     * (`Game.processAIActions`), so it could appear over a menu opened in that interval. The
+     * decision is kept, not dropped: [resumeAfterMenu] shows it again.
+     */
+    fun holdForMenu() {
+        heldForMenu = true
+        val shown = onScreen ?: return
+        queue.addFirst(shown)
+        removeBox()
+    }
+
+    fun resumeAfterMenu() {
+        if (!heldForMenu) return
+        heldForMenu = false
+        if (!isOpen() && queue.isNotEmpty()) showNext()
+    }
+
+    /** Drops every queued and open promotion. Called on scenario teardown (`Game.cleanup`): a choice
+     *  about a formation of the battle just left must not be applied inside the next one. */
+    fun discard() {
+        queue.clear()
+        heldForMenu = false
+        if (removeBox()) MessageDialogs.resumeDynamicMessages("decision-promotion")
+    }
+
+    private fun removeBox(): Boolean {
+        onScreen = null
+        val box = byId(BOX_ID) ?: return false
+        delTag(box)
+        return true
     }
 
     /** Whether a promotion dialog is currently on screen — see [MainMenuButtonHandler.handleGlobalEscape]. */
@@ -63,6 +103,7 @@ internal object HeroPromotionPresenter {
         org.osada.ui.music.MusicLibraryPresenter
             .yieldToDecision()
         val mainBody = byId("mainbody") ?: return
+        onScreen = announcement
         val box = addTag(mainBody, "div")
         box.className = "osada-hpp"
         box.id = BOX_ID
@@ -109,6 +150,7 @@ internal object HeroPromotionPresenter {
 
         option.asButton {
             HeroCampaign.applyPromotionChoice(HeroId(heroId), choice.traitId)
+            onScreen = null
             delTag(box)
             showNext()
         }

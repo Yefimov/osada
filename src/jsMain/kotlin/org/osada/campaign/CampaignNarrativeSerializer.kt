@@ -24,7 +24,11 @@ internal object CampaignNarrativeSerializer {
             json(
                 Pair("version", NARRATIVE_VERSION),
                 Pair("outcomes", state.scenarioOutcomes.map(::serializeOutcome).toTypedArray()),
-                Pair("choices", serializeStringMap(state.selectedChoices)),
+                // Pre-scoping readers (and the co-op probe) read `choices` as line id -> choice id;
+                // a line id repeated across missions keeps its latest answer there. `choiceRecords`
+                // is the full scoped list and wins on read.
+                Pair("choices", serializeStringMap(state.choiceRecords.associate { it.lineId to it.choiceId })),
+                Pair("choiceRecords", state.choiceRecords.map(ChoiceRecordCodec::serialize).toTypedArray()),
                 Pair("flags", state.flags.toTypedArray()),
                 Pair("actions", serializeActions(state)),
                 Pair("applied", state.effects.applied.toTypedArray()),
@@ -36,6 +40,7 @@ internal object CampaignNarrativeSerializer {
                 ),
             )
         state.route.peek()?.let { obj.route = it }
+        state.visits.current?.let { obj.visit = json(Pair("scenario", it.scenarioFile), Pair("n", it.ordinal)) }
         return obj
     }
 
@@ -48,13 +53,14 @@ internal object CampaignNarrativeSerializer {
                 CampaignNarrativeState().apply {
                     restoreFrom(
                         outcomeRecords = readOutcomes(value.outcomes),
-                        choiceMap = readStringMap(value.choices),
+                        choiceRecords = ChoiceRecordCodec.read(value) { readStringMap(it) },
                         flagValues = BriefingDynamic.strList(value.flags).toSet(),
                         actionMap = readActions(value.actions),
                         applied = BriefingDynamic.strList(value.applied).toSet(),
                         queued = readPending(value.pending),
                         route = BriefingDynamic.int(value.route),
                     )
+                    visits.restore(readVisit(value.visit))
                 }
             } catch (e: Throwable) {
                 console.warn("[OSADA] campaign narrative state corrupt, starting from empty narrative", e)
@@ -69,6 +75,7 @@ internal object CampaignNarrativeSerializer {
             Pair("scenario", record.scenarioFile),
             Pair("outcome", record.outcome),
             Pair("next", record.nextScenario ?: ""),
+            Pair("visit", record.visit),
         )
 
     /** Only the four engine outcome grades are accepted; a tampered grade drops the record. */
@@ -83,9 +90,19 @@ internal object CampaignNarrativeSerializer {
                     scenarioFile = scenario,
                     outcome = outcome,
                     nextScenario = BriefingDynamic.str(item?.next)?.takeIf { it.isNotBlank() },
+                    // Absent before visits (2026-10-14): such a save kept only each scenario's first result.
+                    visit = BriefingDynamic.int(item?.visit)?.takeIf { it >= 1 } ?: 1,
                 )
             }
         }
+
+    /** The pinned visit of the battle in play; absent (an older save) or malformed reads as none. */
+    private fun readVisit(value: dynamic): ScenarioVisit? {
+        if (!BriefingDynamic.isObject(value)) return null
+        val scenario = BriefingDynamic.str(value.scenario)?.takeIf { it.isNotBlank() }
+        val ordinal = BriefingDynamic.int(value.n)?.takeIf { it >= 1 }
+        return if (scenario == null || ordinal == null) null else ScenarioVisit(scenario, ordinal)
+    }
 
     // ---------------------------------------------------------------- pending
 
@@ -140,7 +157,8 @@ internal object CampaignNarrativeSerializer {
         return out
     }
 
-    private const val NARRATIVE_VERSION = 1
+    /** 2: choices scoped by scenario (`choiceRecords`); 3: outcome visits and the pinned `visit`. Both 2026-10-14. */
+    private const val NARRATIVE_VERSION = 3
 
     private val VALID_OUTCOMES = setOf("briliant", "victory", "tactical", "lose")
 }
@@ -210,4 +228,29 @@ internal object CampaignEffectSerializer {
             is CampaignEffect.Route -> "route"
             is CampaignEffect.AutoRefit -> "autoRefit"
         }
+}
+
+/** The `choiceRecords` block of the narrative save, and the pre-scoping `choices` map it replaces. */
+internal object ChoiceRecordCodec {
+    fun serialize(record: ChoiceRecord): dynamic {
+        val obj: dynamic = json(Pair("line", record.lineId), Pair("choice", record.choiceId))
+        record.scenarioFile?.let { obj.scenario = it }
+        return obj
+    }
+
+    /** `choiceRecords` when present; otherwise a pre-scoping save's `choices` map, read unscoped. */
+    fun read(
+        value: dynamic,
+        readLegacyMap: (dynamic) -> Map<String, String>,
+    ): List<ChoiceRecord> {
+        val records = value.choiceRecords
+        if (!BriefingDynamic.isArray(records)) {
+            return readLegacyMap(value.choices).map { (line, choice) -> ChoiceRecord(null, line, choice) }
+        }
+        return BriefingDynamic.mapArray(records) { item ->
+            val line = BriefingDynamic.str(item?.line)
+            val choice = BriefingDynamic.str(item?.choice)
+            if (line == null || choice == null) null else ChoiceRecord(BriefingDynamic.str(item.scenario), line, choice)
+        }
+    }
 }

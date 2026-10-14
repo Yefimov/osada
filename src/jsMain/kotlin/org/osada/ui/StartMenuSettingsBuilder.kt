@@ -421,7 +421,7 @@ internal object StartMenuSettingsBuilder {
                 makeHidden("startmenu")
                 // Third way back into the battle; see MainMenuButtonHandler.onOptionsButton for
                 // why the queued popups are held while any of the menu surfaces is up.
-                MessageDialogs.resumeDynamicMessages()
+                PauseMenu.closed()
                 byId("options")?.let { toggleButton(it, false) }
             } else {
                 makeVisible("startmenu")

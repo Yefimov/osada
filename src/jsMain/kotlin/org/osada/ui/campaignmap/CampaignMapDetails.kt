@@ -1,6 +1,8 @@
 package org.osada.ui.campaignmap
 
 import org.osada.scenario.CampaignRouting
+import org.osada.scenario.CampaignTransition
+import org.osada.scenario.CampaignTransitions
 import org.osada.ui.addTag
 import org.w3c.dom.HTMLElement
 
@@ -162,19 +164,40 @@ internal class CampaignMapDetails(
             return when {
                 routed && CampaignRouting.routeApplies(grade.key) -> GradeDestination.ByChoice
                 goto == null -> null
-                goto == record.index -> GradeDestination.Replay
-                goto in data.records.indices ->
-                    GradeDestination.Operation(
-                        goto,
-                        data.graph.edges.any {
-                            it.from == record.index &&
-                                it.to == goto &&
-                                it.back
-                        },
+                else ->
+                    destinationOf(
+                        data,
+                        record,
+                        CampaignTransitions.resolve(data.records.size, record.index, grade.key, goto),
                     )
-                grade == OutcomeGrade.LOSE -> GradeDestination.Defeat
-                else -> GradeDestination.Ending(CampaignGraph.finaleId(record.index))
             }
         }
+
+        /** The engine's own resolver decides; a target it refuses has no destination to show. */
+        private fun destinationOf(
+            data: CampaignMapData,
+            record: CampaignScenarioRecord,
+            transition: CampaignTransition,
+        ): GradeDestination? =
+            when (transition) {
+                is CampaignTransition.NextScenario ->
+                    if (transition.index == record.index) {
+                        GradeDestination.Replay
+                    } else {
+                        GradeDestination.Operation(
+                            transition.index,
+                            data.graph.edges.any { it.from == record.index && it.to == transition.index && it.back },
+                        )
+                    }
+                is CampaignTransition.CampaignEnd ->
+                    if (transition.defeat) {
+                        GradeDestination.Defeat
+                    } else {
+                        GradeDestination.Ending(
+                            CampaignGraph.finaleId(record.index),
+                        )
+                    }
+                is CampaignTransition.NeedsDecision, is CampaignTransition.InvalidData -> null
+            }
     }
 }

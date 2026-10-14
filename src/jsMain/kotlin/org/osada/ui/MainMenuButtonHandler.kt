@@ -125,9 +125,15 @@ internal class MainMenuButtonHandler(
             makeHidden("smState")
             makeHidden("startmenu")
             // Back to the battle: whatever the menu was holding back gets its turn now.
-            MessageDialogs.resumeDynamicMessages()
+            PauseMenu.closed()
             byId("options")?.let { toggleButton(it, false) }
         } else {
+            // A battle that is waiting on the player's answer to its outcome (the defeat question,
+            // an owed route) keeps that question on screen: the card would float over the menu, and
+            // a save loaded from it would inherit the wait.
+            if (ui.game.awaitingOutcomeAnswer) return
+            // A non-blocking confirmation (sell, disband) is withdrawn: it would float over the menu.
+            if (ConfirmCard.isOpen()) ConfirmCard.cancel()
             // An open message box (e.g. the scenario-intro briefing left unread) sits on
             // --z-msg, ABOVE the pause menu's own layer — its title floated over the main
             // menu. Dismiss it through its own OK path so any pending
@@ -136,7 +142,7 @@ internal class MainMenuButtonHandler(
             // The QUEUED boxes (hero emergence, casualties, prototype awards) are the same layer
             // and were the other half of that report — they have no callback to run, so they are
             // held rather than dismissed and come back when the player continues.
-            MessageDialogs.suspendDynamicMessages()
+            PauseMenu.opened()
             makeVisible("startmenu")
             makeVisible("smMain")
             // Re-check Continue: a save created during this session must surface it.

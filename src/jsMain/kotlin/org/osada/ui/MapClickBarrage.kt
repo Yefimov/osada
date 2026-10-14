@@ -45,7 +45,9 @@ internal fun MapClickHandler.resolveBarrageClick(
     if (unit == null || !hex.isBarrageSel) map.clearBarrageTargeting()
     if (unit != null) {
         if (hex.isBarrageSel || result != null) {
-            ui.showAlert(cell.row, cell.col, I18n.t(barrageMessageKey(result)), true)
+            // No banner for a shot that was fired (owner, 2026-10-14): the animation and what it
+            // leaves on the map are the feedback. Only a refused order is explained.
+            if (result == null) ui.showAlert(cell.row, cell.col, I18n.t("unit_info.action.barrage.blocked"), true)
             // One console line per barrage, the way the AI's moves and the attack diagnostics are
             // logged: a shot into a hex nobody can see is exactly what a player asks about later.
             console.log("[OSADA] barrage ${unit.id} -> ${cell.row},${cell.col}: $result")
@@ -72,19 +74,6 @@ private fun MapClickHandler.playBarrageFire(
     ui.render.runAnimation(null)
 }
 
-/** Which sentence the banner shows — OG's three outcomes, plus a miss and a refusal. */
-private fun barrageMessageKey(result: org.osada.rules.Barrage.BarrageResult?): String =
-    when {
-        result == null -> "unit_info.action.barrage.blocked"
-        !result.hit -> "unit_info.action.barrage.done.miss"
-        result.blewBridge -> "unit_info.action.barrage.done.bridge"
-        result.cutRail -> "unit_info.action.barrage.done.rail"
-        result.wreckedTerrain -> "unit_info.action.barrage.done.wrecked"
-        result.leftRubble -> "unit_info.action.barrage.done.rubble"
-        result.leftCrater -> "unit_info.action.barrage.done.crater"
-        else -> "unit_info.action.barrage.done.hit"
-    }
-
 /**
  * The Barrage chip: OG 9.2's is the one action in the strip that needs a TARGET, so it opens a
  * targeting mode instead of firing. Pressing it again closes the mode — a mode entered by accident
@@ -101,7 +90,8 @@ internal fun UnitContextMenu.toggleBarrageTargeting(
     } else {
         uiSettings.barrageMode = true
         map.openBarrageTargeting(unit)
-        ui.showAlert(pos.row, pos.col, I18n.t("unit_info.action.barrage.pick"), true)
+        val chance = mapOf("chance" to org.osada.rules.Barrage.HIT_CHANCE_PERCENT)
+        ui.showAlert(pos.row, pos.col, I18n.t("unit_info.action.barrage.pick", chance), true)
     }
     ui.render.render(pos.row, pos.col, getUnitRenderRadius(unit))
 }

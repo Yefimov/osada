@@ -21,7 +21,7 @@ import kotlin.test.assertTrue
 
 /**
  * Shell craters — **OSADA's own rule** (`rules/Craters`), behind
- * `RuleKey.CRATERS` and deliberately off in Open General Fidelity.
+ * `RuleKey.CRATERS`: on in OSADA Default, off in Author's Vision.
  *
  * The two claims worth defending are the two that make it safe: a crater is a FLOOR under the
  * occupant's entrenchment rather than a bonus on top of it — so shelling your own line can never
@@ -54,12 +54,15 @@ class CratersTest : OgRulesTestHarness() {
     fun teardown() = clearTestWorld()
 
     @Test
-    fun theRuleIsOffInOpenGeneralFidelityAndByDefault() {
+    fun theRuleIsOnInOsadaDefaultAndFollowsAnExplicitOff() {
         val map = world()
         GameHolder.instance = holderFor(map)
 
-        ruleset(RuleKey.BARRAGE to 1)
-        assertFalse(Craters.enabled(), "no OG source gives a crater cover; the profile must not ship one")
+        ruleset()
+        assertTrue(Craters.enabled(), "OSADA Default runs craters since schema 24")
+
+        ruleset(RuleKey.CRATERS to 0)
+        assertFalse(Craters.enabled(), "a profile that turns it off keeps it off")
     }
 
     @Test
@@ -72,6 +75,7 @@ class CratersTest : OgRulesTestHarness() {
 
         ruleset(RuleKey.BARRAGE to 1, RuleKey.CRATERS to 1)
         assertTrue(fireUntilItLands(map, gun, Cell(2, 5)).leftCrater)
+        assertFalse(map.map!![2][5].rubble, "a crater, not wreckage")
         assertTrue(map.map!![2][5].crater)
     }
 
@@ -137,7 +141,7 @@ class CratersTest : OgRulesTestHarness() {
     }
 
     private fun craterWorld(cratersOn: Boolean): GameMap {
-        if (cratersOn) ruleset(RuleKey.BARRAGE to 1, RuleKey.CRATERS to 1) else ruleset(RuleKey.BARRAGE to 1)
+        ruleset(RuleKey.BARRAGE to 1, RuleKey.CRATERS to if (cratersOn) 1 else 0)
         val map = world()
         for (r in 0 until map.rows) {
             for (c in 0 until map.cols) map.map!![r][c].terrain = TerrainType.CLEAR.value

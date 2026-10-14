@@ -27,6 +27,7 @@ internal class HexCellRenderer(
 ) {
     private val destroyedBridgeRenderer = DestroyedBridgeRenderer(rc)
     private val builtFacilityRenderer = BuiltFacilityRenderer(rc)
+    private val ruinsRenderer = RuinsRenderer(rc)
 
     companion object {
         // Stacked-layer marker: two short bars at the top of the hex. Brass is the HUD's own
@@ -42,6 +43,10 @@ internal class HexCellRenderer(
         private const val STRATEGIC_ZOOM_UNIT_FLAG_SCALE = 1.4
         private const val MOVED_UNIT_FLAG_ALPHA = 0.6
         private const val STRATEGIC_ZOOM_VICTORY_FLAG_SCALE = 3.0
+
+        // 1 - the fog veil's 0.38 (`FogOfWarRenderer`): a crater drawn over the veil at this alpha
+        // reads as one drawn under it.
+        private const val FOGGED_CRATER_ALPHA = 0.62
     }
 
     fun drawCell(
@@ -58,6 +63,8 @@ internal class HexCellRenderer(
         // Terrain damage stays below units, flags and selection, in both zoom modes and on AI turns.
         destroyedBridgeRenderer.draw(hex, x, y)
         builtFacilityRenderer.draw(hex, x, y)
+        ruinsRenderer.draw(hex, x, y)
+        drawCraters(hex, x, y)
         if (isCurrentHex) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["currentstroke"])
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["current"])
@@ -338,7 +345,6 @@ internal class HexCellRenderer(
         if (Engineering.visibleSiteFor(hex, frame.q.currentPlayer?.side ?: 0)) {
             rc.drawHex(rc.hexesCtx, x, y, hexStyles["construction"])
         }
-        drawCraters(hex, x, y)
     }
 
     /**
@@ -348,7 +354,13 @@ internal class HexCellRenderer(
      * how a cratered hex differs from the field beside it, and without it the movement cost and the
      * entrenchment floor would be rules with no visible cause
      * (`docs/design/action-affordances-and-objectives.md` §1.1).
-     * Wreckage from a destroyed facility gets no sprite: that hex already changed terrain.
+     * Wreckage of a destroyed facility is [RuinsRenderer]'s.
+     *
+     * Persistent terrain damage, drawn with the destroyed bridges in [drawCell] -- under the units,
+     * in both zoom modes and on every side's turn. Until 2026-10-14 it rode with the move/attack
+     * overlays, which skip strategic zoom and any turn that is not the observer's, and it was
+     * painted over the unit sprites. The veil is a pre-pass on the same canvas, so a crater in an
+     * unspotted hex is drawn at the veil's complement instead, to read as terrain under the fog.
      */
     private fun drawCraters(
         hex: Hex,
@@ -361,7 +373,11 @@ internal class HexCellRenderer(
         val width = (img?.width as? Number)?.toDouble()
         val height = (img?.height as? Number)?.toDouble()
         if (width != null && height != null) {
-            rc.hexesCtx.drawImage(img, x + (rc.hexTopWidth - width) / 2.0, y + rc.v - height / 2.0)
+            val ctx = rc.hexesCtx
+            val fogged = !hex.isSpotted(GameHolder.instance?.spotSide ?: 0)
+            if (fogged) ctx.globalAlpha = FOGGED_CRATER_ALPHA
+            ctx.drawImage(img, x + (rc.hexTopWidth - width) / 2.0, y + rc.v - height / 2.0)
+            if (fogged) ctx.globalAlpha = 1.0
         }
     }
 

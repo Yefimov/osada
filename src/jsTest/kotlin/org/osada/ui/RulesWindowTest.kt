@@ -260,15 +260,14 @@ class RulesWindowTest {
         RulesEditorWindow.openCopyOf(RulesetSelection.Surface.SCENARIO)
         val editor = byId(RulesEditorWindow.WINDOW_ID)
         val craters = editor?.querySelector("[data-rule=\"craters\"] input") as? HTMLInputElement
-        // Barrage is a three-value choice since schema 17, so the prerequisite is a select rather
-        // than a tickbox -- the dependency has to be handed back from either kind of control.
-        val barrage = editor?.querySelector("[data-rule=\"barrage\"] select") as? HTMLSelectElement
+        // Barrage is a tickbox again since schema 24 collapsed its three grades to off/on.
+        val barrage = editor?.querySelector("[data-rule=\"barrage\"] input") as? HTMLInputElement
 
         assertNotNull(craters)
         assertNotNull(barrage)
         assertEquals(true, craters.disabled)
 
-        barrage.value = "1"
+        barrage.checked = true
         barrage.dispatchEvent(
             org.w3c.dom.events
                 .Event("change"),

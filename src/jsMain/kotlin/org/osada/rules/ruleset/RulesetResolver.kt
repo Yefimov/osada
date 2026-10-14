@@ -155,11 +155,12 @@ object RulesetResolver {
     /**
      * OSADA inventions that OSADA Default runs and Author's Vision must not.
      *
-     * Empty since 2026-09-29: `combat_support_min_bar` was its only member, and schema 21 retired
-     * that rule outright (the floor always applies). The mechanism stays for the next rule that
-     * genuinely must differ.
+     * [RuleKey.CRATERS] since schema 24, when OSADA Default turned it on: Open General has no
+     * crater, so following the content means not having one. A custom profile that names no value
+     * for it follows Author's Vision here too; one that sets it keeps what it set.
+     * (`combat_support_min_bar` was the first member, until schema 21 retired it.)
      */
-    private val OSADA_ONLY = emptySet<RuleKey>()
+    private val OSADA_ONLY = setOf(RuleKey.CRATERS)
 
     /**
      * "On" means "allow the slots this efile defines" and can never invent definitions the content
@@ -220,7 +221,7 @@ object RulesetResolver {
     ): ResolvedRuleset {
         val rules =
             RuleKey.entries.associateWith { rule ->
-                val value = effective[rule] ?: RulesetDefaults.OSADA.getValue(rule)
+                val value = effective[rule] ?: RulesetDefaults.forSchema(rule, schemaVersion)
                 ResolvedRule(value, value, RuleProvenance.CUSTOM_OVERRIDE)
             }
         return ResolvedRuleset(

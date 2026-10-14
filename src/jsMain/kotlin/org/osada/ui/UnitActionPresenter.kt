@@ -54,6 +54,8 @@ internal object UnitActionPresenter {
         setOf(
             ActionEffectKind.ENDS_UNIT_ACTION,
             ActionEffectKind.LIMBER_TOGGLE_FREE,
+            // Odds, not a gain: two shots in five fall wide.
+            ActionEffectKind.BARRAGE_HIT_CHANCE,
             ActionEffectKind.EXPERIENCE_DILUTION,
             // A failed clearing attempt is a stated risk, not a gain -- painting it the same green
             // as "+3 strength" would read as a benefit.

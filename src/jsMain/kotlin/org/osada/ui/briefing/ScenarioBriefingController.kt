@@ -38,11 +38,22 @@ internal object ScenarioBriefingController {
         I18n.onLanguageChanged { refreshLocalization() }
     }
 
+    /**
+     * Opens the briefing as a battle's opening: the conversation, then the orders.
+     *
+     * With [owedBeginKey] it opens instead on the ORDERS sheet at a decision the campaign still owes
+     * (`OwedBriefingDecision`): a restored battle, or a victory about to be routed, whose saved
+     * narrative never recorded the briefing's choice. The conversation is not replayed -- the battle
+     * is already under way -- but the decision block is the one SKIP leaves behind, and the
+     * [owedBeginKey] button stays disabled until it is answered through the same once-only
+     * `CampaignNarrative.commitChoice`.
+     */
     fun show(
         campaignFile: String,
         scenarioFile: String,
         scenarioFacts: ScenarioFacts,
         rawData: dynamic,
+        owedBeginKey: String? = null,
         onFinished: () -> Unit,
     ) {
         val source = BriefingSource(campaignFile, scenarioFile, scenarioFacts.title, rawData)
@@ -55,8 +66,9 @@ internal object ScenarioBriefingController {
                 BriefingLocalization.parse(source),
                 source,
                 localizedFacts,
-                "briefing.begin.label",
+                owedBeginKey ?: "briefing.begin.label",
                 onFinished,
+                owed = owedBeginKey != null,
             )
         }
     }
@@ -108,6 +120,9 @@ internal object ScenarioBriefingController {
 
     fun isVisible(): Boolean = view != null
 
+    /** The sheet was opened on an owed decision ([show]'s `owedBeginKey`): the block says why. */
+    internal var owedDecision: Boolean = false
+
     /** Esc on the ORDERS stage acts like the primary button: begin the operation — unless a
      *  decision is still owed, which BEGIN itself is disabled for. Esc must not be a way around it. */
     internal fun finishBriefing() {
@@ -128,6 +143,7 @@ internal object ScenarioBriefingController {
         beginKey: String,
         onFinished: () -> Unit,
         reviewing: Boolean = false,
+        owed: Boolean = false,
     ) {
         close(runCallback = false)
         org.osada.ui.MessageDialogs
@@ -141,11 +157,14 @@ internal object ScenarioBriefingController {
         beginLabelKey = beginKey
         finishCallback = onFinished
         previousFocus = document.activeElement as? HTMLElement
-        stage = if (parsed.dialogue.isNotEmpty() && !reviewing) BriefingStage.DIALOGUE else BriefingStage.ORDERS
+        owedDecision = owed
+        val conversation = parsed.dialogue.isNotEmpty() && !reviewing && !owed
+        stage = if (conversation) BriefingStage.DIALOGUE else BriefingStage.ORDERS
         path.clear()
         // A review leaves the path EMPTY on purpose: `pendingChoiceLine` reads the head of the
         // path, so an empty path is what makes the decision block (and its BEGIN gate) stay away.
         if (!reviewing) parsed.dialogue.firstOrNull()?.let { path += DialogueStep(it.id) }
+        if (owed) advanceToNextPendingChoice()
 
         val created =
             ScenarioBriefingBuilder.create(
@@ -173,7 +192,7 @@ internal object ScenarioBriefingController {
             BriefingTypewriter.cancel()
             ScenarioBriefingBuilder.renderOrders(currentView, data.orders, facts)
             // A decision the player skipped past follows them here and gates BEGIN.
-            renderPendingDecision(currentView, pendingChoiceLine()) { chooseFromOrders(it) }
+            renderPendingDecision(currentView, pendingChoiceLine(), owedDecision) { chooseFromOrders(it) }
         }
         CoopBriefingBridge.renderVotes()
     }
@@ -255,6 +274,7 @@ internal object ScenarioBriefingController {
         briefing = null
         currentSource = null
         facts = null
+        owedDecision = false
         path.clear()
 
         val callback = finishCallback

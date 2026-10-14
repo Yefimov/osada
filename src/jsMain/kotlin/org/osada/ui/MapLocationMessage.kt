@@ -2,9 +2,11 @@ package org.osada.ui
 
 import org.osada.RoadType
 import org.osada.TerrainType
+import org.osada.i18n.GameText
 import org.osada.i18n.I18n
 import org.osada.model.Hex
 import org.osada.rules.AirfieldQuality
+import org.osada.rules.Craters
 import org.osada.rules.UnitConcealment
 import org.osada.terrainNames
 import org.osada.uiSettings
@@ -64,4 +66,18 @@ private fun hexNotes(hex: Hex): List<String> =
         if (hex.terrain == TerrainType.AIRFIELD.value && AirfieldQuality.isDirt(hex)) {
             add(I18n.t("hud.status.location.field_airfield"))
         }
+        damageNotes(hex)
     }
+
+/**
+ * What a barrage or a demolition left here. The painted map still shows a destroyed facility, so
+ * the line has to name it: the terrain word above already reads "Clear" for a razed airfield.
+ */
+private fun MutableList<String>.damageNotes(hex: Hex) {
+    if (hex.razedTerrain >= 0) {
+        add(I18n.t("hud.status.location.ruins", mapOf("terrain" to GameText.terrain(hex.razedTerrain))))
+    }
+    if (hex.rubble) add(I18n.t("hud.status.location.wreckage"))
+    if (hex.blownRail != 0) add(I18n.t("hud.status.location.rail_cut"))
+    if (hex.crater && Craters.enabled()) add(I18n.t("hud.status.location.craters"))
+}
